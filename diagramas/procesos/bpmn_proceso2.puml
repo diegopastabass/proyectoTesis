@@ -1,0 +1,28 @@
+@startuml bpmn_proceso2
+!include bpmn_estilo.iuml
+skinparam activity {
+    BackgroundColor #D5F5E3
+}
+
+|Atleta|
+|Aplicación|
+|Asistente de IA|
+|Atleta|
+start
+:1. Saca una foto, describe su comida,\nbusca un alimento o escanea un código;
+|Aplicación|
+if (¿Foto o\ndescripción?) then (No)
+  :4. Muestra los datos del\nalimento o del producto;
+else (Sí)
+  |Asistente de IA|
+  :2. Estima los alimentos, las\ncantidades y los macronutrientes;
+  |Aplicación|
+  :3. Muestra la estimación y avisa\nsi el resultado es poco seguro;
+endif
+|Atleta|
+:5. Revisa los datos, corrige lo\nque haga falta e indica cuánto comió;
+|Aplicación|
+:6. Guarda la comida en el diario\ny descarta la foto;
+:7. Suma la comida al día y\nmuestra cuánto falta para la meta;
+stop
+@enduml

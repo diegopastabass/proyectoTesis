@@ -1,0 +1,19 @@
+@startuml dga_cu20
+!include dga_estilo.iuml
+|Usuario|
+|Aplicación|
+|Usuario|
+start
+:1. Abre un entrenamiento\no una comida;
+|Aplicación|
+:2. Muestra el detalle\ndel registro;
+|Usuario|
+:3. Escribe cómo se sintió\ny pulsa Guardar;
+|Aplicación|
+if (¿Escribió\nalgo?) then (No)
+  :No crea ninguna nota;
+else (Sí)
+  :4. Guarda la nota junto\na ese registro;
+endif
+stop
+@enduml

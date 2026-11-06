@@ -1,0 +1,26 @@
+@startuml int_alimentos
+!include sec_estilo.iuml
+participant "App Flutter" as A
+participant "API NestJS" as B
+database "MongoDB" as DB
+participant "API de alimentos\n(Open Food Facts)" as OFF
+autonumber
+A -> B : GET /food-items/barcode/{codigo}
+B -> DB : buscar(foodItems, barcode)
+alt Ya está en foodItems
+  DB --> B : producto
+else No está
+  DB --> B : Sin resultados
+  B -> OFF : GET /api/v3/product/{codigo} con User-Agent propio
+  alt Existe
+    OFF --> B : nombre, marca, porción, nutrientes por 100 g
+    B -> B : Convierte al formato per100g
+    B -> DB : guardar(foodItems, source = Open Food Facts)
+  else No existe o el servicio falla
+    OFF --> B : Sin producto o error
+    B --> A : Producto no encontrado
+    A -> A : Ofrece buscar en la lista
+  end
+end
+B --> A : producto(calorías, proteínas, carbohidratos, grasas)
+@enduml

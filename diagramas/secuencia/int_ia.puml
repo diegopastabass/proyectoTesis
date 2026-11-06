@@ -1,0 +1,24 @@
+@startuml int_ia
+!include sec_estilo.iuml
+participant "App Flutter" as A
+participant "API NestJS" as B
+participant "Servicio de IA\n(Gemini)" as IA
+autonumber
+A -> B : POST /meals/estimate(foto comprimida o texto)
+B -> B : Revisa el plan premium y el límite de uso
+alt Texto ya consultado
+  B -> B : Usa la respuesta guardada en memoria
+else Consulta nueva
+  B -> IA : generateContent(instrucciones, foto o texto, formato JSON)
+  alt Respuesta correcta
+    IA --> B : alimentos, cantidades, calorías, macronutrientes, confianza
+    B -> B : Valida que el JSON tenga el formato esperado
+  else Error o sin respuesta
+    IA --> B : Error
+    B -> IA : Reintenta una vez
+    B --> A : Servicio no disponible
+    A -> A : Ofrece el registro manual
+  end
+end
+B --> A : Estimación, sin guardar
+@enduml

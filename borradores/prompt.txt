@@ -1,0 +1,17 @@
+En esta ruta he agregado al documento 'Flujo de Caja.xlsx' tres nuevas hojas con el desglose de costos por especialista en cada etapa del ciclo de vida de desarrollo de software para cada una de las tres alternativas. Estas hojas llevan por nombre ALT1, ALT2, ALT3.
+
+Para la construcción del desglose de costos por especialista hice una investigación en diversas fuentes sobre los
+valores de hora hombre por hora trabajada que tienen cada uno de los cargos en Chile, lo hice en base a diversas fuentes para que tengas la referencia y lo agregues posteriormente al informe.
+
+Con esta investigación concluí que cada una de las etapas diferia en base a las estimaciones que hicimos anteriormente con respecto a los costos por cada una de las alternativas, concluyendo que las alternativas más económicas no eran tan baratas como lo habíamos planteado, ni la más completa tan cara (al menos desde el punto de vista de costos por personal).
+
+A estos costos hay que sumar todos los costos que se habían estimado con respecto a servicios y contratos que debemos financiar por cada una de las alternativas. Por lo que también deberas estimar costos con respecto a hosting, uso de apis, mantención, publicación en las diferentes stores (Apple Store y Google Play) y recordar que íbamos a subsistir principalmente en base a servicios de AWS, una bd postgres en RDS e instancias para desplegar los servicios web a utilizar.
+
+Tu objetivo ahora es:
+1.- Analizar el documento main.tex para que tengas contexto del proyecto y de lo que habiamos estado conversando.
+
+2.- Realizar una descripción detallada de los costos por alternativa considerando tanto los costos que te propuse, entre otros que puedas tu considerar necesarios para llevar a cabo alguna de las alternativas propuestas.
+
+3.- Actualizar los flujos de cajas existentes en base a esta nueva estructura de costos.
+
+

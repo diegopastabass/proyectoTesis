@@ -1,0 +1,25 @@
+@startuml int_notificaciones
+!include sec_estilo.iuml
+participant "App Flutter" as A
+participant "Firebase Cloud\nMessaging" as FCM
+participant "API NestJS" as B
+database "MongoDB" as DB
+autonumber
+== Registro del teléfono ==
+A -> FCM : Pide el identificador del teléfono
+FCM --> A : token
+A -> B : POST /users/me/device-tokens(token)
+B -> DB : guardar(users.deviceTokens)
+== Envío de una alerta ==
+B -> DB : leer(users.deviceTokens)
+DB --> B : tokens
+B -> FCM : messages:send(token, título, texto, id de la alerta)
+alt Token válido
+  FCM --> B : Mensaje aceptado
+  FCM -> A : Notificación push
+  B -> DB : guardar(alerts.isPushSent)
+else Token vencido
+  FCM --> B : UNREGISTERED
+  B -> DB : borrar(users.deviceTokens)
+end
+@enduml

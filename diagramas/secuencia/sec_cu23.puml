@@ -1,0 +1,33 @@
+@startuml sec_cu23
+!include sec_estilo.iuml
+actor "Atleta" as U
+participant "App Flutter" as A
+participant "API NestJS" as B
+database "MongoDB" as DB
+participant "CloudFront" as CF
+autonumber
+U -> A : Abre el muro
+alt Sin conexión
+  A --> U : Avisa que no se pudo cargar
+else Con conexión
+  A -> B : GET /feed?page=1
+  B -> DB : Lee a quiénes sigue en follows
+  DB --> B : Personas seguidas
+  alt No sigue a nadie
+    B --> A : Muro vacío
+    A --> U : Sugiere buscar personas (CU-14)
+  else Sigue a alguien
+    B -> DB : Lee posts por autor y fecha
+    DB --> B : Publicaciones
+    B -> B : Filtra por visibilidad
+    B --> A : Publicaciones con direcciones de fotos
+    A -> CF : Pide las miniaturas
+    CF --> A : Imágenes
+    A --> U : Muestra el muro
+    U -> A : Baja para ver más
+    A -> B : GET /feed?page=2
+    B --> A : Siguientes publicaciones
+    A --> U : Las agrega al muro
+  end
+end
+@enduml

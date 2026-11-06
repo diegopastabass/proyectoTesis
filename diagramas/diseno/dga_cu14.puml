@@ -1,0 +1,22 @@
+@startuml dga_cu14
+!include dga_estilo.iuml
+|Usuario|
+|Aplicación|
+|Usuario|
+start
+repeat
+  :1. Busca a una persona o\nla encuentra en el muro;
+  |Aplicación|
+repeat while (¿La encuentra?) is (No, permite buscar\notro nombre) not (Sí)
+:2. Muestra su perfil;
+if (¿Ya la sigue?) then (Sí)
+  :Ofrece dejar de seguirla. Si lo hace,\nquita sus publicaciones del muro;
+  stop
+else (No)
+  |Usuario|
+  :3. Pulsa Seguir;
+  |Aplicación|
+  :4. Guarda la relación y muestra\nsus publicaciones en el muro;
+endif
+stop
+@enduml

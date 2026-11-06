@@ -1,0 +1,34 @@
+@startuml bpmn_proceso1
+!include bpmn_estilo.iuml
+skinparam activity {
+    BackgroundColor #D6EAF8
+}
+
+|Atleta|
+|Aplicación|
+|Reloj y app de salud|
+|Atleta|
+start
+:1. Termina una sesión\nde cardio;
+|Aplicación|
+if (¿Registró con\nun reloj?) then (Sí)
+  |Reloj y app de salud|
+  :2. Guarda la sesión con su\nduración, distancia y pulso;
+else (No)
+  |Atleta|
+  :3. Sube el archivo del\nciclocomputador, graba con el\nGPS o anota la sesión a mano;
+endif
+|Aplicación|
+:4. Guarda la sesión y\ncalcula su carga;
+:5. Cruza la carga con la fuerza\ny las comidas de los últimos días;
+:6. Actualiza las metas de\nalimentación del día;
+if (¿Riesgo de fatiga\no poco descanso?) then (Sí)
+  :7. Envía una alerta\ncon una sugerencia;
+  |Atleta|
+  :8. Decide si ajusta\nsu entrenamiento;
+  |Aplicación|
+else (No)
+endif
+:9. Muestra el resumen\nactualizado;
+stop
+@enduml

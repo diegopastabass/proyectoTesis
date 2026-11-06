@@ -1,0 +1,24 @@
+@startuml dga_cu21
+!include dga_estilo.iuml
+|Usuario|
+|Aplicación|
+|Usuario|
+start
+:1. Abre la configuración\nde sus datos;
+|Aplicación|
+:2. Muestra sus datos y\nlos permisos que ha dado;
+if (¿Qué quiere\nhacer?) then (Eliminar\nla cuenta)
+  :Pide una confirmación y\nborra todos sus datos;
+  stop
+else (Corregir o\ncambiar permiso)
+  |Usuario|
+  :3. Corrige un dato o\ncambia un permiso;
+  |Aplicación|
+  :4. Guarda el cambio\ny lo confirma;
+endif
+if (¿Quitó el permiso de\ndatos de salud?) then (Sí)
+  :Deja de leerlos;
+else (No)
+endif
+stop
+@enduml

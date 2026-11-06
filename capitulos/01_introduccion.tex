@@ -1,0 +1,82 @@
+% Introducción
+% Este archivo se incluye desde main.tex con \input.
+\section{Introducción}
+\subsection{Contexto General del Área}
+El deporte pasó de ser una necesidad básica de supervivencia a una práctica cada vez más especializada. Hoy muchos deportistas aficionados usan métodos de entrenamiento y alimentación que antes eran exclusivos del ámbito profesional. Esto se nota, por ejemplo, en lo común que se ha vuelto usar relojes inteligentes, bandas cardíacas y ciclocomputadores para medir el rendimiento.
+\\\\
+En este escenario aparece el llamado atleta híbrido, que es una persona que busca mejorar al mismo tiempo en dos áreas que normalmente compiten entre sí. Por un lado está la fuerza máxima, como en el levantamiento de pesas, y por otro la resistencia cardiovascular, como en el ciclismo de ruta o el running. En la fisiología del ejercicio esta práctica se conoce como entrenamiento concurrente, y se define como la combinación sistemática de entrenamiento de fuerza y de resistencia dentro de un mismo programa \citep{fisiologiadelejercicio}.
+\\\\
+Para estos deportistas es muy importante tener una buena base nutricional y evitar que un tipo de entrenamiento perjudique al otro. Cuando estas variables no se controlan bien, aparece mucha fatiga y el progreso se estanca \citep{fisiologiadelejercicio}. El problema es que las aplicaciones actuales funcionan por separado. Una aplicación de pesas puede proponer una meta de levantamiento sin saber que al día siguiente el deportista tiene planificada una salida larga en bicicleta, o sin saber si comió lo suficiente. Como los datos no se cruzan, el usuario no tiene una forma clara de saber cuánta fatiga lleva acumulada ni de mejorar su recuperación.
+\newpage
+\subsection{Motivación del proyecto}
+La motivación de este proyecto surge de la necesidad de registrar el progreso en el entrenamiento concurrente y de ver esa información de forma clara, sobre todo al combinar pesas con deportes de resistencia como el ciclismo de ruta. La idea es que el propio deportista cuente con mejor información para organizar sus entrenamientos. Cuando los datos no se cruzan, es frecuente que una sesión de resistencia se haga con fatiga muscular de días anteriores, o que el rendimiento en las pesas baje después de un esfuerzo cardiovascular largo. Esto se vuelve todavía más delicado cuando el deportista está en déficit calórico, es decir, comiendo menos de lo que gasta.
+\\\\
+Las aplicaciones de nutrición más conocidas sirven bien para estimar el gasto de energía y contar calorías cuando hay un solo objetivo, como ganar masa muscular o bajar grasa. Pero se quedan cortas cuando hay que relacionar lo que se come con la carga de entrenamiento. La otra opción es llevar el registro a mano, por ejemplo en papel y consultando a herramientas de inteligencia artificial. Esto da más flexibilidad, pero todo depende de estimaciones y sensaciones, y así es difícil comparar el progreso real a lo largo del tiempo.
+\\\\
+A esto se suma un problema de información. Quien recién empieza suele buscar rutinas, recetas o rutas en YouTube o Instagram. El contenido que se publica ahí está pensado para llegar a la mayor cantidad de personas y llamar la atención, no necesariamente para ser útil a cada deportista. Además, no siempre es confiable. Un estudio que revisó los blogs de influencers populares del Reino Unido sobre control de peso encontró que solo uno de los nueve blogs analizados alcanzó el puntaje mínimo de credibilidad \citep{sabbagh2020credibility}. Y aunque el deportista encuentre una rutina o una receta que le sirva, tiene que copiarla a mano en otra aplicación para poder seguirla.
+\\
+Esta situación la viven muchos aficionados que quieren avanzar de forma pareja en ambas disciplinas. Aunque existe bastante información teórica sobre cómo manejar las cargas y la fatiga, aplicarla en el día a día es difícil sin un entrenador con experiencia. Por eso se plantea la necesidad de una herramienta que reúna estos datos, los cruce y los muestre de forma que el deportista pueda tomar sus propias decisiones con mejor información.
+\newpage
+\subsection{Descripción del Problema}
+El problema principal es que las herramientas disponibles para el entrenamiento concurrente están fragmentadas. Hoy, quien combina fuerza y resistencia termina usando varias aplicaciones a la vez. Usa una para registrar las pesas, otra para las actividades cardiovasculares y otra para controlar la alimentación.
+\\\\
+Existen algunas aplicaciones pensadas para el atleta híbrido, pero en general se quedan cortas en alguna de las áreas. Hay herramientas que registran bien el esfuerzo cardiovascular, pero no permiten seguir con detalle la progresión de cargas en el gimnasio, o que directamente no consideran los macronutrientes. Hasta ahora no hay una aplicación que integre de forma sencilla la fuerza, la resistencia y la nutrición. En la siguiente sección se revisan estas alternativas con más detalle.
+\\\\
+Al tener los datos repartidos en distintas aplicaciones, nadie los cruza. Si no se relaciona lo que se comió con el volumen de fuerza y la intensidad del cardio, no hay forma de estimar la fatiga real acumulada. Por lo mismo, las aplicaciones actuales no pueden sugerir cosas como bajar la carga del entrenamiento del día siguiente, ajustar la comida para recuperar energía o tomarse un día de descanso. Esto aumenta el riesgo de sobreentrenamiento y frena el progreso.
+\\\\
+Este problema es relevante porque cada vez hay más deportistas aficionados que intentan entrenar como los profesionales, pero sin un equipo de entrenadores detrás. Estas personas dependen casi por completo de las aplicaciones para organizarse, y si la información de nutrición, fuerza y resistencia está separada, es más difícil entrenar de forma segura.
+\\
+El problema es aún mayor para quien tiene poca experiencia. Además de no contar con un entrenador, no tiene un lugar centralizado ni personalizado donde informarse sobre alimentación, rutinas de gimnasio o rutas de cardio. La información existe, pero está repartida entre redes sociales, videos y aplicaciones distintas, y casi nunca está adaptada a su nivel, a sus objetivos ni a su equipamiento.
+\newpage
+El efecto más directo se da en la salud física y el rendimiento. Si los datos no se cruzan, el deportista puede acumular fatiga sin darse cuenta hasta que aparece el estancamiento, el dolor persistente o una lesión. A esto se suma un problema práctico, que es el tiempo que toma pasar datos a mano de una aplicación a otra y calcular por cuenta propia cuánto descanso o comida se necesita. Con el tiempo, este trabajo extra hace que muchos dejen de llevar su registro.
+\newpage
+\subsection{Revisión Preliminar de Soluciones Existentes}
+Existen muchas aplicaciones relacionadas con el deporte y la nutrición. Entre ellas destacan las siguientes:
+\begin{itemize}
+    \item \textbf{Fitia:} Es una de las aplicaciones de nutrición más conocidas. Su función principal es estimar el gasto de energía del usuario y repartir los macronutrientes, generando planes de alimentación para bajar grasa o ganar músculo.
+    \\\\
+    Para el caso del entrenamiento concurrente, Fitia tiene limitaciones importantes, ya que se enfoca casi solo en la alimentación. Permite sumar las calorías gastadas en el ejercicio, pero no tiene herramientas para registrar la progresión de cargas en las pesas ni el efecto que tienen las sesiones de cardio en el cuerpo. Sin esos datos, la aplicación no puede estimar el desgaste real ni la fatiga cruzada.
+
+    \item \textbf{Threshold y Edge:} Son aplicaciones nuevas pensadas especialmente para el atleta híbrido. Su punto fuerte es organizar el entrenamiento concurrente, ajustando las rutinas día a día. Por ejemplo, separan los días de sentadilla pesada de los días de carrera larga para evitar la fatiga cruzada.
+    \\\\
+    Aunque funcionan bien en lo físico, no tienen un módulo de nutrición. Por eso no ajustan las calorías ni los macronutrientes según el desgaste real de cada sesión, y esa parte queda en manos del usuario.
+
+    \item \textbf{Kenso:} Es una alternativa más analítica, que usa inteligencia artificial para detectar cuándo el usuario se está estancando. Permite registrar rutinas de fuerza e importar datos cardiovasculares desde dispositivos externos como Garmin o Apple Health, y con eso avisa cuando hay riesgo de sobreentrenamiento.
+    \\\\
+    Su limitación es que depende de otras plataformas para obtener los datos del cardio y que tampoco incluye el seguimiento nutricional.
+\newpage
+    \item \textbf{Hybrid:} Es la plataforma que hoy está más cerca de una solución unificada. Calcula las calorías y los macronutrientes de cada día según el calendario de entrenamiento, dando más peso a uno u otro tipo de alimento según la disciplina que toque ese día.
+    \\\\
+    Aunque es la opción más completa, le faltan funciones que hagan más fácil el uso diario. Por ejemplo, no registra rutas con el GPS del teléfono ni permite adaptar automáticamente las porciones de recetas compartidas por otros usuarios. Estas dos funciones ayudan a que el usuario mantenga su registro en el tiempo.
+\end{itemize}
+
+Fuera de las aplicaciones pensadas para el atleta híbrido, hay dos plataformas que muestran el valor de una comunidad dentro de una aplicación deportiva. Strava funciona como una red social para deportes de resistencia, donde los usuarios siguen a otras personas, comparten sus actividades y comparan sus tiempos en tramos de ruta llamados segmentos \citep{strava_segments}. Hevy hace algo parecido con el entrenamiento de fuerza, ya que permite seguir a otros usuarios, ver sus entrenamientos en un muro y copiar sus rutinas para usarlas \citep{hevy_social}. Sin embargo, cada una cubre una sola disciplina, y ninguna conecta lo que se comparte con la nutrición ni con la fatiga cruzada.
+\newpage
+A modo de resumen, la siguiente tabla muestra cómo las alternativas actuales cubren los distintos aspectos del problema, en comparación con la solución que se busca en este proyecto:
+
+\vspace{0.5cm}
+
+% Tabla comparativa de soluciones
+\begin{table}[h!]
+    \centering
+    \renewcommand{\arraystretch}{1.5}
+    \begin{tabular}{|>{\raggedright\arraybackslash}m{4.2cm}|c|c|c|c|c|}
+        \hline
+        \rowcolor[HTML]{EFEFEF}
+        \textbf{Aspecto a resolver} & \textbf{Fitia} & \textbf{Threshold/Edge} & \textbf{Kenso} & \textbf{Hybrid} & \textbf{Propuesta} \\ \hline
+        Registro de fuerza y cargas & $\times$ & \checkmark & \checkmark & \checkmark & \checkmark \\ \hline
+        Seguimiento cardiovascular & $\times$ & \checkmark & Parcial & \checkmark & \checkmark \\ \hline
+        Seguimiento nutricional & \checkmark & $\times$ & $\times$ & \checkmark & \checkmark \\ \hline
+        Alertas por fatiga cruzada & $\times$ & \checkmark & \checkmark & \checkmark & \checkmark \\ \hline
+        Nutrición ajustada a cada sesión & $\times$ & $\times$ & $\times$ & \checkmark & \checkmark \\ \hline
+        Registro con GPS del teléfono & $\times$ & $\times$ & $\times$ & $\times$ & \checkmark \\ \hline
+        Comunidad y recetas adaptables & $\times$ & $\times$ & $\times$ & $\times$ & \checkmark \\ \hline
+        \rowcolor[HTML]{EFEFEF}
+        \textbf{Todo en una sola aplicación} & $\times$ & $\times$ & $\times$ & Parcial & \checkmark \\ \hline
+    \end{tabular}
+    \caption{Comparativa de soluciones existentes frente a la propuesta.}
+\end{table}
+\newpage
+\subsection{Comentarios Generales del Capítulo}
+En este capítulo se presentó al atleta híbrido, es decir, la persona que practica entrenamiento concurrente y quiere progresar tanto en fuerza como en resistencia. Este tipo de deportista tiene que estar atento a muchas más variables que alguien que entrena una sola disciplina. Quien solo entrena fuerza puede ver de una sesión a otra cómo avanza, y sabe que comiendo suficiente proteína va a progresar sin grandes complicaciones. Quien solo hace cardio sabe que necesita más carbohidratos para tener energía al entrenar. Cada uno de estos mundos, por separado, es relativamente simple de llevar incluso para un principiante. La complicación aparece cuando se combinan. Además, al revisar las aplicaciones disponibles se vio que ninguna cubre por completo la fuerza, la resistencia y la nutrición al mismo tiempo. También se vio que quien recién empieza no tiene un lugar centralizado ni personalizado donde informarse, y que el contenido de las redes sociales está pensado para las masas. Plataformas como Strava y Hevy muestran que una comunidad dentro de la aplicación puede ayudar a resolver este problema.
+\newpage

@@ -1,0 +1,31 @@
+@startuml sec_cu16
+!include sec_estilo.iuml
+actor "Atleta" as U
+participant "App Flutter" as A
+participant "API NestJS" as B
+participant "Servicio de IA" as IA
+database "MongoDB" as DB
+autonumber
+U -> A : Escribe o dicta lo que comió
+A -> B : POST /meals/parse
+B -> IA : Envía el texto con instrucciones
+alt Sin conexión o sin respuesta
+  IA --> B : Error
+  B --> A : Servicio no disponible
+  A --> U : Avisa y ofrece anotar buscando (CU-06)
+else No entiende el texto
+  IA --> B : Sin alimentos reconocidos
+  B --> A : Texto no reconocido
+  A --> U : Pide más detalle
+else Respuesta correcta
+  IA --> B : Alimentos y cantidades en JSON
+  B --> A : Estimación, sin guardar
+  A --> U : Muestra la estimación
+  U -> A : Corrige y confirma
+  A -> B : POST /meals
+  B -> DB : Guarda en meals
+  DB --> B : Confirmación
+  B --> A : Comida creada y avance del día
+  A --> U : Muestra el avance
+end
+@enduml

@@ -1,0 +1,26 @@
+@startuml sec_cu22
+!include sec_estilo.iuml
+actor "Atleta" as U
+participant "App Flutter" as A
+participant "API NestJS" as B
+database "MongoDB" as DB
+autonumber
+U -> A : Pulsa Reportar
+A --> U : Muestra los motivos
+alt Cancela
+  U -> A : Cierra sin elegir
+else Elige un motivo
+  U -> A : Elige el motivo y confirma
+  A -> B : POST /posts/{id}/reports
+  B -> DB : Busca su reporte en posts
+  DB --> B : Resultado
+  alt Ya la había reportado
+    B --> A : Reporte repetido
+    A --> U : Avisa y no crea otro
+  else Reporte nuevo
+    B -> DB : Agrega a reports y suma a reportsCount
+    B --> A : Reporte creado
+    A --> U : Confirma el reporte
+  end
+end
+@enduml

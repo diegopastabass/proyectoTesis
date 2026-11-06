@@ -1,0 +1,28 @@
+@startuml dga_cu02
+!include dga_estilo.iuml
+|Usuario|
+|Aplicación|
+|Usuario|
+start
+:1. Elige contar su sesión\ncon sus palabras;
+|Aplicación|
+:2. Muestra un espacio\npara escribir o dictar;
+|Usuario|
+:3. Escribe o dicta\nlo que hizo;
+|Aplicación|
+if (¿Hay conexión y el\nasistente responde?) then (No)
+  :Avisa y ofrece usar\nel formulario (CU-01);
+  stop
+else (Sí)
+  :4. Ordena el texto en ejercicios,\nseries, repeticiones y peso;
+  if (¿Reconoce todos\nlos ejercicios?) then (No)
+    :Marca el ejercicio para\nelegirlo de la lista;
+  else (Sí)
+  endif
+endif
+|Usuario|
+:5. Revisa, corrige\ny confirma;
+|Aplicación|
+:6. Guarda la sesión y la\nsuma a su historial;
+stop
+@enduml

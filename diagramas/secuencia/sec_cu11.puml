@@ -1,0 +1,32 @@
+@startuml sec_cu11
+!include sec_estilo.iuml
+actor "Administrador" as U
+participant "Panel web" as A
+participant "API NestJS" as B
+database "MongoDB" as DB
+autonumber
+U -> A : Abre la lista de reportes
+A -> B : GET /admin/reports
+B -> DB : Busca en posts los reportes pendientes
+DB --> B : Publicaciones y motivos
+alt Sin reportes pendientes
+  B --> A : Lista vacía
+  A --> U : Muestra la lista vacía
+else Con reportes
+  B --> A : Lista
+  A --> U : Muestra las publicaciones y sus motivos
+  U -> A : Revisa una publicación y decide
+  alt No cumple las normas
+    A -> B : POST /admin/posts/{id}/hide
+    B -> DB : Cambia isModerated en posts
+    B -> DB : Guarda en moderationLogs
+    B --> A : Publicación oculta
+    A --> U : La saca de la lista
+  else Cumple las normas
+    A -> B : POST /admin/posts/{id}/dismiss
+    B -> DB : Cierra el reporte y guarda en moderationLogs
+    B --> A : Reporte descartado
+    A --> U : La publicación sigue visible
+  end
+end
+@enduml

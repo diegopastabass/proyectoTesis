@@ -1,0 +1,39 @@
+@startuml sec_cu21
+!include sec_estilo.iuml
+actor "Atleta" as U
+participant "App Flutter" as A
+participant "Health Connect /\nApple Health" as HC
+participant "API NestJS" as B
+database "MongoDB" as DB
+participant "Amazon S3" as S3
+autonumber
+U -> A : Abre la configuración de sus datos
+A -> B : GET /users/me
+B -> DB : Lee users
+DB --> B : Datos y permisos
+B --> A : Datos
+A --> U : Muestra datos y permisos
+alt Corrige un dato
+  U -> A : Cambia el dato
+  A -> B : PATCH /users/me
+  B -> DB : Actualiza users
+  B --> A : Confirmación
+  A --> U : Confirma el cambio
+else Quita el permiso de salud
+  U -> A : Quita el permiso
+  A -> HC : Revoca el acceso de lectura
+  A -> B : PATCH /users/me/consent
+  B -> DB : Actualiza consent en users
+  B --> A : Confirmación
+  A --> U : Deja de leer esos datos
+else Elimina su cuenta
+  U -> A : Elige eliminar la cuenta
+  A --> U : Pide una confirmación
+  U -> A : Confirma
+  A -> B : DELETE /users/me
+  B -> DB : Borra todos sus documentos
+  B -> S3 : Borra sus fotos y archivos .fit
+  B --> A : Cuenta eliminada
+  A --> U : Cierra la sesión
+end
+@enduml

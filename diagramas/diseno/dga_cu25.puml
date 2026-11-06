@@ -1,0 +1,24 @@
+@startuml dga_cu25
+!include dga_estilo.iuml
+|Usuario|
+|Aplicación|
+|Usuario|
+start
+:1. Abre los datos de\nsu suscripción;
+|Aplicación|
+:2. Muestra su plan, la fecha del\npróximo cobro y el botón para cancelar;
+|Usuario|
+:3. Pulsa Cancelar\nsuscripción;
+|Aplicación|
+:4. Abre la pantalla de suscripciones\nde la tienda de aplicaciones;
+if (¿Confirma la\ncancelación?) then (No)
+  :La suscripción\nsigue igual;
+  stop
+else (Sí)
+  |Usuario|
+  :5. Confirma la\ncancelación;
+  |Aplicación|
+  :6. Muestra hasta qué fecha\nmantiene el plan premium;
+endif
+stop
+@enduml

@@ -1,0 +1,48 @@
+@startuml arquitectura_detallada
+!theme plain
+skinparam dpi 200
+skinparam defaultFontName "Liberation Sans"
+skinparam defaultFontSize 12
+skinparam shadowing false
+skinparam ArrowColor #333333
+skinparam nodesep 40
+skinparam ranksep 55
+skinparam rectangle {
+    RoundCorner 10
+    BorderColor #1F4E79
+}
+skinparam database {
+    BorderColor #1F4E79
+}
+
+rectangle "Aplicación móvil\n(Android e iOS)" as APP #E3F2FD
+rectangle "Navegador del\nadministrador" as NAV #E3F2FD
+
+rectangle "AWS, región São Paulo" as AWS #E8F5E9 {
+  rectangle "Balanceador de carga\n(ALB, HTTPS)" as ALB #FFFFFF
+  rectangle "CloudFront\n(fotos y panel web)" as CF #FFFFFF
+  rectangle "VPC con dos zonas\nde disponibilidad" as VPC #F1F8E9 {
+    rectangle "API NestJS en Fargate\n0,5 vCPU y 1 GB\n(de 1 a 3 tareas)" as API #FFFFFF
+  }
+  rectangle "Parser .fit\n(Lambda)" as LB #FFFFFF
+  rectangle "Amazon S3\n(buckets privados)" as S3 #FFFFFF
+  rectangle "Apoyo: ECR, Secrets\nManager y CloudWatch" as SUP #FFFFFF
+}
+
+database "MongoDB Atlas M10\n(São Paulo, tres nodos)" as DB #F3E5F5
+rectangle "Servicios externos: Gemini Flash,\nOpen Food Facts, Firebase,\nGoogle Play y App Store" as EX #FFF3C4
+
+APP --> ALB : HTTPS
+APP --> CF : Fotos
+NAV --> ALB : HTTPS
+NAV --> CF : Panel web
+APP --> S3 : Subida prefirmada
+ALB --> API
+CF --> S3 : Lectura\nexclusiva
+API --> LB : Invoca
+LB --> S3 : Lee .fit
+API -left-> SUP
+API --> DB : VPC peering
+API --> EX : HTTPS
+
+@enduml

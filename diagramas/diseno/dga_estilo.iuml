@@ -1,0 +1,16 @@
+' Estilo común de los diagramas de actividades de los casos de uso
+!theme plain
+skinparam dpi 200
+skinparam defaultFontName "Liberation Sans"
+skinparam defaultFontSize 12
+skinparam shadowing false
+skinparam ArrowColor #333333
+skinparam conditionStyle InsideDiamond
+skinparam swimlaneTitleFontStyle bold
+skinparam activity {
+    BackgroundColor #E3F2FD
+    BorderColor #1F4E79
+    DiamondBackgroundColor #FFF3C4
+    DiamondBorderColor #8A6D1F
+    DiamondFontSize 11
+}

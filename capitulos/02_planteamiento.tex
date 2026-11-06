@@ -1,0 +1,228 @@
+% Planteamiento del Problema
+% Este archivo se incluye desde main.tex con \input.
+\section{Planteamiento del Problema}
+\subsection{Introducción del Capítulo}
+Como se vio en el capítulo anterior, el atleta híbrido necesita una forma objetiva de seguir y evaluar su progreso. El entrenamiento concurrente mezcla muchas variables de rendimiento y alimentación, y llevar el control de todas ellas sin ayuda de alguna herramienta es muy difícil.
+\\\\
+También se vio que, aunque hay varias aplicaciones para registrar deporte y nutrición, cada una funciona por su cuenta. El deportista tiene que usar varias aplicaciones separadas y no existe una plataforma que reúna y cruce todos los datos importantes.
+\\\\
+En este capítulo se profundiza en ese problema. Se explican sus causas y sus efectos, y cómo la falta de integración de los datos impide estimar la fatiga cruzada y afecta el rendimiento y la salud del deportista. También se describe al usuario objetivo y sus principales dolores. Además, se presenta el contexto actual del entrenamiento concurrente, la justificación del proyecto, sus objetivos y su alcance.
+\newpage
+\subsection{Descripción del Problema}
+
+El problema central que aborda este proyecto es la \textbf{falta de una herramienta tecnológica que reúna y cruce los datos del entrenamiento concurrente, y que entregue información personalizada a cada deportista}. Hoy los atletas híbridos no cuentan con una plataforma que junte en un solo lugar los datos de fuerza, resistencia y nutrición, que los analice en conjunto y que los oriente según su nivel y sus objetivos.
+\\\\
+Para entender mejor este problema, primero se revisan sus causas principales:
+
+\begin{itemize} \item \textbf{Aplicaciones pensadas para un solo nicho:} Las aplicaciones deportivas y de nutrición del mercado están hechas para un público específico. Hay plataformas muy completas para el cardio (como Strava o Garmin Connect), otras para registrar pesas y otras para contar calorías, pero no se comunican bien entre sí.
+
+
+\item \textbf{Dificultad para medir la fatiga cruzada:} No es simple juntar en una sola medida el desgaste muscular que deja la fuerza y el desgaste metabólico que deja la resistencia, porque el cuerpo usa la energía de forma distinta en cada caso. Las soluciones actuales todavía no resuelven bien este cálculo.
+
+  \item \textbf{Planes de alimentación fijos:} Las aplicaciones de dieta tradicionales calculan requerimientos fijos y no cambian la distribución de macronutrientes según el desgaste de cada día. No distinguen, por ejemplo, si el deportista necesita reponer muchos carbohidratos después de una salida larga en bicicleta o si le conviene priorizar proteínas después de una sesión de fuerza máxima.
+
+  \item \textbf{Información dispersa y pensada para las masas:} Las rutinas, recetas y rutas que circulan en YouTube, Instagram u otras redes están hechas para llegar a la mayor cantidad de personas, no para un deportista en particular, y no siempre son confiables \citep{sabbagh2020credibility}. Además, no hay forma de pasarlas directamente a una aplicación de registro.
+
+  \item \textbf{Dependencia del cálculo manual:} Como los datos no están en un mismo lugar, el usuario tiene que hacer de puente entre sus aplicaciones. Termina calculando a mano y guiándose por sensaciones para estimar su progreso y sus tiempos de recuperación.
+\end{itemize}
+\newpage
+Estas causas generan una serie de efectos en los deportistas que practican entrenamiento concurrente sin la guía de un profesional:
+
+\begin{itemize} \item \textbf{Mayor riesgo de sobreentrenamiento y lesiones:} Sin un cruce de datos, el atleta puede ir acumulando fatiga cruzada sin notarlo. Al no saber cuánta carga real lleva, termina entrenando con músculos que no se han recuperado, lo que aumenta el riesgo de lesiones.
+
+
+\item \textbf{Estancamiento del rendimiento (efecto de interferencia):} Si las sesiones no se organizan bien, el cardio se hace con fatiga muscular previa o la fuerza baja después de un esfuerzo cardiovascular largo. Esta interferencia frena el progreso en ambas disciplinas.
+
+  \item \textbf{Recuperación nutricional insuficiente:} Al guiarse por cálculos aislados, muchos usuarios no comen lo suficiente para cubrir su gasto total ni para reparar el músculo después de entrenar. Esto retrasa la recuperación y hace que la fatiga se mantenga.
+
+  \item \textbf{Más trabajo para el usuario:} Pasar datos a mano, sacar cuentas de calorías y reajustar rutinas en varias aplicaciones toma tiempo. Este trabajo extra es una de las razones por las que muchos dejan de seguir su planificación.
+
+  \item \textbf{Menos confianza para entrenar:} Quien recién empieza no sabe bien qué rutina seguir ni cómo combinarla con el cardio y la alimentación. Esto le quita seguridad, y la guía de un programa y la confianza en la propia capacidad son factores asociados a mantener el entrenamiento de fuerza \citep{rhodes2017resistance}.
+\end{itemize}
+
+En resumen, el problema no es que falte información sobre el entrenamiento, sino que está dispersa, no está adaptada a cada persona y las herramientas actuales no la juntan en un solo lugar ni la vuelven fácil de aplicar en el día a día.
+\newpage
+\subsection{Usuario Objetivo y sus Dolores}
+Para diseñar una solución útil, primero hay que entender a quién va dirigida y qué problemas concretos enfrenta. Esta sección se basa en la literatura y en el análisis de las aplicaciones existentes, y no en una encuesta propia. Por eso, sus conclusiones deberán confirmarse con usuarios reales en las evaluaciones del prototipo.
+\\\\
+\textbf{Perfiles de usuario}
+
+El usuario objetivo es el deportista aficionado que combina fuerza y resistencia. Dentro de este grupo se distinguen tres perfiles, que sirven como referencia para diseñar las funciones y los planes sugeridos (Tabla \ref{tab:perfiles_objetivo}).
+
+\begin{table}[h!]
+    \centering
+    \renewcommand{\arraystretch}{1.4}
+    \begin{tabular}{|>{\raggedright\arraybackslash}m{2.8cm}|>{\raggedright\arraybackslash}m{3.7cm}|>{\raggedright\arraybackslash}m{3.7cm}|>{\raggedright\arraybackslash}m{3.7cm}|}
+        \hline
+        \rowcolor[HTML]{EFEFEF}
+        \textbf{Perfil} & \textbf{Quién es} & \textbf{Principales dolores} & \textbf{Qué necesita de la aplicación} \\ \hline
+        \textbf{Novato híbrido} & Entrena hace menos de un año. Va al gimnasio y además sale a correr, a pedalear o a caminar por cerros. & No sabe qué rutina seguir ni cómo combinar las disciplinas. Se informa con contenido genérico de redes sociales. & Un plan inicial según su nivel, rutinas confiables y sugerencias simples. \\ \hline
+        \textbf{Deportista de resistencia que entra al gimnasio} & Corre o anda en bicicleta hace años y suma pesas para rendir mejor o prevenir lesiones. & Conoce su disciplina, pero no la fuerza. Teme que las pesas afecten sus salidas largas. & Rutinas de fuerza adaptadas a su calendario de cardio y alertas de fatiga. \\ \hline
+        \textbf{Deportista de fuerza que suma cardio} & Entrena pesas con regularidad y empieza a correr, pedalear o prepararse para una carrera híbrida como Hyrox. & No sabe cuánto cardio hacer sin perder fuerza ni cómo ajustar su alimentación. & Sesiones de cardio graduales, metas de comida según el día y seguimiento de su fuerza. \\ \hline
+    \end{tabular}
+    \caption{Perfiles del usuario objetivo.}
+    \label{tab:perfiles_objetivo}
+\end{table}
+\newpage
+\textbf{Dolores principales}
+
+A partir de los perfiles, de la literatura revisada y del análisis de las aplicaciones existentes, se identifican los siguientes dolores:
+\begin{itemize}
+    \item \textbf{No hay un lugar centralizado ni personalizado para informarse.} La información sobre alimentación, rutinas y rutas está repartida en distintas plataformas y casi nunca está adaptada al nivel, a los objetivos ni al equipamiento de cada persona.
+    \item \textbf{El contenido de las redes sociales es genérico y no siempre confiable.} Está pensado para llegar a la mayor cantidad de personas. Un estudio sobre blogs de influencers encontró que solo uno de los nueve analizados alcanzó el puntaje mínimo de credibilidad \citep{sabbagh2020credibility}.
+    \item \textbf{Hay que copiar todo a mano.} Una rutina vista en un video o una receta vista en una publicación se tiene que transcribir a otra aplicación o ser anotada en un cuaderno para poder seguirla.
+    \item \textbf{Falta de guía y de confianza.} Quien empieza no sabe por dónde partir. La guía de un programa y la confianza en la propia capacidad son factores asociados a mantener el entrenamiento de fuerza \citep{rhodes2017resistance}.
+    \item \textbf{Los datos no se cruzan.} Como se explicó antes, sin cruzar fuerza, resistencia y nutrición no es posible estimar la fatiga cruzada.
+\end{itemize}
+\newpage
+\textbf{Cómo responde la propuesta}
+
+La Tabla \ref{tab:dolores_respuesta} relaciona cada dolor con la forma en que la aplicación busca resolverlo.
+
+\begin{table}[h!]
+    \centering
+    \renewcommand{\arraystretch}{1.4}
+    \begin{tabular}{|>{\raggedright\arraybackslash}m{5cm}|>{\raggedright\arraybackslash}m{10cm}|}
+        \hline
+        \rowcolor[HTML]{EFEFEF}
+        \textbf{Dolor} & \textbf{Respuesta de la aplicación} \\ \hline
+        Información dispersa y genérica & Un plan semanal sugerido según el perfil, y una red social donde la información viene de personas que el usuario elige seguir. \\ \hline
+        Copiar contenido a mano & Un botón para agregar una sesión, ruta o receta publicada directamente al módulo correspondiente. \\ \hline
+        Falta de guía y de confianza & Un plan inicial y sugerencias que se ajustan con lo que el usuario registra. \\ \hline
+        Datos que no se cruzan & Registro y cruce de fuerza, resistencia y nutrición en una sola aplicación. \\ \hline
+        Miedo a la fatiga o a perder fuerza & Alertas de fatiga cruzada y metas de alimentación según el entrenamiento del día. \\ \hline
+    \end{tabular}
+    \caption{Relación entre los dolores del usuario y la respuesta de la aplicación.}
+    \label{tab:dolores_respuesta}
+\end{table}
+
+\textbf{Cómo conocer mejor al usuario}
+
+La aplicación conocerá a cada usuario de dos formas. Primero, con un cuestionario corto al registrarse, que pregunta por su experiencia, sus objetivos, los días que tiene disponibles, su equipamiento, las disciplinas que practica y sus datos corporales básicos (edad, sexo, estatura y peso). Después, con lo que registra día a día, como si cumple las sesiones sugeridas, qué tan duro siente cada sesión (RPE) y cómo evolucionan su carga y su fatiga. Con esta información el perfil se actualiza y las sugerencias se ajustan.
+\\\\
+Este enfoque tiene respaldo en la literatura. Una revisión sistemática con metaanálisis encontró que las tecnologías móviles personalizadas tienen un efecto positivo moderado en el cambio de hábitos de vida. Además, la personalización basada en datos que captura el propio sistema mostró efectos mayores que la basada solo en lo que reporta el usuario \citep{tong2021personalized}. Por eso la aplicación combina ambas fuentes.
+\newpage
+\subsection{Diagnóstico o contexto actual}
+El entrenamiento concurrente busca desarrollar al mismo tiempo varias capacidades, como la fuerza muscular y la resistencia cardiovascular. Por mucho tiempo, la planificación de este tipo de entrenamiento estuvo marcada por la preocupación por el llamado ``efecto de interferencia''. Según esta idea, combinar fuerza y resistencia aeróbica puede hacer que cada tipo de entrenamiento reduzca las mejoras del otro, sobre todo en fuerza, potencia y crecimiento muscular.
+\\\\
+A nivel molecular, esto se explica porque el cardio intenso activa una vía llamada AMPK, que puede frenar a otra vía llamada mTOR, que es la principal responsable de fabricar proteínas y hacer crecer el músculo \citep{aptavs2025concurrente}. Sin embargo, la evidencia más reciente ha cambiado esta visión. Hoy se sabe que el efecto de interferencia no es una barrera absoluta, y que la mayoría de las personas puede mejorar tanto su capacidad aeróbica como su masa muscular entrenando ambas cosas \citep{fisiologiadelejercicio}. El desafío ya no es que sean incompatibles, sino cómo dosificar el entrenamiento y los tiempos de descanso.
+\\\\
+Los estudios también muestran que, cuando la interferencia aparece, afecta mucho más a la potencia explosiva que a la fuerza máxima o al crecimiento muscular \citep{fisiologiadelejercicio}. Además, el riesgo aumenta bastante cuando se hacen sesiones de resistencia largas (de más de 45 a 60 minutos) el mismo día que el trabajo de fuerza \citep{aptavs2025concurrente}.
+\\\\
+Por lo tanto, hoy el foco está en organizar bien las variables del entrenamiento. Para aprovechar las mejoras y reducir la interferencia, las recomendaciones actuales son dejar al menos 6 a 8 horas entre sesiones \citep{aptavs2025concurrente, fisiologiadelejercicio} y, cuando por tiempo deban hacerse juntas, hacer primero la fuerza y después la resistencia \citep{aptavs2025concurrente}.
+\newpage
+\subsection{Justificación del Proyecto}
+
+Este proyecto se justifica principalmente por tres razones. La primera tiene que ver con el acceso a este tipo de herramientas, la segunda con la salud del deportista y la tercera con la calidad de la información que recibe.
+\\\\
+\textbf{Acceso a herramientas de entrenamiento:}\\
+Por mucho tiempo, el análisis detallado de datos deportivos y el entrenamiento personalizado estuvieron reservados casi solo para atletas de élite. Este proyecto busca acercar estas herramientas a deportistas aficionados o que recién empiezan a competir, para que desde el principio puedan llevar un mejor registro de su entrenamiento concurrente y tener sus datos ordenados. Con información clara, el deportista puede mejorar su progreso sin tener que pagar un entrenador desde el inicio. Según estudios prospectivos, los avances tecnológicos en el deporte van a hacer más accesible el entrenamiento de calidad, sobre todo para atletas aficionados que no pueden pagar un entrenador presencial, y van a ayudar a que tomen decisiones basadas en datos para mejorar su rendimiento por su cuenta \citep{frevel2022impact}.
+\\\\
+\textbf{Recuperación y prevención de lesiones:}\\
+La segunda razón es ayudar a reducir el riesgo de lesiones causadas por una mala combinación de fuerza y resistencia, y a mejorar la recuperación. El cruce de datos permitirá avisar al usuario cuando aparezcan señales de sobreentrenamiento, para que pueda decidir a tiempo si descansa, baja la carga o consulta a un profesional. En el deporte, el uso de tecnología para medir y evaluar se ha vuelto un recurso muy importante, y hoy se aplica con buenos resultados en áreas como la kinesiología, la preparación física y la rehabilitación. Expertos de la industria deportiva coinciden en que recolectar y procesar datos de forma automática será clave en los próximos años para alargar la vida deportiva, prevenir lesiones y depender menos de que una persona esté monitoreando todo el tiempo \citep{frevel2022impact}.
+\newpage
+\textbf{Información confiable y personalizada:}\\
+La tercera razón es entregar a cada deportista información adaptada a su nivel, en un solo lugar. Hoy, quien empieza depende de contenido genérico de redes sociales, que no siempre es confiable \citep{sabbagh2020credibility}. La aplicación busca cambiar eso con un plan sugerido según el perfil y con una comunidad donde las rutinas, recetas y rutas se pueden agregar directamente a los propios módulos. Esto es relevante, porque la personalización en aplicaciones móviles ha mostrado efectos positivos en el cambio de hábitos \citep{tong2021personalized}.
+\newpage
+\subsection{Objetivos del Proyecto}
+\subsubsection{Objetivo General}
+Desarrollar, antes de diciembre de 2026, un producto mínimo viable (MVP) de una aplicación móvil que centralice el registro del entrenamiento de fuerza, resistencia y nutrición de deportistas aficionados que practican entrenamiento concurrente en Chile, que entregue un plan de entrenamiento sugerido según el perfil de cada usuario y sugerencias de carga y alimentación a partir del cruce de sus datos, y que permita compartir y reutilizar sesiones, rutas y comidas entre usuarios, validado mediante pruebas técnicas, para que el deportista, incluso sin experiencia previa, cuente con información objetiva y personalizada al organizar sus entrenamientos y su alimentación, y así pueda reducir el riesgo de acumular fatiga cruzada.
+\subsubsection{Objetivos Específicos}
+Los siguientes objetivos específicos se enmarcan en el mismo plazo del objetivo general:
+\begin{enumerate}
+    \item Identificar, a partir de literatura científica y fuentes oficiales, las variables de fuerza, resistencia y nutrición que influyen en la fatiga y la recuperación en el entrenamiento concurrente, junto con los perfiles del usuario objetivo y sus principales dolores, y definir qué datos registrará la aplicación, para que el cálculo de la fatiga, el plan sugerido y las sugerencias se basen en evidencia y no en estimaciones.
+    \item Comparar al menos cuatro aplicaciones existentes (Fitia, Threshold, Kenso y Hybrid) según su registro de fuerza, seguimiento cardiovascular, seguimiento nutricional y cruce de datos, y revisar las funciones sociales de Strava y Hevy, para identificar las brechas que la solución debe cubrir y diferenciar la propuesta de lo que ya existe en el mercado.
+    \item Especificar los requerimientos funcionales y no funcionales de la aplicación, documentándolos en un modelo de procesos, un modelo de requerimientos y diagramas de casos de uso, para asegurar que la aplicación responda a las necesidades reales del atleta híbrido y sirva de base para su diseño.
+    \newpage
+    \item Diseñar la arquitectura, el modelo de datos y las interfaces principales de la aplicación a partir de los requerimientos especificados, para guiar la implementación del MVP y asegurar que la aplicación pueda recibir datos de sus distintas fuentes (GPS del teléfono, concentradores de salud y archivos .fit).
+    \item Implementar un MVP con los módulos de fuerza, resistencia y nutrición, el perfil del usuario con su plan sugerido y una red social básica, y verificar mediante pruebas técnicas que los datos de los tres módulos se cruzan para generar al menos una sugerencia de carga de entrenamiento y una de alimentación, y que una sesión, ruta o comida publicada se puede agregar a los módulos de otro usuario, para comprobar que la propuesta funciona y que entrega al deportista información útil para organizar su entrenamiento.
+\end{enumerate}
+\newpage
+
+\subsection{Alcance del Proyecto}
+El alcance de este proyecto considera el diseño y el desarrollo de un producto mínimo viable (MVP) de una aplicación móvil para registrar, seguir y analizar el entrenamiento concurrente y la nutrición de atletas aficionados. Las funcionalidades que se incluyen son las siguientes:
+
+\begin{itemize}
+    \item \textbf{Módulo de Entrenamiento de Fuerza:} Permite registrar series, repeticiones y peso de forma manual o con ayuda de inteligencia artificial, escribiendo o dictando el entrenamiento en lenguaje natural. Contará con una base de ejercicios estándar y la opción de crear ejercicios propios.
+    \item \textbf{Módulo de Entrenamiento de Resistencia (Cardio):} Considera ciclismo, running y trekking, según se detalla más abajo. Los datos se obtienen en tres niveles según el equipamiento del usuario. El nivel básico usa el GPS del teléfono junto con la percepción del esfuerzo (RPE). El nivel intermedio lee de forma automática los datos de relojes y bandas cardíacas a través de Apple Health o Google Health Connect. El nivel avanzado permite subir archivos \texttt{.fit} exportados desde ciclocomputadores o relojes deportivos, para obtener datos más detallados como la potencia y la cadencia.
+    \item \textbf{Módulo de Nutrición:} Registro de comidas a partir de fotos, de descripciones en lenguaje natural o del código de barras de productos comerciales. Permitirá editar los macronutrientes, guardar recetas y llevar un seguimiento de la alimentación. En nutrición la aplicación entrega metas y sugerencias, no dietas ni planes de alimentación prescritos.
+    \item \textbf{Perfil del Usuario y Plan Sugerido:} Al registrarse, el usuario responde un cuestionario corto sobre su experiencia, sus objetivos, los días que tiene disponibles, su equipamiento, las disciplinas que practica y sus datos corporales básicos (edad, sexo, estatura y peso). Con eso la aplicación lo clasifica según su nivel y su orientación (más fuerza, más resistencia o equilibrada) y le sugiere un plan semanal de entrenamiento, que se ajusta con lo que el usuario va registrando. El plan es una sugerencia y el usuario puede cambiarlo cuando quiera.
+    \newpage
+    \item \textbf{Red Social Deportiva:} Los usuarios pueden seguir a otras personas, ver un muro con sus publicaciones y publicar en su perfil sus sesiones de fuerza, sus rutas de cardio y sus comidas o recetas. Cualquier publicación se puede agregar con un botón al módulo correspondiente de quien la ve. Una sesión de fuerza pasa a sus rutinas, una ruta pasa a su módulo de cardio y una receta pasa a su módulo de nutrición, con las porciones ajustadas a sus necesidades del día. Las publicaciones pueden llevar fotos, por ejemplo del plato, de un paisaje de la ruta o del ejercicio, porque gran parte del atractivo de una red social está en lo visual. Los videos quedan para después del MVP.
+    \item \textbf{Cruce de Datos y Sugerencias:} La información se ordena en una línea de tiempo diaria y mensual. Un modelo de cálculo interno cruza los datos de nutrición, fuerza y resistencia para mostrar la carga acumulada y entregar sugerencias de carga y alimentación. La decisión final siempre queda en manos del usuario.
+    \item \textbf{Registro de Sensaciones (RPE y bienestar):} Apartado opcional donde el usuario puede anotar en lenguaje natural cómo se sintió físicamente o a nivel digestivo, y asociarlo a un entrenamiento o a una comida.
+    \item \textbf{Cuenta y Planes:} El usuario crea su cuenta y acepta los términos de uso y el aviso legal. La aplicación tiene un plan gratuito y un plan premium por suscripción, que se puede contratar y cancelar desde la misma aplicación.
+\end{itemize}
+
+\subsubsection*{Tipos de Entrenamiento Considerados}
+El entrenamiento de fuerza se registra de forma bastante parecida sin importar su objetivo. En cambio, cada deporte de resistencia se mide de una manera distinta, y no es lo mismo seguir a alguien que corre que a alguien que anda en bicicleta. Por eso es necesario definir qué tipos de entrenamiento va a seguir la aplicación y qué datos se registran en cada uno.
+\\\\
+\textbf{Entrenamiento de fuerza}
+
+La Tabla \ref{tab:tipos_fuerza} muestra los tipos de entrenamiento de fuerza que considera la aplicación.
+
+\begin{table}[h!]
+    \centering
+    \renewcommand{\arraystretch}{1.4}
+    \begin{tabular}{|m{3.5cm}|m{6cm}|m{5cm}|}
+        \hline
+        \rowcolor[HTML]{EFEFEF}
+        \textbf{Tipo} & \textbf{En qué consiste} & \textbf{Datos que se registran} \\ \hline
+        \textbf{Fuerza máxima} & Levantar cargas muy altas con pocas repeticiones, por ejemplo entre 1 y 5. & Ejercicio, series, repeticiones y peso. \\ \hline
+        \textbf{Hipertrofia muscular} & Trabajar con cargas moderadas y más repeticiones, por ejemplo entre 6 y 12, para aumentar la masa muscular. & Ejercicio, series, repeticiones y peso. \\ \hline
+        \textbf{Fuerza explosiva o potencia} & Hacer movimientos rápidos para generar la mayor fuerza en el menor tiempo, como saltos, lanzamientos o levantamientos olímpicos. & Ejercicio, series, repeticiones y peso. En saltos o lanzamientos, también la altura o la distancia. \\ \hline
+        \textbf{Resistencia muscular} & Hacer muchas repeticiones con cargas bajas, para que el músculo aguante el esfuerzo por más tiempo. & Ejercicio, series, repeticiones y peso. \\ \hline
+        \textbf{Entrenamiento isométrico} & Contraer el músculo sin moverse, manteniendo una posición, como en la plancha o la sentadilla en pared. & Ejercicio, series, tiempo que se mantiene la posición y peso adicional si se usa. \\ \hline
+        \textbf{Calistenia y peso corporal} & Usar el propio cuerpo como carga, como en las dominadas, los fondos o las flexiones. & Ejercicio, series, repeticiones y lastre si se usa. El peso corporal se toma del perfil del usuario. \\ \hline
+    \end{tabular}
+    \caption{Tipos de entrenamiento de fuerza considerados.}
+    \label{tab:tipos_fuerza}
+\end{table}
+
+En la práctica, todos estos tipos se registran de la misma forma, con el ejercicio, las series, las repeticiones y el peso. Hay solo dos diferencias. En el entrenamiento isométrico se registra el tiempo en vez de las repeticiones, y en la calistenia se suma el peso corporal del usuario como parte de la carga. Esto permite usar un mismo formulario y un mismo cálculo de volumen para todos los tipos de fuerza.
+\newpage
+\textbf{Entrenamiento de resistencia (cardio)}
+
+La Tabla \ref{tab:tipos_cardio} muestra las disciplinas de resistencia que considera la aplicación y los datos que se obtienen de cada una.
+
+\begin{table}[h!]
+    \centering
+    \renewcommand{\arraystretch}{1.4}
+    \begin{tabular}{|m{2.5cm}|m{6.5cm}|m{5.5cm}|}
+        \hline
+        \rowcolor[HTML]{EFEFEF}
+        \textbf{Disciplina} & \textbf{Datos principales} & \textbf{Cómo se obtienen} \\ \hline
+        \textbf{Ciclismo} & Distancia, velocidad, desnivel y frecuencia cardíaca. Si el ciclista usa potenciómetro, también la potencia y la cadencia de pedaleo. & GPS del teléfono, concentradores del sistema operativo o archivo \texttt{.fit} del ciclocomputador. \\ \hline
+        \textbf{Running} & Distancia, ritmo (minutos por kilómetro), desnivel, frecuencia cardíaca y cadencia de zancada. & GPS del teléfono, concentradores del sistema operativo o archivo \texttt{.fit} del reloj. \\ \hline
+        \textbf{Trekking} & Distancia, tiempo, desnivel positivo acumulado y frecuencia cardíaca. & GPS del teléfono, concentradores del sistema operativo o archivo \texttt{.fit} del reloj. \\ \hline
+    \end{tabular}
+    \caption{Disciplinas de resistencia consideradas y sus datos.}
+    \label{tab:tipos_cardio}
+\end{table}
+
+La diferencia principal entre estas disciplinas está en cómo se mide la intensidad. En el ciclismo la medida más precisa es la potencia, en el running se usa el ritmo, y en el trekking pesa mucho el desnivel, porque una caminata con mucha subida cansa bastante más que una plana de la misma distancia. Por eso, el cálculo de la carga de cada sesión de cardio se ajusta según la disciplina. Cuando no hay datos avanzados, se usan la frecuencia cardíaca o el RPE, que sirven para las tres.
+
+\subsubsection*{Funciones Posteriores al MVP}
+Algunas funciones de la red social se dejan para versiones posteriores al MVP, porque requieren más desarrollo o más infraestructura:
+\begin{itemize}
+    \item \textbf{Récords de tramo:} Tramos de ruta donde se comparan los tiempos de las personas que el usuario sigue, de forma parecida a los segmentos "KOM" de Strava \citep{strava_segments}.
+    \item \textbf{Récords de fuerza comparados:} Comparación de las mejores marcas en un ejercicio entre seguidores.
+    \item \textbf{Retos entre seguidores:} Desafíos con una meta y un plazo, como sumar cierta distancia en un mes.
+    \item \textbf{Videos:} Publicaciones con videos cortos, por ejemplo sobre la técnica de un ejercicio o consejos para rendir mejor en cardio. Se dejan para después porque pesan mucho más que una foto y hay que procesarlos antes de mostrarlos.
+\end{itemize}
+\newpage
+\subsubsection*{Exclusiones y Límites del Proyecto}
+Para acotar el desarrollo de la propuesta, quedan fuera del alcance los siguientes puntos:
+\begin{itemize}
+    \item No se incluirán disciplinas de resistencia distintas al ciclismo, el running y el trekking, como la natación o el remo.
+    \item No se desarrollará hardware propio. Los datos fisiológicos se obtendrán solo desde dispositivos que ya existen en el mercado compatibles con Apple HealthKit y Android Health Connect.
+    \item La aplicación no entregará diagnósticos médicos ni tratamientos de nutrición clínica o de kinesiología. Es solo una herramienta de apoyo para que el deportista organice su entrenamiento.
+    \item No se considera el análisis en tiempo real de la técnica de los ejercicios de fuerza mediante visión computacional.
+    \item La aplicación no entregará dietas ni planes de alimentación prescritos. En nutrición solo entrega metas y sugerencias, porque la planificación dietética está reservada a profesionales de la salud.
+    \item En el MVP no se podrán subir videos a la red social. Las fotos sí se incluyen.
+\end{itemize}
+\newpage
+\subsection{Comentarios Generales del Capítulo}
+En este capítulo se describió el problema que enfrentan los deportistas aficionados que combinan fuerza, resistencia y nutrición usando aplicaciones separadas que no comparten datos entre sí. Esto hace más difícil prevenir lesiones y mejorar el rendimiento. También se describió al usuario objetivo a través de tres perfiles, y se identificaron sus principales dolores. El más importante es que no tiene un lugar centralizado ni personalizado donde informarse, y que depende de contenido genérico de redes sociales.
+\\\\
+A partir de este diagnóstico se definió el objetivo general, que es desarrollar un MVP de una aplicación que centralice estos registros, entregue un plan sugerido según el perfil y sugerencias a partir del cruce de datos, y permita compartir y reutilizar contenido entre usuarios. También se plantearon los objetivos específicos y se delimitó el alcance, indicando qué funciones se incluyen (registro de fuerza, resistencia y nutrición, perfil y plan sugerido, red social deportiva, cruce de datos con sugerencias e integración con dispositivos de terceros), qué funciones quedan para después del MVP y qué queda fuera (diagnósticos médicos, dietas prescritas y hardware propio). En el siguiente capítulo se presenta el Marco Teórico y Referencial, donde se explican los conceptos del entrenamiento concurrente y se revisan las tecnologías deportivas actuales.

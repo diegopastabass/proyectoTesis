@@ -1,0 +1,20 @@
+@startuml dga_cu19
+!include dga_estilo.iuml
+|Usuario|
+|Aplicación|
+|Usuario|
+start
+:1. Abre su historial;
+|Aplicación|
+if (¿Hay registros?) then (No)
+  :Invita a registrar su\nprimera sesión o comida;
+  stop
+else (Sí)
+  :2. Muestra entrenamientos,\ncomidas y carga del día;
+endif
+|Usuario|
+:3. Elige otro día\no un mes completo;
+|Aplicación|
+:4. Muestra la información\nde ese periodo;
+stop
+@enduml

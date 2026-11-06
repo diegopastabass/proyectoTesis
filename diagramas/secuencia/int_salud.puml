@@ -1,0 +1,23 @@
+@startuml int_salud
+!include sec_estilo.iuml
+actor "Atleta" as U
+participant "App Flutter" as A
+participant "Health Connect /\nApple Health" as HC
+participant "API NestJS" as B
+autonumber
+U -> A : Autoriza la lectura de sus datos de salud
+A -> HC : solicitarPermisos(sesiones, pulso, distancia, calorías)
+HC --> A : Permisos concedidos
+loop En segundo plano o al abrir la aplicación
+  A -> HC : leerSesiones(desde la última sincronización)
+  HC --> A : sesiones(tipo, inicio, fin, distancia, pulso, calorías)
+  A -> A : Deja solo ciclismo, running y trekking
+  alt Con conexión
+    A -> B : POST /workouts/sync(sesiones)
+    B -> B : Descarta repetidas por fecha y hora
+    B --> A : Sesiones guardadas
+  else Sin conexión
+    A -> A : Guarda en la cola local y reintenta después
+  end
+end
+@enduml

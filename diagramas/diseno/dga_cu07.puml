@@ -1,0 +1,30 @@
+@startuml dga_cu07
+!include dga_estilo.iuml
+|Usuario|
+|Aplicación|
+|Usuario|
+start
+:1. Saca una foto\na su plato;
+|Aplicación|
+if (¿Hay conexión y el\nasistente responde?) then (No)
+  :Avisa y ofrece anotar la\ncomida buscando (CU-06);
+  stop
+else (Sí)
+  :2. Estima los alimentos, cantidades,\ncalorías y macronutrientes;
+  if (¿Resultado\npoco seguro?) then (Sí)
+    :Avisa para que lo revise\ncon más cuidado;
+  else (No)
+  endif
+endif
+|Usuario|
+:3. Revisa la estimación y\ncorrige lo que haga falta;
+:4. Confirma la comida;
+|Aplicación|
+:5. La guarda en el diario y\nactualiza el avance del día;
+if (¿La quiere\npublicar?) then (Sí)
+  :Sigue en CU-09\ny guarda la foto;
+else (No)
+  :Descarta la foto;
+endif
+stop
+@enduml

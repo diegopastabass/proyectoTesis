@@ -1,0 +1,22 @@
+@startuml dga_cu13
+!include dga_estilo.iuml
+|Usuario|
+|Aplicación|
+|Usuario|
+start
+:1. Pulsa Agregar\nen la publicación;
+|Aplicación|
+if (¿Es una\nreceta?) then (Sí)
+  :Sigue en CU-08;
+  stop
+else (No)
+endif
+if (¿Ya la había\nagregado?) then (Sí)
+  :Avisa y no crea\nuna copia nueva;
+  stop
+else (No)
+  :2. La guarda en el módulo que\ncorresponde, indicando quién la creó;
+endif
+:3. Confirma que\nquedó agregada;
+stop
+@enduml

@@ -1,0 +1,27 @@
+@startuml sec_cu13
+!include sec_estilo.iuml
+actor "Atleta" as U
+participant "App Flutter" as A
+participant "API NestJS" as B
+database "MongoDB" as DB
+autonumber
+U -> A : Pulsa Agregar en la publicación
+A -> B : POST /posts/{id}/add
+B -> DB : Lee la publicación en posts
+DB --> B : Tipo y visibilidad
+alt Es una receta
+  B --> A : Sigue en CU-08
+else Es una sesión o una ruta
+  B -> DB : Busca una copia con el mismo source.postId
+  DB --> B : Resultado
+  alt Ya la había agregado
+    B --> A : Ya existe
+    A --> U : Avisa y no crea otra copia
+  else No la tiene
+    B -> DB : Guarda en routines o routes con source
+    B -> DB : Suma uno a importsCount en posts
+    B --> A : Contenido agregado
+    A --> U : Confirma que quedó agregada
+  end
+end
+@enduml

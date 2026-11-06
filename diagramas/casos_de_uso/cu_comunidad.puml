@@ -1,0 +1,36 @@
+@startuml cu_comunidad
+!include cu_estilo.iuml
+skinparam usecase {
+    BackgroundColor #B2DFDB
+}
+
+actor "Atleta Híbrido\n(plan premium)" as H
+actor "Administrador" as A
+
+rectangle "Red Social y Administración" {
+    usecase "CU-23: Ver el muro\nde la comunidad" as CU23
+    usecase "CU-14: Seguir a\notro usuario" as CU14
+    usecase "CU-09: Publicar una\nsesión, ruta o comida" as CU09
+    usecase "CU-13: Agregar una\npublicación a mis módulos" as CU13
+    usecase "CU-22: Reportar\nuna publicación" as CU22
+    usecase "CU-10: Mantener el\ncatálogo de ejercicios" as CU10
+    usecase "CU-11: Revisar el\ncontenido reportado" as CU11
+
+    usecase "Elegir quién\npuede verla" as P1 #FFFFFF
+    usecase "Agregar fotos\n(hasta 4)" as P2 #FFFFFF
+    usecase "CU-08: Agregar una receta\najustada a mis metas" as CU08
+}
+
+H -- CU23
+H -- CU14
+H -- CU09
+H -- CU13
+H -- CU22
+A -- CU10
+A -- CU11
+
+CU09 ..> P1 : <<include>>
+CU09 <.. P2 : <<extend>>
+CU13 <|-- CU08
+
+@enduml

@@ -1,0 +1,346 @@
+================================================================================
+ANÁLISIS DE CARGOS MÍNIMOS Y ESPECIALISTAS POR ETAPA DEL CICLO DE VIDA (SDLC)
+PROYECTO: PLATAFORMA INTEGRAL DE ENTRENAMIENTO CONCURRENTE (FUERZA, CARDIO Y NUTRICIÓN)
+================================================================================
+
+1. INTRODUCCIÓN Y CONTEXTO DEL PROYECTO
+--------------------------------------------------------------------------------
+El presente documento tiene como objetivo definir y analizar los cargos mínimos, 
+especialistas técnicos y personal capacitado de dominio (tanto en ingeniería de 
+software como en disciplinas de rendimiento deportivo y nutrición) necesarios 
+para llevar a cabo la ejecución de cualquiera de las tres alternativas de 
+solución tecnológicas propuestas en el proyecto de tesis.
+
+Este análisis toma como referente metodológico la estructura de definición de 
+cargos por ciclo de vida de desarrollo de software (SDLC) utilizada en el 
+proyecto anterior ("Proyecto_Infraestructura_Tecnológica_Micros_Inter_Urbanas.pdf"), 
+adaptándola a las exigencias específicas de una plataforma de entrenamiento 
+concurrente con telemetría de wearables, modelos de inteligencia artificial y 
+motores de cálculo metabólico/neuromuscular.
+
+Las 5 etapas estándar del Ciclo de Vida del Software (SDLC) evaluadas son:
+  1. Análisis
+  2. Diseño Lógico
+  3. Diseño Físico
+  4. Pruebas QA
+  5. Implementación
+
+
+2. RESUMEN DE LAS 3 ALTERNATIVAS EVALUADAS
+--------------------------------------------------------------------------------
+- ALTERNATIVA 1: SOLUCIÓN MINIMALISTA (MVP LEAN)
+  * Alcance: Formularios de registro manual para fuerza y nutrición, uso del GPS 
+    nativo del teléfono para cardio y evaluación subjetiva del esfuerzo (RPE).
+  * Arquitectura: Monolítica simple (App Flutter + API REST NestJS + PostgreSQL).
+  * Complejidad: Baja. Desarrollado con el mínimo esfuerzo técnico.
+
+- ALTERNATIVA 2: SOLUCIÓN INTEGRADA CON BROKERS DEL SISTEMA OPERATIVO
+  * Alcance: Incorpora captura pasiva de wearables mediante Health Connect (Android) 
+    y Apple Health (HealthKit), más integración de Inteligencia Artificial (Gemini/OpenAI) 
+    para visión artificial (fotos de platos) y procesamiento de lenguaje natural (PLN) 
+    para voz/texto en fuerza y nutrición.
+  * Arquitectura: App Flutter con SDKs nativos + API NestJS + Servicios de IA Cloud 
+    + PostgreSQL (JSONB).
+  * Complejidad: Media.
+
+- ALTERNATIVA 3: SOLUCIÓN POR CAPAS (ECOSISTEMA FLEXIBLE)
+  * Alcance: Sistema de cardio en 3 capas (GPS teléfono / Brokers SO / Parser de 
+    archivos .FIT de ciclocomputadores con potencia W y cadencia), motor de fatiga 
+    cruzada adaptativo (TSS/TRIMP), motor de nutrición dinámica con escalado social 
+    de recetas por porciones objetivo.
+  * Arquitectura: Backend NestJS modularizado con microservicio parser .FIT, motor 
+    de fatiga adaptativo, integración de IA y PostgreSQL (JSONB para series de tiempo).
+  * Complejidad: Alta.
+
+
+3. CATÁLOGO Y DEFINICIÓN DE CARGOS REQUERIDOS
+--------------------------------------------------------------------------------
+A continuación se describen los perfiles de los profesionales y especialistas 
+mínimos que deben participar en las distintas etapas del proyecto:
+
+A. LIDERAZGO Y GESTIÓN
+   1. Jefe de Proyecto Senior (JP Senior / Project Manager): Responsable de la 
+      planificación general, control del presupuesto, gestión de riesgos, 
+      coordinación multidisciplinaria entre ingenieros y especialistas de dominio, 
+      y aseguramiento del cumplimiento de metas.
+   2. Jefe de Proyecto Junior (JP Junior / Scrum Master): Encargado del seguimiento 
+      diario de actividades, facilitador del marco de trabajo ágil (Scrumban/Lean UX), 
+      gestión del backlog y eliminación de bloqueos operativos.
+
+B. ARQUITECTURA Y DISEÑO
+   3. Arquitecto de Software / Soluciones (Arq. Web / Cloud): Encargado de definir 
+      el diseño arquitectónico, patrones de integración de APIs, diseño de microservicios 
+      o módulos, comunicación con servicios de IA y estrategia de almacenamiento.
+   4. Diseñador UX/UI (Mobile UX Specialist): Diseñador centrado en experiencia 
+      de usuario e interfaces móviles en Flutter/Lean UX. Crea wireframes, 
+      flujos de interacción y prototipos visuales para reducir la fricción en el 
+      registro diario de entrenamientos y comidas.
+
+C. DESARROLLO E INGENIERÍA DE SOFTWARE
+   5. Desarrollador Mobile (Flutter / Dart): Ingeniero encargado de la programación 
+      de la aplicación cliente multiplataforma (iOS y Android), integración de GPS 
+      nativo, captura de cámara/micrófono y consumo de SDKs nativos (Health Connect / HealthKit).
+   6. Desarrollador Backend (NestJS / Node.js / TypeScript): Ingeniero especializado 
+      en la construcción de APIs RESTful, lógica de negocio, módulos de autenticación, 
+      y motor de cruce de datos basado en timestamps.
+   7. Especialista en Telemetría / Parser .FIT (Telemetric Backend Specialist): 
+      Ingeniero Backend con conocimiento especializado en codificación binaria y 
+      estándares de telemetría deportiva (Protocolo FIT / ANT+), encargado de 
+      construir el parser binario de ciclocomputadores para la Alternativa 3.
+
+D. DATOS E INTELIGENCIA ARTIFICIAL
+   8. Ingeniero de Bases de Datos (DB Engineer / DBA): Especialista en diseño y 
+      optimización de bases de datos relacionales e híbridas (PostgreSQL + JSONB), 
+      creación de esquemas flexibles para series temporales y tunning de consultas.
+   9. Data Scientist / AI Specialist: Especialista en ciencia de datos e IA, 
+      encargado del diseño de algoritmos de fatiga cruzada (TSS, TRIMP), tuning de 
+      prompts e integración de APIs de LLM y Visión Artificial (Gemini / OpenAI).
+
+E. CALIDAD Y ASEGURAMIENTO (QA)
+  10. Analista QA: Encargado del diseño de planes de prueba, elaboración de casos 
+      de prueba funcionales, validación de reglas de negocio y pruebas de usabilidad.
+  11. Ingeniero QA (QA Automation & Mobile Specialist): Ingeniero especializado en 
+      automatización de pruebas unitarias/integración, ejecución de tests en 
+      dispositivos móviles reales y pruebas de integración con sensores y brokers del SO.
+
+F. INFRAESTRUCTURA Y OPERACIONES
+  12. Ingeniero DevOps / Cloud Infrastructure: Encargado de la configuración de 
+      servidores cloud, pipelines de CI/CD, contenedorización (Docker), seguridad, 
+      monitoreo y despliegue en Google Play Store y Apple App Store.
+
+G. ESPECIALISTAS DE DOMINIO Y ASESORES TÉCNICO-CIENTÍFICOS
+  13. Nutricionista Deportivo (Asesor Experto en Nutrición): Profesional de la 
+      salud y nutrición deportiva. Asesora en las etapas de Análisis y Diseño Lógico 
+      para definir las fórmulas de gasto energético (Harris-Benedict, Cunningham), 
+      ventanas de ingesta de macronutrientes, lógica de nutrición dinámica y reglas 
+      de escalado de porciones en recetas.
+  14. Coach Deportivo / Fisiólogo del Ejercicio (Asesor Experto en Rendimiento): 
+      Especialista en ciencias de la actividad física y entrenamiento concurrente. 
+      Asesora en Análisis y Diseño Lógico para definir las zonas de frecuencia 
+      cardíaca, escalas RPE, modelos de fatiga acumulada, y los umbrales de tiempo 
+      e intensidad para prevenir el fenómeno de interferencia neuromuscular.
+
+
+4. ANÁLISIS DETALLADO DE CARGOS POR ETAPA DEL SDLC SEGÚN ALTERNATIVA
+--------------------------------------------------------------------------------
+
+================================================================================
+4.1 ALTERNATIVA 1: SOLUCIÓN MINIMALISTA (MVP LEAN)
+================================================================================
+
+ETAPA 1: ANÁLISIS
+- Cargos Mínimos Necesarios:
+  * 1 x Jefe de Proyecto Senior (JP Senior): Define el alcance del MVP, restricciones y viabilidad.
+  * 1 x Jefe de Proyecto Junior (JP Junior): Levanta requerimientos funcionales y casos de uso básicos.
+  * 1 x Nutricionista Deportivo (Asesor): Valida el modelo simplificado de cálculo de calorías y macros.
+  * 1 x Coach Deportivo (Asesor): Valida la escala RPE (1-10) y los parámetros del formulario de fuerza.
+- Justificación: Aunque es un MVP básico, se requiere asesoría experta para asegurar que el registro 
+  manual de RPE y macros tenga sustento técnico-deportivo real.
+
+ETAPA 2: DISEÑO LÓGICO
+- Cargos Mínimos Necesarios:
+  * 1 x JP Senior: Revisa y aprueba la arquitectura lógica y especificación de requerimientos.
+  * 1 x JP Junior: Documenta la especificación de APIs y reglas de negocio.
+  * 1 x Arquitecto de Software / Web: Diseña la arquitectura monolítica cliente-servidor (Flutter-NestJS).
+  * 1 x Diseñador UX/UI: Crea los wireframes y prototipos visuales de los formularios de registro manual.
+  * 1 x Nutricionista Deportivo (Asesor): Revisa la lógica de cálculo automático de macros en el diseño.
+  * 1 x Coach Deportivo (Asesor): Revisa el diseño del motor de alertas de fatiga básico (volumen + RPE).
+- Justificación: En esta etapa se transforman los requerimientos en diagramas de arquitectura, 
+  modelos conceptuales de datos y prototipos de interfaz.
+
+ETAPA 3: DISEÑO FÍSICO (DESARROLLO / CODIFICACIÓN)
+- Cargos Mínimos Necesarios:
+  * 1 x JP Junior: Supervisa el progreso diario y gestiona el flujo de trabajo (WIP).
+  * 1 x Desarrollador Mobile (Flutter): Codifica la interfaz móvil, captura GPS nativo y formularios.
+  * 1 x Desarrollador Backend (NestJS): Desarrolla la API REST, autenticación, CRUD y lógica de cruce.
+  * 1 x Ingeniero de Bases de Datos (DB Engineer): Modela e implementa la base de datos PostgreSQL.
+- Justificación: Es la etapa intensiva de construcción de código. Al ser un monolito simple, se requiere 
+  un equipo de desarrollo técnico compacto.
+
+ETAPA 4: PRUEBAS QA
+- Cargos Mínimos Necesarios:
+  * 1 x Analista QA: Diseña y ejecuta pruebas funcionales y de usabilidad de formularios y GPS.
+  * 1 x Ingeniero QA: Desarrolla e ejecuta pruebas unitarias e integración en backend y frontend.
+- Justificación: Asegura la estabilidad de la aplicación, la correcta persistencia de datos y el 
+  funcionamiento continuo del trackeo por GPS sin caídas.
+
+ETAPA 5: IMPLEMENTACIÓN (DESPLIEGUE Y PUESTA EN MARCHA)
+- Cargos Mínimos Necesarios:
+  * 1 x JP Junior: Coordina las actividades de entrega y revisión de hitos finalizados.
+  * 1 x Ingeniero DevOps: Configura la infraestructura VPS, base de datos en producción y publica 
+    en tiendas (Google Play y App Store).
+- Justificación: Garantiza el despliegue seguro en servidores cloud y la distribución en las tiendas.
+
+
+================================================================================
+4.2 ALTERNATIVA 2: SOLUCIÓN INTEGRADA CON BROKERS DEL SISTEMA OPERATIVO
+================================================================================
+
+ETAPA 1: ANÁLISIS
+- Cargos Mínimos Necesarios:
+  * 1 x Jefe de Proyecto Senior (JP Senior): Lidera el levantamiento de alcance e integración con brokers.
+  * 1 x Jefe de Proyecto Junior (JP Junior): Modela historias de usuario y flujos asistidos por IA.
+  * 1 x Data Scientist / AI Specialist: Analiza la factibilidad de APIs de LLM/Visión y latencias de inferencia.
+  * 1 x Nutricionista Deportivo (Asesor): Define reglas para nutrición dinámica ajustada por zonas de FC.
+  * 1 x Coach Deportivo (Asesor): Define algoritmos de zonas cardíacas y estimación de gasto por zonas.
+- Justificación: La incorporación de IA y sincronización de wearables exige validar previamente los 
+  umbrales metabólicos y la precisión esperada de las fuentes de IA.
+
+ETAPA 2: DISEÑO LÓGICO
+- Cargos Mínimos Necesarios:
+  * 1 x JP Senior: Aprueba el diseño modular y la estrategia de integración multicloud.
+  * 1 x JP Junior: Documenta contratos de interfaz REST e integración con servicios de IA.
+  * 1 x Arquitecto de Software: Diseña la arquitectura de integración con Health Connect, HealthKit y Gemini API.
+  * 1 x Data Scientist / AI Specialist: Diseña las estructuras de prompt y esquemas JSON de respuesta de IA.
+  * 1 x Diseñador UX/UI: Diseña la experiencia del usuario para dictado por voz, foto de alimentos y dashboards de cardio.
+  * 1 x Nutricionista Deportivo (Asesor): Valida los algoritmos de recomendación dinámica de macronutrientes.
+  * 1 x Coach Deportivo (Asesor): Valida la ponderación del estrés cardíaco (carga interna) en la fatiga.
+- Justificación: El diseño lógico debe especificar claramente cómo la App procesa datos de sensores y de 
+  servicios de IA sin bloquear la experiencia de usuario.
+
+ETAPA 3: DISEÑO FÍSICO (DESARROLLO / CODIFICACIÓN)
+- Cargos Mínimos Necesarios:
+  * 1 x JP Junior: Gestiona sprints y resuelve bloqueos de integraciones externas.
+  * 1 x Desarrollador Mobile (Flutter + Native SDKs): Implementa la App, plugins de cámara/audio e 
+    integración nativa con Health Connect (Kotlin/Android) y HealthKit (Swift/iOS).
+  * 1 x Desarrollador Backend (NestJS): Desarrolla la API modular, conector con APIs de IA y motor de cruce.
+  * 1 x Data Scientist / AI Specialist: Implementa el módulo de inferencia de IA (PLN y Visión) y calibración.
+  * 1 x Ingeniero de Bases de Datos: Diseña esquemas PostgreSQL con uso intensivo de JSONB para telemetría heterogénea.
+- Justificación: Requiere perfiles técnicos más avanzados en desarrollo móvil nativo e integración de IA 
+  para construir la canalización de datos.
+
+ETAPA 4: PRUEBAS QA
+- Cargos Mínimos Necesarios:
+  * 1 x Analista QA: Diseña casos de prueba para registro por voz, imagen y flujos comunitarios.
+  * 1 x Ingeniero QA (Mobile & SDK Specialist): Realiza pruebas automatizadas e integración en dispositivos 
+    físicos Android e iOS sincronizados con smartwatches (Garmin, Apple Watch, Galaxy Watch).
+- Justificación: La sincronización pasiva en segundo plano desde el sistema operativo requiere pruebas 
+  específicas en hardware real bajo diversos escenarios de permisos y consumo de batería.
+
+ETAPA 5: IMPLEMENTACIÓN (DESPLIEGUE Y PUESTA EN MARCHA)
+- Cargos Mínimos Necesarios:
+  * 1 x JP Junior: Coordina la salida a producción.
+  * 1 x Ingeniero DevOps: Configura CI/CD, aprovisionamiento de VPS cloud, claves API de IA con cuotas de 
+    seguridad y publicación en tiendas.
+- Justificación: Requiere asegurar la escalabilidad de las llamadas a servicios cloud de IA y la persistencia en BD.
+
+
+================================================================================
+4.3 ALTERNATIVA 3: SOLUCIÓN POR CAPAS (ECOSISTEMA FLEXIBLE)
+================================================================================
+
+ETAPA 1: ANÁLISIS
+- Cargos Mínimos Necesarios:
+  * 1 x Jefe de Proyecto Senior (JP Senior): Define el alcance del ecosistema de 3 capas y gestión de riesgos.
+  * 1 x Jefe de Proyecto Junior (JP Junior): Levanta requerimientos técnicos para archivos .FIT, brokers y GPS.
+  * 1 x Data Scientist / Algorithmic Specialist: Analiza modelos matemáticos de fatiga cruzada (TSS, TRIMP).
+  * 1 x Especialista en Telemetría / Parser .FIT: Evalúa la estructura del protocolo binario FIT (Garmin/ANT+).
+  * 1 x Nutricionista Deportivo (Asesor): Define reglas del motor de escalado social de recetas e ingesta dinámica.
+  * 1 x Coach Deportivo (Asesor): Establece métricas de potencia (vatios), TSS y ventanas avanzadas de recuperación.
+- Justificación: Al incorporar procesamiento binario de telemetría y modelos de fatiga adaptativos con 
+  múltiples niveles de confianza, la fase de análisis requiere el nivel máximo de asesoría técnica y científica.
+
+ETAPA 2: DISEÑO LÓGICO
+- Cargos Mínimos Necesarios:
+  * 1 x JP Senior: Supervisa el diseño de la arquitectura modular de alta complejidad.
+  * 1 x JP Junior: Documenta especificaciones de microservicios o módulos independientes.
+  * 1 x Arquitecto de Software: Diseña la arquitectura desacoplada por capas (Parser .FIT, Motor Fatiga, Motor Nutrición).
+  * 1 x Data Scientist / Algorithmic Specialist: Diseña la lógica adaptativa del motor de fatiga según el nivel de confianza de los datos.
+  * 1 x Diseñador UX/UI: Diseña la interfaz completa del ecosistema (upload .FIT, métricas de potencia, gráficos de fatiga acumulada, escalado de recetas).
+  * 1 x Nutricionista Deportivo (Asesor): Revisa la precisión matemática del escalado dinámico de ingredientes.
+  * 1 x Coach Deportivo (Asesor): Revisa los modelos de carga TSS y la lógica de alertas de sobreentrenamiento.
+- Justificación: El diseño lógico debe garantizar que el sistema sea capaz de procesar datos de calidad 
+  asimétrica (desde un simple RPE hasta datos segundo a segundo de un potenciómetro) de forma consistente.
+
+ETAPA 3: DISEÑO FÍSICO (DESARROLLO / CODIFICACIÓN)
+- Cargos Mínimos Necesarios:
+  * 1 x JP Junior: Gestor del backlog en Scrumban y coordinación de desarrolladores.
+  * 1 x Desarrollador Mobile (Flutter + SDKs + File Handling): Desarrolla la App completa, gestión de archivos .FIT y sincronización con brokers.
+  * 1 x Desarrollador Backend (NestJS Modular): Construye la API modular, conectores de IA y motor de escalado.
+  * 1 x Especialista en Telemetría / Parser .FIT: Programa el servicio de decodificación de archivos binarios .FIT en backend.
+  * 1 x Data Scientist / Algorithmic Specialist: Implementa las fórmulas del motor de fatiga adaptativo (TSS/TRIMP/Zonas).
+  * 1 x Ingeniero de Bases de Datos: Diseña esquemas JSONB avanzados e índices en PostgreSQL para series de tiempo de alta frecuencia.
+- Justificación: Requiere un equipo técnico multidisciplinario especializado en backend, estructuras de datos binarias, 
+  modelado algorítmico e ingeniería de bases de datos.
+
+ETAPA 4: PRUEBAS QA
+- Cargos Mínimos Necesarios:
+  * 1 x Analista QA: Diseña casos de prueba para el módulo social, escalado de porciones y flujos de usuario.
+  * 1 x Ingeniero QA (Automation, Telemetry & Multi-device QA): Ejecuta pruebas automatizadas de parsing .FIT 
+    con archivos de diversos ciclocomputadores (Garmin, Wahoo, Bryton), valida el comportamiento del motor 
+    adaptativo y realiza pruebas de carga en backend.
+- Justificación: El parsing de archivos binarios de terceros y la ingesta masiva de puntos por segundo 
+  requiere rigurosas pruebas de esfuerzo, manejo de errores y compatibilidad.
+
+ETAPA 5: IMPLEMENTACIÓN (DESPLIEGUE Y PUESTA EN MARCHA)
+- Cargos Mínimos Necesarios:
+  * 1 x JP Junior: Controla el plan de despliegue en producción.
+  * 1 x Ingeniero DevOps / Cloud Specialist: Aprovisiona una infraestructura cloud robusta, configura CI/CD, 
+    gestiona el balanceo de carga para el servicio parser y publica la solución en las tiendas móviles.
+- Justificación: Garantiza la disponibilidad y rendimiento del sistema frente a cargas de procesamiento 
+  de archivos pesados.
+
+
+5. MATRIZ RESUMEN DE CARGOS MÍNIMOS POR ETAPA Y ALTERNATIVA
+--------------------------------------------------------------------------------
+A continuación se presenta el cuadro resumido que servirá como base para la 
+estimación de costos por etapa (Horas Hombre y Tarifas):
+
++--------------------+-------------------------+-------------------------+-------------------------+
+| ETAPA SDLC         | ALTERNATIVA 1           | ALTERNATIVA 2           | ALTERNATIVA 3           |
+|                    | Minimalista (MVP)       | Brokers del SO + IA     | Solución por Capas      |
++--------------------+-------------------------+-------------------------+-------------------------+
+| 1. ANÁLISIS        | - JP Senior             | - JP Senior             | - JP Senior             |
+|                    | - JP Junior             | - JP Junior             | - JP Junior             |
+|                    | - Nutricionista Asesor  | - Data Scientist / IA   | - Data Scientist / Alg. |
+|                    | - Coach Dep. Asesor     | - Nutricionista Asesor  | - Especialista Parser   |
+|                    |                         | - Coach Dep. Asesor     | - Nutricionista Asesor  |
+|                    |                         |                         | - Coach Dep. Asesor     |
++--------------------+-------------------------+-------------------------+-------------------------+
+| 2. DISEÑO LÓGICO   | - JP Senior             | - JP Senior             | - JP Senior             |
+|                    | - JP Junior             | - JP Junior             | - JP Junior             |
+|                    | - Arquitecto Software   | - Arquitecto Software   | - Arquitecto Software   |
+|                    | - Diseñador UX/UI       | - Data Scientist / IA   | - Data Scientist / Alg. |
+|                    | - Nutricionista Asesor  | - Diseñador UX/UI       | - Diseñador UX/UI       |
+|                    | - Coach Dep. Asesor     | - Nutricionista Asesor  | - Nutricionista Asesor  |
+|                    |                         | - Coach Dep. Asesor     | - Coach Dep. Asesor     |
++--------------------+-------------------------+-------------------------+-------------------------+
+| 3. DISEÑO FÍSICO   | - JP Junior             | - JP Junior             | - JP Junior             |
+| (Desarrollo)       | - Dev Mobile (Flutter)  | - Dev Mobile + SDKs     | - Dev Mobile + .FIT     |
+|                    | - Dev Backend (NestJS)  | - Dev Backend (NestJS)  | - Dev Backend Modular   |
+|                    | - Ingeniero BD (Postgre)| - Data Scientist / IA   | - Especialista Parser   |
+|                    |                         | - Ingeniero BD (JSONB)  | - Data Scientist / Alg. |
+|                    |                         |                         | - Ingeniero BD (JSONB)  |
++--------------------+-------------------------+-------------------------+-------------------------+
+| 4. PRUEBAS QA      | - Analista QA           | - Analista QA           | - Analista QA           |
+|                    | - Ingeniero QA          | - Ingeniero QA Mobile   | - Ingeniero QA Telemetry|
++--------------------+-------------------------+-------------------------+-------------------------+
+| 5. IMPLEMENTACIÓN  | - JP Junior             | - JP Junior             | - JP Junior             |
+|                    | - Ingeniero DevOps      | - Ingeniero DevOps      | - Ingeniero DevOps Cloud|
++--------------------+-------------------------+-------------------------+-------------------------+
+
+
+6. RECOMENDACIONES PARA LA ESTIMACIÓN FINANCIERA Y DE COSTOS
+--------------------------------------------------------------------------------
+1. Valoración de Horas Hombre (HH):
+   - Perfiles de Gestión / Arquitectura / Especialistas (JP Senior, Arquitecto, Data Scientist, 
+     Especialista Telemetría, Asesores de Dominio): Se recomienda cotizar con una tarifa senior/especializada.
+   - Perfiles de Ejecución / Desarrollo (JP Junior, Dev Mobile, Dev Backend, Ingeniero BD, QA, DevOps): 
+     Se pueden valorar con la tarifa de referencia del mercado chileno (por ejemplo, \$15.000 - \$27.000 CLP/h) 
+     según el nivel de experiencia requerido (Junior/Medio).
+
+2. Asesores de Dominio (Nutricionista Deportivo y Coach Deportivo):
+   - Su participación es crítica en las Etapas 1 (Análisis) y 2 (Diseño Lógico). No requieren estar 
+     contratados a tiempo completo durante todo el proyecto; se deben calcular paquetes de horas de 
+     consultoría (ej. 10 a 20 horas por etapa) destinadas a la definición de reglas de negocio, validación 
+     de algoritmos y revisión de prototipos.
+
+3. Escalabilidad del Esfuerzo según la Alternativa:
+   - La Alternativa 1 demanda un volumen acotado de horas enfocado en el desarrollo puro de software web/móvil.
+   - La Alternativa 2 requiere horas adicionales en desarrollo de IA, integración nativa de Android/iOS y QA multi-dispositivo.
+   - La Alternativa 3 exige la mayor cantidad de horas-hombre debido al parsing binario, procesamiento algorítmico 
+     de fatiga y pruebas extensivas de compatibilidad de archivos de terceros (.FIT).
+
+================================================================================
+FIN DEL DOCUMENTO
+================================================================================

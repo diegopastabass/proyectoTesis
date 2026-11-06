@@ -1,0 +1,38 @@
+@startuml sec_cu04
+!include sec_estilo.iuml
+actor "Atleta" as U
+participant "App Flutter" as A
+participant "API NestJS" as B
+participant "Parser .fit\n(Lambda)" as L
+participant "Amazon S3" as S3
+database "MongoDB" as DB
+autonumber
+U -> A : Elige el archivo .fit
+A -> A : Revisa el tipo y el tamaño
+alt No es .fit o pesa más de 10 MB
+  A --> U : Explica el motivo y pide otro archivo
+else Archivo aceptado
+  A -> B : POST /uploads/presign
+  B --> A : URL prefirmada
+  A -> S3 : PUT del archivo
+  S3 --> A : Confirmación
+  A -> B : POST /workouts/fit con la clave
+  B -> L : Invoca el parser con la clave
+  L -> S3 : Lee el archivo
+  S3 --> L : Contenido
+  L --> B : Datos de la sesión o error
+  alt Archivo dañado
+    B --> A : Error de lectura
+    A --> U : Avisa y no guarda nada
+  else Lectura correcta
+    B --> A : Resumen de la sesión
+    A --> U : Muestra potencia, cadencia y pulso
+    U -> A : Confirma
+    A -> B : POST /workouts/fit/confirm
+    B -> DB : Guarda en workouts y telemetry
+    B -> B : Calcula la carga
+    B --> A : Sesión creada
+    A --> U : Muestra la sesión en el historial
+  end
+end
+@enduml

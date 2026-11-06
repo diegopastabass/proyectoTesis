@@ -1,0 +1,25 @@
+@startuml dga_cu10
+!include dga_estilo.iuml
+|Usuario|
+|Aplicación|
+|Usuario|
+start
+:1. Abre la lista\nde ejercicios;
+|Aplicación|
+:2. Muestra los ejercicios\nexistentes;
+if (¿Qué quiere\nhacer?) then (Desactivar)
+  :Lo saca de las nuevas sesiones y\nlo mantiene en las registradas;
+  stop
+else (Agregar\no cambiar)
+  |Usuario|
+  :3. Indica los músculos\ny el equipamiento;
+  |Aplicación|
+endif
+if (¿Ya existe?) then (Sí)
+  :Avisa y no lo guarda;
+  stop
+else (No)
+  :4. Guarda el cambio;
+endif
+stop
+@enduml

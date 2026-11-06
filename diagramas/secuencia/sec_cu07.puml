@@ -1,0 +1,31 @@
+@startuml sec_cu07
+!include sec_estilo.iuml
+actor "Atleta" as U
+participant "App Flutter" as A
+participant "API NestJS" as B
+participant "Servicio de IA" as IA
+database "MongoDB" as DB
+autonumber
+U -> A : Saca una foto al plato
+A -> B : POST /meals/estimate con la foto
+B -> IA : Envía la foto con instrucciones
+alt Sin conexión o sin respuesta
+  IA --> B : Error
+  B --> A : Servicio no disponible
+  A --> U : Avisa y ofrece anotar buscando (CU-06)
+else Respuesta correcta
+  IA --> B : Alimentos, cantidades y confianza en JSON
+  B --> A : Estimación, sin guardar
+  opt Confianza menor a 70%
+    A --> U : Avisa que la revise con cuidado
+  end
+  A --> U : Muestra la estimación
+  U -> A : Corrige y confirma
+  A -> B : POST /meals
+  B -> DB : Guarda en meals con aiConfidenceScore
+  DB --> B : Confirmación
+  B --> A : Comida creada y avance del día
+  A --> U : Muestra el avance
+  A -> A : Descarta la foto, salvo que se publique (CU-09)
+end
+@enduml

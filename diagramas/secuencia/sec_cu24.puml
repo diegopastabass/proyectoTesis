@@ -1,0 +1,31 @@
+@startuml sec_cu24
+!include sec_estilo.iuml
+actor "Atleta" as U
+participant "App Flutter" as A
+participant "Google Play /\nApp Store" as T
+participant "API NestJS" as B
+database "MongoDB" as DB
+autonumber
+U -> A : Elige pasar al plan premium
+A -> T : Consulta el precio de la suscripción
+T --> A : Precio con impuestos y periodo
+A --> U : Muestra qué incluye, el precio y el cobro
+alt No contrata
+  U -> A : Cierra sin comprar
+else Contrata
+  U -> A : Confirma la compra
+  A -> T : Inicia el pago
+  alt Pago rechazado
+    T --> A : Pago rechazado
+    A --> U : Avisa y sigue en el plan gratuito
+  else Pago aceptado
+    T --> A : Comprobante de compra
+    A -> B : POST /subscriptions con el comprobante
+    B -> T : Valida el comprobante
+    T --> B : Compra válida y fecha de término
+    B -> DB : Actualiza role y subscription en users
+    B --> A : Plan premium activo
+    A --> U : Activa las funciones y lo confirma
+  end
+end
+@enduml

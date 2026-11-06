@@ -1,0 +1,24 @@
+@startuml dga_cu08
+!include dga_estilo.iuml
+|Usuario|
+|Aplicación|
+|Usuario|
+start
+:1. Pulsa Agregar\nen la receta;
+|Aplicación|
+if (¿Ya cumplió sus\nmetas del día?) then (Sí)
+  :Avisa y ofrece las\nporciones originales;
+else (No)
+  :2. Ajusta los ingredientes a lo\nque le falta comer ese día;
+endif
+:3. Muestra la receta;
+|Usuario|
+if (¿Le convence\nel ajuste?) then (No)
+  :Cambia las porciones;
+else (Sí)
+endif
+:4. Confirma;
+|Aplicación|
+:5. Guarda la receta en nutrición,\nindicando quién la creó;
+stop
+@enduml

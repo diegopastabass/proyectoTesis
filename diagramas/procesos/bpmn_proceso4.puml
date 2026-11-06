@@ -1,0 +1,28 @@
+@startuml bpmn_proceso4
+!include bpmn_estilo.iuml
+skinparam activity {
+    BackgroundColor #E8DAEF
+}
+
+|Atleta|
+|Aplicación|
+|Asistente de IA|
+|Atleta|
+start
+:1. Abre el formulario, o escribe\no dicta con sus palabras lo que hizo;
+|Aplicación|
+if (¿Usó sus\npalabras?) then (No)
+  :4. Muestra la lista de ejercicios\ny las rutinas guardadas;
+else (Sí)
+  |Asistente de IA|
+  :2. Ordena el texto en ejercicios,\nseries, repeticiones y peso;
+  |Aplicación|
+  :3. Compara los ejercicios con\nla lista y muestra el resultado;
+endif
+|Atleta|
+:5. Revisa o completa los ejercicios,\nseries, repeticiones, peso y esfuerzo;
+|Aplicación|
+:6. Guarda la sesión y\ncalcula su carga;
+:7. Actualiza el historial y\nrevisa la fatiga (Proceso 1);
+stop
+@enduml

@@ -1,0 +1,26 @@
+@startuml dga_cu16
+!include dga_estilo.iuml
+|Usuario|
+|Aplicación|
+|Usuario|
+start
+:1. Elige contar su comida\ncon sus palabras;
+|Aplicación|
+:2. Muestra un espacio\npara escribir o dictar;
+repeat
+  |Usuario|
+  :3. Escribe o dicta\nlo que comió;
+  |Aplicación|
+  if (¿Hay conexión y el\nasistente responde?) then (No)
+    :Avisa y ofrece anotar la\ncomida buscando (CU-06);
+    stop
+  else (Sí)
+  endif
+repeat while (¿Entiende\nel texto?) is (No, pide más detalle) not (Sí)
+:4. Estima los alimentos, las\ncantidades y los macronutrientes;
+|Usuario|
+:5. Revisa, corrige\ny confirma;
+|Aplicación|
+:6. Guarda la comida y\nactualiza el avance del día;
+stop
+@enduml

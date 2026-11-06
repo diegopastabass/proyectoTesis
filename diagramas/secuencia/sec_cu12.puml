@@ -1,0 +1,35 @@
+@startuml sec_cu12
+!include sec_estilo.iuml
+actor "Atleta" as U
+participant "App Flutter" as A
+participant "API NestJS" as B
+database "MongoDB" as DB
+autonumber
+A --> U : Muestra el cuestionario inicial
+U -> A : Responde el cuestionario
+alt Falta una pregunta obligatoria
+  A --> U : Pide completarla
+else Cuestionario completo
+  A -> B : PATCH /users/me/profile
+  B -> DB : Guarda profile en users
+  B -> B : Calcula nivel y orientación
+  B -> B : Elige la plantilla del plan
+  B -> DB : Guarda en trainingPlans
+  DB --> B : Plan creado
+  B --> A : Plan semanal
+  A --> U : Muestra el plan sugerido
+  alt Acepta el plan
+    U -> A : Acepta
+    A -> B : PATCH /training-plans/{id}
+    B -> DB : Deja el plan como ACTIVE
+    B --> A : Confirmación
+  else Lo cambia
+    U -> A : Cambia los días o las sesiones
+    A -> B : PATCH /training-plans/{id}
+    B -> DB : Guarda el cambio en adjustments
+    B --> A : Confirmación
+  else Lo ignora
+    U -> A : Cierra el plan
+  end
+end
+@enduml

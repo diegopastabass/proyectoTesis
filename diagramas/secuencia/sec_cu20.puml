@@ -1,0 +1,24 @@
+@startuml sec_cu20
+!include sec_estilo.iuml
+actor "Atleta" as U
+participant "App Flutter" as A
+participant "API NestJS" as B
+database "MongoDB" as DB
+autonumber
+U -> A : Abre un entrenamiento o una comida
+A -> B : GET /workouts/{id} o GET /meals/{id}
+B -> DB : Lee el registro
+DB --> B : Detalle
+B --> A : Detalle
+A --> U : Muestra el registro
+U -> A : Escribe cómo se sintió y pulsa Guardar
+alt Nota vacía
+  A -> A : No crea ninguna nota
+else Con texto
+  A -> B : POST /daily-logs/{fecha}/reports
+  B -> DB : Agrega a subjectiveReports con relatedTo
+  DB --> B : Confirmación
+  B --> A : Nota guardada
+  A --> U : Muestra la nota junto al registro
+end
+@enduml

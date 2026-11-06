@@ -1,0 +1,105 @@
+@startuml cu_general
+!theme plain
+left to right direction
+skinparam defaultFontName "Segoe UI"
+skinparam defaultFontSize 13
+skinparam backgroundColor #FEFEFE
+skinparam shadowing false
+skinparam ArrowColor #333333
+skinparam packageStyle rectangle
+skinparam nodesep 6
+skinparam ranksep 60
+skinparam actor {
+    BackgroundColor #FFFFE0
+    BorderColor #333333
+}
+skinparam rectangle {
+    BackgroundColor #F1F1F1
+    BorderColor #555555
+}
+skinparam usecase {
+    BorderColor #1F4E79
+}
+
+actor "Atleta Básico\n(Free)" as B
+actor "Atleta Híbrido\n(Premium)" as H
+actor "Administrador" as A
+B <|-- H
+
+rectangle "Health Connect /\nApple HealthKit" as HC
+rectangle "Servicio de IA\n(Visión + NLP)" as IA
+rectangle "Firebase\n(FCM)" as FCM
+rectangle "API de alimentos\n(OpenFoodFacts)" as API
+rectangle "Almacenamiento de\narchivos (S3)" as S3
+
+package "Plataforma de Entrenamiento Concurrente" {
+    package "Perfil y Seguimiento" #FCE4EC {
+        usecase "CU-12: Completar perfil y recibir plan sugerido" as CU12
+        usecase "CU-19: Revisar mi progreso" as CU19
+        usecase "CU-20: Registrar sensaciones" as CU20
+        usecase "CU-21: Controlar mis datos personales" as CU21
+    }
+    package "Entrenamiento" #E8F5E9 {
+        usecase "CU-01: Registrar fuerza (manual)" as CU01
+        usecase "CU-17: Registrar resistencia sin reloj" as CU17
+        usecase "CU-02: Registrar fuerza (NLP)" as CU02
+        usecase "CU-03: Sincronizar telemetría cardio" as CU03
+        usecase "CU-04: Cargar archivo .fit" as CU04
+        usecase "CU-05: Consultar fatiga cruzada" as CU05
+    }
+    package "Nutrición" #FFF9C4 {
+        usecase "CU-06: Registrar comida (manual)" as CU06
+        usecase "CU-15: Registrar comida (código de barras)" as CU15
+        usecase "CU-07: Registrar comida (foto IA)" as CU07
+        usecase "CU-16: Registrar comida (descripción IA)" as CU16
+        usecase "CU-18: Consultar metas de alimentación" as CU18
+    }
+    package "Red Social" #E0F2F1 {
+        usecase "CU-09: Publicar sesión, ruta o comida" as CU09
+        usecase "CU-14: Seguir a otro usuario" as CU14
+        usecase "CU-13: Agregar publicación a mis módulos" as CU13
+        usecase "CU-08: Importar y escalar receta comunitaria" as CU08
+        usecase "CU-22: Reportar una publicación" as CU22
+    }
+    package "Administración" #ECEFF1 {
+        usecase "CU-10: Mantener catálogo de ejercicios" as CU10
+        usecase "CU-11: Moderar comunidad" as CU11
+    }
+}
+
+B -- CU12
+B -- CU19
+B -- CU20
+B -- CU21
+B -- CU01
+B -- CU17
+B -- CU06
+B -- CU15
+
+H -- CU02
+H -- CU03
+H -- CU04
+H -- CU05
+H -- CU07
+H -- CU16
+H -- CU18
+H -- CU09
+H -- CU14
+H -- CU13
+H -- CU22
+CU08 -|> CU13
+
+A -- CU10
+A -- CU11
+
+CU21 -- HC
+CU03 -- HC
+CU02 -- IA
+CU07 -- IA
+CU16 -- IA
+CU05 -- FCM
+CU15 -- API
+CU04 -- S3
+CU09 -- S3
+
+@enduml

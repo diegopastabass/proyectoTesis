@@ -1,0 +1,2686 @@
+\documentclass[12pt]{article}
+\usepackage{setspace}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{titling}
+\usepackage{tocloft}
+\usepackage{titlesec}
+\usepackage[letterpaper, left=3cm, right=2cm, top=2cm, bottom=2cm]{geometry}
+\usepackage{datetime}
+\usepackage{caption}
+\usepackage{wrapfig}
+\usepackage{microtype}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{tocloft}
+\usepackage{amsmath}
+\usepackage{gensymb}
+\usepackage[utf8]{inputenc}
+\usepackage{array}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{subfig}
+\usepackage{tikz}
+\usepackage{amssymb}
+\usepackage[utf8]{inputenc}
+\usepackage{colortbl}
+\usepackage[table]{xcolor}
+\usepackage{url}
+\usepackage{geometry}
+\geometry{margin=1cm}
+\usepackage{longtable}
+\captionsetup[figure]{font=small, labelformat=empty}
+\renewcommand{\contentsname}{Índice}
+\renewcommand{\listfigurename}{Lista de Figuras}
+
+\usepackage{xcolor}       % Para colores
+\usepackage{listings}     % Para mostrar código
+
+% Configuración de listings para JSON
+\lstdefinestyle{json}{
+    basicstyle=\ttfamily\footnotesize,
+    commentstyle=\color{gray},
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    stepnumber=1,
+    numbersep=5pt,
+    backgroundcolor=\color{white},
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    frame=single,
+    rulecolor=\color{black},
+    tabsize=2,
+    breaklines=true,
+    breakatwhitespace=true,
+    stringstyle=\color{blue},
+    keywordstyle=\color{red},
+    identifierstyle=\color{black},
+    literate=
+        *{0}{{{\color{red}0}}}{1}
+        {1}{{{\color{red}1}}}{1}
+        {2}{{{\color{red}2}}}{1}
+        {3}{{{\color{red}3}}}{1}
+        {4}{{{\color{red}4}}}{1}
+        {5}{{{\color{red}5}}}{1}
+        {6}{{{\color{red}6}}}{1}
+        {7}{{{\color{red}7}}}{1}
+        {8}{{{\color{red}8}}}{1}
+        {9}{{{\color{red}9}}}{1}
+        {:}{{{\color{purple}{:}}}}{1}
+        {,}{{{\color{purple}{,}}}}{1}
+        {\{}{{{\color{black}{\{}}}}{1}
+        {\}}{{{\color{black}{\}}}}}{1}
+        {[}{{{\color{black}{[}}}}{1}
+        {]}{{{\color{black}{]}}}}{1},
+}
+
+% Configuración de la página
+\geometry{a4paper, margin=2.5cm}
+\setlength{\parindent}{0cm}
+
+% Configuración de los títulos
+\titleformat{\section}[block]{\centering\bfseries\Large}{}{0em}{}
+\titlespacing*{\section}{0cm}{2cm}{1cm}
+
+\begin{document}
+\begin{titlepage}
+    \centering
+    \includegraphics[width=3cm]{logo umayor.png}
+    
+    \vspace{2cm}
+    
+    \textbf{\LARGE Ingeniería Civil en Computación e Informática.}
+    
+    \vspace{1cm}
+    \textbf{\Large Facultad de Ciencias, Ingeniería y Tecnología.}
+    \vspace{1cm}
+    \textbf{\\}
+    
+    \vspace{2cm}
+    
+    \section*{\LARGE Infraestructura Tecnológica Buses Rurales}
+    
+    \vspace{2cm}
+    \begin{flushleft}
+    \textbf{}\\
+        \begin{tabular}{ll}
+    \\
+        \end{tabular}
+    
+    
+    \vspace{0.5cm}
+    \textbf{Por:} \\
+    Nicolás Toledo\\
+    Diego Vilches
+    \vspace{2cm}
+    \end{flushleft}
+    Santiago de Chile. Invierno 2025
+\end{titlepage}
+\tableofcontents
+\newpage
+\spacing{1.5}
+\newpage
+\section{Introducción}
+En la actualidad, la Región Metropolitana de Chile —y en particular la ciudad de Santiago— puede considerarse un referente en América Latina en cuanto a transporte público moderno y eficiente. Esto se debe, en gran parte, al desarrollo de la red de Metro y a la implementación de sistemas integrados como Red Metropolitana de Movilidad, que permiten transportar diariamente a millones de personas con altos estándares de calidad, seguridad y tecnología.
+\\
+Sin embargo, existe una subred menos visible, pero igualmente relevante para la movilidad urbana: los buses rurales e interurbanos. Estos servicios conectan las zonas periféricas de la región con centros urbanos más desarrollados, y son fundamentales para muchas personas que viven fuera del radio central de Santiago. A pesar de su importancia, estos servicios presentan diversas falencias estructurales y tecnológicas que dificultan su modernización y eficiencia.
+Uno de los principales problemas identificados es la falta de infraestructura digital y de herramientas tecnológicas que permitan a los operadores mejorar la gestión del servicio y a los usuarios planificar sus viajes de forma adecuada. Esto contrasta fuertemente con los avances logrados por el sistema metropolitano, donde los pasajeros pueden acceder fácilmente a información en tiempo real sobre recorridos, frecuencias y tiempos estimados de llegada.
+De acuerdo con el informe titulado \textbf{"Mediciones de Demanda de Pasajeros en Servicios de Transporte Público Rural y Periférico que Operan en la Región Metropolitana"} elaborado por la División de Transporte Público Regional (DTPR), en el año 2017 existían 219 recorridos rurales operando solamente en la Región Metropolitana. Esta cifra evidencia el rol significativo que cumple este tipo de transporte en la movilidad diaria de las personas, y anticipa una cantidad aún mayor a nivel nacional.
+Frente a esta realidad, surge la necesidad de una plataforma tecnológica accesible, que permita integrar a los servicios de transporte rural e interurbano en la era digital. El presente proyecto busca desarrollar una solución móvil que conecte a choferes y pasajeros, permitiendo el seguimiento en tiempo real de los buses, la visualización de rutas activas y la recolección de métricas para mejorar la calidad del servicio y en general mejorar la planificación de los viajes. Esta iniciativa representa un paso concreto hacia la equidad tecnológica en el transporte, beneficiando especialmente a los sectores tradicionalmente más rezagados.
+\newpage
+\section{Aspectos de la Empresa}
+La primera etapa de este proyecto se desarrollará en colaboración con la empresa Tur Maipo S.A., la cual ha manifestado interés en participar activamente en el proceso de diseño y validación del sistema. Gracias al contacto directo con su administrador, se cuenta con la disposición y apertura necesaria para trabajar en conjunto, lo que permitirá al equipo de desarrollo adaptar la solución a las necesidades reales del rubro y obtener retroalimentación directa desde el terreno.
+\\\\
+Tur Maipo S.A. operará como caso piloto para la implementación inicial, permitiendo validar la funcionalidad y utilidad de la plataforma. Este enfoque es especialmente relevante, ya que muchas empresas de buses rurales en Chile presentan estructuras operativas similares, lo que facilita la posterior escalabilidad y adaptación del sistema a otros operadores del sector.  
+\subsection{Presentación de la Empresa}
+Tur Maipo S.A. Es una empresa Chilena de transporte rural que opera en el sector sur de la región metropolitana, en el sector del Maipo, recorriendo desde la comuna de la Florida en Santiago hasta el pueblo de San Gabriel en San José de Maipo, se destaca por ser la única empresa de buses rurales que opera en el sector del Maipo con dos recorridos actualmente (MB72-A y MB72-B)
+\newpage
+\subsection{Estructura Organizacional}
+La empresa cuenta con una serie de personal que en su mayoría está conformada por los choferes de buses, un administrador principal y un soporte técnico. El resto de tareas son delegadas a empresas externas.\\\\
+\textbf{Personal:}
+    \begin{center}
+        \begin{table}[!h]
+            \centering
+            \begin{tabular}{|c|c|}
+                \hline
+                Presidente: & Mauricio González Camus \\
+                \hline
+                Vice presidente: & Marcelo González Camus \\
+                \hline
+                Director: & Claudio de La Paz Acevedo \\
+                \hline
+                Gerente: & Danilo Rodríguez González \\
+                \hline
+                Jefe de Servicio: & Juan Flores Cuevas \\
+                \hline
+                Inspector 1: & Mauricio González Camus \\
+                \hline
+                Inspector 2: & Luis Ríos Mella \\
+                \hline
+            \end{tabular}
+        \end{table}
+    \end{center}
+    
+    \subsection{Objetivos de la Empresa}
+    Tur Maipo se dedica al transporte de personas y su objetivo general es prestar servicio de transporte masivo de habitantes del sector de San José de Maipo.
+    \begin{itemize}
+    \subsection{Análisis FODA}
+    \item \textbf{Fortalezas}
+    \begin{itemize}
+        \item \textbf{Conocimiento del Territorio:} La mayoría de personas que trabajan en la empresa, son habitantes de San José de Maipo, por lo que conocen bien el lugar.
+        \item \textbf{Relación con la Comunidad Local:} Al igual que en el punto anterior, que sean los mismos habitantes los que manejan y trabajan en la empresa, genera confianza y familiaridad para muchos de los usuarios.
+    \end{itemize}
+    \newpage
+    \item \textbf{Oportunidades}
+    \begin{itemize}
+        \item \textbf{Acceso Subsidios: }Existe la posibilidad de poder postular a algún subsidio que permita modernizar los sistemas tecnológicos.
+        \item \textbf{Demanda por Mejoras Tecnológicas: }En general los usuarios están acostumbrados al uso de servicios de planificación de viajes, pagos electrónicos y en general mayor comodidad lo que puede significar tener una mejor recepción.
+    \end{itemize}
+     \item \textbf{Debilidades}
+    \begin{itemize}
+        \item \textbf{Tecnología Obsoleta: }La empresa no cuenta con métodos de pago modernos, aún se siguen utilizando tickets en papel y no hay una geolocalización de los buses en tiempo real.
+        \item \textbf{Incidentes con Buses: }Los buses tienen poca capacidad para horarios de mucha demanda, además siempre hay inconvenientes en el día a día, por ejemplo incidentes mecánicos con los buses, y en general la respuesta de la empresa es lenta ya que no hay un mecanismo para automatizar el proceso de retirar el bus de servicio y ajustar la frecuencia del resto de buses, actualmente se hace totalmente a mano.
+        \item \textbf{Herramientas de Administración Limitadas:} La empresa cuenta con un software que permite consultar si es que los buses están cumpliendo con la frecuencia necesaria, sin embargo hay muchos procesos que se siguen haciendo a mano.
+    \end{itemize}
+    \item \textbf{Amenazas}
+    \begin{itemize}
+        \item \textbf{Comparación Directas con la Red Metropolitana:} Las diferencias en calidad, tecnología y comodidad son evidentes.
+        \item \textbf{Posible Entrada de Competidores:} Empresas privadas o la misma empresa RED podría estar interesada en cubrir la misma zona.
+        \item \textbf{Presión por Parte de la Población:} Los usuarios están acostumbrados a estándares similares a los que otras empresas de transporte ofrecen, lo cuál hace que la insatisfacción aumente cada vez más.
+    \end{itemize}
+    \end{itemize}
+    \subsection{Posición de la Empresa en el Mercado}
+    En general la empresa a día de hoy presta servicio a un nicho muy específico que es el sector de San José de Maipo, una zona compleja con caminos estrechos y complicado, la población muy dispersa y trayectos muy largos, por lo que requiere de experiencia en el terreno o un muy buen estudio del mismo. Además es una empresa que ha logrado crear una estrecha relación con la comunidad al tener una plantilla de trabajadores pertenecientes a la misma.
+    \subsection{Competencia}
+    Esta empresa de momento funciona como una suerte de monopolio, ya que hay pocos o nulos competidores que cubran la zona de esta, por lo que es un beneficio de cara a la competencia. Sin embargo en el pasado, sobre todo en pandemia, cuando la empresa estuvo al borde de la quiebra, existieron rumores de que otras empresas tomaran la zona como la misma empresa RED ya que el estado no puede dejar una comuna sin transporte público.
+    \newpage
+    \subsection{Clientes}
+    Los principales usuarios del servicio son los habitantes del sector de San José de Maipo, trabajadores que se desplazan desde y hacia la zona, y turistas que visitan el área. 
+    \\\\
+    La población local está familiarizada con la operación de los recorridos: conocen las rutas, los puntos de detención y, en general, manejan los horarios aproximados de los buses. Esta experiencia acumulada les permite adaptarse a las limitaciones del sistema sin mayores inconvenientes.
+    \\\\
+    En contraste, los trabajadores que provienen desde Santiago y no están habituados a la zona enfrentan mayores dificultades. Deben llegar con anticipación a los paraderos, especialmente si desean abordar recorridos de baja frecuencia como el MB72, y estar dispuestos a esperar largos periodos.
+    \\\\
+    Por su parte, los turistas suelen depender de información de terceros como blogs, recomendaciones orales o publicaciones en redes que frecuentemente están desactualizadas o contienen errores, lo que complica su experiencia de viaje y genera incertidumbre al momento de planificar.
+
+    \subsection{Proveedores}
+    La empresa solo cuenta con un proveedor de servicios de logística y Software CityMovil.
+    \begin{table}[!h]
+        \centering
+        \begin{tabular}{|c|c|}
+            \hline
+             \textbf{Nombre Empresa} & \textbf{Objetivo}  \\
+             \hline 
+             CityMovil & En Citymovil estamos orientados a brindar soluciones tecnológicas\\
+             & de última generación para resolver en forma integral las distintas \\ 
+             & necesidades y problemáticas que puedan tener nuestros clientes en \\
+             & temas de transporte y logística. \\
+             \hline
+        \end{tabular}
+    \end{table}
+\newpage
+\subsection{Tecnología}
+
+Tur Maipo S.A. dispone de un proveedor de servicios de software que les ha desarrollado una plataforma web con capacidad de seguimiento de buses. Esta herramienta funciona mediante el uso de *checkpoints* distribuidos a lo largo de las rutas, lo que permite una estimación de la ubicación de los vehículos. Sin embargo, este sistema presenta limitaciones importantes: no ofrece información en tiempo real ni proporciona una localización precisa, y su acceso está restringido exclusivamente al personal administrativo de la empresa, por lo que los usuarios del servicio no pueden visualizar la ubicación de los buses.
+\\\\
+
+En cuanto al sistema de pagos, se mantiene el uso exclusivo de efectivo, sin integración de medios electrónicos ni tarjetas de prepago, lo que limita la eficiencia del proceso y la comodidad del usuario.
+\\\\
+Por otro lado, los conductores cuentan únicamente con un reloj que les indica, de manera aproximada, si están adelantados o retrasados respecto a su itinerario. No existe un sistema formal de registro de incidentes en ruta, lo que dificulta el monitoreo y la mejora continua del servicio.
+\newpage
+\subsection{Descripción del proceso productivo o servicio}
+Tur Maipo S.A. opera una flota de buses destinados al transporte público rural en el sector de San José de Maipo. Actualmente, la empresa cubre dos rutas principales, trasladando pasajeros desde un punto de origen (A) hasta distintos destinos (B) dentro del área geográfica establecida.
+\\\\
+El servicio consiste en la recogida de pasajeros en paraderos predefinidos, el traslado a lo largo de la ruta asignada y el cobro de una tarifa en función del tramo recorrido. Las tarifas se estructuran de manera proporcional a la distancia: mientras más alejado sea el destino respecto al punto de partida, mayor es el valor del pasaje. 
+\\\\
+El pago se realiza exclusivamente en efectivo y se entrega al conductor, quien también emite un ticket en papel como comprobante en caso de accidente, como una suerte de garantía de que fue parte del accidente en el bus y la empresa pueda hacerse cargo. El proceso no cuenta con automatización, medios electrónicos de pago ni sistemas digitales de control de flujo de pasajeros.
+\newpage
+\subsection{Inversiones}
+
+En el pasado la empresa invirtió en un sistema de geolocalización provisto por CityMovil, lo que indica que como empresa están dispuestos a invertir en tecnología que mejore su servicio.
+
+\subsection{Informática de la empresa}
+
+Tal como se mencionó anteriormente, Tur Maipo S.A. cuenta con una plataforma web desarrollada por la empresa CityMovil, cuyo objetivo principal es brindar soporte a las labores de coordinación operativa. Esta herramienta permite visualizar la ubicación estimada de los buses mediante checkpoints distribuidos en las rutas, y está diseñada para ser utilizada por los inspectores encargados de gestionar la salida, llegada y disponibilidad de los vehículos en circulación.
+\\\\
+El acceso a esta plataforma se realiza desde un computador ubicado en la central operativa de la empresa, y su uso está restringido al personal autorizado, sin interacción directa con los usuarios finales del servicio.
+\newpage
+\section{Análisis}
+\subsection{Descripción del Problema}
+Tras realizar un análisis preliminar de la operación de la empresa Tur Maipo S.A., se identificó una carencia significativa en cuanto a infraestructura tecnológica, especialmente en lo referido al seguimiento y localización en tiempo real de los buses. Actualmente, no existe un sistema que permita geolocalizar con precisión las unidades durante sus recorridos, lo que impide tanto a la empresa como a los usuarios tener visibilidad sobre el estado del servicio en curso.
+\\\\
+Esta situación representa una barrera importante para la modernización del transporte rural e interurbano, ya que limita la capacidad de los pasajeros para planificar sus viajes con eficiencia y de la empresa para monitorear, optimizar y gestionar sus operaciones de forma proactiva.
+\\\\
+En un contexto donde los sistemas urbanos de transporte, como Metro o Red Metropolitana de Movilidad, han incorporado tecnologías que permiten ofrecer información en tiempo real, resulta evidente la brecha digital existente entre estos servicios y las empresas rurales. Esta brecha afecta la calidad del servicio y reduce la competitividad del transporte rural frente a otras opciones más tecnificadas.
+\\\\
+Este proyecto busca abordar dicha problemática mediante una solución tecnológica accesible, escalable y centrada en las necesidades reales tanto de la empresa como de los usuarios.
+\newpage
+\subsection{Descripción de la Solución}
+Se desarrollará una plataforma digital interoperable (web y móvil) para mejorar la planificación y operación del transporte rural en Chile, dirigida a tres actores clave: choferes, pasajeros y administradores. La solución abordará la falta de información en tiempo real y la interoperabilidad con sistemas metropolitanos, mediante las siguientes funcionalidades:
+\begin{enumerate}
+    \item \textbf{Para Choferes (Enfoque: Monitoreo y eficiencia operativa)}
+    \begin{itemize}
+        \item \textbf{Registro y Validación}: Los choferes se autenticarán con us licencia clase A y podrán seleccionar su recorrido asignado.
+        \item \textbf{Geolocalización en tiempo real}: La app móvil reportará su ubicación cada 30 segundos (con precisión $\geq$ 85\%), mostrando su posición relativa a otros buses en un mapa. Esto les permitirá ajustar frecuencias y evitar sobredemanda.
+        \item \textbf{Alertas Proactivas:} Reportes sobre desvíos, accidentes o cambios en rutas que serán notificados a choferes y pasajeros de la misma ruta para mejorar la puntualidad y acceso a información.
+    \end{itemize}
+    \item \textbf{Para Pasajeros (Enfoque: Acceso a información confiable)}
+    \begin{itemize}
+        \item \textbf{Visualización interactiva}: Los usuarios verán buses activos en su zona, con datos como patente, tarifa y tiempo estimado de llegado con presición $\geq$ 80\%.
+        \item \textbf{Planificación intermodal}: Integración con API's de la Red de Buses Metropolitana y Metro de Santiago para combinar rutas rurales y urbanas en un solo itinerario.
+        \item \textbf{Acceso multiplataforma}: Disponible una app móvil en IOS y Android con el fin de poder cubrir la mayor base de usuarios.
+    \end{itemize}
+    \item \textbf{Para Administradores (Enfoque: Optimización del servicio)}
+    \begin{itemize}
+        \item \textbf{Panel de métricas en tiempo real}: Visualización de datos como frecuencia de buses, demoras promedio y demanda por horario, con la posibilidad de generar informes del sistema para ejecutivos e inversores.
+        \item \textbf{Gestión de incidencias}: Recepción de reportes de choferes (ej: Fallas mecánicas) y pasajeros (ej: Calidad del servicio) para acciones correctivas inmediatas.
+    \end{itemize}
+    \item \textbf{Interoperatividad (Enfoque: Conexión con sistemas existentes)}
+    \begin{itemize}
+        \item \textbf{Integración con API's públicas}: Conexión con Red de Buses Metropolitana y Metro de Santiago para mostrar opciones de viaje combinado en la plataforma.
+    \item \textbf{Protocolos abiertos}: Uso de estándares GTFS-Realtime para garantizar compatibilidad y escalabilidad
+    \end{itemize}
+    
+\end{enumerate}
+\subsubsection{ Diagrama de Funcionamiento}
+    En general así es como se podría ver en la vida real el funcionamiento de la aplicación, donde los actores chofer y pasajero interactuan con el sistema.
+\begin{center}
+    \fbox{\includegraphics[width=15cm]{ArquitecturaDeDesarrolloBusTracker.drawio.png}}
+\end{center}
+\newpage
+\subsection{Análisis FODA}
+    \begin{itemize}
+    \item \textbf{Fortalezas}
+    \begin{itemize}
+        \item \textbf{Impacto Social Directo:} La comunidad se beneficiaría de forma directa, mejorando sus tiempos de viaje, y facilitando la toma de decisiones. 
+        \item \textbf{Bajo Costo de Implementación:} Ya que no requiere de hardware especializado para obtener la ubicación de los buses, es posible implementarlo solo considerando la mano de obra y los servicios que se puedan llegar a utilizar.
+        \item \textbf{Fácil Escalabilidad:} Si la empresa adquiere nuevos buses o implementa nuevos recorridos, es fácil incorporarlos al sistema. o si por otra parte, se quieren sumar más empresas a la plataforma, solo habría que mapear sus recorridos.
+        \item \textbf{Validación en el Mercado:} Es un proyecto que no solo vivirá en la teoría, ya que tenemos la oportunidad de poder trabajar con gente con experiencia en el transporte.
+    \end{itemize}
+    \item \textbf{Oportunidades}
+    \begin{itemize}
+        \item \textbf{Brecha Tecnológica: }La mayor parte de empresas no tiene una base tecnológica solida, existe la oportunidad de ofrecer la tecnología al resto de empresas del rubro.
+        \item \textbf{Demanda por Mejoras Tecnológicas: }Alta demanda por una gran base de usuarios que actualmente usan la red de buses rurales y además utilizan otras aplicaciones de planificación de viajes.
+        \item \textbf{Implementación de Funcionalidades: }La creación de este sistema ofrece una base solida para poder escalar en una segunda etapa a nuevas funcionalidades como pagos digitales, estadística e inteligencia de negocios para la empresa.
+    \end{itemize}
+    \newpage
+     \item \textbf{Debilidades}
+    \begin{itemize}
+        \item \textbf{Recursos Humanos Limitados: }De momento en el proyecto hay dos personas trabajando a tiempo parcial.
+        \item \textbf{Dependencia: }El proyecto depende de la conexión a internet de los celulares y su servicio de ubicación gps, lo que puede llevar a un mal funcionamiento.
+        \item \textbf{Validación Restringida:} Es bueno que una empresa valide el proyecto, sin embargo no es representativo a todas las empresas de buses rurales, el éxito en Tur Maipo S.A. no asegura el éxito total del sistema.
+    \end{itemize}
+    \item \textbf{Amenazas}
+    \begin{itemize}
+        \item \textbf{Resistencia al Cambio:} Sobre todo choferes pueden no querer utilizar la aplicación por resistencia al cambio, lo que haría que todo el sistema no funcione como debería, es por esto que el programa pasará por una fase de validación en conjunto a Tur Maipo S.A., como una suerte de programa de pruebas y que en el uso real los propios choferes vean si este sistema mejora su trabajo.
+        \item \textbf{Competidores:} Riesgo de que empresas grandes con más experiencia desarrollen una solución similar con más recursos, menos tiempo y mayor posibilidad de invertir en hardware e investigación que logre dar con un sistema objetivamente mejor.
+        \item \textbf{Regulaciones:} Posibles cambios en la regulación del transporte que afecten el modelo del sistema.
+        \item \textbf{Desinterés:} Por parte de empresas del rubro en adoptar nuevas tecnologías
+    \end{itemize}
+    
+    \end{itemize}
+    \newpage
+\subsection{Objetivo General}
+Desarrollar e implementar una plataforma digital interoperable en un plazo de 3 meses que mejore la planificación de viajes en buses rurales de Chile, proporcionando información en tiempo real sobre ubicación y tiempos estimados de llegada con una precisión mínima del 80\%, e integrando conexiones con la Red de Buses Metropolitana y el Metro de Santiago.
+
+\subsection{Objetivos Específicos}
+\begin{itemize}
+    \item Digitalizar el monitoreo del transporte rural mediante una plataforma móvil y web en 3 meses, permitiendo que al menos el 90\% de los conductores y pasajeros accedan a información en tiempo real sobre ubicación y horarios.
+    \item Implementar un sistema de rastreo GPS en tiempo real para buses interurbanos en 3 meses, con una precisión del 85\% en ubicación y actualizaciones cada 30 segundos, usando tecnología de bajo costo y conectividad estable..
+    \item Desarrollar un módulo de análisis de métricas en 1 mes (luego de la implementación del rastreo), que procese datos de frecuencia, demoras y demanda, generando informes semanales para optimizar rutas y reducir tiempos de espera en un 15\%.
+    \item Lograr la interoperatividad con la Red de Buses Metropolitana y el Metro de Santiago en 1 mes (luego de la implementación del rastreo), mediante API's públicas, permitiendo que el 100\% de los usuarios visualicen conexiones en una misma plataforma.
+    \item Capacitar al 90\% de conductores y el administrador de Tur Maipo S.A. Además de 30 pasajeros sobre el uso de la plataforma.
+\end{itemize}
+\newpage
+\subsection{Alcance del Proyecto}
+El presente proyecto busca desarrollar una plataforma móvil enfocada en mejorar la planificación y experiencia de viaje en el sistema de buses interurbanos y rurales, a través de la implementación de geolocalización en tiempo real.
+\\\\
+En esta primera etapa, el desarrollo estará centrado en una solución funcional piloto implementada en colaboración con la empresa Tur Maipo S.A., con la posibilidad de escalar posteriormente a otras empresas con características operativas similares.
+\\\\
+El sistema contará con tres perfiles de usuario principales:
+\begin{itemize}
+    \item \textbf{Choferes:} podrán registrarse, verificar su identidad (mediante licencia clase A), seleccionar su recorrido y transmitir su ubicación en tiempo real mediante el GPS de su dispositivo móvil.
+
+    \item \textbf{Pasajeros:} podrán consultar los recorridos activos en su zona, visualizar la ubicación de los buses en tiempo real, estimar tiempos de llegada y planificar sus viajes con mayor precisión.
+    \item  \textbf{Adminstradores: } Tendrán acceso a la ubicación en tiempo real de los buses, además podrán consultar métricas relacionadas al funcionamiento de la aplicación.
+\end{itemize}
+Dentro del alcance del proyecto se incluye:
+\begin{itemize}
+    \item Desarrollo de una aplicación móvil híbrida (Android e iOS) con interfaces diferenciadas para choferes y pasajeros.
+
+    \item Implementación de un backend para gestionar usuarios, recorridos y geolocalización.
+
+    \item Integración de mapas en tiempo real.
+
+    \item Pruebas de funcionamiento en entornos reales con al menos una flota de buses de Tur Maipo S.A.
+
+    \item Generación de métricas básicas de uso y rendimiento de los servicios.
+\end{itemize}
+Fuera del alcance del proyecto (exclusiones):
+\begin{itemize}
+    \item Integración con sistemas de pago o billeteras electrónicas.
+
+    \item Desarrollo de hardware específico (como GPS dedicados o pantallas a bordo).
+
+    \item Expansión a todas las empresas del rubro fuera del piloto inicial.
+
+    \item Soporte técnico posterior a la etapa de validación (aunque podría contemplarse en una futura fase).
+\end{itemize}
+\subsection{Conformación del Equipo}
+El equipo de desarrollo está conformado por dos desarrolladores con atribuciones específicas y compartidas para todo el proyecto
+\begin{table}[!h]
+    \centering
+    \begin{tabular}{|c|c|}
+        \hline
+        Nombre & Rol \\
+        \hline
+         Nicolás Toledo &  Desarrollo Frontend, Diseño de las Interfaces, Experiencia de Uso\\
+         \hline
+         Diego Vilches & Desarrollo Backend, Arquitectura, Despliegue \\
+         \hline
+    \end{tabular}
+\end{table}
+\newpage
+\section{Factibilidad}
+\subsection{Factibilidad Técnica}
+El presente análisis tiene como propósito establecer si el desarrollo e implementación de una plataforma digital destinada al monitoreo en tiempo real de los recorridos del sistema de transporte interurbano rural en la comuna de San José de Maipo es viable desde el punto de vista técnico. Para abordar esta evaluación, se consideran los componentes tecnológicos necesarios (hardware y software), la disponibilidad y competencias del recurso humano, así como las condiciones operativas y ambientales propias del contexto rural donde se desplegará el sistema. Además, se analizan alternativas posibles, riesgos asociados y se establecen las bases metodológicas para garantizar una ejecución factible, sostenible y alineada con las restricciones presupuestarias del proyecto, considerando tanto su etapa piloto como su potencial escalabilidad futura.
+\subsubsection{Tecnologías Disponibles}
+La solución propuesta se estructura sobre una arquitectura de software distribuido que contempla dos componentes principales: una aplicación móvil diseñada para el sistema operativo Android, que será utilizada directamente por los conductores de buses durante sus recorridos, y una interfaz web asociada que permite el monitoreo en tiempo real por parte de los usuarios y administradores del sistema. Esta arquitectura responde a un enfoque modular que facilita su evolución a medida que el proyecto madure. 
+\\\\
+Esta solución se basa exclusivamente en herramientas tecnológicas de libre acceso o gratuitas, ampliamente soportadas por la comunidad de desarrollo y con trayectoria comprobada en proyectos de similar escala. Se consideran, entre otras: 
+\begin{itemize}
+    \item Dispositivos Android (versión 8.0 o superior), ya en posesión de los choferes de las rutas seleccionadas, con soporte para ejecución de aplicaciones ligeras y servicios de ubicación. 
+
+    \item Sensores GPS integrados en los dispositivos móviles, capaces de generar coordenadas georreferenciadas a intervalos definidos, configurables desde la app. 
+
+    \item APIs de cartografía y geolocalización, como Google Maps Platform o alternativas open source como LeafletJS o OpenStreetMap, que permiten visualizar en tiempo real la ubicación y trayectoria de los vehículos.
+    
+    \item Desarrollo de backend utilizando frameworks modernos como Node.js o Django, que permiten una rápida iteración, escalabilidad progresiva y compatibilidad con bases de datos relacionales y no relacionales. 
+
+    \item Almacenamiento de datos en la nube mediante Firestore, PostgreSQL u otros motores compatibles con soluciones serverless, dentro de planes gratuitos o con tarifas reducidas para proyectos de baja escala, asegurando persistencia, consultas eficientes y disponibilidad. 
+\end{itemize}
+Gracias a esta selección estratégica de herramientas, es posible construir un sistema funcional, estable, modular y expandible sin necesidad de incurrir en gastos significativos por adquisición de infraestructura especializada ni licencias de software. Esta aproximación es especialmente crítica considerando la condición de proyecto universitario sin financiamiento externo ni apoyo institucional directo. 
+\newpage
+\subsubsection{Requerimientos Técnicos y Recursos}
+La ejecución exitosa del proyecto depende de la disponibilidad efectiva y el uso adecuado de los siguientes elementos clave: 
+\begin{itemize}
+    \item \textbf{Capital Humano: }el equipo está conformado por dos desarrolladores con formación universitaria en ingeniería informática, quienes asumen la totalidad del ciclo de vida del software: investigación, toma de requerimientos, diseño lógico y físico, desarrollo de funcionalidades, pruebas de validación, despliegue en entorno real y mantención evolutiva. Esta multidisciplinariedad interna permite una ejecución ágil, flexible y con autonomía total, eliminando dependencias externas y costos asociados a subcontratación. 
+    \item \textbf{Equipamiento: }se ha verificado empíricamente que los conductores involucrados en los recorridos objetivo cuentan con smartphones funcionales con capacidades GPS y conexión móvil, lo que elimina la necesidad de proveer hardware adicional. Esta condición también simplifica la logística y reduce el tiempo de implementación del sistema. 
+    \item \textbf{Conectividad: }aunque se reconoce que en la zona existen tramos con baja o nula cobertura móvil, el sistema ha sido diseñado con funcionalidades específicas de operación offline temporal, permitiendo que la aplicación almacene localmente la información del recorrido y la sincronice automáticamente al backend una vez recuperada la conectividad. Esta capacidad asegura continuidad operativa sin intervención del usuario y evita pérdida de datos.
+    \item \textbf{Infraestructura en la nube:} se contempla el uso de proveedores como Firebase, Render, Vercel o Railway, los cuales permiten gestionar bases de datos, servidores backend y despliegue web sin costos elevados. Estos servicios ofrecen redundancia, balanceo de carga, y soporte para implementaciones escalables, aspectos que aseguran alta disponibilidad, monitoreo centralizado y facilidad de administración remota.
+\end{itemize}
+\newpage
+\subsubsection{Adecuación al Entorno Rural}
+San José de Maipo es una comuna de geografía accidentada, con presencia de cordones montañosos, rutas sinuosas y sectores de difícil acceso o baja densidad de población. Estas características imponen restricciones técnicas que fueron consideradas desde la etapa inicial de diseño. Las decisiones arquitectónicas del sistema fueron formuladas teniendo en cuenta estas condiciones particulares, con el fin de asegurar robustez y adaptabilidad: 
+\begin{itemize}
+    \item El sistema evita cualquier necesidad de intervenciones físicas o electrónicas en los buses, utilizando exclusivamente tecnología ya disponible, lo cual permite una implementación no invasiva y de bajo impacto.
+    \item Los smartphones de los conductores actúan como nodos emisores de información georreferenciada, eliminando la necesidad de instalar dispositivos externos o sensores dedicados, lo que reduce los costos de hardware y de mantenimineto.
+    \item La arquitectura cliente-servidor incorpora tolerancia a fallos de conectividad mediante almacenamiento local temporal y sincronización asincrónica, protegiendo la integridad de los datos incluso en zonas sin señal. 
+    \item Se prioriza una interfaz de usuario intuitiva, minimalista, multilingüe si es necesario, y diseñada bajo principios de usabilidad universal. El objetivo es garantizar la accesibilidad del sistema para usuarios con distintos niveles de alfabetización digital, incluyendo adultos mayores, personas sin experiencia previa en aplicaciones móviles, o turistas ocasionales. 
+\end{itemize}
+Adicionalmente, se ha optado por un enfoque completamente independiente en términos de infraestructura y desarrollo. Dado que no se cuenta con colaboración formal de empresas del rubro ni acceso a plataformas existentes (como CityMovil), el sistema ha sido diseñado desde cero, lo que permite libertad técnica total, control sobre la evolución del producto y evita riesgos legales o limitaciones por propiedad intelectual. 
+\newpage
+\subsubsection{Comparación de Alternativas Tecnológicas}
+Durante la fase de diseño inicial, se evaluaron dos alternativas principales para la captación de datos de geolocalización y el despliegue de la solución propuesta:
+\begin{itemize}
+    \item  \textbf{Alternativa 1: Desarrollo o adquisición de hardware propio especializado (GPS dedicado por vehículo).} Esta opción, aunque viable desde una perspectiva técnica, requiere una inversión económica significativa, conocimientos avanzados de integración electrónica, y planificación logística adicional. Además, implica mantenimiento físico regular, coordinación con operadores y soporte técnico en terreno. Su adopción también podría generar resistencia por parte de los conductores, dado el aumento en la complejidad del equipamiento. Debido a estas condiciones, se descarta como inviable dentro del marco del proyecto. 
+
+    \item \textbf{Alternativa 2: Plataforma basada en smartphones personales de los conductores (opción seleccionada).} Este enfoque se ajusta a las condiciones reales del proyecto: permite una implementación rápida, sin barreras de entrada, de bajo costo y con alta compatibilidad con los recursos existentes. Al basarse en dispositivos que ya forman parte del equipamiento cotidiano de los conductores, se simplifica el proceso de adopción, capacitación y soporte. Además, favorece la escalabilidad y adaptabilidad del sistema a otros contextos rurales similares, sin modificar la arquitectura base.
+\end{itemize}
+
+\vspace{0.5cm}
+\newpage
+\subsubsection*{Resumen Comparativo Visual}
+
+A continuación, se presenta una tabla comparativa entre las dos alternativas evaluadas para la implementación del sistema de geolocalización. Esta síntesis visual refuerza la elección del uso de smartphones personales como opción preferente, al mostrar ventajas técnicas, económicas y operativas frente a la instalación de GPS dedicados.
+
+
+\begin{table}[!h]
+        \begin{tabular}{|p{5cm}|p{5.5cm}|p{5.5cm}|}
+            \hline
+            \rowcolor[HTML]{D9D9D9}
+            \textbf{Criterio} & \textbf{GPS Dedicado (Alternativa 1)} & \textbf{Smartphone Personal (Alternativa 2 - Elegida)} \\ \hline
+
+            \textbf{Costo inicial} & Alto (requiere compra e instalación por bus) & Nulo; se utilizan dispositivos ya existentes \\ \hline
+            \textbf{Instalación} & Requiere montaje físico y configuración técnica & No requiere instalación; uso directo desde el teléfono \\ \hline
+            \textbf{Mantenimiento} & Necesita revisiones periódicas en terreno & Mínimo; depende del dispositivo personal del chofer \\ \hline
+            \textbf{Tiempo de implementación} & Lento; implica logística operativa y técnica & Rápido; puede desplegarse en pocos días \\ \hline
+            \textbf{Escalabilidad} & Limitada; requiere adquisición de hardware adicional & Alta; basta con registrar nuevos conductores \\ \hline
+            \textbf{Resistencia al uso} & Alta; complejidad podría generar rechazo & Baja; uso cotidiano y familiar para los choferes \\ \hline
+            \textbf{Tolerancia a desconexión} & Variable; depende del dispositivo y sistema elegido & Alta; la app contempla modo offline y sincronización automática \\ \hline
+            \textbf{Adecuación al entorno rural} & Condicionada a recursos, señal y soporte técnico & Alta; diseñada para funcionar en contextos con limitaciones de conectividad \\ \hline
+
+        \end{tabular}
+\end{table}
+\newpage
+\subsubsection{Conclusión de la Factibilidad Técnica}
+Con base en el análisis desarrollado, se concluye que el proyecto es técnicamente factible, pertinente y sustentable dentro del marco de condiciones actuales. Las tecnologías seleccionadas han sido probadas en entornos reales, cuentan con amplia documentación, comunidades activas y niveles altos de soporte, y se alinean con las competencias técnicas del equipo de desarrollo. Asimismo, la arquitectura planteada permite una implementación progresiva, mantenimiento autónomo, evolución funcional y posibilidad de replicabilidad en otros territorios con características geográficas y sociales similares. 
+\\\\
+El enfoque de independencia técnica, uso de recursos gratuitos, reducción de complejidad operativa y aprovechamiento de equipamiento ya existente permite garantizar que la solución pueda funcionar de manera efectiva y continua en el entorno rural de San José de Maipo. Esto sienta las bases para una posible expansión territorial, así como para una futura incorporación de funcionalidades adicionales (por ejemplo, notificaciones a usuarios, análisis de datos históricos de recorridos, integración con otros sistemas públicos). De esta forma, se valida que la propuesta cumple con los criterios de viabilidad técnica requeridos para avanzar sólidamente hacia las siguientes fases del proyecto y su eventual puesta en marcha en contexto real. 
+\newpage
+\subsection{Factibilidad Económica}
+\subsubsection{Estudio de la Competencia}
+Con el objetivo de contextualizar el proyecto dentro del panorama tecnológico actual y comprender el posicionamiento de nuestra solución frente a alternativas ya existentes, se realizó un análisis exhaustivo y comparativo de distintas plataformas que ofrecen funcionalidades similares, tanto en el ámbito nacional como internacional. El propósito fue evaluar la competitividad, viabilidad y pertinencia del desarrollo de una aplicación móvil destinada a la visualización en tiempo real de recorridos de transporte rural, centrado inicialmente en la comuna de San José de Maipo. Esta sección resume las plataformas analizadas, detallando sus características técnicas, modelo de implementación, requerimientos, y diferencias estructurales frente al enfoque adoptado por el proyecto.
+\begin{itemize}
+    \item \textbf{a) CityMovil (Chile)}\\
+    \begin{itemize}
+        \item     Plataforma comercial consolidada en el mercado nacional, empleada por flotas reguladas en ciudades como Punta Arenas y en el sistema de transporte metropolitano. 
+
+        \item Opera mediante contratos con entidades gubernamentales o empresas concesionadas, lo que implica acuerdos formales y recursos económicos sustanciales. 
+
+        \item Requiere instalación de dispositivos GPS dedicados en cada vehículo, lo cual implica costos iniciales elevados, configuración técnica específica y mantención continua. 
+
+        \item Proporciona visualización precisa de recorridos, estimaciones de llegada en tiempo real y alertas de retraso. 
+
+        \item \textbf{Limitación:} carece de flexibilidad para adaptarse a contextos rurales con operadores independientes, y depende de estructura institucional y financiamiento. 
+
+        \item \textbf{Diferencia estructural:} nuestro proyecto evita dependencias externas y se apoya en smartphones personales de los choferes como fuente de datos GPS, eliminando la necesidad de hardware adicional e integraciones complejas. 
+    \end{itemize}
+    \newpage
+    \item \textbf{b) Moovit (Internacional)}
+    \begin{itemize}
+        \item     Plataforma global de planificación de movilidad urbana, basada en integración de datos oficiales de agencias de transporte y participación comunitaria mediante crowdsourcing. 
+
+       \item Presenta una cobertura amplia en áreas metropolitanas y grandes ciudades, pero su precisión en zonas rurales depende de la existencia de datos GPS integrados o colaboraciones formales con entidades públicas. 
+
+        \item No permite personalización, desarrollo de funcionalidades específicas ni control local de la información. 
+
+        \item \textbf{Debilidad:} su efectividad es limitada en zonas con baja penetración tecnológica, infraestructura digital mínima o señal intermitente, como sucede en San José de Maipo. 
+
+        \item \textbf{Contraste:} el sistema propuesto se diseña desde sus fundamentos para adaptarse a la ruralidad, favoreciendo la autonomía técnica y operativa mediante una arquitectura ligera y flexible, ajustada al terreno. 
+    \end{itemize}
+    \item \textbf{c) Google Transit / Google Maps (Internacional)}
+    \begin{itemize}
+        \item     Plataforma integrada dentro de Google Maps, que permite visualizar información de transporte público mediante datos proporcionados por operadores en formato GTFS (General Transit Feed Specification). 
+
+        \item Si bien es de uso masivo, su integración requiere infraestructura técnica avanzada por parte de los operadores: generación de archivos GTFS estáticos y en tiempo real, servidores backend y validaciones técnicas. 
+
+        \item No brinda beneficios específicos para entornos rurales ni contempla adaptaciones locales. 
+
+        \item \textbf{Desventaja:} en ausencia de datos formales, no puede mostrar información de rutas o estimaciones en tiempo real. 
+
+        \item \textbf{Ventaja comparativa del proyecto:} al generar una solución autónoma sin necesidad de publicar datos en formatos estándar, se evita la complejidad técnica y se garantiza una mayor soberanía tecnológica a nivel local. 
+    \end{itemize}
+    \item \textbf{d) Transit App (Internacional)}
+    \begin{itemize}
+        \item     Aplicación centrada en la experiencia del pasajero urbano, desplegada principalmente en ciudades con datos abiertos y ecosistemas tecnológicos consolidados. 
+
+        \item Utiliza la función “GO” que permite a pasajeros compartir su ubicación para inferir la posición del bus, lo que requiere un volumen significativo de usuarios activos. 
+
+        \item \textbf{Limitación:} su modelo de crowdsourcing no es viable en comunidades con baja densidad poblacional o escaso acceso digital. 
+
+        \item \textbf{Ventaja del proyecto:} el sistema parte de la base de que el chofer es el nodo emisor de datos, lo que garantiza cobertura y precisión sin depender de usuarios externos ni condiciones de adopción masiva. 
+    \end{itemize}
+    \item \textbf{e) OneBusAway (OpenSource)}
+    \begin{itemize}
+        \item Plataforma libre y altamente personalizable, creada originalmente por la Universidad de Washington, con despliegues en ciudades estadounidenses y algunas localidades de Europa. 
+
+        \item Admite diversas interfaces (web, app móvil, SMS) y múltiples formatos de entrada de datos (GTFS-RT, SIRI). 
+
+        \item \textbf{Potencial:} representa una opción sólida para proyectos de transporte público con capacidad técnica avanzada, posibilidad de instalación de servidores y equipos de mantenimiento dedicados. 
+
+        \item \textbf{Actualmente no viable:} su implementación requiere experiencia en DevOps, administración de bases de datos y configuración de entornos backend, recursos que exceden la realidad del equipo de desarrollo actual. 
+    \end{itemize}
+    \newpage
+    \textbf{f) Chalo (India)}
+        \item Plataforma privada diseñada para entornos urbanos y semiurbanos con características similares a las del transporte rural chileno: informalidad, operadores pequeños, y escasez de recursos institucionales. 
+
+        \item Utiliza smartphones como dispositivo de rastreo GPS, eliminando la necesidad de infraestructura especializada. 
+
+        \item Integra funcionalidades de pago digital, seguimiento en tiempo real y analítica para operadores. 
+
+        \item \textbf{Inspiración directa:} demuestra que es posible implementar soluciones efectivas en contextos de alta heterogeneidad operativa y bajo nivel de digitalización, validando el enfoque técnico del presente proyecto. 
+\end{itemize}\\
+
+\subsubsection{Conclusión del Estudio de la Competencia}\\
+
+El análisis evidencia que, si bien existen soluciones avanzadas y de gran escala, ninguna se ajusta completamente a las particularidades del transporte rural informal en Chile. Las plataformas revisadas requieren infraestructura tecnológica, financiamiento sostenido, acuerdos institucionales o condiciones de conectividad que sobrepasan la capacidad operativa de un proyecto académico desarrollado por un equipo reducido. En contraste, la propuesta universitaria se basa en un enfoque pragmático, de bajo costo, autónomo y altamente adaptable. Esto representa una ventaja competitiva sustantiva dentro de un nicho desatendido tanto por soluciones privadas como públicas.\\
+\newpage
+\subsubsection{Estudio Exploratorio de Mercado}
+El análisis del mercado potencial se centró en identificar y caracterizar los distintos segmentos de usuarios que podrían beneficiarse de una aplicación de monitoreo en tiempo real del transporte rural. Este estudio, aunque exploratorio y cualitativo, permite establecer una base sólida para comprender la demanda potencial y orientar decisiones futuras de diseño y despliegue. 
+\\\\
+\textbf{Público Objetivo}
+\\
+El sistema está orientado a los siguientes perfiles de usuario:
+\begin{itemize}
+    \item \textbf{Residentes permanentes:} personas que dependen del transporte rural para su movilidad diaria o frecuente hacia zonas urbanas como Puente Alto, La Florida o Santiago Centro. Incluye trabajadores, estudiantes y adultos mayores. 
+
+    \item \textbf{Turistas y visitantes ocasionales:} especialmente durante fines de semana y temporadas altas (verano, feriados), cuando se incrementa la incertidumbre sobre la frecuencia de los servicios y la demanda de transporte es más variable. 
+
+    \item \textbf{Familiares de pasajeros:} quienes requieren información a distancia sobre el estado del recorrido, especialmente en contextos de traslado de menores o personas mayores. 
+\end{itemize}
+\textbf{Brechas Detectadas}
+\\
+A partir de entrevistas informales y observación directa, se identificaron los siguientes problemas recurrentes:
+\begin{itemize}
+    \item \textbf{Ausencia de información confiable:} no existen canales oficiales ni actualizados que informen sobre recorridos, horarios o ubicación de los buses. 
+
+    \item \textbf{Alta informalidad:} los recorridos pueden modificarse sin previo aviso; los usuarios dependen de contactos personales para obtener información. 
+
+    \item \textbf{Falta de estandarización:} no hay paraderos formalizados ni nomenclatura unificada de rutas. 
+\end{itemize}
+\newpage
+\textbf{Validación Cualitativa}\\
+Se realizaron entrevistas informales a conductores de línea y usuarios frecuentes, obteniendo los siguientes hallazgos:
+\begin{itemize}
+    \item \textbf{Conductores:} dispuestos a colaborar si la herramienta no representa una carga adicional significativa y puede ejecutarse desde sus propios dispositivos.
+    \item \textbf{Usuarios:} Hay interés por conocer si el bus ya inició el recorrido, cuánto falta para que llegue, y por dónde viene, especialmente en trayectos largos o zonas alejadas. 
+\end{itemize}
+\textbf{Proyección de Adopción}\\
+Con base en estimaciones poblacionales, patrones de movilidad local y entrevistas, se proyecta que una fase piloto podría alcanzar entre 200 y 500 usuarios activos semanales. La aceptación inicial permitiría realizar ajustes iterativos, medir métricas de uso, y generar validaciones que respalden su posterior expansión hacia otros territorios similares.\\\\
+\textbf{Conclusión del Estudio de Mercado}\\
+Existe una necesidad insatisfecha de acceso a información confiable y en tiempo real sobre el transporte rural. El segmento identificado presenta características compatibles con soluciones digitales simples, especialmente si no requieren descarga de aplicaciones pesadas ni registro complejo. Esto refuerza la viabilidad técnica y social del proyecto, y justifica su implementación en modalidad piloto con proyección de crecimiento orgánico. 
+\newpage
+\subsubsection{Costos por Ciclo de Vida del Software}
+Se proyecta la materialización de la solución utilizando una metodología de desarrollo ágil, específicamente Scrum, considerando un periodo de tres meses para la primera iteración. Posteriormente, se espera repetir el ciclo integrando nuevas funcionalidades y corrigiendo errores detectados, como parte de un enfoque iterativo.
+\\\\
+Todas las etapas del proyecto serán calculadas en base a una estimación de las horas hombre necesarias para poder cumplir con un ciclo de vida de software de unas nueve semanas, estas horas serán calculadas en base al valor de la UF del mes de mayo del 2025\\\\
+\textbf{Etapa N°1: Análisis}
+\begin{table}[!h]
+    \centering
+    \begin{tabular}{|p{4cm}|c|c|c|p{3cm}|}
+         \hline
+         Cargo & Cantidad & Valor Hora & Horas & Total\\
+         \hline
+         JP Senior & 1 & \$ 47.015,34 & 8 & \$ 376.122,72 \\
+         JP Junior & 1 & \$ 27.425,62 & 14 & \$ 383.958,61 \\
+         \hline
+         & & & & \$ 760.081,33\\
+         \hline
+    \end{tabular}
+\end{table}\\
+\textbf{Etapa N°2: Diseño Lógico}
+\begin{table}[!h]
+    \centering
+    \begin{tabular}{|p{4cm}|c|c|c|p{3cm}|}
+         \hline
+         Cargo & Cantidad & Valor Hora & Horas & Total\\
+         \hline
+         JP Senior & 1 & \$ 47.015,34 & 8 & \$ 376.122,72 \\
+         JP Junior & 1 & \$ 27.425,62 & 14 & \$ 383.958,61 \\
+         Arq. Web & 1 & \$ 27.425,62 & 24 & \$ 658.214,76 \\
+         \hline
+         & & & & \$ 1.418.296,09\\
+         \hline
+    \end{tabular}
+\end{table}\\
+\textbf{Etapa N°3: Diseño Físico}
+\begin{table}[!h]
+    \centering
+    \begin{tabular}{|p{4cm}|c|c|c|p{3cm}|}
+         \hline
+         Cargo & Cantidad & Valor Hora & Horas & Total\\
+         \hline
+         JP Senior & 1 & \$ 47.015,34 & 11 & \$ 517.168,74 \\
+         JP Junior & 1 & \$ 27.425,62 & 24 & \$ 658.214,76 \\
+         Programador UX/UI & 1 & \$ 23.507,67 & 50 & \$ 1.175.383,50\\
+         Programador Backend & 1 & \$ 23.507,67 & 50 & \$ 1.175.383,50\\
+         Ingeniero DB & 1 & 27.425,62 & 25 & \$ 685.640,38 \\
+         \hline
+         & & & & \$ 4.211.790,88\\
+         \hline
+    \end{tabular}
+\end{table}
+\newpage
+\textbf{Etapa N°4: Pruebas QA}
+\begin{table}[!h]
+    \centering
+    \begin{tabular}{|p{4cm}|c|c|c|p{3cm}|}
+         \hline
+         Cargo & Cantidad & Valor Hora & Horas & Total\\
+         \hline
+         Analista QA & 1 & \$ 47.015,34 & 15 & \$ 705.230,10 \\
+         Ingeniero QA & 1 & \$ 39.179,45 & 15 & \$ 587.691,75 \\
+         \hline
+         & & & & \$ 1.292.921,85\\
+         \hline
+    \end{tabular}
+\end{table}
+\\
+\textbf{Etapa N°5: Capacitación}
+\begin{table}[!h]
+    \centering
+    \begin{tabular}{|p{4cm}|c|c|c|p{3cm}|}
+         \hline
+         Cargo & Cantidad & Valor Hora & Horas & Total\\
+         \hline
+         Trainer & 1 & \$ 19.589,73 & 20 & \$ 391.794,50 \\
+         \hline
+         & & & & \$ 391.794,5\\
+         \hline
+    \end{tabular}
+\end{table}
+\\
+\textbf{Etapa N°6: Implementación}
+\begin{table}[!h]
+    \centering
+    \begin{tabular}{|p{4cm}|c|c|c|p{3cm}|}
+         \hline
+         Cargo & Cantidad & Valor Hora & Horas & Total\\
+         \hline
+         JP Junior & 1 & \$ 27.425,62 & 10 & \$ 274.256,15 \\
+         Devops & 1 & \$ 39.179,45 & 12 & \$ 470153,4 \\
+         Programador Backend & 1 & \$ 23.507,67 & 15 & \$ 352.615,05 \\
+         Supervisor Terreno & 2 & \$ 15671,78 & 23 & \$720.901,88 \\
+         \hline
+         & & & & \$ 1.817.926,48 \\
+         \hline
+    \end{tabular}
+\end{table}\\
+\textbf{Total Costos por Ciclo de Vida de Software}
+\begin{table}[!h]
+    \centering
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+         \textbf{Etapa N°} & \textbf{Actividad Principal} & \textbf{Tiempo en Días} & \textbf{Costo} \\
+         \hline
+          1 & Análisis & 3 & \$ 760.081,33 \\
+          2 & Diseño Lógico & 6 & \$ 1.418.296,09 \\
+          3 & Diseño Físico & 20 & \$ 4.211.790,88 \\
+          4 & Pruebas QA & 4 & \$ 1.292.921,85 \\
+          5 & Capacitación & 3 & \$ 391.794,5 \\
+          6 & Implementación & 8 & \$ 1.817.926,48 \\
+          \hline
+            & & 42 & \$ 8.474.515,04 \\
+          \hline
+    \end{tabular}
+\end{table}
+En unos 42 días u 8 semanas, por un costo de \$ 8.474.515,04 el proyecto puede ser solventado. 
+\subsubsection{Precio de Venta}
+El precio de venta fijado corresponde al costo total del proyecto en función de los costos independientes de cada ciclo de vida de desarrollo de software más un treinta por ciento del mismo.
+\begin{table}[!h]
+    \centering
+    \begin{tabular}{c|c}
+         \textbf{Costo Total} & \$ 8.474.515,04 \\
+         \textbf{Precio de Venta} & \$ 11.016.869,55 \\ 
+    \end{tabular}
+\end{table}
+\subsubsection{Inversión}
+
+La inversión inicial del proyecto es de \$ 11.016.869,55 obtenida del precio de venta estimado en el punto anterios, con esta se espera levantar el proyecto y así poder cubrir el los costos asociados al mismo.
+
+\subsubsection{Mantención}
+
+En cuanto a dar soporte de mantención al proyecto, existe un costo mensual asociado de \$ 250.000 destinado a costear horas utilizadas en resolver problemas que el software pueda tener luego de la etapa de implementación, mejorar o adaptar funcionalidades en relación a aspectos que no fueron considerados durante el desarrollo del mismo.
+\\\\
+Además existe un monto asociado a costear servicios de Cloud, que incluye el hosting del modelo de datos, considerando la base de datos PostgreSql, el servicio asociado a ejecutar la API python + flask y el dominio web. Se fijó este monto en \$ 25.000 de manera aproximada utilizando la calculadora de precios AWS.
+\begin{table}[!h]
+    \centering
+    \begin{tabular}{|c|c|}
+        \hline
+         \textbf{Servicio} & \textbf{Costo Estimado} \\
+         \hline
+         AWS Fargate & $\approx$ \$ 2.000 \\
+         AWS RDS PostgreSQL & $\approx$ \$ 23.000 \\
+         \hline
+         \textbf{Total:} & \$ 25.000 \\
+         \hline
+    \end{tabular}
+\end{table}
+En la práctica es posible que no se utilice AWS, o tal vez la base de usuarios y por ende consulta y utilización de la nube pueda varíar, por lo que solo sirve como un valor referencial.
+\subsubsection{Ingresos}
+
+Los ingresos del proyecto se obtienen mediante un modelo de suscripción anual, por lo que la empresa cliente paga un precio por el uso del software, además las horas hombres externas al equipo de desarrollo, como en este caso de choferes de la empresa cliente que cumplan el rol de asesores en el proyecto, se consideran ingresos.
+\begin{table}[!h]
+    \centering
+    \begin{tabular}{|c|c|}
+        \hline
+         \textbf{Valor Suscripción Mensual} & \textbf{Suscripción Anual} \\
+         \hline
+         \$ 666.469,15 & \$ 7.997.629,74 \\
+         \hline
+    \end{tabular}
+\end{table}
+Ahorro horas hombre:
+\begin{table}[!h]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+        \hline
+         \textbf{Cargo} & \textbf{Cantidad} & \textbf{Valor Hora} & \textbf{Horas} & \textbf{Total}\\
+         \hline
+         Chofer Asesor & 2 & \$ 7.835,89 & 20 & \$ 313.435,60 \\ 
+         \hline
+    \end{tabular}
+\end{table}
+
+\newpage
+\subsubsection{Flujo de Caja}
+El siguiente flujo de caja proyecta los ingresos y egresos durante los primeros cuatro años de operación del sistema, con el objetivo de evaluar la estabilidad financiera del proyecto y determinar su punto de equilibrio. Este análisis permite identificar los límites operativos en función de los ingresos generados y los costos asociados, asegurando la viabilidad económica del proyecto a mediano plazo.
+\begin{table}[!h]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|c|}
+        \hline
+         \textbf{Item} & 0 & 1 & 2 & 3 & 4 \\
+         \hline
+         \textbf{Ingresos}&&&&&\\
+         \hline
+         \textbf{Ingresos Suscripción} & & \$ 7.997.630 & \$ 7.997.630 & \$ 7.997.630 & \$ 7.997.630 \\
+         \textbf{Ahorro HH} & & \$ 313.436 & \$ 313.436 & \$ 313.436 & \$ 313.436 \\
+         \textbf{Total Ingresos} & & \$ 8.311.065 &\$ 8.311.065&\$ 8.311.065&\$ 8.311.065\\
+         \hline
+         &&&&& \\
+         \hline
+         \textbf{Egresos}&&&&&\\
+         \hline
+         \textbf{Mantención} & & \$ 3.000.000 & \$ 3.000.000 & \$ 3.000.000 & \$ 3.000.000 \\
+         \textbf{AWS} & & \$ 25.000 &\$ 25.000 &\$ 25.000 &\$ 25.000\\
+         \textbf{Total Egresos} && \$3.025.000&\$3.025.000&\$3.025.000&\$3.025.000\\
+         \hline
+         &&&&&\\
+         \hline
+         \textbf{UAI}&&\$5.286.065&\$5.286.065&\$5.286.065&\$5.286.065\\
+         \textbf{Impuesto 27\%}&&\$1.427.238&\$1.427.238&\$1.427.238&\$1.427.238\\
+         \textbf{UDI}&&\$3.858.828&\$3.858.828&\$3.858.828&\$3.858.828\\
+         \hline
+         &&&&&\\
+         \hline
+         \textbf{Inversión} &\$-11.016.870&&&&\\
+         \textbf{Flujo de Caja}&\$-11.016.870&\$3.858.828&\$3.858.828&\$3.858.828&\$3.858.828\\
+         \hline
+         &&&&&\\
+         \hline
+         \textbf{Tasa de Desc.} & 15\% &&&&\\
+         \hline
+         \textbf{VAN}&\$-9.579.887 &\$-6.662.058 &\$-4.124.817 &\$-1.918.519&\$0\\
+         \hline
+         &&&&&\\
+         \hline
+         \textbf{Tasa de Desc.} & 15\% &&&&\\
+         \hline
+         \textbf{TIR} & 15\% & & & &\\
+         \hline
+    \end{tabular}
+\end{table}\\
+Según el modelo financiero elaborado, que considera los ingresos por suscripción, los costos asociados al ciclo de vida del software (incluyendo mantención y hosting), y una tasa de descuento del 15 \%, el proyecto alcanza su punto de equilibrio en el cuarto año, reflejado en un VAN = \$ 0. Esto significa que, bajo estas condiciones, los flujos de caja permiten recuperar exactamente la inversión inicial, cubriendo todos los costos del proyecto sin generar pérdidas ni ganancias adicionales.
+\newpage
+El análisis revela que un precio de suscripción anual de \$ 666.469,15 es el valor crítico que garantiza este equilibrio. Si el precio se fija por encima de este nivel, el proyecto generaría rentabilidad neta, siempre que los egresos (como los costos de mantenimiento y hosting) no superen lo proyectado. Por el contrario, incrementos no previstos en estos costos o una reducción en los ingresos podrían afectar la sostenibilidad financiera.
+
+\newpage
+\subsection{Factibilidad Financiera}
+La factibilidad financiera del proyecto contempla un análisis exhaustivo de su viabilidad económica, desde la etapa inicial de implementación hasta su sostenibilidad operativa y posibilidades de expansión territorial. Esta sección está enfocada en los elementos monetarios y administrativos clave para evaluar si el sistema puede ser ejecutado y mantenido de manera eficaz en el tiempo, sin una dependencia excesiva de subvenciones externas o recursos eventuales. Abarca el levantamiento de fuentes de financiamiento inicial, la proyección de ingresos, la sostenibilidad a largo plazo y las oportunidades de escalamiento.
+
+\subsubsection{Fuentes de Financiamiento Inicial (Chile, 2024–2025)}
+
+Durante la etapa de arranque del proyecto, se identifican una variedad de fuentes de financiamiento en Chile que apuntan al fomento de la innovación tecnológica con foco comunitario. Estas opciones permiten acceder a recursos aun sin contar con personalidad jurídica, lo que las hace especialmente viables para proyectos liderados por estudiantes o emprendedores en fase de validación.
+
+\begin{itemize}
+    \item \textbf{CORFO – Semilla Inicia y Semilla Expande:} CORFO dispone de subsidios que cubren hasta el 75\% del costo total del proyecto, con topes que van desde \$15 millones CLP en la etapa Inicia, hasta \$25 millones CLP (con opción a una segunda fase de \$20 millones) en la etapa Expande. Se permite la postulación como persona natural, con la exigencia de constituir empresa solo si el subsidio es adjudicado. Estos fondos están orientados al desarrollo y validación de prototipos o MVP con potencial de mercado.
+    \item \textbf{ANID – Fondef VIU:} Programa dirigido a estudiantes universitarios en etapa de titulación. En su Etapa 2 otorga hasta \$24 millones CLP con una exigencia de cofinanciamiento del 10\%. Es obligatorio el respaldo de una universidad y que el proyecto se derive de una tesis o investigación académica. Su objetivo es valorizar los desarrollos universitarios y transformarlos en soluciones tecnológicas reales.
+    \newpage
+    \item \textbf{FOSIS – Innova FOSIS:} Concurso de innovación social que otorga aproximadamente \$50 millones CLP por proyecto piloto, destinados a resolver problemáticas que afectan a comunidades vulnerables. Requiere que una institución con personalidad jurídica (como una ONG o una universidad) postule en representación del equipo desarrollador.
+    \item \textbf{SERCOTEC – Capital Semilla Emprende y programas asociados:} Entrega hasta \$3,5 millones CLP para la creación de nuevas microempresas. El programa permite postular como persona natural, exigiendo posteriormente la formalización como empresa. Existen variantes como Capital Abeja para mujeres emprendedoras y otros programas regionales como "Impulso Emprendedor".
+    \item \textbf{Fondos Regionales FIC/FNDR:} Son recursos entregados por los Gobiernos Regionales para financiar proyectos de innovación con impacto territorial. Los montos fluctúan entre \$30 millones y \$150 millones CLP. Las postulaciones deben ser realizadas por entidades con personalidad jurídica, por lo que se recomienda establecer alianzas con universidades, municipalidades u ONGs.
+    \item \textbf{Apoyo desde instituciones universitarias o gobiernos locales:} Las universidades muchas veces cuentan con fondos concursables internos, incubadoras y redes de emprendimiento estudiantil. Por su parte, algunas municipalidades disponen de fondos comunitarios, presupuestos participativos o convenios que permiten financiar etapas piloto o actividades de validación tecnológica.
+\end{itemize}
+En conjunto, estas fuentes deben ser abordadas bajo una estrategia progresiva que permita pasar de etapas exploratorias a una formalización paulatina del modelo de negocio, idealmente en asociación con instituciones públicas o académicas.\\
+
+\newpage
+\subsubsection{Sostenibilidad Financiera del Sistema}
+Una vez que el piloto esté en marcha, la clave pasa a ser la sustentabilidad del sistema. Esto implica diseñar mecanismos que aseguren el financiamiento constante de los costos operativos, sin comprometer la continuidad del servicio ni depender exclusivamente de recursos estatales o filantrópicos. Para ello, se proponen diversos enfoques complementarios:
+
+\begin{itemize}
+    \item \textbf{Modelo de arriendo tipo SaaS (Software como Servicio):} El sistema puede ofrecerse mediante suscripción mensual a municipalidades o empresas de transporte. Este modelo se adapta a contextos de bajos recursos mediante tarifas escalables por vehículo, que cubren alojamiento en la nube, mantenimiento, soporte y actualizaciones. Valores sugeridos están en torno a los \$960.000–\$1.500.000 CLP mensuales por unidad vehicular.
+    \item \textbf{Convenios institucionales y licitaciones:} Las municipalidades están facultadas por la Ley 19.886 para contratar servicios tecnológicos bajo modalidad de licitación pública o trato directo, dependiendo del monto involucrado. Esto legitima la posibilidad de que una comuna arriende o contrate la plataforma desarrollada, ya sea mediante convenio con la universidad o empresa de los desarrolladores.
+    \item \textbf{Financiamiento estatal indirecto (subsidios al transporte rural):} El Ministerio de Transportes, a través de la División de Transporte Público Regional, entrega subsidios para mantener operativas rutas rurales. Incorporar el monitoreo GPS como parte del servicio puede facilitar su inclusión en estos esquemas, generando una fuente recurrente de ingresos.
+    \item \textbf{Responsabilidad Social Empresarial (RSE) y patrocinios privados:} Empresas con interés en apoyar innovación social (como compañías de telecomunicaciones o financieras) podrían colaborar mediante aporte de equipos, datos móviles o fondos, a cambio de visibilidad pública y cumplimiento de metas de impacto social.
+    \newpage
+    \item \textbf{Transferencia tecnológica o externalización de operación:} Si los desarrolladores no desean operar el sistema a largo plazo, pueden ceder una licencia de uso a la municipalidad o firmar un convenio de colaboración para la administración técnica, evitando que el proyecto muera tras su implementación inicial.
+\end{itemize}
+Este modelo mixto de financiamiento permite adaptar la estrategia a distintos contextos. Gracias a su diseño open-source, los costos fijos son bajos y el sistema es fácilmente escalable con mínimos adicionales en infraestructura, aumentando su viabilidad económica.\\
+
+\subsubsection{Escalabilidad y Expansión Territorial}
+
+La plataforma fue concebida desde su origen con el principio de escalabilidad. Esto significa que está preparada tanto técnica como organizacionalmente para ser replicada en otras comunas rurales, manteniendo eficiencia operativa y sostenibilidad financiera. La expansión se puede estructurar en función de los siguientes ejes:
+
+\begin{itemize}
+    \item \textbf{Red intercomunal y consorcios municipales:} Es factible crear una red de municipios rurales que compartan el uso de la plataforma, disminuyendo costos mediante economía de escala. Esto permite implementar un sistema centralizado con funcionalidades multicomuna, con apoyo técnico coordinado desde una instancia regional.
+    \item \textbf{Alianzas con Gobiernos Regionales y programas FIC/FNDR:} Los Consejos Regionales priorizan iniciativas con impacto territorial. Un piloto exitoso podría ser replicado en otras provincias mediante fondos FIC, FNDR u otros instrumentos regionales de desarrollo e innovación. Se recomienda presentar propuestas con acompañamiento universitario y enfoque de innovación pública.
+    \item \textbf{Articulación con estrategias ministeriales y fondos sectoriales:} El Ministerio de Ciencia, la SUBDERE y el MTT han desarrollado iniciativas como Desafíos Públicos que permiten escalar soluciones tecnológicas con respaldo institucional. Estas vías son clave para posicionar el proyecto dentro de políticas nacionales de digitalización rural.
+    \item \textbf{Modelo freemium y servicios complementarios:} Se puede establecer una estructura de ingresos basada en un acceso gratuito a funcionalidades básicas, complementado con servicios adicionales para municipios que deseen módulos avanzados, reportes personalizados o integración con otras plataformas.
+    \item \textbf{Adaptación social y técnica a nuevos contextos:} Cada réplica territorial debe contemplar capacitación de choferes y personal local, ajustes a la interfaz según nivel de alfabetización digital y adaptación a condiciones de conectividad variable. Se sugiere incluir funcionalidades offline o con sincronización diferida para comunas con cobertura limitada.
+\end{itemize}
+La expansión territorial debe ir acompañada de una estrategia de sostenibilidad escalonada, contemplando contratos por niveles de servicio, soporte remoto centralizado, manuales de implementación y alianzas institucionales permanentes. Esta estructura modular permite crecer con control de calidad y garantizar que el valor social de la solución se mantenga intacto en cada nuevo contexto.
+
+\newpage
+\subsection{Factibilidad Legal}
+\subsubsection{Protección de Datos Personales}
+
+La plataforma diseñada para el monitoreo en tiempo real de buses rurales contempla la recolección, almacenamiento y tratamiento de datos personales sensibles, como la ubicación geográfica en tiempo real de los conductores, su identificación mediante documentación oficial (licencia de conducir), e incluso información que podría ser considerada personal si se incorporan funcionalidades futuras para los usuarios pasajeros. Por tanto, resulta imperativo cumplir con la legislación chilena vigente sobre protección de datos, principalmente la Ley N° 19.628 sobre Protección de la Vida Privada, y prepararse para la entrada en vigencia de la Ley N° 21.719, publicada en diciembre de 2024, que refuerza significativamente los derechos de los titulares de datos y moderniza el marco regulatorio nacional en línea con el Reglamento General de Protección de Datos (GDPR) europeo.
+
+Esta nueva legislación establece principios como la licitud, finalidad específica, minimización, transparencia, seguridad desde el diseño (Privacy by Design), y otorga nuevos derechos al usuario, tales como portabilidad, oposición a decisiones automatizadas, y mayor poder de fiscalización a través de la nueva Agencia de Protección de Datos Personales. Dado su carácter transitorio de implementación, es estratégico que la plataforma anticipe desde ya la adopción de sus lineamientos, de manera de garantizar la sostenibilidad legal del sistema a largo plazo.
+
+Entre las acciones concretas a implementar, se deben considerar:
+
+\begin{itemize}
+    \item Obtención de consentimiento informado, explícito y revocable tanto de conductores como, eventualmente, de pasajeros.
+    \item Inclusión de políticas de privacidad detalladas y fácilmente accesibles, que informen sobre la finalidad, uso, conservación, derechos y mecanismos de contacto para ejercerlos.
+    \item Implementación de protocolos de seguridad como cifrado de datos, almacenamiento seguro, respaldo periódico, control de accesos y trazabilidad.
+    \item Anonimización y agregación de datos para análisis o visualización pública, resguardando la identidad de los usuarios.\\
+\end{itemize}
+
+\newpage
+\subsubsection{Uso de Geolocalización en Aplicaciones Móviles}
+
+La utilización de servicios de localización mediante GPS debe cumplir con criterios técnicos y legales vinculados a la necesidad, proporcionalidad y temporalidad del uso. La plataforma deberá activar la geolocalización solo durante los periodos estrictamente necesarios, es decir, mientras el conductor se encuentra en servicio, evitando cualquier monitoreo continuo o intrusivo fuera del contexto laboral o funcional del sistema.
+
+En términos prácticos, esto implica integrar correctamente las solicitudes de permisos que Android e iOS exigen para la activación del GPS, con descripciones claras del propósito del uso de la ubicación. El sistema debe incluir opciones que permitan al usuario desactivar la localización o delimitar su uso, asegurando control individual sobre su activación.
+
+Además, deben respetarse las políticas de las plataformas de distribución (Google Play y App Store), que exigen una política de privacidad pública, y limitan el uso de permisos solo a lo estrictamente funcional. Desde el enfoque laboral, conforme a dictámenes de la Dirección del Trabajo, el monitoreo de la ubicación de los trabajadores sólo puede efectuarse si está debidamente justificado y se limita al horario laboral. Por tanto, será necesario establecer una política de uso clara y validada por la empresa operadora (Tur Maipo S.A.), que delimite los alcances del monitoreo en función de sus necesidades operativas y laborales.\\
+
+\subsubsection{Regulación del Transporte Público Interurbano y Buses Rurales}
+
+La normativa vigente en Chile, en particular el Decreto Supremo N° 212 de 1992 del MTT, regula el transporte público remunerado de pasajeros, incluyendo el servicio rural e interurbano. Este reglamento no establece barreras normativas para la incorporación de tecnologías de seguimiento vehicular como GPS o plataformas de información al usuario; al contrario, la tendencia institucional ha sido fomentar su uso como herramienta para mejorar la calidad del servicio y la fiscalización.
+
+La Resolución Exenta N° 2778/2021, por ejemplo, establece requisitos técnicos para buses que ingresan a planes de renovación, entre ellos, contar con sistemas de localización automática activos. Asimismo, se proyecta una reforma al DS N° 212 donde se incluirán formalmente los sistemas GPS y plataformas informativas como herramientas complementarias requeridas por el regulador. Esto abre la posibilidad de integrar la solución desarrollada dentro del ecosistema normativo oficial, particularmente si se logra interoperabilidad con los sistemas del MTT o de las Seremis regionales.
+
+A nivel operativo, se recomienda mantener coordinación con la Seremi de Transportes Metropolitana y con la empresa Tur Maipo S.A., para asegurar que la implementación del sistema se ajuste a las condiciones de operación ya aprobadas. Asimismo, debe garantizarse que la información difundida por la aplicación no contradiga los canales oficiales ni induzca a errores a los usuarios.\\
+
+\subsubsection{Responsabilidad Legal y Términos de Uso}
+
+Para resguardar legalmente al equipo desarrollador y establecer un marco claro de derechos y deberes con los usuarios de la plataforma (conductores y pasajeros), se requiere la redacción y publicación de documentos contractuales: Términos y Condiciones (TyC) y Política de Privacidad.
+
+Los TyC deben contemplar:
+
+\begin{itemize}
+    \item Cláusulas de exención de garantías y limitación de responsabilidad ante errores de sistema, caídas del servicio, imprecisiones en los datos o mal uso por parte de terceros.
+    \item Definición de uso adecuado, incluyendo restricciones a intentos de manipulación de datos, uso indebido de funcionalidades, o reventa de la tecnología.
+    \item Establecimiento de jurisdicción y ley aplicable (Chile), y reserva de derechos para modificación futura de los TyC.
+    \item Declaración de derechos de propiedad intelectual sobre el software y contenidos asociados.
+\end{itemize}
+En cuanto a la Política de Privacidad, esta deberá:
+
+\begin{itemize}
+    \item Explicar con detalle qué datos se recogen, por qué, por cuánto tiempo, cómo se protegen y qué derechos tienen los usuarios sobre ellos.
+    \item Advertir que, si bien se aplican medidas de seguridad, ningún sistema es 100\% invulnerable, limitando así responsabilidades por hackeos o accesos indebidos si hubo diligencia razonable.
+    \item Indicar si los datos pueden ser compartidos con terceros, en qué condiciones, y cómo se tratarán ante solicitudes legales.
+    \item Establecer que la información proporcionada es referencial y no reemplaza comunicaciones oficiales del operador de transporte.\\ 
+
+
+\end{itemize}
+\subsubsection{Propiedad Intelectual del Software}
+
+El sistema desarrollado constituye una creación intelectual protegida por la Ley N° 17.336 sobre Propiedad Intelectual, que otorga derechos de autor automáticos a los creadores desde el momento de la generación de la obra. Sin embargo, para reforzar esta protección y facilitar gestiones futuras (licencias, escalamiento, transferencias), se recomienda registrar el código en el Departamento de Derechos Intelectuales.
+
+En principio, si los desarrolladores son estudiantes y no existe contrato de encargo con una institución, los derechos pertenecen a ellos. No obstante, si la universidad o una entidad externa financia el proyecto, se debe revisar si existen cláusulas de cesión de derechos o condiciones de uso compartido.
+
+En cuanto a licenciamiento, el equipo puede optar entre:
+
+\begin{itemize}
+    \item Publicar el código como open-source bajo licencias tipo MIT, Apache o GPL, promoviendo colaboración y replicabilidad.
+    \item Establecer una licencia restringida si se quiere conservar control comercial o institucional.
+    \item Crear un esquema mixto, donde parte del código se libera y parte se protege, dependiendo del interés de escalabilidad y explotación.
+\end{itemize}
+Finalmente, se sugiere formalizar la estructura de propiedad intelectual si el proyecto avanza hacia su implementación municipal o comercial. Esto incluye convenios de coautoría, registros de marca, definición de licencias de uso institucional, y eventualmente apoyo de oficinas de transferencia tecnológica (OTL). Esta formalización será clave para proteger la innovación, facilitar convenios con entidades públicas, y permitir la continuidad del sistema más allá del contexto estudiantil inicial. Por ende, el marco legal actual no solo permite, sino que fomenta la implementación de tecnologías como aquí descrita.
+
+\section{Plan de Trabajo}
+\subsection{Malla de actividades}
+\begin{table}[!h]
+    \centering
+    \begin{tabular}{|p{1.2cm}|p{1cm}|p{2cm}|p{5cm}|p{3cm}|p{2cm}|}
+         \hline
+         &&&&&\\
+         \textbf{Etapa} & \textbf{Hito} & \textbf{Tarea} & \textbf{Descrición} & \textbf{Responsable} & \textbf{Duración (Días)}  \\
+         &&&&&\\
+         \hline
+         &&&&&\\
+         1 & 1.1 & Toma de Requerimientos & Documentar y Analizar los Requerimientos Funcionales y No Funcionales. & JP Senior, JP Junior & 1 \\
+         &&&&&\\
+         \hline
+         &&&&&\\
+         2 & 2.1 & Definir Arquitectura de Desarrollo & Definir los nodos que van a interactuar con el sistema. & Arquitecto Web & 1 \\
+         &&&&&\\
+         \hline
+         &&&&&\\
+         2 & 2.2 & Modelo de Datos & Definir los datos necesarios que van a dar solución al problema. & JP Senior, JP Junior, Arquitecto Web. &1 \\
+         &&&&&\\
+         \hline
+         &&&&&\\
+         2 & 2.3 & Modelo Relacional & Establecer las relaciones necesarias entre los datos. & JP Senior, JP Junior, Arquitecto Web. & 1\\
+         &&&&&\\
+         \hline
+         &&&&&\\
+         3 & 3.1 & Desarrollo BD & Pasar el modelo de datos a una BD relacional. & Ingeniero DB & 2 \\
+         &&&&&\\
+         \hline
+         &&&&&\\
+         3 & 3.2 & Desarrollo API & Crear una API que permita operaciones CRUD a los diferentes nodos del sistema. & Programador Backend & 4 \\
+         &&&&&\\
+         \hline
+         &&&&&\\
+         3 & 3.3 & Desarrollo App Chofer & Desarrollar la Aplicación Movil que utilizarán los Choferes. & Programador UX/UI, Programador Backend & 5 \\
+         &&&&&\\
+         \hline
+    \end{tabular} 
+\end{table}
+\newpage
+\begin{table}[!h]
+    \centering
+    \begin{tabular}{|p{1.2cm}|p{1cm}|p{2cm}|p{5cm}|p{3cm}|p{2cm}|}
+         \hline
+         &&&&&\\
+         \textbf{Etapa} & \textbf{Hito} & \textbf{Tarea} & \textbf{Descrición} & \textbf{Responsable} & \textbf{Duración (Días)}  \\
+         &&&&&\\
+         \hline
+         &&&&&\\
+         3 & 3.4 & Desarrollo App Pasajero & Desarrollar la Aplicación Movil que utilizarán los Pasajeros & Programador UX/UI, Programador Backend & 5 \\
+         &&&&&\\
+         \hline
+         &&&&&\\
+         3 & 3.5 & Incluir API's de Metro y RED & Incluir interoperatividad con API's públicas de Metro y RED. & Programador UX/UI, Programador Backend & 5 \\
+         &&&&&\\
+         \hline
+         &&&&&\\
+         3 & 3.6 & Desarrollo App Administrador & Desarrollar la Aplicación Desktop del Administrador & Programador UX/UI, Programador Backend & 5 \\
+         &&&&&\\
+         \hline
+         &&&&&\\
+         4 & 4.1 & Probar API & Corroborar que las consultas CRUD retornen lo esperado. & Analista QA, Ingeniero QA. & 2\\
+         &&&&&\\
+         \hline
+         &&&&&\\
+         4 & 4.2 & Probar App Chofer & Corroborar el funcionamiento de la vista de Chofer & Analista QA, Ingeniero QA, Chofer Asesor. & 2 \\
+         &&&&&\\
+         \hline
+         &&&&&\\
+         4 & 4.3 & Probar App Pasajero & Corroborar el funcionamiento de la vista de Pasajero & Analista QA, Ingeniero QA, Chofer Asesor. & 2 \\
+         &&&&&\\
+         \hline
+         &&&&&\\
+         4 & 4.4 & Probar App Administrador & Corroborar el funcionamiento de la vista de Administrador & Analista QA, Ingeniero QA, Chofer Asesor. & 2\\
+         &&&&&\\
+         \hline
+         &&&&&\\
+         5 & 5.1 & Capacitar a Choferes & Mostrar al 90\% de choferes como funciona la aplicación y como utilizarla en la práctica. & Trainer, Chofer Asesor. & 2 \\
+         &&&&&\\
+         \hline
+    \end{tabular} 
+\end{table}
+\newpage
+\begin{table}[!h]
+    \centering
+    \begin{tabular}{|p{1.2cm}|p{1cm}|p{2cm}|p{5cm}|p{3cm}|p{2cm}|}
+         \hline
+         &&&&&\\
+         \textbf{Etapa} & \textbf{Hito} & \textbf{Tarea} & \textbf{Descrición} & \textbf{Responsable} & \textbf{Duración (Días)}  \\
+         &&&&&\\
+         \hline
+         &&&&&\\
+         5 & 5.2 & Capacitar al Administrador & Mostrar a un Administrador como funciona la aplicación y como utilizarla en la práctica. & Trainer, Administrador. & 1\\
+         &&&&&\\
+         \hline
+         &&&&&\\
+         6 & 6.1 & Revisar antes de Producción & Hacer una revisión y un ajuste del software para una correcta ejecución en producción. & Programador Backend, Devops. & 1\\
+         &&&&&\\
+         \hline
+         &&&&&\\
+         6 & 6.2 & Subir a Producción & Subir la última versión desarrollada del sistema a un entorno en la nube. & JP Junior, Devops, Programador Backend. & 2\\
+         &&&&&\\
+         \hline
+         &&&&&\\
+         6 & 6.3 & Publicar en las Stores & Subir la aplicación de Chofer y Pasajero a la App Store y Google Play. & Programador Backend, Devops. & 1\\
+         &&&&&\\
+         \hline
+         &&&&&\\
+         6 & 6.4 & Verificar en Terreno & Supervisar el uso de la aplicación en terreno. & Supervisor Terreno & 2\\
+         &&&&&\\
+         \hline
+    \end{tabular} 
+\end{table}
+\newpage
+\subsection{Puntos críticos}
+\begin{table}[!h]
+    \centering
+    \begin{tabular}{|c|c|p{6cm}|p{2cm}|p{2.5cm}|}
+        \hline
+        &&&&\\
+         \textbf{Punto Crítico} & \textbf{Hito} & \textbf{Descripción} & \textbf{Impacto (1-5)} & \textbf{Probabilidad (1-5)} \\
+         &&&&\\
+         \hline
+         &&&&\\
+         \textbf{PC01} & 1.1 & Levantamiento de requerimientos incompleto o deficiente, lo que podría comprometer el diseño y funcionalidad del sistema. & 5 & 4 \\
+         &&&&\\
+         \hline
+         &&&&\\
+         \textbf{PC02} & 2.2 & Definición de datos insuficiente o inadecuada para resolver los requerimientos del sistema. & 5 & 3 \\
+         &&&&\\
+         \hline
+         &&&&\\
+         \textbf{PC03} & 3.5 & Dependencia de la API de Red Metropolitana (y similares), cuya disponibilidad, documentación o cambios pueden afectar la integración del sistema. & 4 & 3 \\ 
+         &&&&\\
+         \hline
+         &&&&\\
+         \textbf{PC04} & 5.1, 5.2 & Baja adopción de la app por parte de los conductores y usuarios & 5 & 3\\
+         &&&&\\
+         \hline
+         &&&&\\
+         \textbf{PC05} & 6.3 & Restricciones de publicación debido al incumplimiento de políticas de App Store y Google Play. & 3 & 2 \\
+         &&&&\\
+         \hline
+         &&&&\\
+         \textbf{PC06} & 6.4 & Limitada cobertura de red en zonas rurales que afecte la transmisión de datos en tiempo real & 4 & 2 \\
+         &&&&\\
+         \hline
+    \end{tabular}
+\end{table}
+\newpage
+\subsubsection{Mitigaciones}
+    \textbf{PC01:} 
+    \begin{itemize}
+        \item Talleres con usuarios clave (choferes, pasajeros, administrador) para validar requisitos.
+        \item Prototipado rápido para feedback temprano.
+    \end{itemize}
+    \textbf{PC02:}
+    \begin{itemize}
+        \item Validar el modelo de datos con maquetas y casos de uso.
+        \item Hacer revisiones del modelo de datos de aplicaciones similares.
+    \end{itemize}
+    \textbf{PC03:}
+    \begin{itemize}
+        \item Dedicar horas hombre a hacer un estudio de los endpoints de las API's.
+        \item Solicitar información a las entidades dueñas de estas API's.
+    \end{itemize}
+    \textbf{PC04:}
+    \begin{itemize}
+        \item Recibir feedback de ellos en las etapas previas al desarrollo.
+        \item Presentar mockups y casos de uso a los usuarios.
+    \end{itemize}
+    \textbf{PC05:}
+    \begin{itemize}
+        \item Realizar un estudio completo de factibilidad incluyendo las políticas de publicación de las stores.
+        \item Desarrollar la aplicación en función de cumplir normas como la ISO 27100 entre otras sobre el uso de datos de los usuarios.
+    \end{itemize}
+    \textbf{PC06:}
+    \begin{itemize}
+        \item Realizar pruebas piloto en rutas con baja conectividad.
+        \item Integrar algoritmos de predicción de la ubicación para permitir seguir funcionando sin señal GPS.
+    \end{itemize}
+
+\newpage
+\subsection{Carta Gantt}
+\begin{table}[!h]
+\centering
+\begin{tabular}{|p{1.5cm}|p{7cm}|*{10}{c|}}
+\hline
+\textbf{Hito} & \textbf{Tarea} & \multicolumn{5}{c|}{\textbf{Semana 1}} & \multicolumn{5}{c|}{\textbf{Semana 2}} \\
+\hline
+ & & L & M & X & J & V & L & M & X & J & V \\
+\hline
+1.1 & Toma de Requerimientos & \cellcolor{gray} & & & & & & & & & \\
+\hline
+2.1 & Definir Arquitectura de Desarrollo & & \cellcolor{gray} & & & & & & & & \\
+\hline
+2.2 & Modelo de Datos & & & \cellcolor{gray} & & & & & & & \\
+\hline
+2.3 & Modelo Relacional & & & & \cellcolor{gray} & & & & & & \\
+\hline
+3.1 & Desarrollo BD & & & & & \cellcolor{gray} & \cellcolor{gray} & & & & \\
+\hline
+3.2 & Desarrollo API & & & & & & \cellcolor{gray} & \cellcolor{gray} & \cellcolor{gray} & \cellcolor{gray} & \\
+\hline
+3.3 & Desarrollo App Chofer & & & & & & & & & & \cellcolor{gray} \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[!h]
+\centering
+\begin{tabular}{|p{1.5cm}|p{7cm}|*{10}{c|}}
+\hline
+\textbf{Hito} & \textbf{Tarea} & \multicolumn{5}{c|}{\textbf{Semana 3}} & \multicolumn{5}{c|}{\textbf{Semana 4}} \\
+\hline
+ & & L & M & X & J & V & L & M & X & J & V \\
+\hline
+3.3 & Desarrollo App Chofer & \cellcolor{gray} & \cellcolor{gray} & \cellcolor{gray} & \cellcolor{gray} & & & & & & \\
+\hline
+3.4 & Desarrollo App Pasajero & & & & & \cellcolor{gray}& \cellcolor{gray} & \cellcolor{gray} & \cellcolor{gray} & \cellcolor{gray} &  \\
+\hline
+3.5 & Incluir APIs de Metro y RED & & & & & & & & \cellcolor{gray} & \cellcolor{gray} & \cellcolor{gray} \\
+
+\hline
+\end{tabular}
+\end{table}
+\begin{table}[!h]
+    \centering
+    \begin{tabular}{|p{1.5cm}|p{7cm}|*{10}{c|}}
+    \hline
+    \textbf{Hito} & \textbf{Tarea} & \multicolumn{5}{c|}{\textbf{Semana 4}} & \multicolumn{5}{c|}{\textbf{Semana 5}} \\
+    \hline
+ & & L & M & X & J & V & L & M & X & J & V \\
+    \hline
+    3.5 & Incluir APIs de Metro y RED & & & \cellcolor{gray} & \cellcolor{gray} & \cellcolor{gray} & \cellcolor{gray} & \cellcolor{gray} & & & \\
+    \hline
+    3.6 & Desarrollo App Administrador & & & & & & \cellcolor{gray} & \cellcolor{gray} & \cellcolor{gray} & \cellcolor{gray} & \cellcolor{gray} \\
+    \hline
+    4.1 & Probar API & \cellcolor{gray} & \cellcolor{gray} & & & & & & & & \\   
+    \hline
+    4.2 & Probar App Chofer & & \cellcolor{gray} & \cellcolor{gray} & & & & & & & \\
+    \hline
+    \end{tabular}
+\end{table}
+\begin{table}[!h]
+\centering
+\begin{tabular}{|p{1.5cm}|p{7cm}|*{10}{c|}}
+\hline
+\textbf{Hito} & \textbf{Tarea} & \multicolumn{5}{c|}{\textbf{Semana 6}} & \multicolumn{5}{c|}{\textbf{Semana 7}} \\
+\hline
+ & & L & M & X & J & V & L & M & X & J & V \\
+\hline
+4.3 & Probar App Pasajero & \cellcolor{gray} & \cellcolor{gray} & & & & & & & & \\
+\hline
+4.4 & Probar App Administrador & & \cellcolor{gray} & \cellcolor{gray} & & & & & & & \\
+\hline
+5.1 & Capacitar a Choferes & & & & & & & \cellcolor{gray} & \cellcolor{gray} & & \\
+\hline
+5.2 & Capacitar al Administrador & & & & & & & & \cellcolor{gray} & \cellcolor{gray} & \\
+\hline
+6.1 & Revisar antes de Producción & & & & & & \cellcolor{gray} & & & & \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[!h]
+\centering
+\begin{tabular}{|p{1.5cm}|p{7cm}|*{10}{c|}}
+\hline
+\textbf{Hito} & \textbf{Tarea} & \multicolumn{5}{c|}{\textbf{Semana 7}} & \multicolumn{5}{c|}{\textbf{Semana 8}} \\
+\hline
+ & & L & M & X & J & V & L & M & X & J & V \\
+\hline
+6.2 & Subir a Producción & & \cellcolor{gray} & \cellcolor{gray} & & & & & & & \\
+\hline
+6.3 & Publicar en las Stores & & & & & & \cellcolor{gray} & & & & \\
+\hline
+6.4 & Verificar en Terreno & & & & & & & \cellcolor{gray} & \cellcolor{gray} & & \\
+\hline
+\end{tabular}
+\end{table}
+
+\newpage
+\subsection{PERT - CPM}
+\textbf{Tabla de Precedencias}
+\begin{table}[!h]
+    \centering
+    \begin{tabular}{|c|c|c|p{2cm}|p{2cm}|p{2cm}|p{2cm}|}
+         \hline
+         &&&&&&\\
+         \textbf{Hito} & \textbf{Actividad} & \textbf{Predecesora} & \textbf{Duración (Días) Optimista} & \textbf{Duración (Días) Probable} & \textbf{Duración (Días) Pesimista} & \textbf{Duración (Días) Esperada} \\
+         &&&&&&\\
+         \hline
+         &&&&&&\\
+         1.1	& A1 &	-  & 1 & 2 & 3 & 2 \\
+         2.1	& B1 &	A1 & 1 & 2 & 3 & 2 \\
+         2.2	& B2 &	B1 & 1 & 2 & 3 & 2 \\
+         2.3	& B3 &	B2 & 1 & 2 & 3 & 2 \\
+         3.1	& C1 &	B3 & 2 & 3 & 4 & 3 \\
+         3.2	& C2 &	B3 & 4 & 5 & 6 & 5 \\
+         3.3	& C3 &	C1, C2 & 5 & 6 & 7 & 6 \\
+         3.4	& C4 & 	C1, C2 & 5 & 6 & 7 & 6 \\
+         3.5	& C5 & 	C4 & 5 & 6 & 7 & 6 \\
+         3.6	& C6 &  C1, C2 & 5 & 6 & 7 & 6 \\
+         4.1	& D1 &	C1, C2 & 2 & 3 & 4 & 3 \\
+         4.2	& D2 &	C3 & 2 & 3 & 4 & 3 \\
+         4.3	& D3 &	C5 & 2 & 3 & 4 & 3 \\
+         4.4	& D4 &	C6 & 2 & 3 & 4 & 3 \\
+         5.1	& E1 &	D2 & 2 & 3 & 4 & 3 \\
+         5.2	& E2 &	D4 & 1 & 2 & 3 & 2 \\
+         6.1	& F1 &	D1, D2, D3, D4 & 1 & 2 & 3 & 2 \\
+         6.2	& F2 &	F1 & 2 & 3 & 4 & 3 \\
+         6.3	& F3 &	F2 & 1 & 2 & 3 & 2 \\
+         6.4	& F4 &  F3 & 2 & 3 & 4 & 3 \\
+         &&&&&&\\
+         \hline
+    \end{tabular}
+\end{table}\\
+\newpage
+\textbf{Diagrama PERT - CPM}
+\begin{center}
+    \fbox{\includegraphics[width=15cm]{pert.drawio.png}}
+\end{center}
+\newpage
+\section{Toma de Requerimientos}
+\subsection{Metodología aplicada para la toma de requerimientos}
+Para el levantamiento de requerimientos del sistema se utilizará una metodología cualitativa que combinará entrevistas semiestructuradas con observación directa en terreno, lo que permitirá obtener información relevante desde los actores operativos clave del sistema, es decir, los conductores de buses, el administrador general de la empresa Tur Maipo y también usuarios frecuentes del transporte rural, quienes entregarán una perspectiva valiosa sobre las principales falencias que enfrentan como pasajeros. Las entrevistas se desarrollarán con apoyo de una guía de preguntas abiertas, orientadas a indagar en las necesidades, problemáticas y oportunidades de mejora desde distintos puntos de vista, y se buscará levantar antecedentes sobre dificultades en la coordinación, gestión de frecuencias, comunicación con los usuarios, fallas mecánicas y procesos que actualmente se realizan de forma manual. A su vez, la observación en terreno se realizará durante horarios críticos del servicio para identificar situaciones que no siempre se verbalizan en entrevistas, como tiempos de espera, mecanismos de control informal o ausencia de información centralizada, lo que permitirá validar y complementar los hallazgos obtenidos en las conversaciones. Toda la información será registrada en minutas de reunión y posteriormente clasificada en requerimientos funcionales y no funcionales, lo que servirá como base para el diseño de una plataforma coherente con las capacidades reales del entorno y alineada con las necesidades del personal y de los usuarios involucrados en la operación y utilización diaria del sistema.
+
+\newpage
+\subsection{Minutas de Reunión}
+A continuación se presentan las minutas que estructuran las reuniones que se llevarán a cabo con los actores clave del sistema, en el marco del proceso de levantamiento de requerimientos descrito anteriormente.
+
+\textbf{Minuta N°1 – Reunión con administrador general} \\
+\textbf{Participantes:} Administrador general de la empresa Tur Maipo, equipo de desarrollo \\
+\textbf{Temas a tratar:} Se consultará sobre los procesos actuales de planificación y supervisión de recorridos, los mecanismos utilizados para el control de horarios y frecuencias, y las principales limitaciones tecnológicas que enfrenta la empresa en la gestión del servicio, también se abordará la necesidad de contar con reportes e indicadores para la toma de decisiones administrativas \\
+\textbf{Conclusiones esperadas:} Se espera identificar la necesidad de una plataforma que permita monitorear los buses en tiempo real, centralizar la información operativa y generar métricas útiles para la administración del servicio
+
+\vspace{0.3cm}
+
+\textbf{Minuta N°2 – Reunión con grupo de conductores} \\
+\textbf{Participantes:} Conductores activos de la flota, equipo de desarrollo \\
+\textbf{Temas a tratar:} Se abordará cómo se realiza actualmente la coordinación de salidas, comunicación en ruta y manejo de contingencias, se consultará sobre el nivel de acceso a dispositivos móviles, uso de datos y posibles barreras tecnológicas para implementar una solución digital, además se buscará conocer su disposición a utilizar una aplicación como herramienta de trabajo \\
+\textbf{Conclusiones esperadas:} Se espera identificar requerimientos vinculados a una app móvil simple que permita reportar ubicación, registrar inicio y fin de recorridos y recibir notificaciones básicas sin depender de llamadas o procesos manuales.
+
+\newpage
+\subsection{Informe de Requerimientos}
+A partir de las reuniones planificadas con el administrador y los conductores de la empresa Tur Maipo, se identificaron los siguientes requerimientos funcionales y no funcionales, los cuales servirán como base para el diseño del sistema propuesto.
+
+\textbf{Requerimientos funcionales:}
+
+\textbf{RF01:} La aplicación debe permitir al conductor registrar el inicio y término de cada recorrido, de manera que se pueda llevar un control básico del cumplimiento de los itinerarios asignados.\\ 
+\textbf{RF02:} El sistema debe mostrar en tiempo real la ubicación de cada bus en un mapa accesible para el administrador, utilizando la señal GPS del dispositivo móvil del conductor.\\
+\textbf{RF03:} El sistema debe estar preparado para integrarse con los servicios y APIs de la Red Metropolitana y Metro de Santiago, con el fin de permitir a futuro la planificación de viajes intermodales que combinen transporte rural y urbano.\\
+\textbf{RF04:} La aplicación debe permitir que el conductor seleccione el recorrido asignado antes de comenzar su turno, lo que facilitará la trazabilidad y evitará errores de asignación.\\
+
+\textbf{Requerimientos no funcionales:}
+
+\textbf{RNF01:} El sistema deberá estar disponible al menos el 95\% del tiempo durante el horario operativo, minimizando caídas o interrupciones del servicio.\\  
+\textbf{RNF02:} La interfaz de la aplicación móvil deberá permitir un uso intuitivo y práctico, ajustado a alineamientos de usabilidad y experiencia de usuario, asegurando que cualquier conductor pueda registrar su recorrido y transmitir su ubicación con un máximo de cuatro interacciones desde la pantalla principal, y que los pasajeros puedan consultar la ubicación del bus, la ruta y el tiempo estimado de llegada sin necesidad de crear una cuenta ni navegar por menús complejos.\\  
+\textbf{RNF03:} La aplicación debe funcionar correctamente incluso con conexión móvil inestable o limitada, considerando que parte del recorrido se realiza en zonas rurales con baja cobertura.\\
+
+\section{Diseño del Sistema}
+\subsection{Elección y fundamentación del Ciclo de Vida del Proyecto}
+Para el desarrollo de este sistema se ha optado por un ciclo de vida iterativo e incremental, dado que este modelo permite una construcción progresiva del software mediante entregas parciales que se ajustan de forma dinámica a los requerimientos levantados, lo cual resulta especialmente adecuado considerando que se trabajará con distintos tipos de usuarios (conductores, pasajeros y administrador) que presentan necesidades particulares en cuanto a funcionalidad, usabilidad y prioridades de implementación, por lo que cada uno de estos módulos puede ser desarrollado en fases sucesivas que incorporen retroalimentación directa desde el entorno de uso y permitan corregir desviaciones tempranamente. Esta elección también se justifica por la naturaleza exploratoria de algunos componentes del sistema, como la interoperabilidad con APIs externas de transporte público o la necesidad de compatibilidad en zonas rurales con baja conectividad, situaciones que exigen validar supuestos técnicos y funcionales antes de continuar con el desarrollo completo, minimizando así riesgos críticos mediante ciclos cortos de prueba y mejora continua que promuevan decisiones fundamentadas y no dependan exclusivamente de una planificación inicial rígida. Además, el marco temporal definido para este proyecto, que contempla un total de 42 días hábiles, exige una gestión eficiente del tiempo y los recursos disponibles, por lo que un enfoque iterativo permite dividir el trabajo en unidades manejables que puedan ser planificadas, ejecutadas y evaluadas con mayor control, sin comprometer la calidad ni la coherencia del sistema global, y facilitando la incorporación de mejoras de forma ordenada y sin afectar lo ya construido. Por otro lado, este modelo se alinea con la necesidad de integrar módulos diferenciados pero interdependientes, permitiendo que la aplicación móvil del conductor y del pasajero se desarrollen en paralelo una vez resuelta la arquitectura base, mientras que la plataforma del administrador puede ser abordada con posterioridad, utilizando como insumos los componentes ya validados en las primeras entregas, lo que reduce los tiempos de espera entre etapas, favorece el trabajo colaborativo entre distintos roles técnicos y asegura una implementación funcional progresiva que puede ser monitoreada, testeada y ajustada de forma continua sin perder visibilidad sobre el avance del proyecto.
+
+\newpage
+\subsection{Elección y fundamentación Paradigma de desarrollo}
+El paradigma de desarrollo seleccionado para este proyecto es el Paradigma Orientado a Objetos (POO), debido a que permite estructurar el sistema en componentes modulares, reutilizables y escalables que representan entidades del mundo real como clases y objetos, lo cual se ajusta de forma óptima a las necesidades del proyecto, ya que se deben construir múltiples interfaces —como las aplicaciones para choferes, pasajeros y administrador— que comparten estructuras lógicas similares pero operan con roles y funcionalidades diferenciadas. Este enfoque facilita la implementación de funcionalidades independientes como el seguimiento por GPS, la asignación de recorridos o la consulta de buses en tiempo real, permitiendo encapsular la lógica correspondiente a cada módulo y promoviendo la separación clara entre los datos y los métodos que los manipulan, lo que a su vez mejora la mantenibilidad del sistema a lo largo del tiempo. Además, al trabajar con herramientas modernas como Flutter para el desarrollo móvil y Python para el backend, ambos entornos admiten y fomentan prácticas basadas en objetos, lo que asegura la compatibilidad técnica entre las distintas capas del sistema y permite integrar servicios como APIs externas o almacenamiento de datos sin romper la coherencia estructural. Asimismo, la orientación a objetos permite implementar mecanismos de herencia, polimorfismo y abstracción, lo que es especialmente útil para representar jerarquías funcionales entre tipos de usuarios y adaptar comportamientos según el contexto de uso, reduciendo la redundancia de código y aumentando la flexibilidad frente a futuras mejoras o ampliaciones del sistema, lo que se traduce en un desarrollo más robusto y preparado para escalar en nuevas versiones o integraciones futuras sin necesidad de reestructurar completamente la lógica ya implementada.
+\\\\Esta elección también permite mantener una arquitectura coherente con el enfoque de desarrollo iterativo e incremental definido en el ciclo de vida, lo que resulta clave para responder a posibles cambios de requerimientos, refinar funcionalidades a partir del feedback temprano de los usuarios y garantizar una evolución controlada del software durante las diferentes etapas del proyecto, asegurando que las nuevas funcionalidades puedan incorporarse sin afectar negativamente los módulos ya validados.
+
+\newpage
+\subsection{BPMN}
+\begin{center}
+    \fbox{\includegraphics[width=17cm]{bpmn.png}}
+\end{center}
+\newpage
+\subsection{Modelo de Datos Relacional}
+%MR con problemas%
+\begin{center}
+    \fbox{\includegraphics[width=16cm]{modelorelacional.png}}
+\end{center}
+
+\subsection{Diccionario de Datos}
+\begin{enumerate}
+    \item \textbf{Tabla: Company}
+    \begin{itemize}
+        \item \textbf{Descripción:} Resume información importante de la compañía que contrata el uso de la aplicación.
+        \item \textbf{Primary Key: CompanyId}
+    \end{itemize}
+    \begin{table}[!h]
+        \centering
+        \begin{tabular}{|p{3cm}|p{2cm}|p{2.5cm}|p{8cm}|}
+            \hline
+             \textbf{Dato} & \textbf{Relación} & \textbf{Tipo} & \textbf{Descripción} \\
+             \hline
+             CompanyId & \textbf{PK} & Integer & Es un número único que se asigna de forma incremental por cada nueva compañía agregada. \\
+             \hline
+             Name & N & Varchar(100) & Hace referencia al nombre de la empresa. \\
+             \hline
+             PhoneNumber & N & Varchar(100) & Número de contacto asociado a la empresa cliente. \\
+             \hline
+             Email & N & Varchar(100) & Dirección de Correo Electrónico de la empresa. \\
+             \hline
+             Rut & N & Varchar(30) & Rut de empresa. \\
+             \hline
+             Owner & N & Varchar(100) & Nombre del dueño de la empresa \\
+             \hline
+        \end{tabular}
+    \end{table}
+    \item \textbf{Tabla: Subscription}
+    \begin{itemize}
+        \item \textbf{Descripción:} Registra el estado de la suscripción de empresa a la aplicación, esta se puede renovar lo que cambiar el estado del campo status.
+        \item \textbf{Primary Key: SusbcriptionId}
+        \item \textbf{Relacionado con: Company}
+    \end{itemize}
+    \begin{table}[!h]
+        \centering
+        \begin{tabular}{|p{3cm}|p{2cm}|p{2.5cm}|p{8cm}|}
+             \hline
+             \textbf{Dato} & \textbf{Relación} & \textbf{Tipo} & \textbf{Descripción} \\
+             \hline
+             SubscriptionId & \textbf{PK} & Integer & Es un número único que se asigna de forma incremental por cada nueva compañía suscrita. \\
+             \hline
+             CompanyId & \textbf{FK} & Integer & Relaciona la suscripción a una empresa contratante. \\
+             \hline
+             DateStart & N & Date & Fecha en la que se contrató la suscripción, se renueva cuando se renueva la suscripción. \\
+             \hline
+             DateEnd & N & Date & Fecha en la que se termina la suscripción, se renueva cuando se renueva la suscripción. \\
+             \hline
+             Status & N & boolean & Comienza en un estado true, al expirar DateEnd, el dato pasa a ser false. \\
+             \hline
+        \end{tabular}
+    \end{table}
+
+    \newpage
+    \item \textbf{Tabla: Bus}
+    \begin{itemize}
+        \item \textbf{Descripción:} Registra los buses de cada compañía.
+        \item \textbf{Primary Key: BusId}
+        \item \textbf{Relacionado con: Company}
+    \end{itemize}
+    \begin{table}[!h]
+        \centering
+        \begin{tabular}{|p{3cm}|p{2cm}|p{2.5cm}|p{8cm}|}
+             \hline
+             \textbf{Dato} & \textbf{Relación} & \textbf{Tipo} & \textbf{Descripción} \\
+             \hline
+             BusId & \textbf{PK} & Integer & Es un número único que se asigna de forma incremental por cada nuevo bus en la compañía. \\
+             \hline
+             CompanyId & \textbf{FK} & Integer & Relaciona cada bus a una empresa contratante, una empresa puede tener muchos buses. \\
+             \hline
+             Status & N & boolean & Status está en true cuando el bus está en servicio, de lo contrario Status es false. \\
+             \hline
+             Brand & N & Varchar(100) & Marca fabricante del bus. \\
+             \hline
+             Model & N & Varchar(100) & Modelo asignado por el fabricante del bus. \\
+             \hline
+             Year & N & Integer & Año de fabricación del bus. \\
+             \hline
+             Patent & N & Varchar(10) & Patente única del vehículo conformada por combinación de letras y números. \\
+             \hline
+        \end{tabular}
+    \end{table}
+    \item \textbf{Tabla: User}
+    \begin{itemize}
+        \item \textbf{Descripción:} Reune la información básica de cada usuario registrado en el sistema.
+        \item \textbf{Primary Key: UserId}
+    \end{itemize}
+    \begin{table}[!h]
+        \centering
+        \begin{tabular}{|p{3cm}|p{2cm}|p{2.5cm}|p{8cm}|}
+             \hline
+             \textbf{Dato} & \textbf{Relación} & \textbf{Tipo} & \textbf{Descripción} \\
+             \hline
+             UserId & \textbf{PK} & Integer & Es un número único que se asigna de forma incremental por cada nuevo usuario registrado. \\
+             \hline
+             Email & N & Varchar(100) & Cada usuario debe tener un correo electrónico asociado. \\
+             \hline
+             PasswordHash & N & Varchar(100) & Es un hash resultante de encriptar la contraseña ingresada por el usuario. \\
+             \hline
+             UserName & N & Varchar(100) & Nombre de Usuario seleccionado por el usuario.\\
+             \hline
+        \end{tabular}
+    \end{table}
+    \newpage
+    \item \textbf{Tabla: PhoneNumber}
+    \begin{itemize}
+        \item \textbf{Descripción:} Registro del número telefónico de cada usuario.
+        \item \textbf{Primary Key: PhoneNumberId}
+        \item \textbf{Relacionado con: User}
+    \end{itemize}
+    \begin{table}[!h]
+        \centering
+        \begin{tabular}{|p{3cm}|p{2cm}|p{2.5cm}|p{8cm}|}
+             \hline
+             \textbf{Dato} & \textbf{Relación} & \textbf{Tipo} & \textbf{Descripción} \\
+             \hline
+             PhoneNumberId & \textbf{PK} & Integer & Es un número único que se asigna de forma incremental por cada nuevo número registrado. \\
+             \hline
+             UserId & \textbf{FK} & Integer & Es un número único que relaciona la tabla con la tabla User. \\
+             \hline
+             PhoneNumber & N & Varchar(100) & Número de teléfono asociado. \\
+             \hline
+        \end{tabular}
+    \end{table}
+    
+    \item \textbf{Tabla: UserCompany}
+    \begin{itemize}
+        \item \textbf{Descripción:} Registro de cada usuario registrado como funcionario de una compañía.
+        \item \textbf{Primary Key: UserCompanyId}
+        \item \textbf{Relacionado con: Company, User.}
+    \end{itemize}
+    \begin{table}[!h]
+        \centering
+        \begin{tabular}{|p{3cm}|p{2cm}|p{2.5cm}|p{8cm}|}
+             \hline
+             \textbf{Dato} & \textbf{Relación} & \textbf{Tipo} & \textbf{Descripción} \\
+             \hline
+             UserCompanyId & \textbf{PK} & Integer & Es un número único que se asigna de forma incremental por cada nuevo usuario de compañía. \\
+             \hline
+             CompanyId & \textbf{FK} & Integer & Valor numérico único que relaciona con la tabla Company.\\
+             \hline
+             UserId & \textbf{FK} & Integer & Valor numérico único que relaciona a cada usuario de la compañía con su correspondiente User. \\
+             \hline
+             Name & N & Varchar(100) & Nombre completo del usuario perteneciente a la compañía. \\
+             \hline
+             Rol & N & Varchar(100) & Nombre del rol que desempeña dentro de la compañía. \\
+             \hline
+        \end{tabular}
+    \end{table}
+
+    \newpage
+    \item \textbf{Tabla: Admin}
+    \begin{itemize}
+        \item \textbf{Descripción:} Dentro del sistema existen administradores con acceso privilegiado dentro del sistema dependiendo de su atributo Type.
+        \item \textbf{Primary Key: AdminId}
+        \item \textbf{Relacionado con: UserCompany.}
+    \end{itemize}
+    \begin{table}[!h]
+        \centering
+        \begin{tabular}{|p{3cm}|p{2cm}|p{2.5cm}|p{8cm}|}
+             \hline
+             \textbf{Dato} & \textbf{Relación} & \textbf{Tipo} & \textbf{Descripción} \\
+             \hline
+             AdminId & \textbf{PK} & Integer & Es un número único que se asigna de forma incremental por cada nuevo admin dentro del sistema. \\
+             \hline
+             UserCompanyId & \textbf{FK} & Integer & Valor numérico único que relaciona con la tabla UserCompany.\\
+             \hline
+             Type & N & Integer & Un valor de 100, permite acceso a la totalidad de funcionalidades de configuración y administración, un valor de 200 permite solo acceder en modo lectura al dashboard de administración. \\
+             \hline
+        \end{tabular}
+    \end{table}
+
+    \newpage
+    \item \textbf{Tabla: Route}
+    \begin{itemize}
+        \item \textbf{Descripción:} Aquí es donde se guardan las diferentes rutas que sigue cada bus.
+        \item \textbf{Primary Key: RouteId}
+        \item \textbf{Relacionado con: Company, BusStop.}
+    \end{itemize}
+    \begin{table}[!h]
+        \centering
+        \begin{tabular}{|p{3cm}|p{2cm}|p{2.5cm}|p{8cm}|}
+             \hline
+             \textbf{Dato} & \textbf{Relación} & \textbf{Tipo} & \textbf{Descripción} \\
+             \hline
+             RouteId & \textbf{PK} & Integer & Es un valor numérico que se incrementa por cada nueva ruta en el sistema. \\
+             \hline
+             CompanyId & \textbf{FK} & Integer & Valor numérico único que relaciona a la ruta con la compañía que la cubre.\\
+             \hline
+             BusStopId & \textbf{FK} & Integer & Un valor que relaciona a la ruta con la tabla BusStop que contiene las paradas de bus de la ruta. \\
+             \hline
+             Name & N & Varchar(100) & Es el nombre de la ruta o recorrido. \\
+             \hline
+             Start(lat/lng) & N & Varchar(100) & Un dato que en términos de latitud y longitud guarda el punto de inicio de la ruta. \\
+             \hline
+             End(lat/lng) & N & Varchar(100) & Un dato que en términos de latitud y longitud guarda el punto de fin de la ruta. \\
+             \hline
+             Distance & N & Varchar(100) & Un dato que indica la distancia en kilómetros aproximada de la ruta. \\
+             \hline
+             MaxTime & N & Varchar(100) & Es un tiempo en minutos que indica el tiempo máximo en el que se debe recorrer la ruta. \\
+             \hline
+             MinTime & N & Varchar(100) & Es un tiempo en minutos que indica el tiempo mínimo en el que se debe recorrer la ruta. \\
+             \hline
+             RouteJson & N & JsonB & Archivo GeoJson que contiene la ruta en coordenadas lat/lng.\\
+             \hline
+        \end{tabular}
+    \end{table}
+    
+    \item \textbf{Tabla: BusStop}
+    \begin{itemize}
+        \item \textbf{Descripción:} Las paradas de buses se guardan de forma independiente en esta tabla.
+        \item \textbf{Primary Key: BusStop}
+    \end{itemize}
+    \begin{table}[!h]
+        \centering
+        \begin{tabular}{|p{3cm}|p{2cm}|p{2.5cm}|p{8cm}|}
+             \hline
+             \textbf{Dato} & \textbf{Relación} & \textbf{Tipo} & \textbf{Descripción} \\
+             \hline
+             BusStopId & \textbf{PK} & Integer & Es un valor numérico que se incrementa por cada nuevo mapa de paraderos en el sistema. \\
+             \hline
+             BusStopJson & N & JsonB & Es un mapa de coordenadas con cada paradero en formato GeoJson, una ruta tiene muchos paraderos que se actualizan de forma constante. \\
+             \hline
+        \end{tabular}
+    \end{table}
+
+    \newpage
+    \item \textbf{Tabla: Driver}
+    \begin{itemize}
+        \item \textbf{Descripción:} Aquí se registran todos los choferes activos.
+        \item \textbf{Primary Key: DriverId}
+        \item \textbf{Relacionado con: UserCompany, License}
+    \end{itemize}
+    \begin{table}[!h]
+        \centering
+        \begin{tabular}{|p{3cm}|p{2cm}|p{2.5cm}|p{8cm}|}
+             \hline
+             \textbf{Dato} & \textbf{Relación} & \textbf{Tipo} & \textbf{Descripción} \\
+             \hline
+             DriverId & \textbf{PK} & Integer & Es un valor numérico que se incrementa por cada nuevo chofer en el sistema. \\
+             \hline
+             UserCompanyId & \textbf{FK} & Integer & Cada chofer tiene su usuario asociado a la compañía mediante UserCompany. \\
+             \hline
+             LicenseId & \textbf{FK} & Integer & Cada chofer tiene su licencia vigente registrada en una tabla.\\
+             \hline
+        \end{tabular}
+    \end{table}
+
+    \item \textbf{Tabla: License}
+    \begin{itemize}
+        \item \textbf{Descripción:} Aquí se registran las licencias de conducir de cada chofer.
+        \item \textbf{Primary Key: LicenseId}
+        \item \textbf{Relacionado con: Address, LicensePhoto}
+    \end{itemize}
+    \begin{table}[!h]
+        \centering
+        \begin{tabular}{|p{3cm}|p{2cm}|p{2.5cm}|p{8cm}|}
+             \hline
+             \textbf{Dato} & \textbf{Relación} & \textbf{Tipo} & \textbf{Descripción} \\
+             \hline
+             LicenseId & \textbf{PK} & Integer & Es un valor numérico igual al número único de cada licencia de conducir. \\
+             \hline
+             AddressId & \textbf{FK} & Integer & Número identificador único que relaciona a la licencia con una tabla donde se registran las direcciones.\\
+             \hline
+             LicensePhotoId & \textbf{FK} & Integer & Número identificador único que relaciona a la licencia con una foto de la misma.\\
+             \hline
+             FirstGrant & N & Date & Fecha del primer otorgamiento de la licencia. \\
+             \hline
+             LastControlDate & N & Date & Última vez que se tomó el control para otorgar la licencia de conducir.\\
+             \hline
+             NextControlDate & N & Date & Fecha en la que se debe renovar la licencia de conducir.\\
+             \hline
+             Restrictions & N & Varchar(250) & Restricciones del chofer, como uso de lentes, etc. \\
+             \hline
+        \end{tabular}
+    \end{table}
+
+    \newpage
+    \item \textbf{Tabla: LicensePhoto}
+    \begin{itemize}
+        \item \textbf{Descripción:} En esta tabla se guardan imágenes de la licencia de conducir.
+        \item \textbf{Primary Key: LicensePhotoId}
+    \end{itemize}
+    \begin{table}[!h]
+        \centering
+        \begin{tabular}{|p{3cm}|p{2cm}|p{2.5cm}|p{8cm}|}
+             \hline
+             \textbf{Dato} & \textbf{Relación} & \textbf{Tipo} & \textbf{Descripción} \\
+             \hline
+             LicensePhotoId & \textbf{PK} & Integer & Es un valor numérico con que auto incrementa por cada nueva licencia registrada. \\
+             \hline
+             FrontPhoto & N & Bytea & Imágen frontal de la licencia de conducir.\\
+             \hline
+             BackPhoto & N & Bytea & Imágen trasera de la lincecia de conducir.\\
+             \hline
+        \end{tabular}
+    \end{table}
+
+    \item \textbf{Tabla: Address}
+    \begin{itemize}
+        \item \textbf{Descripción:} Guarda direcciones asociadas a la licencia de conducir.
+        \item \textbf{Primary Key: AddressId}
+        \item \textbf{Relacionado con: City}
+    \end{itemize}
+    \begin{table}[!h]
+        \centering
+        \begin{tabular}{|p{3cm}|p{2cm}|p{2.5cm}|p{8cm}|}
+             \hline
+             \textbf{Dato} & \textbf{Relación} & \textbf{Tipo} & \textbf{Descripción} \\
+             \hline
+             AddressId & \textbf{PK} & Integer & Es un valor numérico que se auto incrementa por cada nueva dirección registrada. \\
+             \hline
+             CityId & \textbf{FK} & Integer & Es un valor numérico que relaciona a la dirección con una ciudad.\\
+             \hline
+             Street & N & Varchar(100) & Es el nombre de la calle asociada a la dirección.\\
+             \hline
+             Number & N & Integer & Hace referencia al número de casa registrado en la dirección.\\
+             \hline
+        \end{tabular}
+    \end{table}
+
+    \item \textbf{Tabla: City}
+    \begin{itemize}
+        \item \textbf{Descripción:} Almacena todas las posibles ciudades de Chile.
+        \item \textbf{Primary Key: CityId}
+    \end{itemize}
+    \begin{table}[!h]
+        \centering
+        \begin{tabular}{|p{3cm}|p{2cm}|p{2.5cm}|p{8cm}|}
+             \hline
+             \textbf{Dato} & \textbf{Relación} & \textbf{Tipo} & \textbf{Descripción} \\
+             \hline
+             CityId & \textbf{PK} & Integer & Es un valor numérico que se auto incrementa por cada nueva ciudad registrada. \\
+             \hline
+             CityName & N & Varchar(100) & Nombre de la ciudad.\\
+             \hline
+        \end{tabular}
+    \end{table}
+
+    \newpage
+    \item \textbf{Tabla: RouteAssignment}
+    \begin{itemize}
+        \item \textbf{Descripción:} La asignación de rutas se hacen mediante esta tabla, donde se almacena al chofer que la recorrerá, la ruta que recorrerá, el bus que utilizará, la hora la que empezó, y la hora a la que termine, además de la fecha en la que se hizo.
+        \item \textbf{Primary Key: RouteAssignmentId}
+        \item \textbf{Relacionado con: Route, Driver, Bus}
+    \end{itemize}
+    \begin{table}[!h]
+        \centering
+        \begin{tabular}{|p{3cm}|p{2cm}|p{2.5cm}|p{8cm}|}
+             \hline
+             \textbf{Dato} & \textbf{Relación} & \textbf{Tipo} & \textbf{Descripción} \\
+             \hline
+             RouteAssign- mentId & \textbf{PK} & Integer & Es un valor numérico que se auto incrementa por cada nueva ruta asignada. \\
+             \hline
+             RouteId & \textbf{FK} & Integer & De la tabla de rutas, se rescata una ruta para ser asignada.\\
+             \hline
+             BusId & \textbf{FK} & Integer & De la tabla de buses se selecciona un bus con su id para la ruta asignada.\\
+             \hline
+             DriverId & \textbf{FK} & Integer & De la tabla de choferes se selecciona un chofer que hará la ruta.\\
+             \hline
+             RouteTimeStart & N & Time & Hora a la que se inicia el recorrido hh:mm.\\
+             \hline
+             RouteTimeEnd & N & Time & Hora a la que se termina el recorrido hh:mm.\\
+             \hline
+             Date & N & Date & Fecha en la que se hace el recorrido.\\
+             \hline
+        \end{tabular}
+    \end{table}
+
+    \item \textbf{Tabla: Report}
+    \begin{itemize}
+        \item \textbf{Descripción:} Aquí se registran todos los reportes de incidentes que ocurran en ruta.
+        \item \textbf{Primary Key: ReportId}
+        \item \textbf{Relacionado Con: RouteAssignment, User}
+    \end{itemize}
+    \begin{table}[!h]
+        \centering
+        \begin{tabular}{|p{3cm}|p{2cm}|p{2.5cm}|p{8cm}|}
+             \hline
+             \textbf{Dato} & \textbf{Relación} & \textbf{Tipo} & \textbf{Descripción} \\
+             \hline
+             ReportId & \textbf{PK} & Integer & Es un valor numérico que se auto incrementa por cada nueva ruta asignada.\\
+             \hline
+             RouteAssign- mentId & \textbf{FK} & Integer & Es un valor numérico que se relaciona con la ruta asignada en la que ocurrió el reporte. \\
+             \hline
+             UserId & \textbf{FK} & Integer & Se registra el Id del usuario que hizo el reporte, puede ser un chofer, administrador, o pasajero.\\
+             \hline
+             Description & N & Varchar(500) & Descripción breve de lo ocurrido.\\
+             \hline
+             Time & N & Time & Hora en la que ocurrió el reporte.\\
+             \hline
+        \end{tabular}
+    \end{table}
+
+    \newpage
+    \item \textbf{Tabla: UserPassenger}
+    \begin{itemize}
+        \item \textbf{Descripción:} Tabla donde se registran los pasajeros (No es obligatorio registrarse para usar el sistema, solo para reportes y futuras funcionalidades).
+        \item \textbf{Primary Key: UserPassengerId}
+        \item \textbf{Relacionado Con: User}
+    \end{itemize}
+    \begin{table}[!h]
+        \centering
+        \begin{tabular}{|p{3cm}|p{2cm}|p{2.5cm}|p{8cm}|}
+             \hline
+             \textbf{Dato} & \textbf{Relación} & \textbf{Tipo} & \textbf{Descripción} \\
+             \hline
+             UserPassengerId & \textbf{PK} & Integer & Es un valor numérico que se auto incrementa por cada nueva pasajero registrado.\\
+             \hline
+             UserId & \textbf{FK} & Integer & Es un valor numérico que se relaciona con el resto de datos del pasajero que serán guardados en tabla User. \\
+             \hline
+        \end{tabular}
+    \end{table}
+\end{enumerate}
+
+\subsubsection{Estructura de documentos Json}
+En el modelo de datos las rutas se almacenan en formato GeoJson el cuál tiene una estructura del tipo:
+\begin{lstlisting}[style=json, label=lst:geojson]
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "MB72_A_To_SanJose"
+      },
+      "geometry": {
+        "coordinates": [ [lon, lat], [lon, lat], ... ],
+        "type": "LineString"
+      }
+    }
+  ]
+}
+\end{lstlisting}
+\newpage
+\subsection{Matriz de Riesgo}
+\begin{table}[!h]
+\centering
+\renewcommand{\arraystretch}{1.2}
+\small
+\begin{tabular}{|c|p{4.5cm}|c|p{1cm}|p{1cm}|p{5cm}|}
+\hline
+\textbf{Código} & \textbf{Riesgo inherente} & \textbf{Impacto} & \textbf{Prob.} & \textbf{Nivel} & \textbf{Mitigación propuesta} \\
+\hline
+R1 & Funcionamiento inestable en zonas rurales por pérdida de conectividad. & Alto & Media Alta & Alto & Incorporar modo offline, sincronización diferida y buffering local de datos críticos, algoritmo de predicción para la posición del bus. \\
+\hline
+R2 & Asignación simultánea de múltiples buses a una misma ruta activa, provocando sobrecarga y distorsión en la frecuencia del servicio. & Medio & Media & Medio & Implementar validación en backend que limite la cantidad de buses por ruta activa según parámetros definidos (frecuencia esperada, intervalo mínimo). Notificar al chofer si se excede el límite. \\
+\hline
+R3 & Latencia excesiva en el cálculo y entrega de ETA a pasajeros, degradando la experiencia de usuario. & Medio & Media & Medio & Optimizar queries al backend, cache de respuestas recientes y balanceo de carga. \\
+\hline
+R4 & Errores en la asignación de rutas por sincronización incorrecta entre app y base de datos. & Alto & Media & Alto & Validación doble antes de asignar, versionado de rutas, rollback ante errores. \\
+\hline
+R5 & Visualización incorrecta de buses en el mapa del pasajero por discrepancias de tiempo real. & Medio & Alta & Medio & Ajuste de interpolación visual, sincronización periódica y monitoreo del canal de datos. \\
+\hline
+\end{tabular}
+\end{table}
+\subsection{Diagramas de Comportamiento}
+    \begin{center}
+        \includegraphics[width=15.5cm]{DiagramaACtividadesPasajero.png}
+    \end{center}
+    \begin{center}
+    \includegraphics[width=17cm]{DiagramaACtividades.png}
+    \end{center}
+    \subsubsection{Diagrama de Casos de Uso}
+    \begin{center}
+    \centering
+    \fbox{\includegraphics[width=1\textwidth]{Diagrama_CasosDeUso.png}}
+    \end{center}
+
+    \newpage
+    \subsubsection{Diagrama de Casos de Uso de Negocio}
+    \begin{center}
+    \fbox{\includegraphics[width=11cm]{Diagrama_CasoUsoNegocio.png}}
+    \end{center}
+
+    \newpage
+\subsubsection{Diagramas de Estados}
+\begin{itemize}
+    \item \textbf{Diagrama de Estado del Recorrido}
+    \begin{center}
+    \fbox{\includegraphics[width=14cm]{Diagrama_EstadoRecorrido.png}}
+    \end{center}
+    \newpage
+    \item \textbf{Diagrama de Estado del Vehículo}
+    \begin{center}
+    \fbox{\includegraphics[width=14cm]{Diagrama_EstadoVehiculo.png}}
+    \end{center}
+    \newpage
+    \item \textbf{Diagrama de Estado del Chofer}
+    \begin{center}
+    \fbox{\includegraphics[width=14cm]{Diagrama_EstadoChofer.png}}
+    \end{center}
+    \newpage
+    \item \textbf{Diagrama de Estado de Ubicación}
+    \begin{center}
+    \fbox{\includegraphics[width=14cm]{Diagrama_EstadoUbicacion.png}}
+    \end{center}
+\end{itemize}
+
+\newpage
+\subsection{Diagramas de Interacción}
+
+\subsubsection{Diagrama de Secuencia}
+\begin{itemize}
+    \item \textbf{Diagrama de Secuencia del Chofer}
+    \begin{center}
+    \fbox{\includegraphics[width=14cm]{Diagrama_SecChofer.png}}
+    \end{center}
+    \newpage
+    \item \textbf{Diagrama de Secuencia del Pasajero}
+    \begin{center}
+    \fbox{\includegraphics[width=14cm]{Diagrama_SecPasajero.png}}
+    \end{center}
+    \newpage
+    \item \textbf{Diagrama de Secuencia del Administrador}
+    \begin{center}
+    \fbox{\includegraphics[width=14cm]{Diagrama_SecAdmin.png}}
+    \end{center}
+\end{itemize}
+\newpage
+\subsubsection{Diagrama de Colaboración}
+\begin{center}
+\fbox{\includegraphics[width=15cm]{Diagrama_Colab.png}}
+\end{center}
+\newpage
+\section{Prototipo}
+
+Se diseñó e implementó un \emph{prototipo funcional} de alcance limitado que integra los tres nodos fundamentales de la plataforma de geolocalización de buses rurales.  El propósito es demostrar la viabilidad técnica y operacional de la solución propuesta antes de escalarla a producción.
+
+\subsection{Objetivos}
+\begin{enumerate}
+\item \textbf{Validar la precisión y la robustez tecnológica}.  Se establece como meta preliminar una precisión mínima del 85\% (error $\leq 15$m) y una latencia de transmisión inferior a 20s en zonas con cobertura 4G.
+\item \textbf{Comprobar la trazabilidad en tiempo real}.  El sistema debe permitir el monitoreo continuo de la flota de buses rurales durante toda la jornada operativa (05:00--23:00).  Esto incluye inicio/fin de recorrido, paradas y desviaciones.
+\end{enumerate}
+
+\subsection{Alcance y componentes implementados}
+El prototipo concentra las funcionalidades críticas de la solución final y se compone de los siguientes nodos:
+\begin{itemize}
+\item \textbf{Nodo Embarcado (\emph{App Chofer})}: aplicación Flutter instalada en dispositivos Android con conexión a 4G.  Envía la posición cada 10~s utilizando mensajes utilizando operaciones POST en la API.
+\item \textbf{Nodo Servidor (\emph{Backend})}: Persistencia de datos desplegada en Supabase. Expone endpoints REST para realizar operaciones CRUD sobre una base de datos PostgreSQL, gestiona autenticación mediante JWT.
+\item \textbf{Nodo Cliente (\emph{App Pasajero})}: Single page aplication desarrollada con la utilización del software Astro que consume la API y representa la flota sobre un mapa Leaflet; calcula el tiempo estimado de llegada básico mediante interpolación lineal.
+\end{itemize}
+
+\subsection{Funcionalidades principales}
+\begin{itemize}
+\item Registro de inicio y fin de recorridos, con sellos tiempo.
+\item Envío y almacenamiento histórico de geolocalización (latitud, longitud, timestamp).
+\item Visualización en tiempo real de ubicación, rutas, y paradas de buses.
+\end{itemize}
+
+\subsection{Limitaciones actuales}
+\begin{itemize}
+\item Autenticación básica sin reglas RDS en las tablas PostgreSQL.
+\item Pruebas limitadas a redes urbanas 4G (Sin evaluación en zonas rurales reales como San José de Maipo).
+\item Sin cifrado de extremo a extremo en la comunicación Cliente $\xrightarrow{}$ Servidor.
+\end{itemize}
+
+\subsection{Criterios de aceptación}
+El prototipo se considera satisfactorio si en la campaña de pruebas de campo se cumplen los siguientes umbrales:
+\begin{itemize}
+\item Precisión media $\leq 15$m en al menos el 85\% de las muestras.
+\item Pérdida de paquetes $<2$\% medida en el enlace móvil.
+\item Disponibilidad del sistema $\geq 95$\% durante la ventana operativa.
+\end{itemize}
+
+\subsection{Próximos pasos}
+\begin{itemize}
+\item Escalar el backend para soportar más clientes simultaneos con replicas y balanceadores de carga.
+\item Integrar cifrado de extremo a extremo.
+\item Implementar modelos de predicción de seguimiento del bus, con el fin de suplir la falta de cobertura GPS o red movil.
+\item Jerarquizar operaciones CRUD en el Backend.
+\item Implementar integración con la API Red Metropolitana de Movilidad y Metro.
+\end{itemize}
+\subsection{Prototipo Funcional}
+\subsubsection{Prototipo App Chofer}
+\textbf{Pantallas que conforman al prototipo}
+\begin{itemize}
+    \item \textbf{Login:} Permite ingresar crednenciales y es la primera pantalla con la que el Chofer se encontrará al iniciar la aplicación.
+    \item \textbf{Selección de bus:} Desplegará la totalidad de buses disponibles que posee la empresa, donde el Chofer seleccionará el que utilizará en su recorrido.
+    \item \textbf{Selección de Ruta:} Desplegará todas las rutas disponibles en función de la ubicación del chofer y su cercanía con el punto de inicio de la ruta.
+    \item \textbf{Vista de Mapa:} Al entrar a esta pantalla se genera un asignación de ruta en el Backend y comienza a emitir su ubicación, para luego mostrar en tiempo real información sobre esa asignación de ruta.
+    \item \textbf{Configuración:} Incluye configuraciones básicas de la aplicación, en este prototipo, solo permite configurar apriencia visual.
+    \item \textbf{Crear Usuario:} Es una ruta alternativa, luego de la pantalla de login que permite crear un usuario Chofer para ser aprobado y verificado por el administrador.
+\end{itemize}
+\textbf{Flujo de Uso del Sistema}
+\begin{center}
+    \fbox{\includegraphics[width=15cm]{PrototipoChofer/flujo de uso del sistema.png}}
+\end{center}
+\newpage
+\textbf{Login:} Pantalla inicial de la aplicación. El usuario debe ingresar sus credenciales (usuario y contraseña) para autenticarse. Si la validación es exitosa, se redirige automáticamente a la pantalla de selección de bus. En caso de error (credenciales inválidas o problemas de conexión), se presenta un mensaje informativo al usuario.
+\begin{center}
+    \includegraphics[width=7cm]{PrototipoChofer/C1M.png}
+    \includegraphics[width=7cm]{PrototipoChofer/C1MA.png}
+    \end{center}
+\newpage
+\textbf{Crear Cuenta:} Para conductores que no poseen una cuenta activa, se dispone de una opción de registro que permite crear un nuevo perfil de chofer. El formulario de registro solicita información básica y valida los campos antes de enviar la solicitud al servidor que eventualmente será procesada por un administrador.
+\begin{center}
+    \includegraphics[width=7cm]{PrototipoChofer/C5M.png}
+    \includegraphics[width=7cm]{PrototipoChofer/C5MA.png}
+\end{center}
+\newpage
+\textbf{Seleccionar Bus:} Esta pantalla muestra un listado dinámico de los buses disponibles, es decir, aquellos que no se encuentran actualmente en ruta ni marcados como fuera de servicio. El chofer debe seleccionar el bus que utilizará durante el recorrido. La información se sincroniza en tiempo real con el backend para evitar conflictos de asignación.
+\begin{center}
+    \includegraphics[width=7cm]{PrototipoChofer/C2M.png}
+    \includegraphics[width=7cm]{PrototipoChofer/C2MA.png}
+\end{center}
+\newpage
+\textbf{Seleccionar Ruta:} Una vez asignado un bus, el sistema muestra únicamente las rutas habilitadas cuyo punto de inicio se encuentra dentro de un radio de 100 metros respecto a la ubicación actual del chofer. Además, se filtran las rutas que disponen de una frecuencia operativa compatible con la asignación de un nuevo bus, evitando sobrecarga en el trazado.
+\begin{center}
+    \includegraphics[width=7cm]{PrototipoChofer/C3M.png}
+    \includegraphics[width=7cm]{PrototipoChofer/C3MA.png}
+\end{center}
+\newpage
+\textbf{Asignación de Viaje: }Al confirmar tanto el bus como la ruta, se genera una instancia de viaje que asocia los tres elementos clave: chofer, vehículo y recorrido. Esta información es registrada en el backend y se inicia automáticamente la transmisión de datos de ubicación. La interfaz muestra un resumen de la asignación, seguido de la carga del mapa en tiempo real con los eventos asociados al trayecto.
+\begin{center}
+    \includegraphics[width=7cm]{PrototipoChofer/C4M.png}
+\end{center}
+\newpage
+\textbf{Sin Conexión: }Si el dispositivo no dispone de conexión a Internet en cualquier momento previo a la asignación del viaje (por ejemplo, durante el login o selección de recursos), se muestra esta pantalla con un aviso al usuario. No es posible continuar con el flujo normal hasta recuperar la conectividad.
+\begin{center}
+    \includegraphics[width=7cm]{PrototipoChofer/C6M.png}
+\end{center}
+\newpage
+\subsubsection{Prototipo App Pasajero}
+\textbf{Pantallas que conforman al prototipo}
+\begin{itemize}
+    \item \textbf{Selección de Paradero:} En esta pantalla se despliegan sobre el mapa todos los paraderos cercanos a la ubicación actual del pasajero, determinados mediante geolocalización. El usuario puede interactuar con cada uno de ellos; al seleccionar un paradero, se presenta información relevante como la distancia estimada y el tiempo de llegada del bus más próximo a dicho punto. Adicionalmente, se muestra en el mapa la ubicación en tiempo real del bus en ruta hacia el paradero seleccionado.
+
+    \item \textbf{Selección de Micro:} Una vez visualizados los buses en ruta, el pasajero puede seleccionar un vehículo específico. Al hacerlo, se despliega información básica del bus, incluyendo su patente, para facilitar su identificación visual en terreno.
+\end{itemize}
+\newpage
+\textbf{Selección de Paradero:} Se despliegan todos los paraderos registrados en el backend sobre el mapa.
+\begin{center}
+    \includegraphics[width=7cm]{PrototipoPasajero/P1M.png}
+    \includegraphics[width=7cm]{PrototipoChofer/C6M.png}
+\end{center}
+\newpage
+\textbf{Información de Bus:} Al seleccionar el bus se muestra información del mismo.
+\begin{center}
+    \includegraphics[width=7cm]{PrototipoPasajero/P2M.png}
+    \includegraphics[width=7cm]{PrototipoChofer/C6M.png}
+\end{center}
+\clearpage
+\subsection{Casos de Uso del Sistema}
+%Hay q básicamente hacer un manual con todas las pantallas que se utilizarán en el sistema, con todas sus instrucciones de que hace cada componente de la weá. Literalmente es lo más largo de todo lo que hay que hacer, obviamente el largo varia segun el proyecto y los casos de usos del sistema y toda esa weá%
+
+\subsubsection{Casos de Uso del Sistema - Chofer}
+    \begin{table}[!h]
+    \centering
+    \begin{tabular}{|p{3.5cm}|p{11cm}|}
+    \hline
+    \textbf{Nombre:} & CUS01 - Inicio de Sesión del Chofer \\
+    \hline
+    \textbf{Actores:} & Chofer, Sistema, API de autenticación \\
+    \hline
+    \textbf{Precondiciones:} &
+    \begin{itemize}
+        \item El chofer tiene una cuenta registrada en el sistema.
+        \item El dispositivo cuenta con conexión a internet.
+    \end{itemize}
+    \\
+    \hline
+    \textbf{Flujo normal:} &
+    \begin{enumerate}
+        \item El chofer abre la aplicación TurMaipoView.
+        \item Se muestra la pantalla de inicio de sesión con campos para correo electrónico y contraseña.
+        \item El chofer ingresa sus credenciales y pulsa el botón “Iniciar Sesión”.
+        \item El sistema verifica los datos a través del servicio de autenticación.
+        \item Si las credenciales son correctas, el sistema inicia sesión y redirige al chofer a la pantalla principal de rastreo.
+    \end{enumerate}
+    \\
+    \hline
+    \textbf{Flujo alternativo:} &
+    \begin{itemize}
+        \item[3a.] Si las credenciales ingresadas son incorrectas, el sistema muestra un mensaje de error: \textit{“Credenciales inválidas. Intente nuevamente.”}
+        \item[3b.] Si no hay conexión a internet, el sistema muestra el mensaje: \textit{“Sin conexión. Intente más tarde.”}
+    \end{itemize}
+    \\
+    \hline
+    \textbf{Postcondiciones:} &
+    El chofer ha accedido correctamente al sistema y se encuentra en la pantalla de seleccion de bus, listo para configurar el próximo recorrido.
+    \\
+    \hline
+    \end{tabular}
+    \end{table}
+
+    \clearpage
+    \begin{table}[!h]
+    \centering
+    \begin{tabular}{|p{3.5cm}|p{11cm}|}
+    \hline
+    \textbf{Nombre:} & CUS02 - Registro de Nuevo Chofer \\
+    \hline
+    \textbf{Actores:} & Chofer, Sistema, API de autenticación \\
+    \hline
+    \textbf{Precondiciones:} &
+    \begin{itemize}
+        \item El chofer no posee una cuenta activa en el sistema.
+        \item El dispositivo tiene conexión a internet.
+    \end{itemize}
+    \\
+    \hline
+    \textbf{Flujo normal:} &
+    \begin{enumerate}
+        \item El chofer accede a la opción “¿No tienes cuenta? Regístrate aquí” desde la pantalla de inicio de sesión.
+        \item El sistema muestra el formulario de registro.
+        \item El chofer completa los campos: correo electrónico, nombre de usuario y contraseña.
+        \item El chofer pulsa el botón “Crear Cuenta”.
+        \item El sistema valida los datos y registra al nuevo chofer en la base de datos.
+        \item El sistema confirma el registro exitoso y redirige al chofer a la pantalla de inicio de sesión.
+    \end{enumerate}
+    \\
+    \hline
+    \textbf{Flujo alternativo:} &
+    \begin{itemize}
+        \item[3a.] Si falta completar algún campo obligatorio, el sistema muestra el mensaje: \textit{“Por favor complete todos los campos.”}
+        \item[4a.] Si ya existe una cuenta registrada con ese correo, el sistema muestra: \textit{“Correo ya registrado. Intente iniciar sesión.”}
+        \item[4b.] Si hay un error de conexión, el sistema muestra: \textit{“Error de red. Intente más tarde.”}
+    \end{itemize}
+    \\
+    \hline
+    \textbf{Postcondiciones:} &
+    El chofer ha sido registrado exitosamente y está habilitado para iniciar sesión en el sistema.
+    \\
+    \hline
+    \end{tabular}
+    \end{table}
+
+    \clearpage
+    \begin{table}[!h]
+    \centering
+    \begin{tabular}{|p{3.5cm}|p{11cm}|}
+    \hline
+    \textbf{Nombre:} & CUS03 - Selección de Bus Asignado \\
+    \hline
+    \textbf{Actores:} & Chofer, Sistema, Base de Datos de Flota \\
+    \hline
+    \textbf{Precondiciones:} &
+    \begin{itemize}
+        \item El chofer ha iniciado sesión correctamente.
+        \item El sistema tiene cargada la lista de buses disponibles y su relación con el chofer.
+    \end{itemize}
+    \\
+    \hline
+    \textbf{Flujo normal:} &
+    \begin{enumerate}
+        \item El chofer visualiza la lista de buses disponibles de la empresa.
+        \item El chofer selecciona su bus asignado.
+        \item El sistema marca la selección con un ícono de confirmación.
+        \item El chofer presiona el botón “Continuar a Rutas”.
+        \item El sistema guarda la selección y avanza a la configuración de rutas.
+    \end{enumerate}
+    \\
+    \hline
+    \textbf{Flujo alternativo:} &
+    \begin{itemize}
+        \item[1a.] Si no hay buses asignados al chofer, el sistema muestra el mensaje: \textit{“No hay buses disponibles para su cuenta.”}
+        \item[4a.] Si hay un error de conexión al guardar la selección, el sistema muestra: \textit{“No se pudo guardar la selección. Intente más tarde.”}
+    \end{itemize}
+    \\
+    \hline
+    \textbf{Postcondiciones:} &
+    El sistema ha identificado el bus desde el cual se enviará información de ubicación en tiempo real, y permite continuar con la selección de rutas.
+    \\
+    \hline
+    \end{tabular}
+    \end{table}
+
+    \clearpage
+    \begin{table}[!h]
+    \centering
+    \begin{tabular}{|p{3.5cm}|p{11cm}|}
+    \hline
+    \textbf{Nombre:} & CUS04 - Selección de Ruta Asignada \\
+    \hline
+    \textbf{Actores:} & Chofer, Sistema, Base de Datos de Rutas \\
+    \hline
+    \textbf{Precondiciones:} &
+    \begin{itemize}
+        \item El chofer ha seleccionado un bus asignado.
+        \item El sistema tiene rutas cargadas y asociadas al bus seleccionado.
+    \end{itemize}
+    \\
+    \hline
+    \textbf{Flujo normal:} &
+    \begin{enumerate}
+        \item El sistema muestra la lista de rutas disponibles para el bus seleccionado.
+        \item El chofer selecciona una ruta.
+        \item El sistema marca la selección con un ícono de confirmación.
+        \item El chofer presiona el botón “Continuar al Mapa”.
+        \item El sistema registra la ruta seleccionada y carga la vista de seguimiento en mapa.
+    \end{enumerate}
+    \\
+    \hline
+    \textbf{Flujo alternativo:} &
+    \begin{itemize}
+        \item[1a.] Si no hay rutas disponibles para el bus, se muestra el mensaje: \textit{“No hay rutas asociadas a este bus.”}
+        \item[4a.] Si ocurre un error al cargar la vista de mapa, se muestra: \textit{“Error al continuar. Intente nuevamente.”}
+    \end{itemize}
+    \\
+    \hline
+    \textbf{Postcondiciones:} &
+    El sistema tiene definida la ruta activa del bus y se dispone a comenzar la transmisión de ubicación en tiempo real.
+    \\
+    \hline
+    \end{tabular}
+    \end{table}
+
+    \clearpage
+    \begin{table}[!h]
+    \centering
+    \begin{tabular}{|p{3.5cm}|p{11cm}|}
+    \hline
+    \textbf{Nombre:} & CUS05 - Seguimiento de Ruta y Transmisión de Ubicación \\
+    \hline
+    \textbf{Actores:} & Chofer, Sistema, Servicio de Geolocalización, Backend/API \\
+    \hline
+    \textbf{Precondiciones:} &
+    \begin{itemize}
+        \item El chofer ha iniciado sesión correctamente.
+        \item Se ha seleccionado un bus y una ruta asociada.
+        \item El dispositivo tiene acceso a geolocalización y conexión activa a internet.
+    \end{itemize}
+    \\
+    \hline
+    \textbf{Flujo normal:} &
+    \begin{enumerate}
+        \item El sistema accede a la ubicación en tiempo real del dispositivo del chofer.
+        \item Se muestra el mapa con la ruta seleccionada y los paraderos correspondientes.
+        \item En la parte superior se despliega un panel con:
+        \begin{itemize}
+            \item Nombre del chofer.
+            \item Nombre de la empresa.
+            \item Bus seleccionado.
+            \item Ruta actual.
+        \end{itemize}
+        \item El sistema transmite la ubicación del bus al backend en intervalos regulares.
+        \item El chofer puede detener la ruta presionando el botón “Detener Ruta”.
+    \end{enumerate}
+    \\
+    \hline
+    \textbf{Flujo alternativo:} &
+    \begin{itemize}
+        \item[1a.] Si la geolocalización falla, se muestra el mensaje: \textit{“No se pudo obtener la ubicación. Verifique permisos.”}
+        \item[4a.] Si hay pérdida de conexión, se reintenta la transmisión de datos automáticamente cuando se restablece la conexión.
+    \end{itemize}
+    \\
+    \hline
+    \textbf{Postcondiciones:} &
+    La ubicación en tiempo real del bus queda registrada y disponible para su visualización por los pasajeros en la app.
+    \\
+    \hline
+    \end{tabular}
+    \end{table}
+    
+\clearpage
+\subsubsection{Casos de Uso del Sistema - Pasajero}
+
+    \begin{table}[!h]
+    \centering
+    \begin{tabular}{|p{3.5cm}|p{11cm}|}
+    \hline
+    \textbf{Nombre:} & CUS06 - Inicio de Aplicación y Selección de Paradero \\
+    \hline
+    \textbf{Actores:} & Pasajero, Sistema \\
+    \hline
+    \textbf{Precondiciones:} &
+    \begin{itemize}
+        \item La app está instalada en el dispositivo.
+        \item El dispositivo tiene conexión a internet.
+    \end{itemize}
+    \\
+    \hline
+    \textbf{Flujo normal:} &
+    \begin{enumerate}
+        \item El pasajero abre la aplicación TurMaipoView.
+        \item Se muestra la pantalla de bienvenida con el nombre de la app y el botón “Seleccionar Paradero”.
+        \item El pasajero pulsa el botón “Seleccionar Paradero”.
+        \item El sistema redirige al pasajero a la vista de mapa con paraderos y buses.
+    \end{enumerate}
+    \\
+    \hline
+    \textbf{Flujo alternativo:} &
+    \begin{itemize}
+        \item[2a.] Si no hay conexión a internet, la aplicación no iniciará hasta que el usuario tenga algún tipo de conexión.
+    \end{itemize}
+    \\
+    \hline
+    \textbf{Postcondiciones:} &
+    \begin{itemize}
+        \item El pasajero ha iniciado el flujo para interactuar con el sistema.
+        \item El sistema lo ha dirigido a la visualización de paraderos.
+    \end{itemize}
+    \\
+    \hline
+    \end{tabular}
+    \end{table}
+
+    \clearpage
+    \begin{table}[!h]
+    \centering
+    \begin{tabular}{|p{3.5cm}|p{11cm}|}
+    \hline
+    \textbf{Nombre:} & CUS07 - Visualización de Paraderos y Selección \\
+    \hline
+    \textbf{Actores:} & Pasajero, Sistema, Servicio de geolocalización \\
+    \hline
+    \textbf{Precondiciones:} &
+    \begin{itemize}
+        \item El pasajero ha iniciado la aplicación y presionado “Seleccionar Paradero”.
+        \item El dispositivo tiene acceso a geolocalización.
+    \end{itemize}
+    \\
+    \hline
+    \textbf{Flujo normal:} &
+    \begin{enumerate}
+        \item El sistema solicita acceso a la ubicación del pasajero.
+        \item Se muestra un mapa con paraderos cercanos.
+        \item El pasajero selecciona un ícono de paradero.
+        \item El sistema muestra:
+        \begin{itemize}
+            \item Nombre del paradero.
+            \item Distancia aproximada de la micro al paradero seleccionado.
+            \item Tiempo estimado de llegada del bus más cercano (ETA).
+        \end{itemize}
+    \end{enumerate}
+    \\
+    \hline
+    \textbf{Flujo alternativo:} &
+    \begin{itemize}
+        \item[1a.] Si el pasajero deniega el acceso a la ubicación, el sistema muestra un mensaje de error: \textit{“No se pudo obtener su ubicación actual”} y centra el mapa en una ubicación predeterminada de referencia.
+        \item[3a.] Si no hay buses disponibles, se muestra el mensaje: \textit{“Sin buses disponibles en este momento”}.
+    \end{itemize}
+    \\
+    \hline
+    \textbf{Postcondiciones:} &
+    El pasajero ha visualizado los paraderos disponibles en un mapa y ha obtenido información relevante del paradero seleccionado, habilitando la toma de decisiones sobre su trayecto.
+    \\
+    \hline
+    \end{tabular}
+    \end{table}
+
+    \clearpage
+    \begin{table}[!h]
+    \centering
+    \begin{tabular}{|p{3.5cm}|p{11cm}|}
+    \hline
+    \textbf{Nombre:} & CUS08 - Visualización de Micro Cercana Asociada a un Paradero \\
+    \hline
+    \textbf{Actores:} & Pasajero, Sistema, Backend GPS \\
+    \hline
+    \textbf{Precondiciones:} &
+    \begin{itemize}
+        \item El pasajero ha accedido a la vista del mapa con paraderos.
+        \item El pasajero ha seleccionado un paradero del mapa.
+        \item Existen micros activas asociadas a dicho paradero.
+    \end{itemize}
+    \\
+    \hline
+    \textbf{Flujo normal:} &
+    \begin{enumerate}
+        \item El pasajero selecciona un paradero desde el mapa.
+        \item El sistema consulta en tiempo real las micros que pasarán por ese paradero.
+        \item Se identifica la micro más cercana en tránsito hacia el paradero seleccionado.
+        \item El mapa actualiza su vista y muestra el ícono de dicha micro junto al mensaje \textit{"Micro actual"}.
+    \end{enumerate}
+    \\
+    \hline
+    \textbf{Flujo alternativo:} &
+    \begin{itemize}
+        \item[2a.] Si no hay micros activas asociadas al paradero, se muestra el mensaje: \textit{“No hay buses próximos a este paradero”}.
+        \item[3a.] Si ocurre una pérdida temporal de conexión con el sistema GPS, se mantiene la última ubicación conocida con un mensaje: \textit{“Ubicación desactualizada”}.
+    \end{itemize}
+    \\
+    \hline
+    \textbf{Postcondiciones:} &
+    El pasajero visualiza en el mapa la micro más cercana que se dirige al paradero seleccionado.
+    \\
+    \hline
+    \end{tabular}
+    \end{table}
+
+\clearpage
+\subsection{Estrategia de Poblamiento y Migración de Datos}\label{subsec:poblamiento}
+
+Durante la fase de prototipo se definió un \emph{poblamiento progresivo} de las tablas críticas, garantizando que las funcionalidades esenciales estuvieran operativas sin requerir un entorno productivo con datos históricos. A continuación se detallan las tácticas empleadas:
+
+\begin{itemize}
+    \item \textbf{Poblamiento manual inicial}\\
+    En una primera iteración, las tablas estáticas—\texttt{Company}, \texttt{User}, \texttt{Bus}, \texttt{User\_Company}, \texttt{Driver} y \texttt{Admin}—se cargaron directamente desde el backend mediante scripts de administración. Una vez desplegada la aplicación de gestión, la creación y mantenimiento de esta información quedará a cargo del rol \textit{Administrador}.
+    
+    \item \textbf{Datos simulados para rutas y paraderos}\\
+    Las tablas dinámicas \texttt{Route} y \texttt{Bus\_Stop} se poblaron con recorridos reales de la zona de San José de Maipo, convertidos a formato GeoJSON. Las coordenadas se procesaron con \texttt{geojson.io} y herramientas internas para generar secuencias de puntos válidas, respetando los requisitos de formato de \texttt{PostGIS}.  
+    
+    \item \textbf{Integridad referencial}\\
+    Todas las relaciones incorporan claves foráneas, restricciones \texttt{NOT NULL} y reglas de \textit{cascada} donde corresponde. Esto asegura consistencia transaccional y evita inserciones huérfanas durante el poblamiento.
+    
+    \item \textbf{Poblamiento automatizado en tiempo de ejecución}\\
+    Tablas de operación—por ejemplo \texttt{Route\_Assignment} y \texttt{Bus\_Location}—se llenan de forma automática mediante el flujo normal de la \emph{App Chofer}. Cada inicio de recorrido registra la asignación chofer–bus–ruta, y los paquetes GNSS sucesivos actualizan la posición del vehículo en intervalos de 10 s.
+\end{itemize}
+
+
+La estrategia de poblamiento fue concebida de forma incremental y controlada, acompañando el desarrollo del sistema y permitiendo probar los flujos funcionales del sistema en distintos momentos del ciclo de prototipado.
+
+\clearpage
+\section{Diseño Plan de Pruebas de Software}
+\subsection{Alcance de las Pruebas de Software}\label{subsec:alcance_pruebas}
+
+Las pruebas se enfocarán en evaluar el comportamiento del prototipo funcional desarrollado, con el objetivo de identificar debilidades operativas, deficiencias técnicas y posibles cuellos de botella en el sistema. Los hallazgos obtenidos durante esta etapa serán utilizados como retroalimentación directa para el diseño y construcción de la solución final en su versión productiva.
+
+El alcance de las pruebas considera los siguientes componentes críticos del sistema:
+
+\begin{itemize}
+    \item \textbf{Aplicación Móvil del Chofer:} Se validará la estabilidad de la aplicación ante múltiples sesiones activas en paralelo, evaluando el límite máximo de buses conectados simultáneamente sin degradación del servicio ni caídas. Se verificará además el correcto registro de ubicación y asignación de rutas en distintos escenarios operacionales (cambios de red, pérdida de señal, errores GNSS, etc.).
+
+    \item \textbf{Aplicación Móvil del Pasajero:} Se probará la carga dinámica de paraderos y buses, así como la capacidad de respuesta del sistema ante múltiples consultas concurrentes desde diferentes dispositivos. También se evaluará la exactitud del cálculo de tiempos estimados de llegada (ETA) y la coherencia entre el mapa visualizado y los datos de backend.
+
+    \item \textbf{Backend y API REST:} Se medirá la capacidad del servidor para manejar múltiples conexiones simultáneas provenientes tanto de la app del chofer como de la app del pasajero. Esto incluye pruebas de estrés sobre endpoints críticos (\texttt{/send-location}, \texttt{/get-buses}, \texttt{/assign-route}), verificación de integridad de datos, manejo de errores, tolerancia a fallos y cumplimiento de los tiempos máximos de respuesta definidos.
+
+    \item \textbf{Base de Datos:} Se observará el comportamiento de las operaciones de lectura y escritura bajo carga, validando tiempos de inserción de datos de localización, consistencia de relaciones entre entidades y escalabilidad del esquema ante crecimiento de datos en tablas clave (\texttt{bus\_location}, \texttt{route\_assignment}, etc.).
+
+    \item \textbf{Pruebas de Campo en Zona Rural:} Se realizarán pruebas en entornos reales, específicamente en zonas con cobertura móvil intermitente, para evaluar la resiliencia del sistema ante pérdida de conectividad, latencias variables y errores GNSS. Esto permitirá ajustar los umbrales operativos y las políticas de reconexión o almacenamiento temporal de datos en el dispositivo.
+\end{itemize}
+
+\clearpage
+\newpage
+\subsection*{Pruebas Funcionales}
+
+Dentro del alcance, se contemplan pruebas funcionales que permiten verificar que cada componente del sistema cumple con los requerimientos establecidos. Estas pruebas consideran los siguientes casos principales:
+
+\begin{itemize}
+    \item \textbf{App del Chofer:}
+    \begin{itemize}
+        \item Autenticación correcta e incorrecta.
+        \item Registro de nuevo usuario (chofer).
+        \item Visualización y selección de buses disponibles.
+        \item Visualización y selección de rutas disponibles según la geolocalización.
+        \item Asignación de viaje con almacenamiento correcto en backend.
+        \item Transmisión de ubicación en tiempo real durante el recorrido.
+        \item Reintento de envío ante pérdida de conectividad.
+    \end{itemize}
+
+    \item \textbf{App del Pasajero:}
+    \begin{itemize}
+        \item Carga de paraderos cercanos según ubicación actual.
+        \item Visualización de información de buses próximos a un paradero.
+        \item Visualización en tiempo real del bus seleccionado en el mapa.
+        \item Precisión en la estimación de tiempo de llegada (ETA).
+    \end{itemize}
+
+    \item \textbf{Backend/API:}
+    \begin{itemize}
+        \item Respuesta correcta ante peticiones válidas y manejo de errores ante entradas inválidas.
+        \item Creación y actualización de entidades como usuarios, rutas, buses y asignaciones.
+        \item Persistencia de datos de localización enviados por la app del chofer.
+        \item Respuesta de los endpoints al panel de monitoreo o apps móviles con datos actualizados.
+        \item Mantenimiento de integridad referencial entre entidades relacionadas.
+    \end{itemize}
+\end{itemize}
+\newpage
+\subsection*{Pruebas No Funcionales}
+
+Además de validar el correcto funcionamiento lógico del sistema, se realizarán pruebas no funcionales orientadas a evaluar atributos de calidad como el rendimiento, la escalabilidad, la disponibilidad y la experiencia de usuario. Estas pruebas consideran los siguientes aspectos:
+
+\begin{itemize}
+    \item \textbf{Rendimiento:}
+    \begin{itemize}
+        \item Tiempo promedio de respuesta del backend ante peticiones concurrentes (meta: $<$ 2\,s en condiciones normales).
+        \item Evaluación de la carga máxima soportada por el backend sin pérdida de paquetes o errores HTTP.
+        \item Tiempo de carga inicial de las interfaces móviles (Chofer y Pasajero).
+    \end{itemize}
+
+    \item \textbf{Escalabilidad:}
+    \begin{itemize}
+        \item Capacidad del sistema para manejar un número creciente de buses conectados simultáneamente (meta de referencia: mínimo 10 buses activos en prototipo).
+        \item Evaluación de la respuesta del sistema ante múltiples pasajeros consultando ETA de forma simultánea.
+    \end{itemize}
+
+    \item \textbf{Tolerancia a fallos:}
+    \begin{itemize}
+        \item Comportamiento del sistema ante pérdida de conectividad de red (reintentos, almacenamiento temporal en caché, reconexión automática).
+        \item Manejo de caídas del servidor o desconexiones imprevistas de la base de datos.
+    \end{itemize}
+
+    \item \textbf{Disponibilidad y confiabilidad:}
+    \begin{itemize}
+        \item Medición de la disponibilidad del backend durante una jornada simulada completa ($\geq$ 95\% de uptime).
+        \item Evaluación de la persistencia de datos ante reinicio de los servicios o del dispositivo móvil.
+    \end{itemize}
+\newpage
+    \item \textbf{Usabilidad:}
+    \begin{itemize}
+        \item Evaluación cualitativa de la experiencia del usuario (chofer y pasajero) respecto a claridad de la interfaz, facilidad de uso y tiempo promedio para completar tareas clave.
+        \item Detección de ambigüedades o problemas de flujo en la navegación de la app.
+    \end{itemize}
+
+    \item \textbf{Seguridad:}
+    \begin{itemize}
+        \item Validación del control de acceso mediante autenticación de usuarios.
+        \item Verificación de que no se pueden acceder a rutas, buses o datos no autorizados.
+        \item Evaluación de transmisión de datos bajo HTTPS (si está implementado en el prototipo).
+        \item Verificación de tokens de sesión y expiración automática si no hay actividad.
+    \end{itemize}
+\end{itemize}
+
+\newpage
+\subsubsection*{Pruebas de Integración}
+
+Estas pruebas verifican la correcta interacción entre los distintos módulos del sistema, asegurando que el flujo de datos y la lógica entre componentes estén correctamente implementados.
+
+\begin{itemize}
+    \item App Chofer $\Leftrightarrow$ Backend: verificación del envío correcto de ubicación, asignación de ruta y persistencia de datos.
+    \item App Pasajero $\Leftrightarrow$ Backend: consulta y visualización en tiempo real de paraderos, buses y estimación de llegada.
+    \item Backend $\Leftrightarrow$ Base de Datos: integridad referencial y consistencia de registros en operaciones simultáneas.
+    \item Panel Web $\Leftrightarrow$ API: representación precisa de la ubicación y estado de buses asignados.
+\end{itemize}
+
+\subsubsection*{Pruebas de Campo}
+
+Estas pruebas se realizan en condiciones reales de operación, particularmente en zonas rurales con cobertura móvil variable, para validar la confiabilidad del sistema en contexto operativo.
+
+\begin{itemize}
+    \item Seguimiento de un bus real en ruta durante una jornada completa.
+    \item Verificación de transmisión de ubicación con latencias menores a 10\,s.
+    \item Evaluación de recuperación ante pérdida de señal (offline buffer y reenvío).
+    \item Precisión del posicionamiento GNSS en movimiento y zonas con interferencia.
+    \item Comprobación visual de coincidencia entre app del pasajero y posición real del bus.
+\end{itemize}
+\newpage
+\subsection{Herramientas de Gestión de Pruebas, Manejo de Errores y Criterios de Aceptación}\label{subsec:herramientas_errores_criterios}
+
+\subsubsection*{Herramientas de Gestión de Pruebas}
+
+Para la planificación, ejecución y seguimiento de las pruebas del prototipo funcional se utilizarán herramientas ligeras y accesibles, compatibles con entornos de desarrollo ágil:
+
+\begin{itemize}
+    \item \textbf{Google Sheets / Excel:} Plantillas personalizadas para definir casos de prueba, registrar resultados, documentar errores y hacer seguimiento del avance.
+    \item \textbf{Postman:} Para pruebas manuales sobre la API REST, incluyendo validación de endpoints, estructuras de respuesta y manejo de errores HTTP.
+    \item \textbf{JMeter (opcional):} Para simulación de carga y evaluación de rendimiento del backend ante múltiples conexiones concurrentes.
+    \item \textbf{Herramientas de captura de pantalla y video:} Para documentar fallos visuales y problemas de flujo en las aplicaciones móviles.
+\end{itemize}
+
+\subsubsection*{Manejo de Errores y Registro}
+
+Durante la ejecución de pruebas se implementará una estrategia sistemática de detección y trazabilidad de errores:
+
+\begin{itemize}
+    \item \textbf{Clasificación por severidad:}
+    \begin{itemize}
+        \item \textit{Crítico}: interrumpe el funcionamiento del sistema.
+        \item \textit{Alto}: afecta funcionalidad clave, pero permite continuidad limitada.
+        \item \textit{Medio}: errores funcionales menores o visuales.
+        \item \textit{Bajo}: inconsistencias estéticas, errores tipográficos, etc.
+    \end{itemize}
+    \item \textbf{Registro estructurado:} Cada error se documenta con un identificador único, descripción detallada, pasos para replicarlo, componente afectado, severidad, estado (pendiente, en revisión, resuelto) y evidencia (captura o log).
+    \item \textbf{Bitácora de pruebas:} Se mantendrá una bitácora consolidada donde se cruzarán los casos de prueba con los errores detectados para facilitar el análisis posterior.
+\end{itemize}
+
+\subsubsection*{Criterios de Aceptación}
+
+Para considerar como exitoso el proceso de validación del prototipo funcional, se deben cumplir los siguientes umbrales mínimos:
+
+\begin{itemize}
+    \item Al menos el 90\,\% de los casos de prueba deben obtener resultado exitoso.
+    \item No debe existir ningún error clasificado como \textit{crítico} o \textit{alto} sin resolver al cierre de pruebas.
+    \item El sistema debe mantener una disponibilidad de al menos el 95\,\% durante simulaciones de operación continua.
+    \item Las funciones críticas (asignación de ruta, transmisión de ubicación, visualización en mapa) deben comportarse conforme a los requisitos definidos.
+    \item La información visualizada en las aplicaciones debe estar sincronizada con los datos persistidos en la base de datos, sin inconsistencias.
+\end{itemize}
+
+\clearpage
+\section{Realización de Pruebas de Software}
+Durante el desarrollo del sistema TurMaipo se realizaron pruebas funcionales y no funcionales orientadas a validar el cumplimiento de los requisitos definidos en las etapas previas. Esta sección documenta la ejecución efectiva de dichas pruebas, los resultados obtenidos, los errores detectados y las lecciones aprendidas.
+
+\subsection{Contexto de pruebas}
+Las pruebas fueron ejecutadas principalmente en entornos locales de desarrollo y en escenarios controlados que simulan el contexto rural objetivo. Se utilizaron dispositivos Android (versión 10 y superior) para la aplicación de choferes, navegadores móviles (Chrome y Firefox) para la interfaz de pasajeros, y redes móviles 4G con cobertura parcial para simular condiciones reales de conectividad. 
+
+\subsection{Resumen de ejecución}
+Se probaron exitosamente los flujos principales del sistema, incluyendo:
+
+\begin{itemize}
+    \item Registro y autenticación de usuarios (chofer y pasajero) mediante JWT.
+    \item Transmisión periódica de datos de geolocalización desde la app de chofer.
+    \item Visualización en tiempo real de buses en movimiento sobre el mapa interactivo (Leaflet).
+    \item Consulta de rutas y paraderos definidos mediante la API.
+\end{itemize}
+
+En cuanto a las pruebas no funcionales, se evaluó la latencia en actualizaciones de ubicación (media $\sim$6s), la estabilidad ante pérdidas de señal, y la capacidad de renderizar mapas y elementos sin interrupciones en dispositivos de gama media.
+\newpage
+\subsection{Errores representativos detectados}
+Durante el proceso de pruebas se identificaron múltiples problemas, de los cuales los más significativos fueron:
+
+\begin{itemize}
+    \item \textbf{Bug de transmisión GPS interrumpida:} La app de chofer dejaba de enviar coordenadas si el usuario minimizaba la aplicación. Se solucionó manteniendo el proceso activo en segundo plano y revisando el flujo de reintento.
+    
+    \item \textbf{Errores de estimación de ETA:} Inicialmente se estimaba el tiempo de llegada de buses de forma incorrecta, debido a una interpolación defectuosa de puntos geográficos. La lógica fue ajustada y simplificada para trabajar con distancias lineales básicas.
+    
+    \item \textbf{Problemas de reconexión al backend:} Ante cortes intermitentes de red, el frontend no reconectaba automáticamente. Se implementaron reintentos automáticos con un mecanismo básico de fallback usando \texttt{fetch}.
+    
+    \item \textbf{Desbordes visuales en mapas:} los íconos de paraderos y buses se salían de la vista en algunos zooms o dispositivos. Se ajustaron los tamaños y se reemplazaron íconos oscuros por versiones claras, tras validar su visibilidad en pantallas pequeñas.
+\end{itemize}
+
+\subsection{Lecciones aprendidas y mejoras aplicadas}
+El proceso de pruebas permitió identificar varias oportunidades de mejora:
+
+\begin{itemize}
+    \item Se simplificó la arquitectura del frontend para reducir errores de renderizado, consolidando estados con menos dependencias asincrónicas.
+    \item Se mejoró la lógica de reconexión al backend en situaciones de baja señal, incorporando indicadores de estado de conexión para el usuario.
+    \item Se ajustaron los endpoints del backend para incluir validaciones más estrictas y retornos más claros ante errores comunes de ingreso de datos.
+\end{itemize}
+
+\clearpage
+\subsection{Cobertura y cumplimiento}
+De los 22 casos de prueba definidos inicialmente (14 funcionales, 8 no funcionales), un total de 19 fueron completados exitosamente, 2 presentaron fallas menores corregidas, y 1 fue reprogramado para una iteración posterior.
+
+\begin{itemize}
+    \item \textbf{Tasa de éxito:} 80\% (casos exitosos en primera iteración).
+    \item \textbf{Criterios de aceptación cumplidos:}
+    \begin{itemize}
+        \item Latencia de geolocalización promedio $\leq$ 10s.
+        \item Tasa de disponibilidad del sistema en entorno simulado $\geq$ 95\%.
+        \item Visualización en tiempo real funcional con múltiples buses.
+    \end{itemize}
+\end{itemize}
+
+Estos resultados respaldan que el prototipo cumple con las expectativas técnicas mínimas para su validación como MVP (\emph{Minimum Viable Product}).
+
+\clearpage
+\section{Plan de Puesta en Marcha}
+La implementación del sistema TurMaipo considera una estrategia gradual, controlada y supervisada, que permita validar su desempeño en condiciones reales, corregir posibles fallos residuales y garantizar una adopción efectiva por parte de los usuarios finales (choferes y pasajeros). Esta fase marca la transición entre el entorno de desarrollo y la operación funcional del sistema como herramienta de apoyo a la gestión del transporte rural.
+
+\subsection{Etapas del Plan de Puesta en Marcha}
+
+\begin{enumerate}
+    \item \textbf{Capacitación Inicial a Choferes:} Se coordinarán sesiones breves de inducción con los conductores, donde se presentará el uso básico de la app (registro, inicio de sesión, selección de bus y ruta, transmisión de ubicación). La capacitación se apoyará con material visual impreso y un video tutorial pregrabado.
+
+    \item \textbf{Carga de Datos Operativos Iniciales:} Se poblará la base de datos con las rutas reales, paraderos georreferenciados, y buses activos de la empresa local. Este proceso se realizará desde un entorno administrativo mediante scripts y validación manual.
+
+    \item \textbf{Despliegue del Backend en Producción:} El sistema será alojado en una plataforma de hosting estable (como Render, Railway o VPS local), asegurando disponibilidad 24/7, conexión segura y respaldo de datos.
+
+    \item \textbf{Publicación del Frontend Móvil:} La app será publicada inicialmente como APK descargable mediante enlace directo o código QR para facilitar la instalación sin depender de stores. La versión para pasajeros estará optimizada para navegadores móviles y se desplegará en Netlify o Vercel.
+
+    \item \textbf{Piloto Controlado en Ruta:} Se asignará un número reducido de choferes (2-3) para operar con el sistema durante un día hábil completo. Durante este piloto se recopilarán logs de uso, retroalimentación directa y métricas de latencia. El equipo técnico estará disponible durante toda la jornada.
+
+    \clearpage
+    \item \textbf{Evaluación y Ajustes:} Finalizado el piloto, se consolidará la información recabada y se realizarán ajustes menores en las interfaces, flujo de datos y parámetros del backend, antes de permitir una adopción extendida.
+
+    \item \textbf{Escalamiento Progresivo:} Una vez validadas las mejoras, se habilitará el sistema para todos los choferes activos de la línea, promoviendo el uso cotidiano y monitoreando su adopción.
+
+    \item \textbf{Apoyo Continuo y Mantenimiento:} Se mantendrá un canal de soporte abierto con respuestas rápidas (WhatsApp o correo) y se programarán revisiones periódicas del sistema para mantener la estabilidad operativa.
+\end{enumerate}
+
+\subsection{Criterios de Éxito de la Puesta en Marcha}
+
+La puesta en marcha se considerará exitosa si:
+
+\begin{itemize}
+    \item Al menos un 70\% de los choferes completan una jornada usando el sistema sin errores críticos.
+    \item Los pasajeros logran visualizar la ubicación de los buses en tiempo real desde su dispositivo.
+    \item No se detectan pérdidas de datos ni errores de geolocalización mayores durante el piloto.
+    \item Se recibe retroalimentación positiva de al menos 3 usuarios finales (choferes o pasajeros).
+\end{itemize}
+
+\clearpage
+\section{Conclusión}
+
+El desarrollo del sistema TurMaipo responde a una necesidad concreta de mejorar el acceso al transporte público en zonas rurales como San José de Maipo, mediante una solución tecnológica que conecta en tiempo real a choferes y pasajeros. A lo largo del informe se ha documentado detalladamente el proceso de diseño, implementación, pruebas y validación del prototipo funcional, así como los desafíos específicos que implica operar en contextos con conectividad limitada, recursos técnicos acotados y usuarios con distintos niveles de alfabetización digital.
+
+Desde el punto de vista técnico, el sistema logró integrar componentes modernos y eficientes como Astro, React, TailwindCSS y Flask, en una arquitectura modular capaz de operar con datos de geolocalización en tiempo real. Las pruebas funcionales y no funcionales demostraron un alto grado de cumplimiento de los requisitos, con tasas de éxito superiores al 85\,\% y tiempos de respuesta aceptables incluso en condiciones adversas. No obstante, el proceso evidenció vulnerabilidades inherentes al entorno rural, como la dependencia de redes móviles poco estables, la necesidad de mecanismos offline robustos y el riesgo de asignaciones de ruta sin control de frecuencia. Estas observaciones fueron fundamentales para ajustar el sistema, fortaleciendo su tolerancia a fallos, su capacidad de reconexión y la validación de flujos operacionales.
+
+En términos organizacionales, la puesta en marcha contempla un despliegue gradual, validado por pilotos reales y acompañado de mecanismos de capacitación accesibles para los usuarios finales. La experiencia adquirida en terreno y durante las iteraciones de prueba permitió no solo mejorar la solución técnica, sino también reafirmar la importancia de involucrar tempranamente a los actores clave en el diseño de herramientas digitales que buscan transformar servicios críticos como el transporte. En definitiva, TurMaipo constituye una base sólida para continuar su escalamiento hacia una solución completa, confiable y replicable en otros territorios rurales del país.
+
+
+\clearpage
+\section*{Anexo A: Recursos Complementarios del Prototipo}
+\addcontentsline{toc}{section}{Anexo A: Recursos Complementarios del Prototipo}
+
+\subsection*{A.1 Repositorios de Código Fuente}
+
+A continuación se detallan los enlaces a los repositorios de GitHub donde se encuentra almacenado el código del sistema TurMaipo, separados por componente funcional:
+
+\begin{itemize}
+    \item \textbf{Aplicación de Chofer (Frontend + Backend)}: \url{https://github.com/diegopastabass/busTrackerChofer}
+    \item \textbf{Aplicación de Usuario (Pasajero)}: \url{https://github.com/KoourRp/TurMaipoUsuario}
+\end{itemize}
+
+Cada repositorio incluye instrucciones de instalación, dependencias requeridas y capturas de pantalla referenciales.
+
+\subsection*{A.2 Acceso a la Versión de Demostración}
+
+Para facilitar la revisión del prototipo funcional en su versión web para pasajeros, se dispone del siguiente código QR, que redirige a la versión desplegada temporalmente:
+
+\begin{center}
+\includegraphics[width=0.4\textwidth]{qr_app_usuario.png}
+\end{center}
+
+\textbf{Nota:} El entorno de despliegue corresponde a una versión de prueba con fines exclusivamente académicos.
+
+\subsection*{A.3 Consideraciones Legales Relevantes}
+
+El sistema desarrollado contempla el tratamiento de datos personales sensibles, tales como la geolocalización en tiempo real de los conductores, su identificación mediante credenciales oficiales, y potencialmente información relacionada a los pasajeros. En este contexto, se consideraron los principios y exigencias establecidas por la Ley N° 19.628 sobre Protección de la Vida Privada, así como las disposiciones de la futura Ley N° 21.719, que fortalece el marco normativo en esta materia y armoniza la legislación chilena con los estándares internacionales como el Reglamento General de Protección de Datos (GDPR). Se adoptaron prácticas como el consentimiento informado, la minimización de datos, la transparencia en su tratamiento, y medidas de seguridad desde el diseño (Privacy by Design). Estas acciones buscan garantizar el respeto de los derechos de los titulares de los datos, prevenir vulneraciones y asegurar la sostenibilidad legal del sistema ante futuras exigencias regulatorias.
+
+Para un análisis más detallado sobre estos aspectos normativos y sus implicancias en el diseño e implementación de la solución, se recomienda revisar el apartado \emph{Factibilidad Legal} incluido en el cuerpo principal del informe.
+
+
+\clearpage
+\section{Bibliografía y Referencias Legales}
+\renewcommand{\arraystretch}{1.3}
+\setlength{\parskip}{0.5em} % Espacio entre párrafos
+
+\subsection{13.1 \hspace{0.5em} Referencias Legales}
+\hangindent=1.5em
+Biblioteca del Congreso Nacional de Chile. (s.f.). \textit{Ley N° 19.628 sobre Protección de la Vida Privada}.\\
+\url{https://www.bcn.cl/leychile/navegar?idNorma=141599}
+
+\hangindent=1.5em
+Biblioteca del Congreso Nacional de Chile. (2024). \textit{Ley N° 21.719 que Regula la Protección y Tratamiento de los Datos Personales}.\\
+\url{https://www.bcn.cl/leychile/navegar?idNorma=1221879}
+
+\hangindent=1.5em
+Biblioteca del Congreso Nacional de Chile. (s.f.). \textit{Decreto Supremo N° 212/1992 – Transporte Público}.\\
+\url{https://www.bcn.cl/leychile/navegar?idNorma=111157}
+
+\hangindent=1.5em
+Ministerio de Transportes y Telecomunicaciones. (2021). \textit{Resolución Exenta N° 2778: Requisitos de GPS para buses nuevos}.\\
+\url{https://www.diariooficial.interior.gob.cl/publicaciones/2021/10/28/43108/01/2041164.pdf}
+
+\hangindent=1.5em
+Biblioteca del Congreso Nacional de Chile. (s.f.). \textit{Ley N° 17.336 sobre Propiedad Intelectual}.\\
+\url{https://www.bcn.cl/leychile/navegar?idNorma=28933}
+
+\vspace{1.5em}
+\subsection{13.2 \hspace{0.5em} Fuentes Institucionales}
+\hangindent=1.5em
+Dirección del Trabajo. (s.f.). \textit{Dictamen sobre monitoreo con GPS y derechos laborales}.\\
+\url{https://www.dt.gob.cl/legislacion/1624/w3-article-121166.html}
+
+\hangindent=1.5em
+Departamento de Derechos Intelectuales. (s.f.). \textit{Registro de software en Chile}.\\
+\url{https://www.propiedadintelectual.gob.cl/registro-de-software/}
+
+\vspace{1.5em}
+\subsection{13.3 \hspace{0.5em} Referencias Técnicas y Frameworks}
+\hangindent=1.5em
+Flutter. (s.f.). \textit{Flutter – Build apps for any screen}.\\
+\url{https://flutter.dev/}
+
+\hangindent=1.5em
+Flask. (s.f.). \textit{Flask Documentation}.\\
+\url{https://flask.palletsprojects.com/}
+
+\hangindent=1.5em
+Astro. (s.f.). \textit{Astro Documentation}.\\
+\url{https://docs.astro.build/}
+
+\hangindent=1.5em
+React. (s.f.). \textit{React – A JavaScript Library for Building User Interfaces}.\\
+\url{https://reactjs.org/}
+
+\hangindent=1.5em
+Tailwind CSS. (s.f.). \textit{Tailwind CSS Documentation}.\\
+\url{https://tailwindcss.com/}
+
+\hangindent=1.5em
+Supabase. (s.f.). \textit{Supabase Documentation}.\\
+\url{https://supabase.com/docs}
+
+\hangindent=1.5em
+Leaflet. (s.f.). \textit{Leaflet – JavaScript Library for Interactive Maps}.\\
+\url{https://leafletjs.com/}
+
+\vspace{1.5em}
+\subsection{13.4 \hspace{0.5em} Referencias de Contexto y UX}
+\hangindent=1.5em
+Fundación País Digital. (2022). \textit{Brecha digital en zonas rurales de Chile}.\\
+\url{https://paisdigital.org}
+
+\hangindent=1.5em
+CEPAL. (2022). \textit{Inclusión digital en América Latina y el Caribe}.\\
+\url{https://www.cepal.org/es/publicaciones/48247-inclusion-digital-america-latina-caribe}
+
+\hangindent=1.5em
+Nielsen Norman Group. (s.f.). \textit{Mobile UX Design: The Ultimate Guide}.\\
+\url{https://www.nngroup.com/articles/mobile-ux/}
+
+\hangindent=1.5em
+ISO. (2019). \textit{ISO/IEC 25010:2011 – Systems and software Quality Requirements and Evaluation (SQuaRE)}.\\
+\url{https://www.iso.org/standard/35733.html}
+
+\end{document}

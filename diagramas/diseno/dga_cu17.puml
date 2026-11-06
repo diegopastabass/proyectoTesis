@@ -1,0 +1,28 @@
+@startuml dga_cu17
+!include dga_estilo.iuml
+|Usuario|
+|Aplicación|
+|Usuario|
+start
+if (¿Cómo la\nregistra?) then (A mano)
+  :Ingresa duración, distancia\ny qué tan duro la sintió;
+else (Con GPS)
+  :1. Elige la disciplina e\ninicia la grabación;
+  |Aplicación|
+  if (¿Tiene permiso de\nubicación?) then (No)
+    :Pide el permiso u ofrece\nanotarla a mano;
+    stop
+  else (Sí)
+    :2. Graba la ruta, el\ntiempo y la distancia;
+  endif
+  |Usuario|
+  :3. Termina la sesión;
+  |Aplicación|
+  :4. Pregunta qué tan\nduro la sintió;
+  |Usuario|
+  :5. Indica qué tan\nduro la sintió;
+endif
+|Aplicación|
+:6. Guarda la sesión y\nactualiza su carga;
+stop
+@enduml

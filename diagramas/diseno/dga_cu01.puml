@@ -1,0 +1,18 @@
+@startuml dga_cu01
+!include dga_estilo.iuml
+|Usuario|
+|Aplicación|
+|Usuario|
+start
+:1. Abre el módulo de fuerza\ny elige anotar una sesión;
+|Aplicación|
+:2. Muestra los ejercicios\ny sus rutinas guardadas;
+repeat
+  |Usuario|
+  :3. Elige ejercicios o una rutina e ingresa\nseries, repeticiones, peso y esfuerzo;
+  :4. Pulsa Guardar;
+  |Aplicación|
+repeat while (¿Falta un dato\no hay un error?) is (Sí, avisa cuál)  not (No)
+:5. Guarda la sesión y la\nsuma a su historial;
+stop
+@enduml

@@ -1,0 +1,393 @@
+@startuml modelo_datos_nosql
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+skinparam nodesep 50
+skinparam ranksep 70
+skinparam classAttributeIconSize 0
+skinparam classFontSize 13
+skinparam classAttributeFontSize 12
+skinparam defaultFontName "Segoe UI"
+skinparam backgroundColor #FEFEFE
+hide methods
+hide circle
+
+skinparam classAttributeFontColor #212529
+skinparam class {
+    BackgroundColor #F8F9FA
+    BorderColor #495057
+    HeaderBackgroundColor #212529
+    FontColor #FFFFFF
+    ArrowColor #495057
+}
+skinparam class<<embedded>> {
+    BackgroundColor #FFFDE7
+    HeaderBackgroundColor #6C757D
+}
+
+' Convención:
+'   <<collection>> = colección de MongoDB
+'   <<embedded>>   = subdocumento guardado dentro de otro documento
+'   *--            = embebido (va dentro del documento)
+'   ..>            = referencia por ObjectId a otra colección
+
+' ══════════════════════════════════════════════════
+' IDENTIDAD Y CONTROL DE ACCESO
+' ══════════════════════════════════════════════════
+package "Identidad y Control de Acceso" #E3F2FD {
+    class "users" as users <<collection>> {
+        _id : ObjectId
+        email : String <<único>>
+        passwordHash : String
+        firstName : String
+        lastName : String
+        role : String
+        consent : Object [dataProcessing, grantedAt, termsVersion]
+        subscription : Object [status, store, expiresAt, purchaseToken]
+        deviceTokens : String[]
+        profile : Profile
+        integrations : Integration[]
+        createdAt : Date
+        updatedAt : Date
+        deletedAt : Date
+    }
+    class "Profile" as profile <<embedded>> {
+        birthDate : Date
+        gender : String
+        heightCm : Double
+        weightKg : Double
+        restingHeartRate : Int32
+        maxHeartRate : Int32
+        activityLevel : String
+        primaryGoal : String
+        experienceLevel : String
+        orientation : String
+        availableDays : Int32
+        equipment : String[]
+        disciplines : String[]
+    }
+    class "Integration" as integration <<embedded>> {
+        provider : String
+        accessTokenEnc : BinData
+        refreshTokenEnc : BinData
+        tokenExpiresAt : Date
+        isActive : Boolean
+    }
+}
+
+' ══════════════════════════════════════════════════
+' REGISTRO DIARIO
+' ══════════════════════════════════════════════════
+package "Registro Diario" #FFF3E0 {
+    class "dailyLogs" as dailyLogs <<collection>> {
+        _id : ObjectId
+        userId : ObjectId
+        date : Date
+        targets : Object [calories, proteinG, carbsG, fatG]
+        subjectiveReports : SubjectiveReport[]
+        notes : String
+        createdAt : Date
+        updatedAt : Date
+    }
+    class "SubjectiveReport" as subjReport <<embedded>> {
+        rpeGeneral : Int32
+        sleepQuality : Int32
+        muscleSoreness : Int32
+        energyLevel : Int32
+        giDiscomfort : Boolean
+        freeNotes : String
+        relatedTo : Object [type, id]
+        createdAt : Date
+    }
+}
+
+' ══════════════════════════════════════════════════
+' ENTRENAMIENTO (FUERZA Y CARDIO)
+' ══════════════════════════════════════════════════
+package "Entrenamiento" #E8F5E9 {
+    class "exercises" as exercises <<collection>> {
+        _id : ObjectId
+        name : String
+        muscleGroups : Object [primary, secondary]
+        bodyRegion : String
+        movementPattern : String
+        equipment : String
+        measureType : String
+        isBodyweight : Boolean
+        isOfficial : Boolean
+        createdBy : ObjectId
+        isActive : Boolean
+    }
+    class "workouts" as workouts <<collection>> {
+        _id : ObjectId
+        userId : ObjectId
+        dailyLogId : ObjectId
+        type : STRENGTH | CARDIO
+        startedAt : Date
+        finishedAt : Date
+        sessionRpe : Int32
+        .. si type = STRENGTH ..
+        trainingType : String
+        inputMethod : String
+        totalVolumeKg : Double
+        exercises : ExerciseEntry[]
+        .. si type = CARDIO ..
+        discipline : CYCLING | RUNNING | TREKKING
+        durationSec : Int32
+        distanceM : Double
+        elevationGainM : Double
+        dataSource : String
+        dataConfidence : String
+        heartRate : Object [avg, max, activeCalories]
+        power : Object [avgWatts, maxWatts, normalizedPower, avgCadence, tss]
+        fitFileUrl : String
+    }
+    class "ExerciseEntry" as exEntry <<embedded>> {
+        exerciseId : ObjectId
+        exerciseName : String
+        order : Int32
+        sets : Set[]
+    }
+    class "Set" as set <<embedded>> {
+        reps : Int32
+        durationSec : Int32
+        weightKg : Double
+        rpe : Double
+        restSec : Int32
+        isWarmup : Boolean
+    }
+    class "telemetry" as telemetry <<time series>> {
+        _id : ObjectId
+        timestamp : Date <<timeField>>
+        meta : Object [workoutId, userId, source] <<metaField>>
+        heartRate : Int32
+        powerWatts : Int32
+        cadence : Int32
+        speedKmh : Double
+        altitudeM : Double
+        location : GeoJSON Point
+    }
+}
+
+' ══════════════════════════════════════════════════
+' NUTRICIÓN
+' ══════════════════════════════════════════════════
+package "Nutrición" #FFF9C4 {
+    class "foodItems" as foodItems <<collection>> {
+        _id : ObjectId
+        name : String
+        brand : String
+        servingSizeG : Double
+        per100g : Object [calories, proteinG, carbsG, fatG, fiberG]
+        source : String
+        barcode : String <<único>>
+        isActive : Boolean
+    }
+    class "meals" as meals <<collection>> {
+        _id : ObjectId
+        userId : ObjectId
+        dailyLogId : ObjectId
+        mealType : String
+        inputMethod : MANUAL | TEXT | PHOTO | BARCODE
+        aiConfidenceScore : Double
+        items : MealItem[]
+        totals : Object [calories, proteinG, carbsG, fatG]
+        recipeRef : Object [recipeId, scaleFactor]
+        consumedAt : Date
+    }
+    class "MealItem" as mealItem <<embedded>> {
+        foodItemId : ObjectId
+        name : String
+        quantityG : Double
+        calories : Double
+        proteinG : Double
+        carbsG : Double
+        fatG : Double
+    }
+}
+
+' ══════════════════════════════════════════════════
+' MOTOR DE FATIGA
+' ══════════════════════════════════════════════════
+package "Motor de Fatiga" #F3E5F5 {
+    class "fatigueSnapshots" as fatigue <<collection>> {
+        _id : ObjectId
+        userId : ObjectId
+        date : Date
+        strength : Object [ctl, atl, tsb]
+        cardio : Object [ctl, atl, tsb]
+        crossFatigueIndex : Double
+        alerts : FatigueAlert[]
+        calculatedAt : Date
+    }
+    class "FatigueAlert" as alert <<embedded>> {
+        alertType : String
+        severity : String
+        message : String
+        suggestion : String
+        isRead : Boolean
+        isPushSent : Boolean
+        createdAt : Date
+    }
+}
+
+' ══════════════════════════════════════════════════
+' PERFIL Y PLAN SUGERIDO
+' ══════════════════════════════════════════════════
+package "Perfil y Plan Sugerido" #FCE4EC {
+    class "trainingPlans" as plans <<collection>> {
+        _id : ObjectId
+        userId : ObjectId
+        profileSnapshot : Object [level, orientation]
+        weekStart : Date
+        days : PlanDay[]
+        status : ACTIVE | ARCHIVED
+        adjustments : Object[] [date, reason, change]
+        generatedAt : Date
+        updatedAt : Date
+    }
+    class "PlanDay" as planDay <<embedded>> {
+        dayOfWeek : Int32
+        sessionType : STRENGTH | CARDIO | REST
+        routineId : ObjectId
+        discipline : String
+        targetDurationMin : Int32
+        notes : String
+    }
+}
+
+' ══════════════════════════════════════════════════
+' COMUNIDAD Y ADMINISTRACIÓN
+' ══════════════════════════════════════════════════
+package "Comunidad y Administración" #E0F2F1 {
+    class "recipes" as recipes <<collection>> {
+        _id : ObjectId
+        authorId : ObjectId
+        source : Object [recipeId, authorId]
+        title : String
+        servings : Int32
+        ingredients : Ingredient[]
+        totals : Object [calories, proteinG, carbsG, fatG]
+        visibility : String
+        isModerated : Boolean
+        isActive : Boolean
+    }
+    class "Ingredient" as ingredient <<embedded>> {
+        foodItemId : ObjectId
+        name : String
+        quantityG : Double
+        order : Int32
+    }
+    class "posts" as posts <<collection>> {
+        _id : ObjectId
+        authorId : ObjectId
+        postType : WORKOUT_SHARE | ROUTE_SHARE | MEAL_SHARE
+        content : String
+        media : PostMedia[]
+        ref : Object [type, id]
+        visibility : PUBLIC | FOLLOWERS | PRIVATE
+        importsCount : Int32
+        reportsCount : Int32
+        reports : Object[] [reporterId, reason, status, createdAt]
+        isModerated : Boolean
+        isActive : Boolean
+        createdAt : Date
+    }
+    class "PostMedia" as postMedia <<embedded>> {
+        url : String
+        thumbUrl : String
+    }
+    class "follows" as follows <<collection>> {
+        _id : ObjectId
+        followerId : ObjectId
+        followeeId : ObjectId
+        createdAt : Date
+    }
+    class "routines" as routines <<collection>> {
+        _id : ObjectId
+        ownerId : ObjectId
+        name : String
+        trainingType : String
+        exercises : RoutineExercise[]
+        source : Object [postId, authorId]
+        createdAt : Date
+    }
+    class "RoutineExercise" as routineEx <<embedded>> {
+        exerciseId : ObjectId
+        exerciseName : String
+        order : Int32
+        targetSets : Int32
+        targetReps : Int32
+        targetDurationSec : Int32
+        targetWeightKg : Double
+    }
+    class "routes" as routes <<collection>> {
+        _id : ObjectId
+        ownerId : ObjectId
+        name : String
+        discipline : CYCLING | RUNNING | TREKKING
+        distanceM : Double
+        elevationGainM : Double
+        path : GeoJSON LineString
+        startPoint : GeoJSON Point <<2dsphere>>
+        visibility : String
+        source : Object [postId, authorId]
+    }
+    class "moderationLogs" as modLogs <<collection>> {
+        _id : ObjectId
+        adminId : ObjectId
+        targetType : POST | RECIPE
+        targetId : ObjectId
+        action : String
+        reason : String
+        executedAt : Date
+    }
+}
+
+' ══════════════════════════════════════════════════
+' SUBDOCUMENTOS EMBEBIDOS
+' ══════════════════════════════════════════════════
+users *-- profile
+users *-- integration
+dailyLogs *-- subjReport
+workouts *-- exEntry
+exEntry *-- set
+meals *-- mealItem
+fatigue *-- alert
+recipes *-- ingredient
+routines *-- routineEx
+posts "1" *-- "0..4" postMedia
+plans *-- planDay
+
+' ══════════════════════════════════════════════════
+' REFERENCIAS ENTRE COLECCIONES (ObjectId)
+' ══════════════════════════════════════════════════
+dailyLogs ..> users : userId
+workouts ..> users : userId
+workouts ..> dailyLogs : dailyLogId
+exEntry ..> exercises : exerciseId
+telemetry ..> workouts : meta.workoutId
+meals ..> dailyLogs : dailyLogId
+mealItem ..> foodItems : foodItemId
+meals ..> recipes : recipeRef.recipeId
+fatigue ..> users : userId
+recipes ..> users : authorId
+ingredient ..> foodItems : foodItemId
+posts ..> users : authorId
+posts ..> workouts : ref.id
+posts ..> recipes : ref.id
+modLogs ..> users : adminId
+modLogs ..> posts : targetId
+follows ..> users : followerId / followeeId
+routines ..> users : ownerId
+routineEx ..> exercises : exerciseId
+routines ..> posts : source.postId
+routes ..> users : ownerId
+routes ..> posts : source.postId
+posts ..> routes : ref.id
+posts ..> meals : ref.id
+plans ..> users : userId
+planDay ..> routines : routineId
+
+@enduml

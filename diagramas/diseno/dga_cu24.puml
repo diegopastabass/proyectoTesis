@@ -1,0 +1,25 @@
+@startuml dga_cu24
+!include dga_estilo.iuml
+|Usuario|
+|Aplicación|
+|Usuario|
+start
+:1. Elige pasar al\nplan premium;
+|Aplicación|
+:2. Muestra qué incluye, el precio final\ncon impuestos y cada cuánto se cobra;
+|Usuario|
+if (¿Lo contrata?) then (No)
+  :Sigue con el plan\ngratuito sin cambios;
+  stop
+else (Sí)
+  :3. Confirma la compra;
+endif
+|Aplicación|
+:4. Abre el pago de la\ntienda de aplicaciones;
+if (¿Pago aceptado?) then (No)
+  :Avisa y sigue con\nel plan gratuito;
+else (Sí)
+  :5. Activa las funciones\npremium y lo confirma;
+endif
+stop
+@enduml

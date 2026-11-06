@@ -1,0 +1,51 @@
+@startuml diagrama_integraciones
+!theme plain
+left to right direction
+skinparam dpi 200
+skinparam defaultFontName "Liberation Sans"
+skinparam defaultFontSize 12
+skinparam shadowing false
+skinparam ArrowColor #333333
+skinparam nodesep 34
+skinparam ranksep 130
+skinparam rectangle {
+    RoundCorner 12
+    BorderColor #1F4E79
+}
+skinparam database {
+    BorderColor #1F4E79
+}
+
+rectangle "Teléfono del usuario" #E3F2FD {
+  rectangle "App Flutter" as APP #FFFFFF
+  rectangle "I-1. Health Connect /\nApple Health" as HC #FFFFFF
+}
+
+rectangle "Plataforma del proyecto" #E8F5E9 {
+  rectangle "API NestJS" as API #FFFFFF
+  database "MongoDB Atlas" as DB #FFFFFF
+  rectangle "Panel web de\nadministración" as WEB #FFFFFF
+}
+
+rectangle "Servicios externos" #FFF3C4 {
+  rectangle "I-2. Servicio de IA\n(Gemini)" as IA #FFFFFF
+  rectangle "I-3. API de alimentos\n(Open Food Facts)" as OFF #FFFFFF
+  rectangle "I-5. Firebase Cloud\nMessaging" as FCM #FFFFFF
+  rectangle "I-6. Google Play /\nApp Store" as T #FFFFFF
+  rectangle "I-4. Amazon S3\n+ CloudFront" as S3 #FFFFFF
+}
+
+HC --> APP : I-1. SDK, solo lectura
+APP --> API : REST con JWT
+WEB --> API : REST con JWT
+API --> DB : Driver con TLS
+API --> IA : REST con clave de API
+API --> OFF : REST público
+API --> FCM : REST con cuenta de servicio
+API <--> T : Valida compras y recibe avisos
+API --> S3 : Firma permisos y lee archivos
+FCM --> APP : Notificación push
+APP --> T : SDK de compra
+APP <--> S3 : Sube archivos y pide fotos
+
+@enduml

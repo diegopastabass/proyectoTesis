@@ -1,0 +1,33 @@
+@startuml sec_cu15
+!include sec_estilo.iuml
+actor "Atleta" as U
+participant "App Flutter" as A
+participant "API NestJS" as B
+database "MongoDB" as DB
+participant "API de alimentos" as OFF
+autonumber
+opt Sin permiso para la cámara
+  A --> U : Pide el permiso
+end
+U -> A : Escanea el código de barras
+A -> B : GET /food-items/barcode/{codigo}
+B -> DB : Busca en foodItems
+DB --> B : Resultado
+opt No está en foodItems
+  B -> OFF : Consulta el código
+  OFF --> B : Datos del producto, si existe
+  B -> DB : Guarda el producto en foodItems
+end
+alt Producto no encontrado
+  B --> A : No existe
+  A --> U : Avisa y ofrece buscar en la lista (CU-06)
+else Producto encontrado
+  B --> A : Calorías y macronutrientes
+  A --> U : Muestra el producto
+  U -> A : Indica cuánto comió y confirma
+  A -> B : POST /meals
+  B -> DB : Guarda en meals
+  B --> A : Comida creada y avance del día
+  A --> U : Muestra el avance
+end
+@enduml

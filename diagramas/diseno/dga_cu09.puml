@@ -1,0 +1,29 @@
+@startuml dga_cu09
+!include dga_estilo.iuml
+|Usuario|
+|Aplicación|
+|Usuario|
+start
+:1. Elige un registro\ny pulsa Publicar;
+|Aplicación|
+:2. Muestra el formulario\nde la publicación;
+|Usuario|
+:3. Escribe un texto y elige\nquién la puede ver;
+if (¿Agrega\nfotos?) then (Sí)
+  :Sube hasta 4 y declara que son\nsuyas o que tiene permiso;
+  |Aplicación|
+  :Las comprime y les\nborra la ubicación;
+  |Usuario|
+else (No)
+endif
+:4. Pulsa Publicar;
+|Aplicación|
+if (¿Hay\nconexión?) then (No)
+  :Avisa y conserva lo\nescrito para reintentar;
+  stop
+else (Sí)
+  :5. Prepara la publicación y oculta\nel inicio y el final de las rutas;
+endif
+:6. La muestra en el muro de\nquienes pueden verla;
+stop
+@enduml

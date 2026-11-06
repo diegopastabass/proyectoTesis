@@ -1,0 +1,25 @@
+@startuml dga_cu23
+!include dga_estilo.iuml
+|Usuario|
+|Aplicación|
+|Usuario|
+start
+:1. Abre el muro;
+|Aplicación|
+if (¿Hay conexión?) then (No)
+  :Avisa que no se pudo\ncargar el muro;
+  stop
+else (Sí)
+endif
+if (¿Sigue a\nalguien?) then (No)
+  :Sugiere buscar\npersonas (CU-14);
+  stop
+else (Sí)
+  :2. Muestra las publicaciones\nmás recientes, con sus fotos;
+endif
+|Usuario|
+:3. Baja para ver\nmás publicaciones;
+|Aplicación|
+:4. Carga las siguientes;
+stop
+@enduml

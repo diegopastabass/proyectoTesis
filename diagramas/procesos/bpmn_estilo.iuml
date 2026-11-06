@@ -1,0 +1,15 @@
+' Estilo común de los diagramas de procesos (carriles al estilo BPMN)
+!theme plain
+skinparam dpi 200
+skinparam defaultFontName "Liberation Sans"
+skinparam defaultFontSize 12
+skinparam shadowing false
+skinparam ArrowColor #333333
+skinparam conditionStyle InsideDiamond
+skinparam swimlaneTitleFontStyle bold
+skinparam activity {
+    BorderColor #1F4E79
+    DiamondBackgroundColor #FFF3C4
+    DiamondBorderColor #8A6D1F
+    DiamondFontSize 11
+}

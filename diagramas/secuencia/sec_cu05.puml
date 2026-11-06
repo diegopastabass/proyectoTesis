@@ -1,0 +1,37 @@
+@startuml sec_cu05
+!include sec_estilo.iuml
+actor "Atleta" as U
+participant "App Flutter" as A
+participant "API NestJS" as B
+database "MongoDB" as DB
+participant "Firebase FCM" as FCM
+autonumber
+U -> A : Registra una sesión
+A -> B : POST /workouts
+B -> DB : Lee workouts y meals recientes
+DB --> B : Sesiones y comidas
+alt Hay pocas sesiones
+  B --> A : Datos insuficientes
+  A --> U : Muestra que faltan datos
+else Datos suficientes
+  B -> B : Calcula ATL, CTL e índice de fatiga
+  B -> B : Revisa el tiempo entre sesiones
+  B -> DB : Guarda fatigueSnapshots y metas en dailyLogs
+  alt Hay riesgo de fatiga o poco descanso
+    B -> FCM : Envía la alerta con deviceTokens
+    FCM --> A : Notificación push
+    A --> U : Muestra el aviso con la sugerencia
+    U -> A : Abre el aviso
+    A -> B : GET /fatigue/today
+    B --> A : Resumen de carga
+    A --> U : Muestra el resumen
+    opt Acepta la sugerencia
+      U -> A : Acepta
+      A -> B : PATCH /training-plans/current
+      B -> DB : Actualiza trainingPlans
+    end
+  else Sin riesgo
+    B --> A : Sesión creada, sin alerta
+  end
+end
+@enduml

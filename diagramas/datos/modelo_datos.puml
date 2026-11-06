@@ -1,0 +1,433 @@
+@startuml Modelo de Datos - Plataforma de Entrenamiento Concurrente
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+skinparam nodesep 60
+skinparam ranksep 80
+skinparam classAttributeIconSize 0
+skinparam classFontSize 13
+skinparam classAttributeFontSize 12
+skinparam defaultFontName "Segoe UI"
+skinparam backgroundColor #FEFEFE
+
+' Configuración de colores para asegurar contraste en el título (FontColor blanco)
+skinparam class {
+    BackgroundColor #F8F9FA
+    BorderColor #495057
+    HeaderBackgroundColor #212529
+    FontColor #FFFFFF
+    AttributeFontColor #212529
+    ArrowColor #495057
+}
+
+' ══════════════════════════════════════════════════
+' MÓDULO 1: IDENTIDAD Y CONTROL DE ACCESO
+' ══════════════════════════════════════════════════
+package "Identidad y Control de Acceso" as identity #E3F2FD {
+    entity "User" as user {
+        * **id** : UUID <<PK>>
+        --
+        * email : VARCHAR(255) <<UNIQUE>>
+        * password_hash : VARCHAR(255)
+        * first_name : VARCHAR(100)
+        * last_name : VARCHAR(100)
+        * role : ENUM('ATHLETE_FREE', 'ATHLETE_PREMIUM', 'ADMIN')
+        * created_at : TIMESTAMPTZ
+        * updated_at : TIMESTAMPTZ
+        deleted_at : TIMESTAMPTZ
+        * consent_data_processing : BOOLEAN
+        * consent_granted_at : TIMESTAMPTZ
+    }
+
+    entity "UserProfile" as user_profile {
+        * **id** : UUID <<PK>>
+        --
+        * user_id : UUID <<FK User>>
+        * birth_date : DATE
+        * gender : ENUM('M', 'F', 'OTHER')
+        * height_cm : DECIMAL(5,2)
+        * weight_kg : DECIMAL(5,2)
+        resting_heart_rate : SMALLINT
+        max_heart_rate : SMALLINT
+        * activity_level : ENUM('SEDENTARY', 'LIGHT', 'MODERATE', 'ACTIVE', 'VERY_ACTIVE')
+        * primary_goal : ENUM('HYPERTROPHY', 'ENDURANCE', 'RECOMPOSITION', 'MAINTENANCE')
+        * updated_at : TIMESTAMPTZ
+    }
+
+    entity "ExternalIntegration" as ext_integration {
+        * **id** : UUID <<PK>>
+        --
+        * user_id : UUID <<FK User>>
+        * provider : ENUM('APPLE_HEALTH', 'HEALTH_CONNECT', 'GARMIN', 'POLAR')
+        * access_token_enc : BYTEA
+        refresh_token_enc : BYTEA
+        * token_expires_at : TIMESTAMPTZ
+        * is_active : BOOLEAN
+        * created_at : TIMESTAMPTZ
+        * updated_at : TIMESTAMPTZ
+    }
+}
+
+' ══════════════════════════════════════════════════
+' MÓDULO 2: REGISTRO DIARIO Y LÍNEA DE TIEMPO
+' ══════════════════════════════════════════════════
+package "Registro Diario" as daily #FFF3E0 {
+    entity "DailyLog" as daily_log {
+        * **id** : UUID <<PK>>
+        --
+        * user_id : UUID <<FK User>>
+        * date : DATE
+        * target_calories : INTEGER
+        * target_protein_g : DECIMAL(6,2)
+        * target_carbs_g : DECIMAL(6,2)
+        * target_fat_g : DECIMAL(6,2)
+        notes : TEXT
+        * created_at : TIMESTAMPTZ
+        * updated_at : TIMESTAMPTZ
+        ..
+        <<UNIQUE(user_id, date)>>
+    }
+
+    entity "SubjectiveReport" as subjective_report {
+        * **id** : UUID <<PK>>
+        --
+        * daily_log_id : UUID <<FK DailyLog>>
+        * rpe_general : SMALLINT
+        sleep_quality : SMALLINT
+        muscle_soreness : SMALLINT
+        energy_level : SMALLINT
+        mood : SMALLINT
+        gi_discomfort : BOOLEAN
+        free_notes : TEXT
+        * created_at : TIMESTAMPTZ
+    }
+}
+
+' ══════════════════════════════════════════════════
+' MÓDULO 3: ENTRENAMIENTO DE FUERZA
+' ══════════════════════════════════════════════════
+package "Entrenamiento de Fuerza" as strength_pkg #E8F5E9 {
+    entity "Exercise" as exercise {
+        * **id** : UUID <<PK>>
+        --
+        * name : VARCHAR(200)
+        * muscle_group : UUID <<FK MuscleGroup>>
+        secondary_muscle_group : UUID <<FK MuscleGroup>>
+        * movement_pattern : ENUM('PUSH', 'PULL', 'SQUAT', 'HINGE', 'CARRY', 'LUNGE', 'ROTATION')
+        * equipment : ENUM('BARBELL', 'DUMBBELL', 'MACHINE', 'CABLE', 'BODYWEIGHT', 'KETTLEBELL')
+        description : TEXT
+        * is_official : BOOLEAN
+        created_by : UUID <<FK User>>
+        * is_active : BOOLEAN
+        * created_at : TIMESTAMPTZ
+    }
+
+    entity "MuscleGroup" as muscle_group {
+        * **id** : UUID <<PK>>
+        --
+        * name : VARCHAR(100) <<UNIQUE>>
+        * body_region : ENUM('UPPER', 'LOWER', 'CORE', 'FULL_BODY')
+    }
+
+    entity "StrengthSession" as strength_session {
+        * **id** : UUID <<PK>>
+        --
+        * user_id : UUID <<FK User>>
+        * daily_log_id : UUID <<FK DailyLog>>
+        * started_at : TIMESTAMPTZ
+        finished_at : TIMESTAMPTZ
+        * input_method : ENUM('MANUAL', 'NLP')
+        nlp_raw_input : TEXT
+        session_rpe : SMALLINT
+        session_notes : TEXT
+        * total_volume_kg : DECIMAL(10,2)
+        * created_at : TIMESTAMPTZ
+    }
+
+    entity "StrengthExerciseLog" as strength_exercise_log {
+        * **id** : UUID <<PK>>
+        --
+        * strength_session_id : UUID <<FK StrengthSession>>
+        * exercise_id : UUID <<FK Exercise>>
+        * exercise_order : SMALLINT
+        notes : TEXT
+    }
+
+    entity "ExerciseSet" as exercise_set {
+        * **id** : UUID <<PK>>
+        --
+        * strength_exercise_log_id : UUID <<FK StrengthExerciseLog>>
+        * set_number : SMALLINT
+        * reps : SMALLINT
+        * weight_kg : DECIMAL(6,2)
+        rpe : DECIMAL(3,1)
+        rest_seconds : SMALLINT
+        is_warmup : BOOLEAN
+        notes : TEXT
+    }
+}
+
+' ══════════════════════════════════════════════════
+' MÓDULO 4: ENTRENAMIENTO CARDIOVASCULAR
+' ══════════════════════════════════════════════════
+package "Entrenamiento Cardiovascular" as cardio_pkg #FCE4EC {
+    entity "CardioSession" as cardio_session {
+        * **id** : UUID <<PK>>
+        --
+        * user_id : UUID <<FK User>>
+        * daily_log_id : UUID <<FK DailyLog>>
+        * discipline : ENUM('RUNNING', 'CYCLING')
+        * started_at : TIMESTAMPTZ
+        * finished_at : TIMESTAMPTZ
+        * duration_seconds : INTEGER
+        * distance_meters : DECIMAL(10,2)
+        avg_speed_kmh : DECIMAL(5,2)
+        elevation_gain_m : DECIMAL(7,2)
+        session_rpe : SMALLINT
+        notes : TEXT
+        * data_confidence : ENUM('LOW', 'MEDIUM', 'HIGH')
+        * data_source : ENUM('MANUAL_GPS', 'HEALTH_BROKER', 'FIT_FILE')
+        * created_at : TIMESTAMPTZ
+    }
+
+    entity "CardioHeartRateData" as cardio_hr {
+        * **id** : UUID <<PK>>
+        --
+        * cardio_session_id : UUID <<FK CardioSession>>
+        avg_heart_rate : SMALLINT
+        max_heart_rate : SMALLINT
+        * active_calories : INTEGER
+        time_zone1_s : INTEGER
+        time_zone2_s : INTEGER
+        time_zone3_s : INTEGER
+        time_zone4_s : INTEGER
+        time_zone5_s : INTEGER
+    }
+
+    entity "CardioPowerData" as cardio_power {
+        * **id** : UUID <<PK>>
+        --
+        * cardio_session_id : UUID <<FK CardioSession>>
+        avg_power_watts : SMALLINT
+        max_power_watts : SMALLINT
+        normalized_power : SMALLINT
+        avg_cadence : SMALLINT
+        * tss : DECIMAL(6,2)
+    }
+
+    entity "TelemetryData" as telemetry {
+        * **id** : UUID <<PK>>
+        --
+        * cardio_session_id : UUID <<FK CardioSession>>
+        * source_type : ENUM('HEALTH_CONNECT', 'APPLE_HEALTHKIT', 'FIT_FILE')
+        fit_file_url : VARCHAR(500)
+        * payload : JSONB
+        * ingested_at : TIMESTAMPTZ
+    }
+}
+
+' ══════════════════════════════════════════════════
+' MÓDULO 5: NUTRICIÓN
+' ══════════════════════════════════════════════════
+package "Nutrición" as nutrition_pkg #FFF9C4 {
+    entity "FoodItem" as food_item {
+        * **id** : UUID <<PK>>
+        --
+        * name : VARCHAR(300)
+        * brand : VARCHAR(200)
+        * serving_size_g : DECIMAL(7,2)
+        * calories_per_100g : DECIMAL(7,2)
+        * protein_per_100g : DECIMAL(6,2)
+        * carbs_per_100g : DECIMAL(6,2)
+        * fat_per_100g : DECIMAL(6,2)
+        fiber_per_100g : DECIMAL(6,2)
+        source : ENUM('OPEN_FOOD_FACTS', 'MANUAL', 'AI_GENERATED')
+        barcode : VARCHAR(50)
+        * is_active : BOOLEAN
+        * created_at : TIMESTAMPTZ
+    }
+
+    entity "Meal" as meal {
+        * **id** : UUID <<PK>>
+        --
+        * daily_log_id : UUID <<FK DailyLog>>
+        * meal_type : ENUM('BREAKFAST', 'LUNCH', 'SNACK', 'DINNER', 'PRE_WORKOUT', 'POST_WORKOUT')
+        * input_method : ENUM('MANUAL', 'AI_VISION', 'RECIPE_IMPORT')
+        ai_confidence_score : DECIMAL(5,2)
+        photo_url : VARCHAR(500)
+        * total_calories : DECIMAL(7,2)
+        * total_protein_g : DECIMAL(6,2)
+        * total_carbs_g : DECIMAL(6,2)
+        * total_fat_g : DECIMAL(6,2)
+        notes : TEXT
+        recipe_id : UUID <<FK CommunityRecipe>>
+        scale_factor : DECIMAL(5,3)
+        * consumed_at : TIMESTAMPTZ
+        * created_at : TIMESTAMPTZ
+    }
+
+    entity "MealItem" as meal_item {
+        * **id** : UUID <<PK>>
+        --
+        * meal_id : UUID <<FK Meal>>
+        * food_item_id : UUID <<FK FoodItem>>
+        * quantity_g : DECIMAL(7,2)
+        * calories : DECIMAL(7,2)
+        * protein_g : DECIMAL(6,2)
+        * carbs_g : DECIMAL(6,2)
+        * fat_g : DECIMAL(6,2)
+    }
+}
+
+' ══════════════════════════════════════════════════
+' MÓDULO 6: MOTOR DE FATIGA Y ANALÍTICA
+' ══════════════════════════════════════════════════
+package "Motor de Fatiga y Analítica" as fatigue_pkg #F3E5F5 {
+    entity "FatigueSnapshot" as fatigue_snapshot {
+        * **id** : UUID <<PK>>
+        --
+        * user_id : UUID <<FK User>>
+        * date : DATE
+        * ctl_strength : DECIMAL(8,3)
+        * atl_strength : DECIMAL(8,3)
+        * ctl_cardio : DECIMAL(8,3)
+        * atl_cardio : DECIMAL(8,3)
+        * tsb_strength : DECIMAL(8,3)
+        * tsb_cardio : DECIMAL(8,3)
+        cross_fatigue_index : DECIMAL(5,2)
+        * calculated_at : TIMESTAMPTZ
+        ..
+        <<UNIQUE(user_id, date)>>
+    }
+
+    entity "FatigueAlert" as fatigue_alert {
+        * **id** : UUID <<PK>>
+        --
+        * user_id : UUID <<FK User>>
+        * fatigue_snapshot_id : UUID <<FK FatigueSnapshot>>
+        * alert_type : ENUM('OVERTRAINING_RISK', 'CROSS_FATIGUE', 'RECOVERY_WINDOW')
+        * severity : ENUM('INFO', 'WARNING', 'CRITICAL')
+        * message : TEXT
+        suggestion : TEXT
+        * is_read : BOOLEAN
+        * is_push_sent : BOOLEAN
+        * created_at : TIMESTAMPTZ
+    }
+}
+
+' ══════════════════════════════════════════════════
+' MÓDULO 7: COMUNIDAD Y SOCIAL
+' ══════════════════════════════════════════════════
+package "Comunidad y Social" as community_pkg #E0F2F1 {
+    entity "CommunityRecipe" as community_recipe {
+        * **id** : UUID <<PK>>
+        --
+        * author_id : UUID <<FK User>>
+        * title : VARCHAR(300)
+        description : TEXT
+        * total_calories : DECIMAL(7,2)
+        * total_protein_g : DECIMAL(6,2)
+        * total_carbs_g : DECIMAL(6,2)
+        * total_fat_g : DECIMAL(6,2)
+        * servings : SMALLINT
+        photo_url : VARCHAR(500)
+        * visibility : ENUM('PUBLIC', 'PRIVATE')
+        * is_moderated : BOOLEAN
+        * is_active : BOOLEAN
+        * created_at : TIMESTAMPTZ
+        * updated_at : TIMESTAMPTZ
+    }
+
+    entity "RecipeIngredient" as recipe_ingredient {
+        * **id** : UUID <<PK>>
+        --
+        * recipe_id : UUID <<FK CommunityRecipe>>
+        * food_item_id : UUID <<FK FoodItem>>
+        * quantity_g : DECIMAL(7,2)
+        * ingredient_order : SMALLINT
+    }
+
+    entity "CommunityPost" as community_post {
+        * **id** : UUID <<PK>>
+        --
+        * author_id : UUID <<FK User>>
+        * post_type : ENUM('WORKOUT_SHARE', 'RECIPE_SHARE', 'GENERAL')
+        * content : TEXT
+        workout_ref_id : UUID
+        recipe_ref_id : UUID <<FK CommunityRecipe>>
+        * visibility : ENUM('PUBLIC', 'PRIVATE')
+        * is_moderated : BOOLEAN
+        * is_active : BOOLEAN
+        * created_at : TIMESTAMPTZ
+    }
+
+    entity "ModerationLog" as moderation_log {
+        * **id** : UUID <<PK>>
+        --
+        * admin_id : UUID <<FK User>>
+        * target_type : ENUM('POST', 'RECIPE')
+        * target_id : UUID
+        * action : ENUM('HIDE', 'DELETE', 'RESTORE')
+        reason : TEXT
+        * executed_at : TIMESTAMPTZ
+    }
+}
+
+' ══════════════════════════════════════════════════
+' FORZAR DISPOSICIÓN VERTICAL DE LOS PAQUETES
+' ══════════════════════════════════════════════════
+identity -[hidden]down-> daily
+daily -[hidden]down-> strength_pkg
+daily -[hidden]down-> cardio_pkg
+strength_pkg -[hidden]down-> nutrition_pkg
+cardio_pkg -[hidden]down-> fatigue_pkg
+nutrition_pkg -[hidden]down-> community_pkg
+fatigue_pkg -[hidden]down-> community_pkg
+
+' ══════════════════════════════════════════════════
+' RELACIONES (Mapeadas verticalmente con '-down-')
+' ══════════════════════════════════════════════════
+' --- Identidad ---
+user ||-down-o| user_profile : "tiene"
+user ||-down-o{ ext_integration : "vincula"
+
+' --- Registro Diario ---
+user ||-down-o{ daily_log : "genera"
+daily_log ||-down-o| subjective_report : "registra"
+
+' --- Fuerza ---
+muscle_group ||-down-o{ exercise : "clasifica"
+user ||-down-o{ strength_session : "realiza"
+daily_log ||-down-o{ strength_session : "contiene"
+strength_session ||-down-|{ strength_exercise_log : "incluye"
+exercise ||-down-o{ strength_exercise_log : "referencia"
+strength_exercise_log ||-down-|{ exercise_set : "detalla"
+
+' --- Cardio ---
+user ||-down-o{ cardio_session : "realiza"
+daily_log ||-down-o{ cardio_session : "contiene"
+cardio_session ||-down-o| cardio_hr : "registra FC"
+cardio_session ||-down-o| cardio_power : "registra potencia"
+cardio_session ||-down-o| telemetry : "almacena raw"
+
+' --- Nutrición ---
+daily_log ||-down-o{ meal : "contiene"
+meal ||-down-|{ meal_item : "compone"
+food_item ||-down-o{ meal_item : "referencia"
+community_recipe ||-down-o{ meal : "importada en"
+
+' --- Fatiga ---
+user ||-down-o{ fatigue_snapshot : "analiza"
+fatigue_snapshot ||-down-o{ fatigue_alert : "genera"
+user ||-down-o{ fatigue_alert : "recibe"
+
+' --- Comunidad ---
+user ||-down-o{ community_recipe : "publica"
+community_recipe ||-down-|{ recipe_ingredient : "contiene"
+food_item ||-down-o{ recipe_ingredient : "referencia"
+user ||-down-o{ community_post : "publica"
+community_recipe ||-down-o{ community_post : "compartida en"
+user ||-down-o{ moderation_log : "modera"
+
+@enduml

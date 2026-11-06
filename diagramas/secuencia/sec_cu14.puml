@@ -1,0 +1,32 @@
+@startuml sec_cu14
+!include sec_estilo.iuml
+actor "Atleta" as U
+participant "App Flutter" as A
+participant "API NestJS" as B
+database "MongoDB" as DB
+autonumber
+U -> A : Busca a una persona
+A -> B : GET /users?q=nombre
+B -> DB : Busca en users y follows
+DB --> B : Resultado
+alt No la encuentra
+  B --> A : Lista vacía
+  A --> U : Permite buscar otro nombre
+else La encuentra
+  B --> A : Perfil y si ya la sigue
+  A --> U : Muestra el perfil
+  alt Ya la sigue
+    U -> A : Pulsa Dejar de seguir
+    A -> B : DELETE /follows/{id}
+    B -> DB : Borra en follows
+    B --> A : Confirmación
+    A --> U : Quita sus publicaciones del muro
+  else No la sigue
+    U -> A : Pulsa Seguir
+    A -> B : POST /follows
+    B -> DB : Guarda en follows
+    B --> A : Confirmación
+    A --> U : Muestra sus publicaciones en el muro
+  end
+end
+@enduml

@@ -1,0 +1,36 @@
+@startuml bpmn_proceso3
+!include bpmn_estilo.iuml
+skinparam activity {
+    BackgroundColor #FCF3CF
+}
+
+|Atleta que publica|
+|Atleta que la ve|
+|Aplicación|
+|Administrador|
+|Atleta que publica|
+start
+:1. Elige un registro, agrega texto\ny fotos, y elige quién lo puede ver;
+|Aplicación|
+:2. Prepara la publicación y la\nmuestra en el muro de quienes\npueden verla;
+|Atleta que la ve|
+:3. Ve la publicación\nen su muro;
+|Aplicación|
+if (¿Qué quiere\nhacer?) then (Agregarla)
+  if (¿Es una\nreceta?) then (Sí)
+    :4. Ajusta las porciones a\nlo que le falta en el día;
+  else (No)
+  endif
+  :5. La guarda en el módulo que\ncorresponde, indicando el autor;
+else (Reportarla)
+  :6. La deja en la lista\nde revisión;
+  |Administrador|
+  :7. Revisa la publicación;
+  if (¿No cumple\nlas normas?) then (Sí)
+    :8. La oculta y deja\nregistro de la decisión;
+  else (No)
+  endif
+  |Aplicación|
+endif
+stop
+@enduml

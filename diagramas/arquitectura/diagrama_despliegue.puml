@@ -1,0 +1,56 @@
+@startuml diagrama_despliegue
+!theme plain
+skinparam dpi 200
+skinparam defaultFontName "Liberation Sans"
+skinparam defaultFontSize 12
+skinparam shadowing false
+skinparam ArrowColor #333333
+skinparam nodesep 40
+skinparam ranksep 55
+skinparam node {
+    BorderColor #1F4E79
+}
+
+node "Teléfono del usuario" <<device>> as PH {
+  artifact "App Flutter\n(.apk / .ipa)" as APP
+}
+node "Computador del\nadministrador" <<device>> as PC {
+  node "Navegador web" <<execution environment>> as NAV
+}
+
+node "AWS sa-east-1" <<cloud>> as AWS {
+  node "ALB" <<balanceador>> as ALB
+  node "CloudFront" <<CDN>> as CF
+  node "ECS Fargate" <<execution environment>> as FG {
+    artifact "api-nestjs\n(imagen Docker)" as API
+  }
+  node "Lambda" <<execution environment>> as LB {
+    artifact "parser-fit\n(función)" as PF
+  }
+  node "S3" <<storage>> as S3 {
+    artifact "Panel web\n(archivos estáticos)" as WEB
+    artifact "Fotos y\narchivos .fit" as FOT
+  }
+}
+
+node "MongoDB Atlas sa-east-1" <<cloud>> as AT {
+  database "Clúster M10\n(tres nodos réplica)" as DB
+}
+
+node "Servicios externos" <<cloud>> as EX {
+  artifact "Gemini, Open Food Facts,\nFirebase, Google Play y App Store" as SV
+}
+
+APP --> ALB : HTTPS, JWT
+NAV --> ALB : HTTPS, JWT
+NAV --> CF : HTTPS
+APP --> CF : HTTPS
+APP --> FOT : URL prefirmada
+CF --> WEB
+CF --> FOT
+ALB --> API : HTTP privado
+API --> PF : IAM
+PF --> FOT : IAM
+API --> DB : TLS, VPC peering
+API --> SV : HTTPS
+@enduml

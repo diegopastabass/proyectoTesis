@@ -1,0 +1,36 @@
+@startuml cu_nutricion
+!include cu_estilo.iuml
+skinparam usecase {
+    BackgroundColor #FFF59D
+}
+
+actor "Atleta Básico\n(plan gratuito)" as B
+actor "Atleta Híbrido\n(plan premium)" as H
+actor "Asistente de\ninteligencia artificial" as IA
+B <|-- H
+
+rectangle "Nutrición" {
+    usecase "CU-06: Anotar una comida\nbuscando los alimentos" as CU06
+    usecase "CU-15: Registrar un producto\ncon su código de barras" as CU15
+    usecase "CU-18: Ver mis metas de\nalimentación del día" as CU18
+    usecase "CU-07: Registrar una\ncomida con una foto" as CU07
+    usecase "CU-16: Contar mi comida\ncon mis palabras" as CU16
+
+    usecase "Indicar cuánto\ncomí" as P1 #FFFFFF
+    usecase "Revisar la estimación\nde la IA" as P2 #FFFFFF
+}
+
+B -- CU06
+B -- CU15
+H -- CU07
+H -- CU16
+H -- CU18
+
+CU06 ..> P1 : <<include>>
+CU15 ..> P1 : <<include>>
+CU07 ..> P2 : <<include>>
+CU16 ..> P2 : <<include>>
+
+P2 -- IA
+
+@enduml

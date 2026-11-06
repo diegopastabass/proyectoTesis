@@ -1,0 +1,33 @@
+@startuml sec_cu02
+!include sec_estilo.iuml
+actor "Atleta" as U
+participant "App Flutter" as A
+participant "API NestJS" as B
+participant "Servicio de IA" as IA
+database "MongoDB" as DB
+autonumber
+U -> A : Escribe o dicta su sesión
+A -> B : POST /workouts/parse
+B -> IA : Envía el texto con instrucciones
+alt Sin conexión o sin respuesta
+  IA --> B : Error
+  B --> A : Servicio no disponible
+  A --> U : Avisa y ofrece el formulario (CU-01)
+else Respuesta correcta
+  IA --> B : Ejercicios, series y pesos en JSON
+  B -> DB : Busca los ejercicios en exercises
+  DB --> B : Coincidencias
+  opt Ejercicio no reconocido
+    B -> B : Lo marca para elegirlo de la lista
+  end
+  B --> A : Sesión propuesta, sin guardar
+  A --> U : Muestra el resultado
+  U -> A : Corrige y confirma
+  A -> B : POST /workouts
+  B -> B : Calcula la carga
+  B -> DB : Guarda en workouts
+  DB --> B : Confirmación
+  B --> A : Sesión creada
+  A --> U : Muestra la sesión en el historial
+end
+@enduml

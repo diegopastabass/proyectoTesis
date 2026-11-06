@@ -1,0 +1,22 @@
+@startuml sec_cu26
+!include sec_estilo.iuml
+actor "Atleta" as U
+participant "App Flutter" as A
+participant "API NestJS" as B
+database "MongoDB" as DB
+autonumber
+A -> B : GET /terms/current
+B --> A : Términos de uso y aviso legal
+A --> U : Muestra los textos
+alt No los acepta
+  U -> A : Rechaza
+  A --> U : Explica que son necesarios y no permite seguir
+else Los acepta
+  U -> A : Acepta
+  A -> B : POST /users/me/consent
+  B -> DB : Guarda fecha y versión en consent
+  DB --> B : Confirmación
+  B --> A : Aceptación registrada
+  A --> U : Sigue con el cuestionario (CU-12)
+end
+@enduml

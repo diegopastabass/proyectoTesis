@@ -1,0 +1,30 @@
+@startuml sec_cu25
+!include sec_estilo.iuml
+actor "Atleta" as U
+participant "App Flutter" as A
+participant "Google Play /\nApp Store" as T
+participant "API NestJS" as B
+database "MongoDB" as DB
+autonumber
+U -> A : Abre los datos de su suscripción
+A -> B : GET /subscriptions/me
+B -> DB : Lee subscription en users
+DB --> B : Estado y fecha de término
+B --> A : Datos de la suscripción
+A --> U : Muestra el plan y el próximo cobro
+U -> A : Pulsa Cancelar suscripción
+A -> T : Abre la pantalla de suscripciones
+alt No confirma
+  U -> T : Sale sin cancelar
+  T --> A : Vuelve a la aplicación
+  A --> U : La suscripción sigue igual
+else Confirma
+  U -> T : Confirma la cancelación
+  T -> B : Notifica la cancelación
+  B -> DB : Cambia status a CANCELED
+  T --> A : Vuelve a la aplicación
+  A -> B : GET /subscriptions/me
+  B --> A : Fecha de término
+  A --> U : Muestra hasta cuándo sigue premium
+end
+@enduml

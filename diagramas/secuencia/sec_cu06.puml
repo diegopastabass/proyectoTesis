@@ -1,0 +1,32 @@
+@startuml sec_cu06
+!include sec_estilo.iuml
+actor "Atleta" as U
+participant "App Flutter" as A
+participant "API NestJS" as B
+database "MongoDB" as DB
+autonumber
+U -> A : Busca un alimento
+A -> B : GET /food-items?q=nombre
+B -> DB : Busca en foodItems
+DB --> B : Coincidencias
+alt Sin resultados
+  B --> A : Lista vacía
+  A --> U : Avisa y ofrece otra búsqueda o código de barras
+else Con resultados
+  B --> A : Alimentos
+  A --> U : Muestra los alimentos
+  U -> A : Elige e indica cuánto comió
+  alt Cantidad vacía o en cero
+    A --> U : Pide corregirla
+  else Cantidad válida
+    A --> U : Muestra calorías y macronutrientes
+    U -> A : Confirma
+    A -> B : POST /meals
+    B -> DB : Guarda en meals
+    B -> DB : Lee las metas en dailyLogs
+    DB --> B : Metas del día
+    B --> A : Comida creada y avance del día
+    A --> U : Muestra el avance
+  end
+end
+@enduml

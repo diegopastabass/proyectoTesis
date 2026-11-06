@@ -1,0 +1,23 @@
+@startuml bpmn_proceso5
+!include bpmn_estilo.iuml
+skinparam activity {
+    BackgroundColor #FADBD8
+}
+
+|Atleta|
+|Aplicación|
+|Atleta|
+start
+:1. Crea su cuenta, acepta los términos\ny responde el cuestionario inicial;
+|Aplicación|
+:2. Calcula su nivel y su orientación\ny le sugiere un plan semanal;
+repeat
+  |Atleta|
+  :3. Acepta, cambia o ignora\nel plan de la semana;
+  :4. Entrena y registra sus\nsesiones (Procesos 1 y 4);
+  |Aplicación|
+  :5. Revisa lo que cumplió, qué tan duro\nlo sintió y su fatiga (plan premium);
+  :6. Sugiere el plan siguiente: más\nliviano, igual o más exigente;
+repeat while (¿Sigue usando\nel plan?) is (Sí) not (No)
+stop
+@enduml

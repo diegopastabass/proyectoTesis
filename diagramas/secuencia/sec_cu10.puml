@@ -1,0 +1,34 @@
+@startuml sec_cu10
+!include sec_estilo.iuml
+actor "Administrador" as U
+participant "Panel web" as A
+participant "API NestJS" as B
+database "MongoDB" as DB
+autonumber
+U -> A : Abre la lista de ejercicios
+A -> B : GET /admin/exercises
+B -> DB : Busca en exercises
+DB --> B : Ejercicios
+B --> A : Lista
+A --> U : Muestra los ejercicios
+alt Desactiva un ejercicio
+  U -> A : Pulsa Desactivar
+  A -> B : PATCH /admin/exercises/{id}
+  B -> DB : Cambia isActive a falso
+  B --> A : Confirmación
+  A --> U : Lo saca de las nuevas sesiones
+else Agrega o cambia un ejercicio
+  U -> A : Indica músculos y equipamiento
+  A -> B : POST /admin/exercises
+  B -> DB : Busca el nombre en exercises
+  DB --> B : Resultado
+  alt Ya existe
+    B --> A : Ejercicio repetido
+    A --> U : Avisa y no lo guarda
+  else No existe
+    B -> DB : Guarda en exercises
+    B --> A : Ejercicio guardado
+    A --> U : Confirma el cambio
+  end
+end
+@enduml

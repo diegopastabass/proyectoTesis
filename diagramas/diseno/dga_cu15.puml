@@ -1,0 +1,26 @@
+@startuml dga_cu15
+!include dga_estilo.iuml
+|Usuario|
+|Aplicación|
+|Usuario|
+start
+|Aplicación|
+if (¿Tiene permiso\npara la cámara?) then (No)
+  :Pide el permiso;
+else (Sí)
+endif
+|Usuario|
+:1. Escanea el código\nde barras del producto;
+|Aplicación|
+if (¿Encuentra\nel producto?) then (No)
+  :Avisa y ofrece buscar en\nla lista (CU-06);
+  stop
+else (Sí)
+  :2. Muestra calorías\ny macronutrientes;
+endif
+|Usuario|
+:3. Indica cuánto comió\ny confirma;
+|Aplicación|
+:4. Guarda la comida y\nactualiza el avance del día;
+stop
+@enduml

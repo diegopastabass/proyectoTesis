@@ -1,0 +1,18 @@
+@startuml dga_cu18
+!include dga_estilo.iuml
+|Usuario|
+|Aplicación|
+|Usuario|
+start
+:1. Abre su resumen\nde nutrición;
+|Aplicación|
+if (¿Tiene entrenamiento\nese día?) then (Sí)
+  :2. Muestra las metas del\ndía según su entrenamiento;
+else (No)
+  :Muestra las metas para\nun día de descanso;
+endif
+:3. Muestra cuánto le falta y sugiere\nen qué momento conviene comer;
+|Usuario|
+:4. Revisa la información\ny decide qué comer;
+stop
+@enduml

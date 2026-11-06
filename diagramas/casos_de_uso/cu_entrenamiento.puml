@@ -1,0 +1,44 @@
+@startuml cu_entrenamiento
+!include cu_estilo.iuml
+skinparam usecase {
+    BackgroundColor #C8E6C9
+}
+
+actor "Atleta Básico\n(plan gratuito)" as B
+actor "Atleta Híbrido\n(plan premium)" as H
+actor "App de salud\ndel teléfono" as HC
+actor "Asistente de\ninteligencia artificial" as IA
+B <|-- H
+
+rectangle "Entrenamiento (Fuerza y Resistencia)" {
+    usecase "CU-01: Anotar una\nsesión de fuerza" as CU01
+    usecase "CU-17: Registrar una sesión\nde cardio sin reloj" as CU17
+    usecase "CU-05: Revisar mi fatiga\ny recibir alertas" as CU05
+    usecase "CU-04: Subir el archivo de\nmi ciclocomputador" as CU04
+    usecase "CU-02: Contar mi sesión de\nfuerza con mis palabras" as CU02
+    usecase "CU-03: Traer mis sesiones\ndesde el reloj" as CU03
+
+    usecase "Usar una rutina\nguardada" as P1 #FFFFFF
+    usecase "Grabar la ruta\ncon el GPS" as P2 #FFFFFF
+    usecase "Recibir una alerta\ncon una sugerencia" as P4 #FFFFFF
+    usecase "Revisar lo que\nentendió la IA" as P3 #FFFFFF
+    usecase "Leer las sesiones guardadas\nen la app de salud" as P5 #FFFFFF
+}
+
+B -- CU01
+B -- CU17
+H -- CU02
+H -- CU03
+H -- CU04
+H -- CU05
+
+CU01 <.. P1 : <<extend>>
+CU17 <.. P2 : <<extend>>
+CU02 ..> P3 : <<include>>
+CU05 <.. P4 : <<extend>>
+CU03 ..> P5 : <<include>>
+
+P3 -- IA
+P5 -- HC
+
+@enduml

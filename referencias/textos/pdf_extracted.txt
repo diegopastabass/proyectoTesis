@@ -1,0 +1,2696 @@
+Ingenier´ ıa Civil en Computaci´ on e
+Inform´ atica.
+Facultad de Ciencias, Ingenier´ ıa y Tecnolog´ ıa.
+Infraestructura Tecnol´ ogica Buses Rurales
+Por:
+Nicol´ as Toledo
+Diego Vilches
+Santiago de Chile. Invierno 2025
+´Indice
+1 Introducci´ on 4
+2 Aspectos de la Empresa 5
+2.1 Presentaci´ on de la Empresa . . . . . . . . . . . . . . . . . . . . . . . . . . 5
+2.2 Estructura Organizacional . . . . . . . . . . . . . . . . . . . . . . . . . . . 6
+2.3 Objetivos de la Empresa . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6
+2.4 An´ alisis FODA . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6
+2.5 Posici´ on de la Empresa en el Mercado . . . . . . . . . . . . . . . . . . . . . 8
+2.6 Competencia . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 8
+2.7 Clientes . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9
+2.8 Proveedores . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9
+2.9 Tecnolog´ ıa . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 10
+2.10 Descripci´ on del proceso productivo o servicio . . . . . . . . . . . . . . . . . 11
+2.11 Inversiones . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 12
+2.12 Inform´ atica de la empresa . . . . . . . . . . . . . . . . . . . . . . . . . . . 12
+3 An´ alisis 13
+3.1 Descripci´ on del Problema . . . . . . . . . . . . . . . . . . . . . . . . . . . 13
+3.2 Descripci´ on de la Soluci´ on . . . . . . . . . . . . . . . . . . . . . . . . . . . 14
+3.2.1 Diagrama de Funcionamiento . . . . . . . . . . . . . . . . . . . . . 15
+3.3 An´ alisis FODA . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 16
+3.4 Objetivo General . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 18
+3.5 Objetivos Espec´ ıficos . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 18
+3.6 Alcance del Proyecto . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 19
+3.7 Conformaci´ on del Equipo . . . . . . . . . . . . . . . . . . . . . . . . . . . . 20
+4 Factibilidad 21
+4.1 Factibilidad T´ ecnica . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 21
+4.1.1 Tecnolog´ ıas Disponibles . . . . . . . . . . . . . . . . . . . . . . . . 21
+4.1.2 Requerimientos T´ ecnicos y Recursos . . . . . . . . . . . . . . . . . 23
+4.1.3 Adecuaci´ on al Entorno Rural . . . . . . . . . . . . . . . . . . . . . 24
+4.1.4 Comparaci´ on de Alternativas Tecnol´ ogicas . . . . . . . . . . . . . . 25
+4.1.5 Conclusi´ on de la Factibilidad T´ ecnica . . . . . . . . . . . . . . . . . 27
+4.2 Factibilidad Econ´ omica . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 28
+4.2.1 Estudio de la Competencia . . . . . . . . . . . . . . . . . . . . . . . 28
+4.2.2 Conclusi´ on del Estudio de la Competencia . . . . . . . . . . . . . . 31
+4.2.3 Estudio Exploratorio de Mercado . . . . . . . . . . . . . . . . . . . 32
+4.2.4 Costos por Ciclo de Vida del Software . . . . . . . . . . . . . . . . 34
+4.2.5 Precio de Venta . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 35
+4.2.6 Inversi´ on . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 36
+4.2.7 Mantenci´ on . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 36
+4.2.8 Ingresos . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 36
+4.2.9 Flujo de Caja . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 37
+4.3 Factibilidad Financiera . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 39
+4.3.1 Fuentes de Financiamiento Inicial (Chile, 2024–2025) . . . . . . . . 39
+4.3.2 Sostenibilidad Financiera del Sistema . . . . . . . . . . . . . . . . . 41
+4.3.3 Escalabilidad y Expansi´ on Territorial . . . . . . . . . . . . . . . . . 42
+1
+4.4 Factibilidad Legal . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 44
+4.4.1 Protecci´ on de Datos Personales . . . . . . . . . . . . . . . . . . . . 44
+4.4.2 Uso de Geolocalizaci´ on en Aplicaciones M´ oviles . . . . . . . . . . . 45
+4.4.3 Regulaci´ on del Transporte P´ ublico Interurbano y Buses Rurales . . 45
+4.4.4 Responsabilidad Legal y T´ erminos de Uso . . . . . . . . . . . . . . 46
+4.4.5 Propiedad Intelectual del Software . . . . . . . . . . . . . . . . . . 47
+5 Plan de Trabajo 48
+5.1 Malla de actividades . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 48
+5.2 Puntos cr´ ıticos . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 51
+5.2.1 Mitigaciones . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 52
+5.3 Carta Gantt . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 53
+5.4 PERT - CPM . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 54
+6 Toma de Requerimientos 56
+6.1 Metodolog´ ıa aplicada para la toma de requerimientos . . . . . . . . . . . . 56
+6.2 Minutas de Reuni´ on . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 57
+6.3 Informe de Requerimientos . . . . . . . . . . . . . . . . . . . . . . . . . . . 58
+7 Dise˜ no del Sistema 59
+7.1 Elecci´ on y fundamentaci´ on del Ciclo de Vida del Proyecto . . . . . . . . . 59
+7.2 Elecci´ on y fundamentaci´ on Paradigma de desarrollo . . . . . . . . . . . . . 60
+7.3 BPMN . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 61
+7.4 Modelo de Datos Relacional . . . . . . . . . . . . . . . . . . . . . . . . . . 62
+7.5 Diccionario de Datos . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 63
+7.5.1 Estructura de documentos Json . . . . . . . . . . . . . . . . . . . . 71
+7.6 Matriz de Riesgo . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 72
+7.7 Diagramas de Comportamiento . . . . . . . . . . . . . . . . . . . . . . . . 73
+7.7.1 Diagrama de Casos de Uso . . . . . . . . . . . . . . . . . . . . . . . 75
+7.7.2 Diagrama de Casos de Uso de Negocio . . . . . . . . . . . . . . . . 76
+7.7.3 Diagramas de Estados . . . . . . . . . . . . . . . . . . . . . . . . . 77
+7.8 Diagramas de Interacci´ on . . . . . . . . . . . . . . . . . . . . . . . . . . . . 81
+7.8.1 Diagrama de Secuencia . . . . . . . . . . . . . . . . . . . . . . . . . 81
+7.8.2 Diagrama de Colaboraci´ on . . . . . . . . . . . . . . . . . . . . . . . 84
+8 Prototipo 85
+8.1 Objetivos . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 85
+8.2 Alcance y componentes implementados . . . . . . . . . . . . . . . . . . . . 85
+8.3 Funcionalidades principales . . . . . . . . . . . . . . . . . . . . . . . . . . 86
+8.4 Limitaciones actuales . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 86
+8.5 Criterios de aceptaci´ on . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 86
+8.6 Pr´ oximos pasos . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 86
+8.7 Prototipo Funcional . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 87
+8.7.1 Prototipo App Chofer . . . . . . . . . . . . . . . . . . . . . . . . . 87
+8.7.2 Prototipo App Pasajero . . . . . . . . . . . . . . . . . . . . . . . . 94
+8.8 Casos de Uso del Sistema . . . . . . . . . . . . . . . . . . . . . . . . . . . . 97
+8.8.1 Casos de Uso del Sistema - Chofer . . . . . . . . . . . . . . . . . . 97
+8.8.2 Casos de Uso del Sistema - Pasajero . . . . . . . . . . . . . . . . . 102
+8.9 Estrategia de Poblamiento y Migraci´ on de Datos . . . . . . . . . . . . . . . 105
+2
+9 Dise˜ no Plan de Pruebas de Software 106
+9.1 Alcance de las Pruebas de Software . . . . . . . . . . . . . . . . . . . . . . 106
+9.2 Herramientas de Gesti´ on de Pruebas, Manejo de Errores y Criterios de
+Aceptaci´ on . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 112
+10 Realizaci´ on de Pruebas de Software 114
+10.1 Contexto de pruebas . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 114
+10.2 Resumen de ejecuci´ on . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 114
+10.3 Errores representativos detectados . . . . . . . . . . . . . . . . . . . . . . . 115
+10.4 Lecciones aprendidas y mejoras aplicadas . . . . . . . . . . . . . . . . . . . 115
+10.5 Cobertura y cumplimiento . . . . . . . . . . . . . . . . . . . . . . . . . . . 116
+11 Plan de Puesta en Marcha 117
+11.1 Etapas del Plan de Puesta en Marcha . . . . . . . . . . . . . . . . . . . . . 117
+11.2 Criterios de ´Exito de la Puesta en Marcha . . . . . . . . . . . . . . . . . . 118
+12 Conclusi´ on 119
+Anexo A: Recursos Complementarios del Prototipo 120
+13 Bibliograf´ ıa y Referencias Legales 122
+13.1 13.1 Referencias Legales . . . . . . . . . . . . . . . . . . . . . . . . . . . 122
+13.2 13.2 Fuentes Institucionales . . . . . . . . . . . . . . . . . . . . . . . . . 122
+13.3 13.3 Referencias T´ ecnicas y Frameworks . . . . . . . . . . . . . . . . . . 123
+13.4 13.4 Referencias de Contexto y UX . . . . . . . . . . . . . . . . . . . . . 123
+3
+Introducci´ on
+En la actualidad, la Regi´ on Metropolitana de Chile —y en particular la ciudad de
+Santiago— puede considerarse un referente en Am´ erica Latina en cuanto a transporte
+p´ ublico moderno y eficiente. Esto se debe, en gran parte, al desarrollo de la red de Metro
+y a la implementaci´ on de sistemas integrados como Red Metropolitana de Movilidad, que
+permiten transportar diariamente a millones de personas con altos est´ andares de calidad,
+seguridad y tecnolog´ ıa.
+Sin embargo, existe una subred menos visible, pero igualmente relevante para la movilidad
+urbana: los buses rurales e interurbanos. Estos servicios conectan las zonas perif´ ericas de la
+regi´ on con centros urbanos m´ as desarrollados, y son fundamentales para muchas personas
+que viven fuera del radio central de Santiago. A pesar de su importancia, estos servicios
+presentan diversas falencias estructurales y tecnol´ ogicas que dificultan su modernizaci´ on
+y eficiencia. Uno de los principales problemas identificados es la falta de infraestructura
+digital y de herramientas tecnol´ ogicas que permitan a los operadores mejorar la gesti´ on del
+servicio y a los usuarios planificar sus viajes de forma adecuada. Esto contrasta fuertemente
+con los avances logrados por el sistema metropolitano, donde los pasajeros pueden acceder
+f´ acilmente a informaci´ on en tiempo real sobre recorridos, frecuencias y tiempos estimados
+de llegada. De acuerdo con el informe titulado ”Mediciones de Demanda de Pasajeros
+en Servicios de Transporte P´ ublico Rural y Perif´ erico que Operan en la Regi´ on
+Metropolitana” elaborado por la Divisi´ on de Transporte P´ ublico Regional (DTPR), en
+el a˜ no 2017 exist´ ıan 219 recorridos rurales operando solamente en la Regi´ on Metropolitana.
+Esta cifra evidencia el rol significativo que cumple este tipo de transporte en la movilidad
+diaria de las personas, y anticipa una cantidad a´ un mayor a nivel nacional. Frente a esta
+realidad, surge la necesidad de una plataforma tecnol´ ogica accesible, que permita integrar
+a los servicios de transporte rural e interurbano en la era digital. El presente proyecto
+busca desarrollar una soluci´ on m´ ovil que conecte a choferes y pasajeros, permitiendo el
+seguimiento en tiempo real de los buses, la visualizaci´ on de rutas activas y la recolecci´ on
+de m´ etricas para mejorar la calidad del servicio y en general mejorar la planificaci´ on de
+los viajes. Esta iniciativa representa un paso concreto hacia la equidad tecnol´ ogica en el
+transporte, beneficiando especialmente a los sectores tradicionalmente m´ as rezagados.
+4
+Aspectos de la Empresa
+La primera etapa de este proyecto se desarrollar´ a en colaboraci´ on con la empresa Tur
+Maipo S.A., la cual ha manifestado inter´ es en participar activamente en el proceso de
+dise˜ no y validaci´ on del sistema. Gracias al contacto directo con su administrador, se
+cuenta con la disposici´ on y apertura necesaria para trabajar en conjunto, lo que permitir´ a
+al equipo de desarrollo adaptar la soluci´ on a las necesidades reales del rubro y obtener
+retroalimentaci´ on directa desde el terreno.
+Tur Maipo S.A. operar´ a como caso piloto para la implementaci´ on inicial, permitiendo vali-
+dar la funcionalidad y utilidad de la plataforma. Este enfoque es especialmente relevante,
+ya que muchas empresas de buses rurales en Chile presentan estructuras operativas simi-
+lares, lo que facilita la posterior escalabilidad y adaptaci´ on del sistema a otros operadores
+del sector.
+2.1 Presentaci´ on de la Empresa
+Tur Maipo S.A. Es una empresa Chilena de transporte rural que opera en el sector sur
+de la regi´ on metropolitana, en el sector del Maipo, recorriendo desde la comuna de la
+Florida en Santiago hasta el pueblo de San Gabriel en San Jos´ e de Maipo, se destaca por
+ser la ´ unica empresa de buses rurales que opera en el sector del Maipo con dos recorridos
+actualmente (MB72-A y MB72-B)
+5
+2.2 Estructura Organizacional
+La empresa cuenta con una serie de personal que en su mayor´ ıa est´ a conformada por los
+choferes de buses, un administrador principal y un soporte t´ ecnico. El resto de tareas son
+delegadas a empresas externas.
+Personal:
+Presidente: Mauricio Gonz´ alez Camus
+Vice presidente: Marcelo Gonz´ alez Camus
+Director: Claudio de La Paz Acevedo
+Gerente: Danilo Rodr´ ıguez Gonz´ alez
+Jefe de Servicio: Juan Flores Cuevas
+Inspector 1: Mauricio Gonz´ alez Camus
+Inspector 2: Luis R´ ıos Mella
+2.3 Objetivos de la Empresa
+Tur Maipo se dedica al transporte de personas y su objetivo general es prestar servicio de
+transporte masivo de habitantes del sector de San Jos´ e de Maipo.
+2.4 An´ alisis FODA
+• Fortalezas
+– Conocimiento del Territorio: La mayor´ ıa de personas que trabajan en la
+empresa, son habitantes de San Jos´ e de Maipo, por lo que conocen bien el lugar.
+– Relaci´ on con la Comunidad Local:Al igual que en el punto anterior, que
+sean los mismos habitantes los que manejan y trabajan en la empresa, genera
+confianza y familiaridad para muchos de los usuarios.
+6
+• Oportunidades
+– Acceso Subsidios: Existe la posibilidad de poder postular a alg´ un subsidio
+que permita modernizar los sistemas tecnol´ ogicos.
+– Demanda por Mejoras Tecnol´ ogicas:En general los usuarios est´ an acos-
+tumbrados al uso de servicios de planificaci´ on de viajes, pagos electr´ onicos y en
+general mayor comodidad lo que puede significar tener una mejor recepci´ on.
+• Debilidades
+– Tecnolog´ ıa Obsoleta:La empresa no cuenta con m´ etodos de pago modernos,
+a´ un se siguen utilizando tickets en papel y no hay una geolocalizaci´ on de los
+buses en tiempo real.
+– Incidentes con Buses: Los buses tienen poca capacidad para horarios de
+mucha demanda, adem´ as siempre hay inconvenientes en el d´ ıa a d´ ıa, por ejemplo
+incidentes mec´ anicos con los buses, y en general la respuesta de la empresa es
+lenta ya que no hay un mecanismo para automatizar el proceso de retirar el
+bus de servicio y ajustar la frecuencia del resto de buses, actualmente se hace
+totalmente a mano.
+– Herramientas de Administraci´ on Limitadas:La empresa cuenta con un
+software que permite consultar si es que los buses est´ an cumpliendo con la
+frecuencia necesaria, sin embargo hay muchos procesos que se siguen haciendo
+a mano.
+• Amenazas
+– Comparaci´ on Directas con la Red Metropolitana: Las diferencias en
+calidad, tecnolog´ ıa y comodidad son evidentes.
+– Posible Entrada de Competidores: Empresas privadas o la misma empresa
+RED podr´ ıa estar interesada en cubrir la misma zona.
+– Presi´ on por Parte de la Poblaci´ on:Los usuarios est´ an acostumbrados a
+est´ andares similares a los que otras empresas de transporte ofrecen, lo cu´ al hace
+que la insatisfacci´ on aumente cada vez m´ as.
+7
+2.5 Posici´ on de la Empresa en el Mercado
+En general la empresa a d´ ıa de hoy presta servicio a un nicho muy espec´ ıfico que es el sector
+de San Jos´ e de Maipo, una zona compleja con caminos estrechos y complicado, la poblaci´ on
+muy dispersa y trayectos muy largos, por lo que requiere de experiencia en el terreno o un
+muy buen estudio del mismo. Adem´ as es una empresa que ha logrado crear una estrecha
+relaci´ on con la comunidad al tener una plantilla de trabajadores pertenecientes a la misma.
+2.6 Competencia
+Esta empresa de momento funciona como una suerte de monopolio, ya que hay pocos
+o nulos competidores que cubran la zona de esta, por lo que es un beneficio de cara a
+la competencia. Sin embargo en el pasado, sobre todo en pandemia, cuando la empresa
+estuvo al borde de la quiebra, existieron rumores de que otras empresas tomaran la zona
+como la misma empresa RED ya que el estado no puede dejar una comuna sin transporte
+p´ ublico.
+8
+2.7 Clientes
+Los principales usuarios del servicio son los habitantes del sector de San Jos´ e de Maipo,
+trabajadores que se desplazan desde y hacia la zona, y turistas que visitan el ´ area.
+La poblaci´ on local est´ a familiarizada con la operaci´ on de los recorridos: conocen las
+rutas, los puntos de detenci´ on y, en general, manejan los horarios aproximados de los
+buses. Esta experiencia acumulada les permite adaptarse a las limitaciones del sistema sin
+mayores inconvenientes.
+En contraste, los trabajadores que provienen desde Santiago y no est´ an habituados
+a la zona enfrentan mayores dificultades. Deben llegar con anticipaci´ on a los paraderos,
+especialmente si desean abordar recorridos de baja frecuencia como el MB72, y estar
+dispuestos a esperar largos periodos.
+Por su parte, los turistas suelen depender de informaci´ on de terceros como blogs, re-
+comendaciones orales o publicaciones en redes que frecuentemente est´ an desactualizadas
+o contienen errores, lo que complica su experiencia de viaje y genera incertidumbre al
+momento de planificar.
+2.8 Proveedores
+La empresa solo cuenta con un proveedor de servicios de log´ ıstica y Software CityMovil.
+Nombre Empresa Objetivo
+CityMovil En Citymovil estamos orientados a brindar soluciones tecnol´ ogicas
+de ´ ultima generaci´ on para resolver en forma integral las distintas
+necesidades y problem´ aticas que puedan tener nuestros clientes en
+temas de transporte y log´ ıstica.
+9
+2.9 Tecnolog´ ıa
+Tur Maipo S.A. dispone de un proveedor de servicios de software que les ha desarrollado
+una plataforma web con capacidad de seguimiento de buses. Esta herramienta funciona
+mediante el uso de *checkpoints* distribuidos a lo largo de las rutas, lo que permite una
+estimaci´ on de la ubicaci´ on de los veh´ ıculos. Sin embargo, este sistema presenta limitaciones
+importantes: no ofrece informaci´ on en tiempo real ni proporciona una localizaci´ on precisa,
+y su acceso est´ a restringido exclusivamente al personal administrativo de la empresa, por
+lo que los usuarios del servicio no pueden visualizar la ubicaci´ on de los buses.
+En cuanto al sistema de pagos, se mantiene el uso exclusivo de efectivo, sin integraci´ on
+de medios electr´ onicos ni tarjetas de prepago, lo que limita la eficiencia del proceso y la
+comodidad del usuario.
+Por otro lado, los conductores cuentan ´ unicamente con un reloj que les indica, de manera
+aproximada, si est´ an adelantados o retrasados respecto a su itinerario. No existe un
+sistema formal de registro de incidentes en ruta, lo que dificulta el monitoreo y la mejora
+continua del servicio.
+10
+2.10 Descripci´ on del proceso productivo o servicio
+Tur Maipo S.A. opera una flota de buses destinados al transporte p´ ublico rural en el sector
+de San Jos´ e de Maipo. Actualmente, la empresa cubre dos rutas principales, trasladando
+pasajeros desde un punto de origen (A) hasta distintos destinos (B) dentro del ´ area
+geogr´ afica establecida.
+El servicio consiste en la recogida de pasajeros en paraderos predefinidos, el traslado
+a lo largo de la ruta asignada y el cobro de una tarifa en funci´ on del tramo recorrido. Las
+tarifas se estructuran de manera proporcional a la distancia: mientras m´ as alejado sea el
+destino respecto al punto de partida, mayor es el valor del pasaje.
+El pago se realiza exclusivamente en efectivo y se entrega al conductor, quien tambi´ en
+emite un ticket en papel como comprobante en caso de accidente, como una suerte de
+garant´ ıa de que fue parte del accidente en el bus y la empresa pueda hacerse cargo. El
+proceso no cuenta con automatizaci´ on, medios electr´ onicos de pago ni sistemas digitales
+de control de flujo de pasajeros.
+11
+2.11 Inversiones
+En el pasado la empresa invirti´ o en un sistema de geolocalizaci´ on provisto por CityMovil,
+lo que indica que como empresa est´ an dispuestos a invertir en tecnolog´ ıa que mejore su
+servicio.
+2.12 Inform´ atica de la empresa
+Tal como se mencion´ o anteriormente, Tur Maipo S.A. cuenta con una plataforma web
+desarrollada por la empresa CityMovil, cuyo objetivo principal es brindar soporte a las
+labores de coordinaci´ on operativa. Esta herramienta permite visualizar la ubicaci´ on esti-
+mada de los buses mediante checkpoints distribuidos en las rutas, y est´ a dise˜ nada para ser
+utilizada por los inspectores encargados de gestionar la salida, llegada y disponibilidad de
+los veh´ ıculos en circulaci´ on.
+El acceso a esta plataforma se realiza desde un computador ubicado en la central operativa
+de la empresa, y su uso est´ a restringido al personal autorizado, sin interacci´ on directa con
+los usuarios finales del servicio.
+12
+An´ alisis
+3.1 Descripci´ on del Problema
+Tras realizar un an´ alisis preliminar de la operaci´ on de la empresa Tur Maipo S.A., se
+identific´ o una carencia significativa en cuanto a infraestructura tecnol´ ogica, especialmente
+en lo referido al seguimiento y localizaci´ on en tiempo real de los buses. Actualmente,
+no existe un sistema que permita geolocalizar con precisi´ on las unidades durante sus
+recorridos, lo que impide tanto a la empresa como a los usuarios tener visibilidad sobre el
+estado del servicio en curso.
+Esta situaci´ on representa una barrera importante para la modernizaci´ on del transporte
+rural e interurbano, ya que limita la capacidad de los pasajeros para planificar sus viajes
+con eficiencia y de la empresa para monitorear, optimizar y gestionar sus operaciones de
+forma proactiva.
+En un contexto donde los sistemas urbanos de transporte, como Metro o Red Metropolitana
+de Movilidad, han incorporado tecnolog´ ıas que permiten ofrecer informaci´ on en tiempo
+real, resulta evidente la brecha digital existente entre estos servicios y las empresas rurales.
+Esta brecha afecta la calidad del servicio y reduce la competitividad del transporte rural
+frente a otras opciones m´ as tecnificadas.
+Este proyecto busca abordar dicha problem´ atica mediante una soluci´ on tecnol´ ogica ac-
+cesible, escalable y centrada en las necesidades reales tanto de la empresa como de los
+usuarios.
+13
+3.2 Descripci´ on de la Soluci´ on
+Se desarrollar´ a una plataforma digital interoperable (web y m´ ovil) para mejorar la planifi-
+caci´ on y operaci´ on del transporte rural en Chile, dirigida a tres actores clave: choferes,
+pasajeros y administradores. La soluci´ on abordar´ a la falta de informaci´ on en tiempo real y
+la interoperabilidad con sistemas metropolitanos, mediante las siguientes funcionalidades:
+1. Para Choferes (Enfoque: Monitoreo y eficiencia operativa)
+• Registro y Validaci´ on: Los choferes se autenticar´ an con us licencia clase A y
+podr´ an seleccionar su recorrido asignado.
+• Geolocalizaci´ on en tiempo real: La app m´ ovil reportar´ a su ubicaci´ on cada
+30 segundos (con precisi´ on≥ 85%), mostrando su posici´ on relativa a otros buses
+en un mapa. Esto les permitir´ a ajustar frecuencias y evitar sobredemanda.
+• Alertas Proactivas: Reportes sobre desv´ ıos, accidentes o cambios en rutas
+que ser´ an notificados a choferes y pasajeros de la misma ruta para mejorar la
+puntualidad y acceso a informaci´ on.
+2. Para Pasajeros (Enfoque: Acceso a informaci´ on confiable)
+• Visualizaci´ on interactiva: Los usuarios ver´ an buses activos en su zona, con
+datos como patente, tarifa y tiempo estimado de llegado con presici´ on≥ 80%.
+• Planificaci´ on intermodal: Integraci´ on con API’s de la Red de Buses Metropoli-
+tana y Metro de Santiago para combinar rutas rurales y urbanas en un solo
+itinerario.
+• Acceso multiplataforma: Disponible una app m´ ovil en IOS y Android con
+el fin de poder cubrir la mayor base de usuarios.
+3. Para Administradores (Enfoque: Optimizaci´ on del servicio)
+• Panel de m´ etricas en tiempo real: Visualizaci´ on de datos como frecuencia
+de buses, demoras promedio y demanda por horario, con la posibilidad de
+generar informes del sistema para ejecutivos e inversores.
+• Gesti´ on de incidencias: Recepci´ on de reportes de choferes (ej: Fallas
+mec´ anicas) y pasajeros (ej: Calidad del servicio) para acciones correctivas
+inmediatas.
+14
+4. Interoperatividad (Enfoque: Conexi´ on con sistemas existentes)
+• Integraci´ on con API’s p´ ublicas: Conexi´ on con Red de Buses Metropolitana
+y Metro de Santiago para mostrar opciones de viaje combinado en la plataforma.
+• Protocolos abiertos : Uso de est´ andares GTFS-Realtime para garantizar
+compatibilidad y escalabilidad
+3.2.1 Diagrama de Funcionamiento
+En general as´ ı es como se podr´ ıa ver en la vida real el funcionamiento de la aplicaci´ on,
+donde los actores chofer y pasajero interactuan con el sistema.
+15
+3.3 An´ alisis FODA
+• Fortalezas
+– Impacto Social Directo: La comunidad se beneficiar´ ıa de forma directa,
+mejorando sus tiempos de viaje, y facilitando la toma de decisiones.
+– Bajo Costo de Implementaci´ on:Ya que no requiere de hardware especial-
+izado para obtener la ubicaci´ on de los buses, es posible implementarlo solo
+considerando la mano de obra y los servicios que se puedan llegar a utilizar.
+– F´ acil Escalabilidad:Si la empresa adquiere nuevos buses o implementa nuevos
+recorridos, es f´ acil incorporarlos al sistema. o si por otra parte, se quieren sumar
+m´ as empresas a la plataforma, solo habr´ ıa que mapear sus recorridos.
+– Validaci´ on en el Mercado:Es un proyecto que no solo vivir´ a en la teor´ ıa,
+ya que tenemos la oportunidad de poder trabajar con gente con experiencia en
+el transporte.
+• Oportunidades
+– Brecha Tecnol´ ogica:La mayor parte de empresas no tiene una base tec-
+nol´ ogica solida, existe la oportunidad de ofrecer la tecnolog´ ıa al resto de empresas
+del rubro.
+– Demanda por Mejoras Tecnol´ ogicas:Alta demanda por una gran base de
+usuarios que actualmente usan la red de buses rurales y adem´ as utilizan otras
+aplicaciones de planificaci´ on de viajes.
+– Implementaci´ on de Funcionalidades:La creaci´ on de este sistema ofrece una
+base solida para poder escalar en una segunda etapa a nuevas funcionalidades
+como pagos digitales, estad´ ıstica e inteligencia de negocios para la empresa.
+16
+• Debilidades
+– Recursos Humanos Limitados: De momento en el proyecto hay dos personas
+trabajando a tiempo parcial.
+– Dependencia: El proyecto depende de la conexi´ on a internet de los celulares
+y su servicio de ubicaci´ on gps, lo que puede llevar a un mal funcionamiento.
+– Validaci´ on Restringida:Es bueno que una empresa valide el proyecto, sin
+embargo no es representativo a todas las empresas de buses rurales, el ´ exito en
+Tur Maipo S.A. no asegura el ´ exito total del sistema.
+• Amenazas
+– Resistencia al Cambio: Sobre todo choferes pueden no querer utilizar la
+aplicaci´ on por resistencia al cambio, lo que har´ ıa que todo el sistema no funcione
+como deber´ ıa, es por esto que el programa pasar´ a por una fase de validaci´ on en
+conjunto a Tur Maipo S.A., como una suerte de programa de pruebas y que en
+el uso real los propios choferes vean si este sistema mejora su trabajo.
+– Competidores: Riesgo de que empresas grandes con m´ as experiencia desar-
+rollen una soluci´ on similar con m´ as recursos, menos tiempo y mayor posibilidad
+de invertir en hardware e investigaci´ on que logre dar con un sistema objetiva-
+mente mejor.
+– Regulaciones: Posibles cambios en la regulaci´ on del transporte que afecten el
+modelo del sistema.
+– Desinter´ es:Por parte de empresas del rubro en adoptar nuevas tecnolog´ ıas
+17
+3.4 Objetivo General
+Desarrollar e implementar una plataforma digital interoperable en un plazo de 3 meses que
+mejore la planificaci´ on de viajes en buses rurales de Chile, proporcionando informaci´ on en
+tiempo real sobre ubicaci´ on y tiempos estimados de llegada con una precisi´ on m´ ınima del
+80%, e integrando conexiones con la Red de Buses Metropolitana y el Metro de Santiago.
+3.5 Objetivos Espec´ ıficos
+• Digitalizar el monitoreo del transporte rural mediante una plataforma m´ ovil y web
+en 3 meses, permitiendo que al menos el 90% de los conductores y pasajeros accedan
+a informaci´ on en tiempo real sobre ubicaci´ on y horarios.
+• Implementar un sistema de rastreo GPS en tiempo real para buses interurbanos en 3
+meses, con una precisi´ on del 85% en ubicaci´ on y actualizaciones cada 30 segundos,
+usando tecnolog´ ıa de bajo costo y conectividad estable..
+• Desarrollar un m´ odulo de an´ alisis de m´ etricas en 1 mes (luego de la implementaci´ on
+del rastreo), que procese datos de frecuencia, demoras y demanda, generando informes
+semanales para optimizar rutas y reducir tiempos de espera en un 15%.
+• Lograr la interoperatividad con la Red de Buses Metropolitana y el Metro de Santiago
+en 1 mes (luego de la implementaci´ on del rastreo), mediante API’s p´ ublicas, permi-
+tiendo que el 100% de los usuarios visualicen conexiones en una misma plataforma.
+• Capacitar al 90% de conductores y el administrador de Tur Maipo S.A. Adem´ as de
+30 pasajeros sobre el uso de la plataforma.
+18
+3.6 Alcance del Proyecto
+El presente proyecto busca desarrollar una plataforma m´ ovil enfocada en mejorar la
+planificaci´ on y experiencia de viaje en el sistema de buses interurbanos y rurales, a trav´ es
+de la implementaci´ on de geolocalizaci´ on en tiempo real.
+En esta primera etapa, el desarrollo estar´ a centrado en una soluci´ on funcional piloto
+implementada en colaboraci´ on con la empresa Tur Maipo S.A., con la posibilidad de
+escalar posteriormente a otras empresas con caracter´ ısticas operativas similares.
+El sistema contar´ a con tres perfiles de usuario principales:
+• Choferes: podr´ an registrarse, verificar su identidad (mediante licencia clase A),
+seleccionar su recorrido y transmitir su ubicaci´ on en tiempo real mediante el GPS
+de su dispositivo m´ ovil.
+• Pasajeros: podr´ an consultar los recorridos activos en su zona, visualizar la ubicaci´ on
+de los buses en tiempo real, estimar tiempos de llegada y planificar sus viajes con
+mayor precisi´ on.
+• Adminstradores: Tendr´ an acceso a la ubicaci´ on en tiempo real de los buses,
+adem´ as podr´ an consultar m´ etricas relacionadas al funcionamiento de la aplicaci´ on.
+Dentro del alcance del proyecto se incluye:
+• Desarrollo de una aplicaci´ on m´ ovil h´ ıbrida (Android e iOS) con interfaces diferenci-
+adas para choferes y pasajeros.
+• Implementaci´ on de un backend para gestionar usuarios, recorridos y geolocalizaci´ on.
+• Integraci´ on de mapas en tiempo real.
+• Pruebas de funcionamiento en entornos reales con al menos una flota de buses de
+Tur Maipo S.A.
+• Generaci´ on de m´ etricas b´ asicas de uso y rendimiento de los servicios.
+Fuera del alcance del proyecto (exclusiones):
+19
+• Integraci´ on con sistemas de pago o billeteras electr´ onicas.
+• Desarrollo de hardware espec´ ıfico (como GPS dedicados o pantallas a bordo).
+• Expansi´ on a todas las empresas del rubro fuera del piloto inicial.
+• Soporte t´ ecnico posterior a la etapa de validaci´ on (aunque podr´ ıa contemplarse en
+una futura fase).
+3.7 Conformaci´ on del Equipo
+El equipo de desarrollo est´ a conformado por dos desarrolladores con atribuciones espec´ ıficas
+y compartidas para todo el proyecto
+Nombre Rol
+Nicol´ as Toledo Desarrollo Frontend, Dise˜ no de las Interfaces, Experiencia de Uso
+Diego Vilches Desarrollo Backend, Arquitectura, Despliegue
+20
+Factibilidad
+4.1 Factibilidad T´ ecnica
+El presente an´ alisis tiene como prop´ osito establecer si el desarrollo e implementaci´ on de una
+plataforma digital destinada al monitoreo en tiempo real de los recorridos del sistema de
+transporte interurbano rural en la comuna de San Jos´ e de Maipo es viable desde el punto
+de vista t´ ecnico. Para abordar esta evaluaci´ on, se consideran los componentes tecnol´ ogicos
+necesarios (hardware y software), la disponibilidad y competencias del recurso humano,
+as´ ı como las condiciones operativas y ambientales propias del contexto rural donde se
+desplegar´ a el sistema. Adem´ as, se analizan alternativas posibles, riesgos asociados y se
+establecen las bases metodol´ ogicas para garantizar una ejecuci´ on factible, sostenible y
+alineada con las restricciones presupuestarias del proyecto, considerando tanto su etapa
+piloto como su potencial escalabilidad futura.
+4.1.1 Tecnolog´ ıas Disponibles
+La soluci´ on propuesta se estructura sobre una arquitectura de software distribuido que
+contempla dos componentes principales: una aplicaci´ on m´ ovil dise˜ nada para el sistema
+operativo Android, que ser´ a utilizada directamente por los conductores de buses durante
+sus recorridos, y una interfaz web asociada que permite el monitoreo en tiempo real por
+parte de los usuarios y administradores del sistema. Esta arquitectura responde a un
+enfoque modular que facilita su evoluci´ on a medida que el proyecto madure.
+Esta soluci´ on se basa exclusivamente en herramientas tecnol´ ogicas de libre acceso o
+gratuitas, ampliamente soportadas por la comunidad de desarrollo y con trayectoria
+comprobada en proyectos de similar escala. Se consideran, entre otras:
+• Dispositivos Android (versi´ on 8.0 o superior), ya en posesi´ on de los choferes de las
+rutas seleccionadas, con soporte para ejecuci´ on de aplicaciones ligeras y servicios de
+ubicaci´ on.
+• Sensores GPS integrados en los dispositivos m´ oviles, capaces de generar coordenadas
+georreferenciadas a intervalos definidos, configurables desde la app.
+21
+• APIs de cartograf´ ıa y geolocalizaci´ on, como Google Maps Platform o alternativas
+open source como LeafletJS o OpenStreetMap, que permiten visualizar en tiempo
+real la ubicaci´ on y trayectoria de los veh´ ıculos.
+• Desarrollo de backend utilizando frameworks modernos como Node.js o Django, que
+permiten una r´ apida iteraci´ on, escalabilidad progresiva y compatibilidad con bases
+de datos relacionales y no relacionales.
+• Almacenamiento de datos en la nube mediante Firestore, PostgreSQL u otros mo-
+tores compatibles con soluciones serverless, dentro de planes gratuitos o con tarifas
+reducidas para proyectos de baja escala, asegurando persistencia, consultas eficientes
+y disponibilidad.
+Gracias a esta selecci´ on estrat´ egica de herramientas, es posible construir un sistema fun-
+cional, estable, modular y expandible sin necesidad de incurrir en gastos significativos por
+adquisici´ on de infraestructura especializada ni licencias de software. Esta aproximaci´ on es
+especialmente cr´ ıtica considerando la condici´ on de proyecto universitario sin financiamiento
+externo ni apoyo institucional directo.
+22
+4.1.2 Requerimientos T´ ecnicos y Recursos
+La ejecuci´ on exitosa del proyecto depende de la disponibilidad efectiva y el uso adecuado
+de los siguientes elementos clave:
+• Capital Humano: el equipo est´ a conformado por dos desarrolladores con formaci´ on
+universitaria en ingenier´ ıa inform´ atica, quienes asumen la totalidad del ciclo de
+vida del software: investigaci´ on, toma de requerimientos, dise˜ no l´ ogico y f´ ısico,
+desarrollo de funcionalidades, pruebas de validaci´ on, despliegue en entorno real y
+mantenci´ on evolutiva. Esta multidisciplinariedad interna permite una ejecuci´ on ´ agil,
+flexible y con autonom´ ıa total, eliminando dependencias externas y costos asociados
+a subcontrataci´ on.
+• Equipamiento: se ha verificado emp´ ıricamente que los conductores involucrados en
+los recorridos objetivo cuentan con smartphones funcionales con capacidades GPS
+y conexi´ on m´ ovil, lo que elimina la necesidad de proveer hardware adicional. Esta
+condici´ on tambi´ en simplifica la log´ ıstica y reduce el tiempo de implementaci´ on del
+sistema.
+• Conectividad: aunque se reconoce que en la zona existen tramos con baja o
+nula cobertura m´ ovil, el sistema ha sido dise˜ nado con funcionalidades espec´ ıficas
+de operaci´ on offline temporal, permitiendo que la aplicaci´ on almacene localmente
+la informaci´ on del recorrido y la sincronice autom´ aticamente al backend una vez
+recuperada la conectividad. Esta capacidad asegura continuidad operativa sin
+intervenci´ on del usuario y evita p´ erdida de datos.
+• Infraestructura en la nube: se contempla el uso de proveedores como Firebase,
+Render, Vercel o Railway, los cuales permiten gestionar bases de datos, servidores
+backend y despliegue web sin costos elevados. Estos servicios ofrecen redundancia,
+balanceo de carga, y soporte para implementaciones escalables, aspectos que aseguran
+alta disponibilidad, monitoreo centralizado y facilidad de administraci´ on remota.
+23
+4.1.3 Adecuaci´ on al Entorno Rural
+San Jos´ e de Maipo es una comuna de geograf´ ıa accidentada, con presencia de cordones
+monta˜ nosos, rutas sinuosas y sectores de dif´ ıcil acceso o baja densidad de poblaci´ on. Estas
+caracter´ ısticas imponen restricciones t´ ecnicas que fueron consideradas desde la etapa inicial
+de dise˜ no. Las decisiones arquitect´ onicas del sistema fueron formuladas teniendo en cuenta
+estas condiciones particulares, con el fin de asegurar robustez y adaptabilidad:
+• El sistema evita cualquier necesidad de intervenciones f´ ısicas o electr´ onicas en
+los buses, utilizando exclusivamente tecnolog´ ıa ya disponible, lo cual permite una
+implementaci´ on no invasiva y de bajo impacto.
+• Los smartphones de los conductores act´ uan como nodos emisores de informaci´ on
+georreferenciada, eliminando la necesidad de instalar dispositivos externos o sensores
+dedicados, lo que reduce los costos de hardware y de mantenimineto.
+• La arquitectura cliente-servidor incorpora tolerancia a fallos de conectividad mediante
+almacenamiento local temporal y sincronizaci´ on asincr´ onica, protegiendo la integridad
+de los datos incluso en zonas sin se˜ nal.
+• Se prioriza una interfaz de usuario intuitiva, minimalista, multiling¨ ue si es necesario,
+y dise˜ nada bajo principios de usabilidad universal. El objetivo es garantizar la
+accesibilidad del sistema para usuarios con distintos niveles de alfabetizaci´ on digital,
+incluyendo adultos mayores, personas sin experiencia previa en aplicaciones m´ oviles,
+o turistas ocasionales.
+Adicionalmente, se ha optado por un enfoque completamente independiente en t´ erminos de
+infraestructura y desarrollo. Dado que no se cuenta con colaboraci´ on formal de empresas
+del rubro ni acceso a plataformas existentes (como CityMovil), el sistema ha sido dise˜ nado
+desde cero, lo que permite libertad t´ ecnica total, control sobre la evoluci´ on del producto y
+evita riesgos legales o limitaciones por propiedad intelectual.
+24
+4.1.4 Comparaci´ on de Alternativas Tecnol´ ogicas
+Durante la fase de dise˜ no inicial, se evaluaron dos alternativas principales para la captaci´ on
+de datos de geolocalizaci´ on y el despliegue de la soluci´ on propuesta:
+• Alternativa 1: Desarrollo o adquisici´ on de hardware propio especializado
+(GPS dedicado por veh´ ıculo).Esta opci´ on, aunque viable desde una perspectiva
+t´ ecnica, requiere una inversi´ on econ´ omica significativa, conocimientos avanzados
+de integraci´ on electr´ onica, y planificaci´ on log´ ıstica adicional. Adem´ as, implica
+mantenimiento f´ ısico regular, coordinaci´ on con operadores y soporte t´ ecnico en
+terreno. Su adopci´ on tambi´ en podr´ ıa generar resistencia por parte de los conductores,
+dado el aumento en la complejidad del equipamiento. Debido a estas condiciones, se
+descarta como inviable dentro del marco del proyecto.
+• Alternativa 2: Plataforma basada en smartphones personales de los
+conductores (opci´ on seleccionada).Este enfoque se ajusta a las condiciones
+reales del proyecto: permite una implementaci´ on r´ apida, sin barreras de entrada,
+de bajo costo y con alta compatibilidad con los recursos existentes. Al basarse en
+dispositivos que ya forman parte del equipamiento cotidiano de los conductores,
+se simplifica el proceso de adopci´ on, capacitaci´ on y soporte. Adem´ as, favorece la
+escalabilidad y adaptabilidad del sistema a otros contextos rurales similares, sin
+modificar la arquitectura base.
+25
+Resumen Comparativo Visual
+A continuaci´ on, se presenta una tabla comparativa entre las dos alternativas evaluadas
+para la implementaci´ on del sistema de geolocalizaci´ on. Esta s´ ıntesis visual refuerza la
+elecci´ on del uso de smartphones personales como opci´ on preferente, al mostrar ventajas
+t´ ecnicas, econ´ omicas y operativas frente a la instalaci´ on de GPS dedicados.
+Criterio GPS Dedicado (Alterna-
+tiva 1)
+Smartphone Personal (Al-
+ternativa 2 - Elegida)
+Costo inicial Alto (requiere compra e insta-
+laci´ on por bus)
+Nulo; se utilizan dispositivos ya
+existentes
+Instalaci´ on Requiere montaje f´ ısico y con-
+figuraci´ on t´ ecnica
+No requiere instalaci´ on; uso di-
+recto desde el tel´ efono
+Mantenimiento Necesita revisiones peri´ odicas
+en terreno
+M´ ınimo; depende del disposi-
+tivo personal del chofer
+Tiempo de imple-
+mentaci´ on
+Lento; implica log´ ıstica opera-
+tiva y t´ ecnica
+R´ apido; puede desplegarse en
+pocos d´ ıas
+Escalabilidad Limitada; requiere adquisici´ on
+de hardware adicional
+Alta; basta con registrar nuevos
+conductores
+Resistencia al uso Alta; complejidad podr´ ıa
+generar rechazo
+Baja; uso cotidiano y familiar
+para los choferes
+Tolerancia a desconexi´ onVariable; depende del disposi-
+tivo y sistema elegido
+Alta; la app contempla modo
+offline y sincronizaci´ on au-
+tom´ atica
+Adecuaci´ on al entorno
+rural
+Condicionada a recursos, se˜ nal
+y soporte t´ ecnico
+Alta; dise˜ nada para funcionar
+en contextos con limitaciones
+de conectividad
+26
+4.1.5 Conclusi´ on de la Factibilidad T´ ecnica
+Con base en el an´ alisis desarrollado, se concluye que el proyecto es t´ ecnicamente factible,
+pertinente y sustentable dentro del marco de condiciones actuales. Las tecnolog´ ıas se-
+leccionadas han sido probadas en entornos reales, cuentan con amplia documentaci´ on,
+comunidades activas y niveles altos de soporte, y se alinean con las competencias t´ ecnicas
+del equipo de desarrollo. Asimismo, la arquitectura planteada permite una implementaci´ on
+progresiva, mantenimiento aut´ onomo, evoluci´ on funcional y posibilidad de replicabilidad
+en otros territorios con caracter´ ısticas geogr´ aficas y sociales similares.
+El enfoque de independencia t´ ecnica, uso de recursos gratuitos, reducci´ on de comple-
+jidad operativa y aprovechamiento de equipamiento ya existente permite garantizar que la
+soluci´ on pueda funcionar de manera efectiva y continua en el entorno rural de San Jos´ e de
+Maipo. Esto sienta las bases para una posible expansi´ on territorial, as´ ı como para una
+futura incorporaci´ on de funcionalidades adicionales (por ejemplo, notificaciones a usuarios,
+an´ alisis de datos hist´ oricos de recorridos, integraci´ on con otros sistemas p´ ublicos). De esta
+forma, se valida que la propuesta cumple con los criterios de viabilidad t´ ecnica requeridos
+para avanzar s´ olidamente hacia las siguientes fases del proyecto y su eventual puesta en
+marcha en contexto real.
+27
+4.2 Factibilidad Econ´ omica
+4.2.1 Estudio de la Competencia
+Con el objetivo de contextualizar el proyecto dentro del panorama tecnol´ ogico actual y
+comprender el posicionamiento de nuestra soluci´ on frente a alternativas ya existentes,
+se realiz´ o un an´ alisis exhaustivo y comparativo de distintas plataformas que ofrecen
+funcionalidades similares, tanto en el ´ ambito nacional como internacional. El prop´ osito
+fue evaluar la competitividad, viabilidad y pertinencia del desarrollo de una aplicaci´ on
+m´ ovil destinada a la visualizaci´ on en tiempo real de recorridos de transporte rural,
+centrado inicialmente en la comuna de San Jos´ e de Maipo. Esta secci´ on resume las
+plataformas analizadas, detallando sus caracter´ ısticas t´ ecnicas, modelo de implementaci´ on,
+requerimientos, y diferencias estructurales frente al enfoque adoptado por el proyecto.
+• a) CityMovil (Chile)
+– Plataforma comercial consolidada en el mercado nacional, empleada por flotas
+reguladas en ciudades como Punta Arenas y en el sistema de transporte
+metropolitano.
+– Opera mediante contratos con entidades gubernamentales o empresas conce-
+sionadas, lo que implica acuerdos formales y recursos econ´ omicos sustanciales.
+– Requiere instalaci´ on de dispositivos GPS dedicados en cada veh´ ıculo, lo cual
+implica costos iniciales elevados, configuraci´ on t´ ecnica espec´ ıfica y mantenci´ on
+continua.
+– Proporciona visualizaci´ on precisa de recorridos, estimaciones de llegada en
+tiempo real y alertas de retraso.
+– Limitaci´ on:carece de flexibilidad para adaptarse a contextos rurales con oper-
+adores independientes, y depende de estructura institucional y financiamiento.
+– Diferencia estructural: nuestro proyecto evita dependencias externas y se
+apoya en smartphones personales de los choferes como fuente de datos GPS,
+eliminando la necesidad de hardware adicional e integraciones complejas.
+28
+• b) Moovit (Internacional)
+– Plataforma global de planificaci´ on de movilidad urbana, basada en integraci´ on
+de datos oficiales de agencias de transporte y participaci´ on comunitaria mediante
+crowdsourcing.
+– Presenta una cobertura amplia en ´ areas metropolitanas y grandes ciudades, pero
+su precisi´ on en zonas rurales depende de la existencia de datos GPS integrados
+o colaboraciones formales con entidades p´ ublicas.
+– No permite personalizaci´ on, desarrollo de funcionalidades espec´ ıficas ni control
+local de la informaci´ on.
+– Debilidad: su efectividad es limitada en zonas con baja penetraci´ on tecnol´ ogica,
+infraestructura digital m´ ınima o se˜ nal intermitente, como sucede en San Jos´ e
+de Maipo.
+– Contraste: el sistema propuesto se dise˜ na desde sus fundamentos para adap-
+tarse a la ruralidad, favoreciendo la autonom´ ıa t´ ecnica y operativa mediante
+una arquitectura ligera y flexible, ajustada al terreno.
+• c) Google Transit / Google Maps (Internacional)
+– Plataforma integrada dentro de Google Maps, que permite visualizar informaci´ on
+de transporte p´ ublico mediante datos proporcionados por operadores en formato
+GTFS (General Transit Feed Specification).
+– Si bien es de uso masivo, su integraci´ on requiere infraestructura t´ ecnica avanzada
+por parte de los operadores: generaci´ on de archivos GTFS est´ aticos y en tiempo
+real, servidores backend y validaciones t´ ecnicas.
+– No brinda beneficios espec´ ıficos para entornos rurales ni contempla adaptaciones
+locales.
+– Desventaja: en ausencia de datos formales, no puede mostrar informaci´ on de
+rutas o estimaciones en tiempo real.
+– Ventaja comparativa del proyecto: al generar una soluci´ on aut´ onoma
+sin necesidad de publicar datos en formatos est´ andar, se evita la complejidad
+t´ ecnica y se garantiza una mayor soberan´ ıa tecnol´ ogica a nivel local.
+29
+• d) Transit App (Internacional)
+– Aplicaci´ on centrada en la experiencia del pasajero urbano, desplegada principal-
+mente en ciudades con datos abiertos y ecosistemas tecnol´ ogicos consolidados.
+– Utiliza la funci´ on “GO” que permite a pasajeros compartir su ubicaci´ on para
+inferir la posici´ on del bus, lo que requiere un volumen significativo de usuarios
+activos.
+– Limitaci´ on:su modelo de crowdsourcing no es viable en comunidades con
+baja densidad poblacional o escaso acceso digital.
+– Ventaja del proyecto: el sistema parte de la base de que el chofer es el nodo
+emisor de datos, lo que garantiza cobertura y precisi´ on sin depender de usuarios
+externos ni condiciones de adopci´ on masiva.
+• e) OneBusAway (OpenSource)
+– Plataforma libre y altamente personalizable, creada originalmente por la Uni-
+versidad de Washington, con despliegues en ciudades estadounidenses y algunas
+localidades de Europa.
+– Admite diversas interfaces (web, app m´ ovil, SMS) y m´ ultiples formatos de
+entrada de datos (GTFS-RT, SIRI).
+– Potencial: representa una opci´ on s´ olida para proyectos de transporte p´ ublico
+con capacidad t´ ecnica avanzada, posibilidad de instalaci´ on de servidores y
+equipos de mantenimiento dedicados.
+– Actualmente no viable: su implementaci´ on requiere experiencia en DevOps,
+administraci´ on de bases de datos y configuraci´ on de entornos backend, recursos
+que exceden la realidad del equipo de desarrollo actual.
+30
+f) Chalo (India)
+• Plataforma privada dise˜ nada para entornos urbanos y semiurbanos con caracter´ ısticas
+similares a las del transporte rural chileno: informalidad, operadores peque˜ nos, y
+escasez de recursos institucionales.
+• Utiliza smartphones como dispositivo de rastreo GPS, eliminando la necesidad de
+infraestructura especializada.
+• Integra funcionalidades de pago digital, seguimiento en tiempo real y anal´ ıtica para
+operadores.
+• Inspiraci´ on directa:demuestra que es posible implementar soluciones efectivas en
+contextos de alta heterogeneidad operativa y bajo nivel de digitalizaci´ on, validando
+el enfoque t´ ecnico del presente proyecto.
+4.2.2 Conclusi´ on del Estudio de la Competencia
+El an´ alisis evidencia que, si bien existen soluciones avanzadas y de gran escala, ninguna
+se ajusta completamente a las particularidades del transporte rural informal en Chile.
+Las plataformas revisadas requieren infraestructura tecnol´ ogica, financiamiento sostenido,
+acuerdos institucionales o condiciones de conectividad que sobrepasan la capacidad op-
+erativa de un proyecto acad´ emico desarrollado por un equipo reducido. En contraste, la
+propuesta universitaria se basa en un enfoque pragm´ atico, de bajo costo, aut´ onomo y
+altamente adaptable. Esto representa una ventaja competitiva sustantiva dentro de un
+nicho desatendido tanto por soluciones privadas como p´ ublicas.
+31
+4.2.3 Estudio Exploratorio de Mercado
+El an´ alisis del mercado potencial se centr´ o en identificar y caracterizar los distintos seg-
+mentos de usuarios que podr´ ıan beneficiarse de una aplicaci´ on de monitoreo en tiempo real
+del transporte rural. Este estudio, aunque exploratorio y cualitativo, permite establecer
+una base s´ olida para comprender la demanda potencial y orientar decisiones futuras de
+dise˜ no y despliegue.
+P´ ublico Objetivo
+El sistema est´ a orientado a los siguientes perfiles de usuario:
+• Residentes permanentes: personas que dependen del transporte rural para su
+movilidad diaria o frecuente hacia zonas urbanas como Puente Alto, La Florida o
+Santiago Centro. Incluye trabajadores, estudiantes y adultos mayores.
+• Turistas y visitantes ocasionales: especialmente durante fines de semana y
+temporadas altas (verano, feriados), cuando se incrementa la incertidumbre sobre la
+frecuencia de los servicios y la demanda de transporte es m´ as variable.
+• Familiares de pasajeros: quienes requieren informaci´ on a distancia sobre el estado
+del recorrido, especialmente en contextos de traslado de menores o personas mayores.
+Brechas Detectadas
+A partir de entrevistas informales y observaci´ on directa, se identificaron los siguientes
+problemas recurrentes:
+• Ausencia de informaci´ on confiable:no existen canales oficiales ni actualizados
+que informen sobre recorridos, horarios o ubicaci´ on de los buses.
+• Alta informalidad: los recorridos pueden modificarse sin previo aviso; los usuarios
+dependen de contactos personales para obtener informaci´ on.
+• Falta de estandarizaci´ on:no hay paraderos formalizados ni nomenclatura unifi-
+cada de rutas.
+32
+Validaci´ on Cualitativa
+Se realizaron entrevistas informales a conductores de l´ ınea y usuarios frecuentes, obteniendo
+los siguientes hallazgos:
+• Conductores: dispuestos a colaborar si la herramienta no representa una carga
+adicional significativa y puede ejecutarse desde sus propios dispositivos.
+• Usuarios: Hay inter´ es por conocer si el bus ya inici´ o el recorrido, cu´ anto falta para
+que llegue, y por d´ onde viene, especialmente en trayectos largos o zonas alejadas.
+Proyecci´ on de Adopci´ on
+Con base en estimaciones poblacionales, patrones de movilidad local y entrevistas, se
+proyecta que una fase piloto podr´ ıa alcanzar entre 200 y 500 usuarios activos semanales.
+La aceptaci´ on inicial permitir´ ıa realizar ajustes iterativos, medir m´ etricas de uso, y generar
+validaciones que respalden su posterior expansi´ on hacia otros territorios similares.
+Conclusi´ on del Estudio de Mercado
+Existe una necesidad insatisfecha de acceso a informaci´ on confiable y en tiempo real sobre
+el transporte rural. El segmento identificado presenta caracter´ ısticas compatibles con
+soluciones digitales simples, especialmente si no requieren descarga de aplicaciones pesadas
+ni registro complejo. Esto refuerza la viabilidad t´ ecnica y social del proyecto, y justifica
+su implementaci´ on en modalidad piloto con proyecci´ on de crecimiento org´ anico.
+33
+4.2.4 Costos por Ciclo de Vida del Software
+Se proyecta la materializaci´ on de la soluci´ on utilizando una metodolog´ ıa de desarrollo ´ agil,
+espec´ ıficamente Scrum, considerando un periodo de tres meses para la primera iteraci´ on.
+Posteriormente, se espera repetir el ciclo integrando nuevas funcionalidades y corrigiendo
+errores detectados, como parte de un enfoque iterativo.
+Todas las etapas del proyecto ser´ an calculadas en base a una estimaci´ on de las horas
+hombre necesarias para poder cumplir con un ciclo de vida de software de unas nueve
+semanas, estas horas ser´ an calculadas en base al valor de la UF del mes de mayo del 2025
+Etapa N°1: An´ alisis
+Cargo Cantidad Valor Hora Horas Total
+JP Senior 1 $ 47.015,34 8 $ 376.122,72
+JP Junior 1 $ 27.425,62 14 $ 383.958,61
+$ 760.081,33
+Etapa N°2: Dise˜ no L´ ogico
+Cargo Cantidad Valor Hora Horas Total
+JP Senior 1 $ 47.015,34 8 $ 376.122,72
+JP Junior 1 $ 27.425,62 14 $ 383.958,61
+Arq. Web 1 $ 27.425,62 24 $ 658.214,76
+$ 1.418.296,09
+Etapa N°3: Dise˜ no F´ ısico
+Cargo Cantidad Valor Hora Horas Total
+JP Senior 1 $ 47.015,34 11 $ 517.168,74
+JP Junior 1 $ 27.425,62 24 $ 658.214,76
+Programador UX/UI 1 $ 23.507,67 50 $ 1.175.383,50
+Programador Backend 1 $ 23.507,67 50 $ 1.175.383,50
+Ingeniero DB 1 27.425,62 25 $ 685.640,38
+$ 4.211.790,88
+34
+Etapa N°4: Pruebas QA
+Cargo Cantidad Valor Hora Horas Total
+Analista QA 1 $ 47.015,34 15 $ 705.230,10
+Ingeniero QA 1 $ 39.179,45 15 $ 587.691,75
+$ 1.292.921,85
+Etapa N°5: Capacitaci´ on
+Cargo Cantidad Valor Hora Horas Total
+Trainer 1 $ 19.589,73 20 $ 391.794,50
+$ 391.794,5
+Etapa N°6: Implementaci´ on
+Cargo Cantidad Valor Hora Horas Total
+JP Junior 1 $ 27.425,62 10 $ 274.256,15
+Devops 1 $ 39.179,45 12 $ 470153,4
+Programador Backend 1 $ 23.507,67 15 $ 352.615,05
+Supervisor Terreno 2 $ 15671,78 23 $720.901,88
+$ 1.817.926,48
+Total Costos por Ciclo de Vida de Software En unos 42 d´ ıas u 8 semanas, por un
+Etapa N° Actividad Principal Tiempo en D´ ıas Costo
+1 An´ alisis 3 $ 760.081,33
+2 Dise˜ no L´ ogico 6 $ 1.418.296,09
+3 Dise˜ no F´ ısico 20 $ 4.211.790,88
+4 Pruebas QA 4 $ 1.292.921,85
+5 Capacitaci´ on 3 $ 391.794,5
+6 Implementaci´ on 8 $ 1.817.926,48
+42 $ 8.474.515,04
+costo de $ 8.474.515,04 el proyecto puede ser solventado.
+4.2.5 Precio de Venta
+El precio de venta fijado corresponde al costo total del proyecto en funci´ on de los costos
+independientes de cada ciclo de vida de desarrollo de software m´ as un treinta por ciento
+del mismo.
+Costo Total $ 8.474.515,04
+Precio de Venta $ 11.016.869,55
+35
+4.2.6 Inversi´ on
+La inversi´ on inicial del proyecto es de$ 11.016.869,55 obtenida del precio de venta estimado
+en el punto anterios, con esta se espera levantar el proyecto y as´ ı poder cubrir el los costos
+asociados al mismo.
+4.2.7 Mantenci´ on
+En cuanto a dar soporte de mantenci´ on al proyecto, existe un costo mensual asociado de $
+250.000 destinado a costear horas utilizadas en resolver problemas que el software pueda
+tener luego de la etapa de implementaci´ on, mejorar o adaptar funcionalidades en relaci´ on
+a aspectos que no fueron considerados durante el desarrollo del mismo.
+Adem´ as existe un monto asociado a costear servicios de Cloud, que incluye el host-
+ing del modelo de datos, considerando la base de datos PostgreSql, el servicio asociado a
+ejecutar la API python + flask y el dominio web. Se fij´ o este monto en$ 25.000 de manera
+aproximada utilizando la calculadora de precios AWS. En la pr´ actica es posible que no se
+Servicio Costo Estimado
+AWS Fargate ≈ $ 2.000
+AWS RDS PostgreSQL ≈ $ 23.000
+Total: $ 25.000
+utilice AWS, o tal vez la base de usuarios y por ende consulta y utilizaci´ on de la nube
+pueda var´ ıar, por lo que solo sirve como un valor referencial.
+4.2.8 Ingresos
+Los ingresos del proyecto se obtienen mediante un modelo de suscripci´ on anual, por lo
+que la empresa cliente paga un precio por el uso del software, adem´ as las horas hombres
+externas al equipo de desarrollo, como en este caso de choferes de la empresa cliente que
+cumplan el rol de asesores en el proyecto, se consideran ingresos. Ahorro horas hombre:
+Valor Suscripci´ on Mensual Suscripci´ on Anual
+$ 666.469,15 $ 7.997.629,74
+Cargo Cantidad Valor Hora Horas Total
+Chofer Asesor 2 $ 7.835,89 20 $ 313.435,60
+36
+4.2.9 Flujo de Caja
+El siguiente flujo de caja proyecta los ingresos y egresos durante los primeros cuatro a˜ nos
+de operaci´ on del sistema, con el objetivo de evaluar la estabilidad financiera del proyecto
+y determinar su punto de equilibrio. Este an´ alisis permite identificar los l´ ımites operativos
+en funci´ on de los ingresos generados y los costos asociados, asegurando la viabilidad
+econ´ omica del proyecto a mediano plazo.
+Item 0 1 2 3 4
+Ingresos
+Ingresos Suscripci´ on $ 7.997.630 $ 7.997.630 $ 7.997.630 $ 7.997.630
+Ahorro HH $ 313.436 $ 313.436 $ 313.436 $ 313.436
+Total Ingresos $ 8.311.065 $ 8.311.065 $ 8.311.065 $ 8.311.065
+Egresos
+Mantenci´ on $ 3.000.000 $ 3.000.000 $ 3.000.000 $ 3.000.000
+AWS $ 25.000 $ 25.000 $ 25.000 $ 25.000
+Total Egresos $3.025.000 $3.025.000 $3.025.000 $3.025.000
+UAI $5.286.065 $5.286.065 $5.286.065 $5.286.065
+Impuesto 27% $1.427.238 $1.427.238 $1.427.238 $1.427.238
+UDI $3.858.828 $3.858.828 $3.858.828 $3.858.828
+Inversi´ on $-11.016.870
+Flujo de Caja $-11.016.870 $3.858.828 $3.858.828 $3.858.828 $3.858.828
+Tasa de Desc. 15%
+VAN $-9.579.887 $-6.662.058 $-4.124.817 $-1.918.519 $0
+Tasa de Desc. 15%
+TIR 15%
+Seg´ un el modelo financiero elaborado, que considera los ingresos por suscripci´ on, los costos
+asociados al ciclo de vida del software (incluyendo mantenci´ on y hosting), y una tasa de
+descuento del 15 %, el proyecto alcanza su punto de equilibrio en el cuarto a˜ no, reflejado
+en un VAN = $ 0. Esto significa que, bajo estas condiciones, los flujos de caja permiten
+recuperar exactamente la inversi´ on inicial, cubriendo todos los costos del proyecto sin
+generar p´ erdidas ni ganancias adicionales.
+37
+El an´ alisis revela que un precio de suscripci´ on anual de$ 666.469,15 es el valor cr´ ıtico que
+garantiza este equilibrio. Si el precio se fija por encima de este nivel, el proyecto generar´ ıa
+rentabilidad neta, siempre que los egresos (como los costos de mantenimiento y hosting)
+no superen lo proyectado. Por el contrario, incrementos no previstos en estos costos o una
+reducci´ on en los ingresos podr´ ıan afectar la sostenibilidad financiera.
+38
+4.3 Factibilidad Financiera
+La factibilidad financiera del proyecto contempla un an´ alisis exhaustivo de su viabilidad
+econ´ omica, desde la etapa inicial de implementaci´ on hasta su sostenibilidad operativa
+y posibilidades de expansi´ on territorial. Esta secci´ on est´ a enfocada en los elementos
+monetarios y administrativos clave para evaluar si el sistema puede ser ejecutado y
+mantenido de manera eficaz en el tiempo, sin una dependencia excesiva de subvenciones
+externas o recursos eventuales. Abarca el levantamiento de fuentes de financiamiento
+inicial, la proyecci´ on de ingresos, la sostenibilidad a largo plazo y las oportunidades de
+escalamiento.
+4.3.1 Fuentes de Financiamiento Inicial (Chile, 2024–2025)
+Durante la etapa de arranque del proyecto, se identifican una variedad de fuentes de
+financiamiento en Chile que apuntan al fomento de la innovaci´ on tecnol´ ogica con foco
+comunitario. Estas opciones permiten acceder a recursos aun sin contar con personalidad
+jur´ ıdica, lo que las hace especialmente viables para proyectos liderados por estudiantes o
+emprendedores en fase de validaci´ on.
+• CORFO – Semilla Inicia y Semilla Expande: CORFO dispone de subsidios
+que cubren hasta el 75% del costo total del proyecto, con topes que van desde $15
+millones CLP en la etapa Inicia, hasta $25 millones CLP (con opci´ on a una segunda
+fase de $20 millones) en la etapa Expande. Se permite la postulaci´ on como persona
+natural, con la exigencia de constituir empresa solo si el subsidio es adjudicado.
+Estos fondos est´ an orientados al desarrollo y validaci´ on de prototipos o MVP con
+potencial de mercado.
+• ANID – Fondef VIU: Programa dirigido a estudiantes universitarios en etapa
+de titulaci´ on. En su Etapa 2 otorga hasta$24 millones CLP con una exigencia de
+cofinanciamiento del 10%. Es obligatorio el respaldo de una universidad y que el
+proyecto se derive de una tesis o investigaci´ on acad´ emica. Su objetivo es valorizar
+los desarrollos universitarios y transformarlos en soluciones tecnol´ ogicas reales.
+39
+• FOSIS – Innova FOSIS: Concurso de innovaci´ on social que otorga aproximada-
+mente $50 millones CLP por proyecto piloto, destinados a resolver problem´ aticas que
+afectan a comunidades vulnerables. Requiere que una instituci´ on con personalidad
+jur´ ıdica (como una ONG o una universidad) postule en representaci´ on del equipo
+desarrollador.
+• SERCOTEC – Capital Semilla Emprende y programas asociados: Entrega
+hasta $3,5 millones CLP para la creaci´ on de nuevas microempresas. El programa
+permite postular como persona natural, exigiendo posteriormente la formalizaci´ on
+como empresa. Existen variantes como Capital Abeja para mujeres emprendedoras
+y otros programas regionales como ”Impulso Emprendedor”.
+• Fondos Regionales FIC/FNDR: Son recursos entregados por los Gobiernos
+Regionales para financiar proyectos de innovaci´ on con impacto territorial. Los
+montos fluct´ uan entre$30 millones y $150 millones CLP. Las postulaciones deben
+ser realizadas por entidades con personalidad jur´ ıdica, por lo que se recomienda
+establecer alianzas con universidades, municipalidades u ONGs.
+• Apoyo desde instituciones universitarias o gobiernos locales: Las universi-
+dades muchas veces cuentan con fondos concursables internos, incubadoras y redes
+de emprendimiento estudiantil. Por su parte, algunas municipalidades disponen de
+fondos comunitarios, presupuestos participativos o convenios que permiten financiar
+etapas piloto o actividades de validaci´ on tecnol´ ogica.
+En conjunto, estas fuentes deben ser abordadas bajo una estrategia progresiva que per-
+mita pasar de etapas exploratorias a una formalizaci´ on paulatina del modelo de negocio,
+idealmente en asociaci´ on con instituciones p´ ublicas o acad´ emicas.
+40
+4.3.2 Sostenibilidad Financiera del Sistema
+Una vez que el piloto est´ e en marcha, la clave pasa a ser la sustentabilidad del sistema.
+Esto implica dise˜ nar mecanismos que aseguren el financiamiento constante de los costos
+operativos, sin comprometer la continuidad del servicio ni depender exclusivamente de
+recursos estatales o filantr´ opicos. Para ello, se proponen diversos enfoques complementarios:
+• Modelo de arriendo tipo SaaS (Software como Servicio): El sistema puede
+ofrecerse mediante suscripci´ on mensual a municipalidades o empresas de transporte.
+Este modelo se adapta a contextos de bajos recursos mediante tarifas escalables por
+veh´ ıculo, que cubren alojamiento en la nube, mantenimiento, soporte y actualizaciones.
+Valores sugeridos est´ an en torno a los$960.000–$1.500.000 CLP mensuales por unidad
+vehicular.
+• Convenios institucionales y licitaciones: Las municipalidades est´ an facultadas
+por la Ley 19.886 para contratar servicios tecnol´ ogicos bajo modalidad de licitaci´ on
+p´ ublica o trato directo, dependiendo del monto involucrado. Esto legitima la
+posibilidad de que una comuna arriende o contrate la plataforma desarrollada, ya
+sea mediante convenio con la universidad o empresa de los desarrolladores.
+• Financiamiento estatal indirecto (subsidios al transporte rural): El Ministe-
+rio de Transportes, a trav´ es de la Divisi´ on de Transporte P´ ublico Regional, entrega
+subsidios para mantener operativas rutas rurales. Incorporar el monitoreo GPS como
+parte del servicio puede facilitar su inclusi´ on en estos esquemas, generando una
+fuente recurrente de ingresos.
+• Responsabilidad Social Empresarial (RSE) y patrocinios privados: Empre-
+sas con inter´ es en apoyar innovaci´ on social (como compa˜ n´ ıas de telecomunicaciones
+o financieras) podr´ ıan colaborar mediante aporte de equipos, datos m´ oviles o fondos,
+a cambio de visibilidad p´ ublica y cumplimiento de metas de impacto social.
+41
+• Transferencia tecnol´ ogica o externalizaci´ on de operaci´ on:Si los desarrol-
+ladores no desean operar el sistema a largo plazo, pueden ceder una licencia de uso a
+la municipalidad o firmar un convenio de colaboraci´ on para la administraci´ on t´ ecnica,
+evitando que el proyecto muera tras su implementaci´ on inicial.
+Este modelo mixto de financiamiento permite adaptar la estrategia a distintos contextos.
+Gracias a su dise˜ no open-source, los costos fijos son bajos y el sistema es f´ acilmente
+escalable con m´ ınimos adicionales en infraestructura, aumentando su viabilidad econ´ omica.
+4.3.3 Escalabilidad y Expansi´ on Territorial
+La plataforma fue concebida desde su origen con el principio de escalabilidad. Esto
+significa que est´ a preparada tanto t´ ecnica como organizacionalmente para ser replicada en
+otras comunas rurales, manteniendo eficiencia operativa y sostenibilidad financiera. La
+expansi´ on se puede estructurar en funci´ on de los siguientes ejes:
+• Red intercomunal y consorcios municipales: Es factible crear una red de
+municipios rurales que compartan el uso de la plataforma, disminuyendo costos
+mediante econom´ ıa de escala. Esto permite implementar un sistema centralizado
+con funcionalidades multicomuna, con apoyo t´ ecnico coordinado desde una instancia
+regional.
+• Alianzas con Gobiernos Regionales y programas FIC/FNDR: Los Consejos
+Regionales priorizan iniciativas con impacto territorial. Un piloto exitoso podr´ ıa
+ser replicado en otras provincias mediante fondos FIC, FNDR u otros instrumentos
+regionales de desarrollo e innovaci´ on. Se recomienda presentar propuestas con
+acompa˜ namiento universitario y enfoque de innovaci´ on p´ ublica.
+• Articulaci´ on con estrategias ministeriales y fondos sectoriales:El Ministerio
+de Ciencia, la SUBDERE y el MTT han desarrollado iniciativas como Desaf´ ıos
+P´ ublicos que permiten escalar soluciones tecnol´ ogicas con respaldo institucional.
+Estas v´ ıas son clave para posicionar el proyecto dentro de pol´ ıticas nacionales de
+digitalizaci´ on rural.
+42
+• Modelo freemium y servicios complementarios: Se puede establecer una
+estructura de ingresos basada en un acceso gratuito a funcionalidades b´ asicas, com-
+plementado con servicios adicionales para municipios que deseen m´ odulos avanzados,
+reportes personalizados o integraci´ on con otras plataformas.
+• Adaptaci´ on social y t´ ecnica a nuevos contextos:Cada r´ eplica territorial debe
+contemplar capacitaci´ on de choferes y personal local, ajustes a la interfaz seg´ un nivel
+de alfabetizaci´ on digital y adaptaci´ on a condiciones de conectividad variable. Se
+sugiere incluir funcionalidades offline o con sincronizaci´ on diferida para comunas con
+cobertura limitada.
+La expansi´ on territorial debe ir acompa˜ nada de una estrategia de sostenibilidad escalonada,
+contemplando contratos por niveles de servicio, soporte remoto centralizado, manuales de
+implementaci´ on y alianzas institucionales permanentes. Esta estructura modular permite
+crecer con control de calidad y garantizar que el valor social de la soluci´ on se mantenga
+intacto en cada nuevo contexto.
+43
+4.4 Factibilidad Legal
+4.4.1 Protecci´ on de Datos Personales
+La plataforma dise˜ nada para el monitoreo en tiempo real de buses rurales contempla la
+recolecci´ on, almacenamiento y tratamiento de datos personales sensibles, como la ubicaci´ on
+geogr´ afica en tiempo real de los conductores, su identificaci´ on mediante documentaci´ on
+oficial (licencia de conducir), e incluso informaci´ on que podr´ ıa ser considerada personal
+si se incorporan funcionalidades futuras para los usuarios pasajeros. Por tanto, resulta
+imperativo cumplir con la legislaci´ on chilena vigente sobre protecci´ on de datos, princi-
+palmente la Ley N ° 19.628 sobre Protecci´ on de la Vida Privada, y prepararse para la
+entrada en vigencia de la Ley N ° 21.719, publicada en diciembre de 2024, que refuerza
+significativamente los derechos de los titulares de datos y moderniza el marco regulatorio
+nacional en l´ ınea con el Reglamento General de Protecci´ on de Datos (GDPR) europeo.
+Esta nueva legislaci´ on establece principios como la licitud, finalidad espec´ ıfica, minimizaci´ on,
+transparencia, seguridad desde el dise˜ no (Privacy by Design), y otorga nuevos derechos al
+usuario, tales como portabilidad, oposici´ on a decisiones automatizadas, y mayor poder de
+fiscalizaci´ on a trav´ es de la nueva Agencia de Protecci´ on de Datos Personales. Dado su
+car´ acter transitorio de implementaci´ on, es estrat´ egico que la plataforma anticipe desde
+ya la adopci´ on de sus lineamientos, de manera de garantizar la sostenibilidad legal del
+sistema a largo plazo.
+Entre las acciones concretas a implementar, se deben considerar:
+• Obtenci´ on de consentimiento informado, expl´ ıcito y revocable tanto de conductores
+como, eventualmente, de pasajeros.
+• Inclusi´ on de pol´ ıticas de privacidad detalladas y f´ acilmente accesibles, que informen
+sobre la finalidad, uso, conservaci´ on, derechos y mecanismos de contacto para
+ejercerlos.
+• Implementaci´ on de protocolos de seguridad como cifrado de datos, almacenamiento
+seguro, respaldo peri´ odico, control de accesos y trazabilidad.
+• Anonimizaci´ on y agregaci´ on de datos para an´ alisis o visualizaci´ on p´ ublica, res-
+guardando la identidad de los usuarios.
+44
+4.4.2 Uso de Geolocalizaci´ on en Aplicaciones M´ oviles
+La utilizaci´ on de servicios de localizaci´ on mediante GPS debe cumplir con criterios t´ ecnicos
+y legales vinculados a la necesidad, proporcionalidad y temporalidad del uso. La plataforma
+deber´ a activar la geolocalizaci´ on solo durante los periodos estrictamente necesarios, es decir,
+mientras el conductor se encuentra en servicio, evitando cualquier monitoreo continuo o
+intrusivo fuera del contexto laboral o funcional del sistema.
+En t´ erminos pr´ acticos, esto implica integrar correctamente las solicitudes de permisos que
+Android e iOS exigen para la activaci´ on del GPS, con descripciones claras del prop´ osito del
+uso de la ubicaci´ on. El sistema debe incluir opciones que permitan al usuario desactivar la
+localizaci´ on o delimitar su uso, asegurando control individual sobre su activaci´ on.
+Adem´ as, deben respetarse las pol´ ıticas de las plataformas de distribuci´ on (Google Play y
+App Store), que exigen una pol´ ıtica de privacidad p´ ublica, y limitan el uso de permisos
+solo a lo estrictamente funcional. Desde el enfoque laboral, conforme a dict´ amenes de la
+Direcci´ on del Trabajo, el monitoreo de la ubicaci´ on de los trabajadores s´ olo puede efectu-
+arse si est´ a debidamente justificado y se limita al horario laboral. Por tanto, ser´ a necesario
+establecer una pol´ ıtica de uso clara y validada por la empresa operadora (Tur Maipo S.A.),
+que delimite los alcances del monitoreo en funci´ on de sus necesidades operativas y laborales.
+4.4.3 Regulaci´ on del Transporte P´ ublico Interurbano y Buses Rurales
+La normativa vigente en Chile, en particular el Decreto Supremo N ° 212 de 1992 del
+MTT, regula el transporte p´ ublico remunerado de pasajeros, incluyendo el servicio rural e
+interurbano. Este reglamento no establece barreras normativas para la incorporaci´ on de
+tecnolog´ ıas de seguimiento vehicular como GPS o plataformas de informaci´ on al usuario;
+al contrario, la tendencia institucional ha sido fomentar su uso como herramienta para
+mejorar la calidad del servicio y la fiscalizaci´ on.
+La Resoluci´ on Exenta N° 2778/2021, por ejemplo, establece requisitos t´ ecnicos para
+buses que ingresan a planes de renovaci´ on, entre ellos, contar con sistemas de local-
+izaci´ on autom´ atica activos. Asimismo, se proyecta una reforma al DS N° 212 donde se
+incluir´ an formalmente los sistemas GPS y plataformas informativas como herramientas
+complementarias requeridas por el regulador. Esto abre la posibilidad de integrar la
+soluci´ on desarrollada dentro del ecosistema normativo oficial, particularmente si se logra
+45
+interoperabilidad con los sistemas del MTT o de las Seremis regionales.
+A nivel operativo, se recomienda mantener coordinaci´ on con la Seremi de Transportes
+Metropolitana y con la empresa Tur Maipo S.A., para asegurar que la implementaci´ on del
+sistema se ajuste a las condiciones de operaci´ on ya aprobadas. Asimismo, debe garantizarse
+que la informaci´ on difundida por la aplicaci´ on no contradiga los canales oficiales ni induzca
+a errores a los usuarios.
+4.4.4 Responsabilidad Legal y T´ erminos de Uso
+Para resguardar legalmente al equipo desarrollador y establecer un marco claro de derechos
+y deberes con los usuarios de la plataforma (conductores y pasajeros), se requiere la
+redacci´ on y publicaci´ on de documentos contractuales: T´ erminos y Condiciones (TyC) y
+Pol´ ıtica de Privacidad.
+Los TyC deben contemplar:
+• Cl´ ausulas de exenci´ on de garant´ ıas y limitaci´ on de responsabilidad ante errores
+de sistema, ca´ ıdas del servicio, imprecisiones en los datos o mal uso por parte de
+terceros.
+• Definici´ on de uso adecuado, incluyendo restricciones a intentos de manipulaci´ on de
+datos, uso indebido de funcionalidades, o reventa de la tecnolog´ ıa.
+• Establecimiento de jurisdicci´ on y ley aplicable (Chile), y reserva de derechos para
+modificaci´ on futura de los TyC.
+• Declaraci´ on de derechos de propiedad intelectual sobre el software y contenidos
+asociados.
+En cuanto a la Pol´ ıtica de Privacidad, esta deber´ a:
+• Explicar con detalle qu´ e datos se recogen, por qu´ e, por cu´ anto tiempo, c´ omo se
+protegen y qu´ e derechos tienen los usuarios sobre ellos.
+• Advertir que, si bien se aplican medidas de seguridad, ning´ un sistema es 100%
+invulnerable, limitando as´ ı responsabilidades por hackeos o accesos indebidos si hubo
+diligencia razonable.
+46
+• Indicar si los datos pueden ser compartidos con terceros, en qu´ e condiciones, y c´ omo
+se tratar´ an ante solicitudes legales.
+• Establecer que la informaci´ on proporcionada es referencial y no reemplaza comunica-
+ciones oficiales del operador de transporte.
+4.4.5 Propiedad Intelectual del Software
+El sistema desarrollado constituye una creaci´ on intelectual protegida por la Ley N° 17.336
+sobre Propiedad Intelectual, que otorga derechos de autor autom´ aticos a los creadores
+desde el momento de la generaci´ on de la obra. Sin embargo, para reforzar esta protecci´ on y
+facilitar gestiones futuras (licencias, escalamiento, transferencias), se recomienda registrar
+el c´ odigo en el Departamento de Derechos Intelectuales.
+En principio, si los desarrolladores son estudiantes y no existe contrato de encargo con una
+instituci´ on, los derechos pertenecen a ellos. No obstante, si la universidad o una entidad
+externa financia el proyecto, se debe revisar si existen cl´ ausulas de cesi´ on de derechos o
+condiciones de uso compartido.
+En cuanto a licenciamiento, el equipo puede optar entre:
+• Publicar el c´ odigo como open-source bajo licencias tipo MIT, Apache o GPL, pro-
+moviendo colaboraci´ on y replicabilidad.
+• Establecer una licencia restringida si se quiere conservar control comercial o institu-
+cional.
+• Crear un esquema mixto, donde parte del c´ odigo se libera y parte se protege,
+dependiendo del inter´ es de escalabilidad y explotaci´ on.
+Finalmente, se sugiere formalizar la estructura de propiedad intelectual si el proyecto
+avanza hacia su implementaci´ on municipal o comercial. Esto incluye convenios de coautor´ ıa,
+registros de marca, definici´ on de licencias de uso institucional, y eventualmente apoyo de
+oficinas de transferencia tecnol´ ogica (OTL). Esta formalizaci´ on ser´ a clave para proteger
+la innovaci´ on, facilitar convenios con entidades p´ ublicas, y permitir la continuidad del
+sistema m´ as all´ a del contexto estudiantil inicial. Por ende, el marco legal actual no solo
+permite, sino que fomenta la implementaci´ on de tecnolog´ ıas como aqu´ ı descrita.
+47
+Plan de Trabajo
+5.1 Malla de actividades
+Etapa Hito Tarea Descrici´ on Responsable Duraci´ on
+(D´ ıas)
+1 1.1 Toma de
+Requerim-
+ientos
+Documentar y Analizar los
+Requerimientos Funcionales
+y No Funcionales.
+JP Senior, JP Ju-
+nior
+1
+2 2.1 Definir
+Arquitec-
+tura de
+Desarrollo
+Definir los nodos que van a
+interactuar con el sistema.
+Arquitecto Web 1
+2 2.2 Modelo de
+Datos
+Definir los datos necesarios
+que van a dar soluci´ on al
+problema.
+JP Senior, JP Ju-
+nior, Arquitecto
+Web.
+1
+2 2.3 Modelo
+Relacional
+Establecer las relaciones
+necesarias entre los datos.
+JP Senior, JP Ju-
+nior, Arquitecto
+Web.
+1
+3 3.1 Desarrollo
+BD
+Pasar el modelo de datos a
+una BD relacional.
+Ingeniero DB 2
+3 3.2 Desarrollo
+API
+Crear una API que per-
+mita operaciones CRUD a
+los diferentes nodos del sis-
+tema.
+Programador
+Backend
+4
+3 3.3 Desarrollo
+App
+Chofer
+Desarrollar la Aplicaci´ on
+Movil que utilizar´ an los
+Choferes.
+Programador
+UX/UI, Progra-
+mador Backend
+5
+48
+Etapa Hito Tarea Descrici´ on Responsable Duraci´ on
+(D´ ıas)
+3 3.4 Desarrollo
+App
+Pasajero
+Desarrollar la Aplicaci´ on
+Movil que utilizar´ an los
+Pasajeros
+Programador
+UX/UI, Progra-
+mador Backend
+5
+3 3.5 Incluir
+API’s de
+Metro y
+RED
+Incluir interoperatividad con
+API’s p´ ublicas de Metro y
+RED.
+Programador
+UX/UI, Progra-
+mador Backend
+5
+3 3.6 Desarrollo
+App
+Admin-
+istrador
+Desarrollar la Aplicaci´ on
+Desktop del Administrador
+Programador
+UX/UI, Progra-
+mador Backend
+5
+4 4.1 Probar
+API
+Corroborar que las consultas
+CRUD retornen lo esperado.
+Analista QA, In-
+geniero QA.
+2
+4 4.2 Probar
+App
+Chofer
+Corroborar el fun-
+cionamiento de la vista
+de Chofer
+Analista QA,
+Ingeniero QA,
+Chofer Asesor.
+2
+4 4.3 Probar
+App
+Pasajero
+Corroborar el fun-
+cionamiento de la vista
+de Pasajero
+Analista QA,
+Ingeniero QA,
+Chofer Asesor.
+2
+4 4.4 Probar
+App
+Admin-
+istrador
+Corroborar el fun-
+cionamiento de la vista
+de Administrador
+Analista QA,
+Ingeniero QA,
+Chofer Asesor.
+2
+5 5.1 Capacitar
+a Choferes
+Mostrar al 90% de choferes
+como funciona la aplicaci´ on
+y como utilizarla en la
+pr´ actica.
+Trainer, Chofer
+Asesor.
+2
+49
+Etapa Hito Tarea Descrici´ on Responsable Duraci´ on
+(D´ ıas)
+5 5.2 Capacitar
+al Admin-
+istrador
+Mostrar a un Administrador
+como funciona la aplicaci´ on
+y como utilizarla en la
+pr´ actica.
+Trainer, Admin-
+istrador.
+1
+6 6.1 Revisar
+antes
+de Pro-
+ducci´ on
+Hacer una revisi´ on y un
+ajuste del software para una
+correcta ejecuci´ on en pro-
+ducci´ on.
+Programador
+Backend, De-
+vops.
+1
+6 6.2 Subir
+a Pro-
+ducci´ on
+Subir la ´ ultima versi´ on de-
+sarrollada del sistema a un
+entorno en la nube.
+JP Junior,
+Devops, Progra-
+mador Backend.
+2
+6 6.3 Publicar en
+las Stores
+Subir la aplicaci´ on de Chofer
+y Pasajero a la App Store y
+Google Play.
+Programador
+Backend, De-
+vops.
+1
+6 6.4 Verificar en
+Terreno
+Supervisar el uso de la apli-
+caci´ on en terreno.
+Supervisor Ter-
+reno
+2
+50
+5.2 Puntos cr´ ıticos
+Punto Cr´ ıtico Hito Descripci´ on Impacto
+(1-5)
+Probabilidad
+(1-5)
+PC01 1.1 Levantamiento de requerimientos
+incompleto o deficiente, lo que
+podr´ ıa comprometer el dise˜ no y
+funcionalidad del sistema.
+5 4
+PC02 2.2 Definici´ on de datos insuficiente o
+inadecuada para resolver los re-
+querimientos del sistema.
+5 3
+PC03 3.5 Dependencia de la API de Red
+Metropolitana (y similares), cuya
+disponibilidad, documentaci´ on o
+cambios pueden afectar la inte-
+graci´ on del sistema.
+4 3
+PC04 5.1, 5.2 Baja adopci´ on de la app por parte
+de los conductores y usuarios
+5 3
+PC05 6.3 Restricciones de publicaci´ on
+debido al incumplimiento de
+pol´ ıticas de App Store y Google
+Play.
+3 2
+PC06 6.4 Limitada cobertura de red en
+zonas rurales que afecte la trans-
+misi´ on de datos en tiempo real
+4 2
+51
+5.2.1 Mitigaciones
+PC01:
+• Talleres con usuarios clave (choferes, pasajeros, administrador) para validar requisitos.
+• Prototipado r´ apido para feedback temprano.
+PC02:
+• Validar el modelo de datos con maquetas y casos de uso.
+• Hacer revisiones del modelo de datos de aplicaciones similares.
+PC03:
+• Dedicar horas hombre a hacer un estudio de los endpoints de las API’s.
+• Solicitar informaci´ on a las entidades due˜ nas de estas API’s.
+PC04:
+• Recibir feedback de ellos en las etapas previas al desarrollo.
+• Presentar mockups y casos de uso a los usuarios.
+PC05:
+• Realizar un estudio completo de factibilidad incluyendo las pol´ ıticas de publicaci´ on
+de las stores.
+• Desarrollar la aplicaci´ on en funci´ on de cumplir normas como la ISO 27100 entre
+otras sobre el uso de datos de los usuarios.
+PC06:
+• Realizar pruebas piloto en rutas con baja conectividad.
+• Integrar algoritmos de predicci´ on de la ubicaci´ on para permitir seguir funcionando
+sin se˜ nal GPS.
+52
+5.3 Carta Gantt
+Hito Tarea Semana 1 Semana 2
+L M X J V L M X J V
+1.1 Toma de Requerimientos
+2.1 Definir Arquitectura de Desarrollo
+2.2 Modelo de Datos
+2.3 Modelo Relacional
+3.1 Desarrollo BD
+3.2 Desarrollo API
+3.3 Desarrollo App Chofer
+Hito Tarea Semana 3 Semana 4
+L M X J V L M X J V
+3.3 Desarrollo App Chofer
+3.4 Desarrollo App Pasajero
+3.5 Incluir APIs de Metro y RED
+Hito Tarea Semana 4 Semana 5
+L M X J V L M X J V
+3.5 Incluir APIs de Metro y RED
+3.6 Desarrollo App Administrador
+4.1 Probar API
+4.2 Probar App Chofer
+Hito Tarea Semana 6 Semana 7
+L M X J V L M X J V
+4.3 Probar App Pasajero
+4.4 Probar App Administrador
+5.1 Capacitar a Choferes
+5.2 Capacitar al Administrador
+6.1 Revisar antes de Producci´ on
+Hito Tarea Semana 7 Semana 8
+L M X J V L M X J V
+6.2 Subir a Producci´ on
+6.3 Publicar en las Stores
+6.4 Verificar en Terreno
+53
+5.4 PERT - CPM
+Tabla de Precedencias
+Hito Actividad Predecesora Duraci´ on
+(D´ ıas) Op-
+timista
+Duraci´ on
+(D´ ıas)
+Probable
+Duraci´ on
+(D´ ıas)
+Pesimista
+Duraci´ on
+(D´ ıas)
+Esperada
+1.1 A1 - 1 2 3 2
+2.1 B1 A1 1 2 3 2
+2.2 B2 B1 1 2 3 2
+2.3 B3 B2 1 2 3 2
+3.1 C1 B3 2 3 4 3
+3.2 C2 B3 4 5 6 5
+3.3 C3 C1, C2 5 6 7 6
+3.4 C4 C1, C2 5 6 7 6
+3.5 C5 C4 5 6 7 6
+3.6 C6 C1, C2 5 6 7 6
+4.1 D1 C1, C2 2 3 4 3
+4.2 D2 C3 2 3 4 3
+4.3 D3 C5 2 3 4 3
+4.4 D4 C6 2 3 4 3
+5.1 E1 D2 2 3 4 3
+5.2 E2 D4 1 2 3 2
+6.1 F1 D1, D2, D3, D4 1 2 3 2
+6.2 F2 F1 2 3 4 3
+6.3 F3 F2 1 2 3 2
+6.4 F4 F3 2 3 4 3
+54
+Diagrama PERT - CPM
+55
+Toma de Requerimientos
+6.1 Metodolog´ ıa aplicada para la toma de requerimientos
+Para el levantamiento de requerimientos del sistema se utilizar´ a una metodolog´ ıa cualitativa
+que combinar´ a entrevistas semiestructuradas con observaci´ on directa en terreno, lo que
+permitir´ a obtener informaci´ on relevante desde los actores operativos clave del sistema,
+es decir, los conductores de buses, el administrador general de la empresa Tur Maipo
+y tambi´ en usuarios frecuentes del transporte rural, quienes entregar´ an una perspectiva
+valiosa sobre las principales falencias que enfrentan como pasajeros. Las entrevistas se
+desarrollar´ an con apoyo de una gu´ ıa de preguntas abiertas, orientadas a indagar en las
+necesidades, problem´ aticas y oportunidades de mejora desde distintos puntos de vista, y se
+buscar´ a levantar antecedentes sobre dificultades en la coordinaci´ on, gesti´ on de frecuencias,
+comunicaci´ on con los usuarios, fallas mec´ anicas y procesos que actualmente se realizan de
+forma manual. A su vez, la observaci´ on en terreno se realizar´ a durante horarios cr´ ıticos
+del servicio para identificar situaciones que no siempre se verbalizan en entrevistas, como
+tiempos de espera, mecanismos de control informal o ausencia de informaci´ on centralizada,
+lo que permitir´ a validar y complementar los hallazgos obtenidos en las conversaciones.
+Toda la informaci´ on ser´ a registrada en minutas de reuni´ on y posteriormente clasificada en
+requerimientos funcionales y no funcionales, lo que servir´ a como base para el dise˜ no de una
+plataforma coherente con las capacidades reales del entorno y alineada con las necesidades
+del personal y de los usuarios involucrados en la operaci´ on y utilizaci´ on diaria del sistema.
+56
+6.2 Minutas de Reuni´ on
+A continuaci´ on se presentan las minutas que estructuran las reuniones que se llevar´ an
+a cabo con los actores clave del sistema, en el marco del proceso de levantamiento de
+requerimientos descrito anteriormente.
+Minuta N°1 – Reuni´ on con administrador general
+Participantes: Administrador general de la empresa Tur Maipo, equipo de desarrollo
+Temas a tratar: Se consultar´ a sobre los procesos actuales de planificaci´ on y supervisi´ on
+de recorridos, los mecanismos utilizados para el control de horarios y frecuencias, y las
+principales limitaciones tecnol´ ogicas que enfrenta la empresa en la gesti´ on del servicio,
+tambi´ en se abordar´ a la necesidad de contar con reportes e indicadores para la toma de
+decisiones administrativas
+Conclusiones esperadas: Se espera identificar la necesidad de una plataforma que
+permita monitorear los buses en tiempo real, centralizar la informaci´ on operativa y generar
+m´ etricas ´ utiles para la administraci´ on del servicio
+Minuta N°2 – Reuni´ on con grupo de conductores
+Participantes: Conductores activos de la flota, equipo de desarrollo
+Temas a tratar: Se abordar´ a c´ omo se realiza actualmente la coordinaci´ on de salidas,
+comunicaci´ on en ruta y manejo de contingencias, se consultar´ a sobre el nivel de acceso a
+dispositivos m´ oviles, uso de datos y posibles barreras tecnol´ ogicas para implementar una
+soluci´ on digital, adem´ as se buscar´ a conocer su disposici´ on a utilizar una aplicaci´ on como
+herramienta de trabajo
+Conclusiones esperadas: Se espera identificar requerimientos vinculados a una app
+m´ ovil simple que permita reportar ubicaci´ on, registrar inicio y fin de recorridos y recibir
+notificaciones b´ asicas sin depender de llamadas o procesos manuales.
+57
+6.3 Informe de Requerimientos
+A partir de las reuniones planificadas con el administrador y los conductores de la empresa
+Tur Maipo, se identificaron los siguientes requerimientos funcionales y no funcionales, los
+cuales servir´ an como base para el dise˜ no del sistema propuesto.
+Requerimientos funcionales:
+RF01: La aplicaci´ on debe permitir al conductor registrar el inicio y t´ ermino de cada recor-
+rido, de manera que se pueda llevar un control b´ asico del cumplimiento de los itinerarios
+asignados.
+RF02: El sistema debe mostrar en tiempo real la ubicaci´ on de cada bus en un mapa
+accesible para el administrador, utilizando la se˜ nal GPS del dispositivo m´ ovil del conductor.
+RF03: El sistema debe estar preparado para integrarse con los servicios y APIs de la
+Red Metropolitana y Metro de Santiago, con el fin de permitir a futuro la planificaci´ on de
+viajes intermodales que combinen transporte rural y urbano.
+RF04: La aplicaci´ on debe permitir que el conductor seleccione el recorrido asignado antes
+de comenzar su turno, lo que facilitar´ a la trazabilidad y evitar´ a errores de asignaci´ on.
+Requerimientos no funcionales:
+RNF01: El sistema deber´ a estar disponible al menos el 95% del tiempo durante el horario
+operativo, minimizando ca´ ıdas o interrupciones del servicio.
+RNF02: La interfaz de la aplicaci´ on m´ ovil deber´ a permitir un uso intuitivo y pr´ actico,
+ajustado a alineamientos de usabilidad y experiencia de usuario, asegurando que cualquier
+conductor pueda registrar su recorrido y transmitir su ubicaci´ on con un m´ aximo de cuatro
+interacciones desde la pantalla principal, y que los pasajeros puedan consultar la ubicaci´ on
+del bus, la ruta y el tiempo estimado de llegada sin necesidad de crear una cuenta ni
+navegar por men´ us complejos.
+RNF03: La aplicaci´ on debe funcionar correctamente incluso con conexi´ on m´ ovil inestable
+o limitada, considerando que parte del recorrido se realiza en zonas rurales con baja
+cobertura.
+58
+Dise˜ no del Sistema
+7.1 Elecci´ on y fundamentaci´ on del Ciclo de Vida del Proyecto
+Para el desarrollo de este sistema se ha optado por un ciclo de vida iterativo e incremental,
+dado que este modelo permite una construcci´ on progresiva del software mediante entregas
+parciales que se ajustan de forma din´ amica a los requerimientos levantados, lo cual resulta
+especialmente adecuado considerando que se trabajar´ a con distintos tipos de usuarios
+(conductores, pasajeros y administrador) que presentan necesidades particulares en cuanto
+a funcionalidad, usabilidad y prioridades de implementaci´ on, por lo que cada uno de
+estos m´ odulos puede ser desarrollado en fases sucesivas que incorporen retroalimentaci´ on
+directa desde el entorno de uso y permitan corregir desviaciones tempranamente. Esta
+elecci´ on tambi´ en se justifica por la naturaleza exploratoria de algunos componentes del
+sistema, como la interoperabilidad con APIs externas de transporte p´ ublico o la necesidad
+de compatibilidad en zonas rurales con baja conectividad, situaciones que exigen validar
+supuestos t´ ecnicos y funcionales antes de continuar con el desarrollo completo, minimizando
+as´ ı riesgos cr´ ıticos mediante ciclos cortos de prueba y mejora continua que promuevan
+decisiones fundamentadas y no dependan exclusivamente de una planificaci´ on inicial r´ ıgida.
+Adem´ as, el marco temporal definido para este proyecto, que contempla un total de 42
+d´ ıas h´ abiles, exige una gesti´ on eficiente del tiempo y los recursos disponibles, por lo
+que un enfoque iterativo permite dividir el trabajo en unidades manejables que puedan
+ser planificadas, ejecutadas y evaluadas con mayor control, sin comprometer la calidad
+ni la coherencia del sistema global, y facilitando la incorporaci´ on de mejoras de forma
+ordenada y sin afectar lo ya construido. Por otro lado, este modelo se alinea con la
+necesidad de integrar m´ odulos diferenciados pero interdependientes, permitiendo que la
+aplicaci´ on m´ ovil del conductor y del pasajero se desarrollen en paralelo una vez resuelta
+la arquitectura base, mientras que la plataforma del administrador puede ser abordada
+con posterioridad, utilizando como insumos los componentes ya validados en las primeras
+entregas, lo que reduce los tiempos de espera entre etapas, favorece el trabajo colaborativo
+entre distintos roles t´ ecnicos y asegura una implementaci´ on funcional progresiva que puede
+ser monitoreada, testeada y ajustada de forma continua sin perder visibilidad sobre el
+avance del proyecto.
+59
+7.2 Elecci´ on y fundamentaci´ on Paradigma de desarrollo
+El paradigma de desarrollo seleccionado para este proyecto es el Paradigma Orientado a
+Objetos (POO), debido a que permite estructurar el sistema en componentes modulares,
+reutilizables y escalables que representan entidades del mundo real como clases y objetos,
+lo cual se ajusta de forma ´ optima a las necesidades del proyecto, ya que se deben construir
+m´ ultiples interfaces —como las aplicaciones para choferes, pasajeros y administrador—
+que comparten estructuras l´ ogicas similares pero operan con roles y funcionalidades difer-
+enciadas. Este enfoque facilita la implementaci´ on de funcionalidades independientes como
+el seguimiento por GPS, la asignaci´ on de recorridos o la consulta de buses en tiempo
+real, permitiendo encapsular la l´ ogica correspondiente a cada m´ odulo y promoviendo la
+separaci´ on clara entre los datos y los m´ etodos que los manipulan, lo que a su vez mejora
+la mantenibilidad del sistema a lo largo del tiempo. Adem´ as, al trabajar con herramientas
+modernas como Flutter para el desarrollo m´ ovil y Python para el backend, ambos entornos
+admiten y fomentan pr´ acticas basadas en objetos, lo que asegura la compatibilidad t´ ecnica
+entre las distintas capas del sistema y permite integrar servicios como APIs externas o
+almacenamiento de datos sin romper la coherencia estructural. Asimismo, la orientaci´ on
+a objetos permite implementar mecanismos de herencia, polimorfismo y abstracci´ on, lo
+que es especialmente ´ util para representar jerarqu´ ıas funcionales entre tipos de usuarios y
+adaptar comportamientos seg´ un el contexto de uso, reduciendo la redundancia de c´ odigo y
+aumentando la flexibilidad frente a futuras mejoras o ampliaciones del sistema, lo que se
+traduce en un desarrollo m´ as robusto y preparado para escalar en nuevas versiones o inte-
+graciones futuras sin necesidad de reestructurar completamente la l´ ogica ya implementada.
+Esta elecci´ on tambi´ en permite mantener una arquitectura coherente con el enfoque de
+desarrollo iterativo e incremental definido en el ciclo de vida, lo que resulta clave para
+responder a posibles cambios de requerimientos, refinar funcionalidades a partir del feed-
+back temprano de los usuarios y garantizar una evoluci´ on controlada del software durante
+las diferentes etapas del proyecto, asegurando que las nuevas funcionalidades puedan
+incorporarse sin afectar negativamente los m´ odulos ya validados.
+60
+7.3 BPMN
+61
+7.4 Modelo de Datos Relacional
+62
+7.5 Diccionario de Datos
+1. Tabla: Company
+• Descripci´ on:Resume informaci´ on importante de la compa˜ n´ ıa que contrata el
+uso de la aplicaci´ on.
+• Primary Key: CompanyId
+Dato Relaci´ on Tipo Descripci´ on
+CompanyId PK Integer Es un n´ umero ´ unico que se asigna de forma
+incremental por cada nueva compa˜ n´ ıa agre-
+gada.
+Name N Varchar(100) Hace referencia al nombre de la empresa.
+PhoneNumber N Varchar(100) N´ umero de contacto asociado a la empresa
+cliente.
+Email N Varchar(100) Direcci´ on de Correo Electr´ onico de la em-
+presa.
+Rut N Varchar(30) Rut de empresa.
+Owner N Varchar(100) Nombre del due˜ no de la empresa
+2. Tabla: Subscription
+• Descripci´ on:Registra el estado de la suscripci´ on de empresa a la aplicaci´ on,
+esta se puede renovar lo que cambiar el estado del campo status.
+• Primary Key: SusbcriptionId
+• Relacionado con: Company
+Dato Relaci´ on Tipo Descripci´ on
+SubscriptionId PK Integer Es un n´ umero ´ unico que se asigna de forma in-
+cremental por cada nueva compa˜ n´ ıa suscrita.
+CompanyId FK Integer Relaciona la suscripci´ on a una empresa con-
+tratante.
+DateStart N Date Fecha en la que se contrat´ o la suscripci´ on, se
+renueva cuando se renueva la suscripci´ on.
+DateEnd N Date Fecha en la que se termina la suscripci´ on, se
+renueva cuando se renueva la suscripci´ on.
+Status N boolean Comienza en un estado true, al expirar Da-
+teEnd, el dato pasa a ser false.
+63
+3. Tabla: Bus
+• Descripci´ on:Registra los buses de cada compa˜ n´ ıa.
+• Primary Key: BusId
+• Relacionado con: Company
+Dato Relaci´ on Tipo Descripci´ on
+BusId PK Integer Es un n´ umero ´ unico que se asigna de forma in-
+cremental por cada nuevo bus en la compa˜ n´ ıa.
+CompanyId FK Integer Relaciona cada bus a una empresa con-
+tratante, una empresa puede tener muchos
+buses.
+Status N boolean Status est´ a en true cuando el bus est´ a en
+servicio, de lo contrario Status es false.
+Brand N Varchar(100) Marca fabricante del bus.
+Model N Varchar(100) Modelo asignado por el fabricante del bus.
+Year N Integer A˜ no de fabricaci´ on del bus.
+Patent N Varchar(10) Patente ´ unica del veh´ ıculo conformada por
+combinaci´ on de letras y n´ umeros.
+4. Tabla: User
+• Descripci´ on:Reune la informaci´ on b´ asica de cada usuario registrado en el
+sistema.
+• Primary Key: UserId
+Dato Relaci´ on Tipo Descripci´ on
+UserId PK Integer Es un n´ umero ´ unico que se asigna de forma in-
+cremental por cada nuevo usuario registrado.
+Email N Varchar(100) Cada usuario debe tener un correo electr´ onico
+asociado.
+PasswordHash N Varchar(100) Es un hash resultante de encriptar la con-
+trase˜ na ingresada por el usuario.
+UserName N Varchar(100) Nombre de Usuario seleccionado por el
+usuario.
+64
+5. Tabla: PhoneNumber
+• Descripci´ on:Registro del n´ umero telef´ onico de cada usuario.
+• Primary Key: PhoneNumberId
+• Relacionado con: User
+Dato Relaci´ on Tipo Descripci´ on
+PhoneNumberId PK Integer Es un n´ umero ´ unico que se asigna de forma in-
+cremental por cada nuevo n´ umero registrado.
+UserId FK Integer Es un n´ umero ´ unico que relaciona la tabla
+con la tabla User.
+PhoneNumber N Varchar(100) N´ umero de tel´ efono asociado.
+6. Tabla: UserCompany
+• Descripci´ on:Registro de cada usuario registrado como funcionario de una
+compa˜ n´ ıa.
+• Primary Key: UserCompanyId
+• Relacionado con: Company, User.
+Dato Relaci´ on Tipo Descripci´ on
+UserCompanyId PK Integer Es un n´ umero ´ unico que se asigna de
+forma incremental por cada nuevo usuario
+de compa˜ n´ ıa.
+CompanyId FK Integer Valor num´ erico ´ unico que relaciona con la
+tabla Company.
+UserId FK Integer Valor num´ erico ´ unico que relaciona a cada
+usuario de la compa˜ n´ ıa con su correspondiente
+User.
+Name N Varchar(100) Nombre completo del usuario perteneciente a
+la compa˜ n´ ıa.
+Rol N Varchar(100) Nombre del rol que desempe˜ na dentro de la
+compa˜ n´ ıa.
+65
+7. Tabla: Admin
+• Descripci´ on:Dentro del sistema existen administradores con acceso privile-
+giado dentro del sistema dependiendo de su atributo Type.
+• Primary Key: AdminId
+• Relacionado con: UserCompany.
+Dato Relaci´ on Tipo Descripci´ on
+AdminId PK Integer Es un n´ umero ´ unico que se asigna de forma
+incremental por cada nuevo admin dentro del
+sistema.
+UserCompanyId FK Integer Valor num´ erico ´ unico que relaciona con la
+tabla UserCompany.
+Type N Integer Un valor de 100, permite acceso a la total-
+idad de funcionalidades de configuraci´ on y
+administraci´ on, un valor de 200 permite solo
+acceder en modo lectura al dashboard de ad-
+ministraci´ on.
+66
+8. Tabla: Route
+• Descripci´ on:Aqu´ ı es donde se guardan las diferentes rutas que sigue cada
+bus.
+• Primary Key: RouteId
+• Relacionado con: Company, BusStop.
+Dato Relaci´ on Tipo Descripci´ on
+RouteId PK Integer Es un valor num´ erico que se incrementa por
+cada nueva ruta en el sistema.
+CompanyId FK Integer Valor num´ erico ´ unico que relaciona a la ruta
+con la compa˜ n´ ıa que la cubre.
+BusStopId FK Integer Un valor que relaciona a la ruta con la tabla
+BusStop que contiene las paradas de bus de
+la ruta.
+Name N Varchar(100) Es el nombre de la ruta o recorrido.
+Start(lat/lng) N Varchar(100) Un dato que en t´ erminos de latitud y longitud
+guarda el punto de inicio de la ruta.
+End(lat/lng) N Varchar(100) Un dato que en t´ erminos de latitud y longitud
+guarda el punto de fin de la ruta.
+Distance N Varchar(100) Un dato que indica la distancia en kil´ ometros
+aproximada de la ruta.
+MaxTime N Varchar(100) Es un tiempo en minutos que indica el tiempo
+m´ aximo en el que se debe recorrer la ruta.
+MinTime N Varchar(100) Es un tiempo en minutos que indica el tiempo
+m´ ınimo en el que se debe recorrer la ruta.
+RouteJson N JsonB Archivo GeoJson que contiene la ruta en co-
+ordenadas lat/lng.
+9. Tabla: BusStop
+• Descripci´ on:Las paradas de buses se guardan de forma independiente en esta
+tabla.
+• Primary Key: BusStop
+Dato Relaci´ on Tipo Descripci´ on
+BusStopId PK Integer Es un valor num´ erico que se incrementa por
+cada nuevo mapa de paraderos en el sistema.
+BusStopJson N JsonB Es un mapa de coordenadas con cada pa-
+radero en formato GeoJson, una ruta tiene
+muchos paraderos que se actualizan de forma
+constante.
+67
+10. Tabla: Driver
+• Descripci´ on:Aqu´ ı se registran todos los choferes activos.
+• Primary Key: DriverId
+• Relacionado con: UserCompany, License
+Dato Relaci´ on Tipo Descripci´ on
+DriverId PK Integer Es un valor num´ erico que se incrementa por
+cada nuevo chofer en el sistema.
+UserCompanyId FK Integer Cada chofer tiene su usuario asociado a la
+compa˜ n´ ıa mediante UserCompany.
+LicenseId FK Integer Cada chofer tiene su licencia vigente reg-
+istrada en una tabla.
+11. Tabla: License
+• Descripci´ on:Aqu´ ı se registran las licencias de conducir de cada chofer.
+• Primary Key: LicenseId
+• Relacionado con: Address, LicensePhoto
+Dato Relaci´ on Tipo Descripci´ on
+LicenseId PK Integer Es un valor num´ erico igual al n´ umero ´ unico
+de cada licencia de conducir.
+AddressId FK Integer N´ umero identificador ´ unico que relaciona a la
+licencia con una tabla donde se registran las
+direcciones.
+LicensePhotoId FK Integer N´ umero identificador ´ unico que relaciona a la
+licencia con una foto de la misma.
+FirstGrant N Date Fecha del primer otorgamiento de la licencia.
+LastControlDate N Date ´Ultima vez que se tom´ o el control para otorgar
+la licencia de conducir.
+NextControlDate N Date Fecha en la que se debe renovar la licencia de
+conducir.
+Restrictions N Varchar(250) Restricciones del chofer, como uso de lentes,
+etc.
+68
+12. Tabla: LicensePhoto
+• Descripci´ on:En esta tabla se guardan im´ agenes de la licencia de conducir.
+• Primary Key: LicensePhotoId
+Dato Relaci´ on Tipo Descripci´ on
+LicensePhotoId PK Integer Es un valor num´ erico con que auto incrementa
+por cada nueva licencia registrada.
+FrontPhoto N Bytea Im´ agen frontal de la licencia de conducir.
+BackPhoto N Bytea Im´ agen trasera de la lincecia de conducir.
+13. Tabla: Address
+• Descripci´ on:Guarda direcciones asociadas a la licencia de conducir.
+• Primary Key: AddressId
+• Relacionado con: City
+Dato Relaci´ on Tipo Descripci´ on
+AddressId PK Integer Es un valor num´ erico que se auto incrementa
+por cada nueva direcci´ on registrada.
+CityId FK Integer Es un valor num´ erico que relaciona a la di-
+recci´ on con una ciudad.
+Street N Varchar(100) Es el nombre de la calle asociada a la di-
+recci´ on.
+Number N Integer Hace referencia al n´ umero de casa registrado
+en la direcci´ on.
+14. Tabla: City
+• Descripci´ on:Almacena todas las posibles ciudades de Chile.
+• Primary Key: CityId
+Dato Relaci´ on Tipo Descripci´ on
+CityId PK Integer Es un valor num´ erico que se auto incrementa
+por cada nueva ciudad registrada.
+CityName N Varchar(100) Nombre de la ciudad.
+69
+15. Tabla: RouteAssignment
+• Descripci´ on:La asignaci´ on de rutas se hacen mediante esta tabla, donde se
+almacena al chofer que la recorrer´ a, la ruta que recorrer´ a, el bus que utilizar´ a,
+la hora la que empez´ o, y la hora a la que termine, adem´ as de la fecha en la que
+se hizo.
+• Primary Key: RouteAssignmentId
+• Relacionado con: Route, Driver, Bus
+Dato Relaci´ on Tipo Descripci´ on
+RouteAssign-
+mentId
+PK Integer Es un valor num´ erico que se auto incrementa
+por cada nueva ruta asignada.
+RouteId FK Integer De la tabla de rutas, se rescata una ruta para
+ser asignada.
+BusId FK Integer De la tabla de buses se selecciona un bus con
+su id para la ruta asignada.
+DriverId FK Integer De la tabla de choferes se selecciona un chofer
+que har´ a la ruta.
+RouteTimeStart N Time Hora a la que se inicia el recorrido hh:mm.
+RouteTimeEnd N Time Hora a la que se termina el recorrido hh:mm.
+Date N Date Fecha en la que se hace el recorrido.
+16. Tabla: Report
+• Descripci´ on:Aqu´ ı se registran todos los reportes de incidentes que ocurran
+en ruta.
+• Primary Key: ReportId
+• Relacionado Con: RouteAssignment, User
+Dato Relaci´ on Tipo Descripci´ on
+ReportId PK Integer Es un valor num´ erico que se auto incrementa
+por cada nueva ruta asignada.
+RouteAssign-
+mentId
+FK Integer Es un valor num´ erico que se relaciona con la
+ruta asignada en la que ocurri´ o el reporte.
+UserId FK Integer Se registra el Id del usuario que hizo el re-
+porte, puede ser un chofer, administrador, o
+pasajero.
+Description N Varchar(500) Descripci´ on breve de lo ocurrido.
+Time N Time Hora en la que ocurri´ o el reporte.
+70
+17. Tabla: UserPassenger
+• Descripci´ on:Tabla donde se registran los pasajeros (No es obligatorio regis-
+trarse para usar el sistema, solo para reportes y futuras funcionalidades).
+• Primary Key: UserPassengerId
+• Relacionado Con: User
+Dato Relaci´ on Tipo Descripci´ on
+UserPassengerId PK Integer Es un valor num´ erico que se auto incrementa
+por cada nueva pasajero registrado.
+UserId FK Integer Es un valor num´ erico que se relaciona con el
+resto de datos del pasajero que ser´ an guarda-
+dos en tabla User.
+7.5.1 Estructura de documentos Json
+En el modelo de datos las rutas se almacenan en formato GeoJson el cu´ al tiene una
+estructura del tipo:
+1 {
+2 " type " : " F e a t u r e C o l l e c t i o n " ,
+3 " features " : [
+4 {
+5 " type " : " Feature " ,
+6 " p r o p e r t i e s " :{
+7 " name " : " MB 7 2 _ A _ T o _ S a n J o s e "
+8 } ,
+9 " geometry " : {
+10 " c o o r d i n a t e s " : [ [ lon , lat ] , [ lon , lat ] , ... ] ,
+11 " type " : " L i n e S t r i n g "
+12 }
+13 }
+14 ]
+15 }
+71
+7.6 Matriz de Riesgo
+C´ odigo Riesgo inherente Impacto Prob. Nivel Mitigaci´ on propuesta
+R1 Funcionamiento inestable
+en zonas rurales por
+p´ erdida de conectividad.
+Alto Media
+Alta
+Alto Incorporar modo offline, sin-
+cronizaci´ on diferida y buffer-
+ing local de datos cr´ ıticos, al-
+goritmo de predicci´ on para la
+posici´ on del bus.
+R2 Asignaci´ on simult´ anea de
+m´ ultiples buses a una
+misma ruta activa, provo-
+cando sobrecarga y dis-
+torsi´ on en la frecuencia del
+servicio.
+Medio Media Medio Implementar validaci´ on en
+backend que limite la canti-
+dad de buses por ruta activa
+seg´ un par´ ametros definidos
+(frecuencia esperada, intervalo
+m´ ınimo). Notificar al chofer si
+se excede el l´ ımite.
+R3 Latencia excesiva en el
+c´ alculo y entrega de ETA
+a pasajeros, degradando la
+experiencia de usuario.
+Medio Media Medio Optimizar queries al backend,
+cache de respuestas recientes
+y balanceo de carga.
+R4 Errores en la asignaci´ on de
+rutas por sincronizaci´ on in-
+correcta entre app y base
+de datos.
+Alto Media Alto Validaci´ on doble antes de asig-
+nar, versionado de rutas, roll-
+back ante errores.
+R5 Visualizaci´ on incorrecta de
+buses en el mapa del
+pasajero por discrepancias
+de tiempo real.
+Medio Alta Medio Ajuste de interpolaci´ on vi-
+sual, sincronizaci´ on peri´ odica
+y monitoreo del canal de datos.
+72
+7.7 Diagramas de Comportamiento
+73
+74
+7.7.1 Diagrama de Casos de Uso
+75
+7.7.2 Diagrama de Casos de Uso de Negocio
+76
+7.7.3 Diagramas de Estados
+• Diagrama de Estado del Recorrido
+77
+• Diagrama de Estado del Veh´ ıculo
+78
+• Diagrama de Estado del Chofer
+79
+• Diagrama de Estado de Ubicaci´ on
+80
+7.8 Diagramas de Interacci´ on
+7.8.1 Diagrama de Secuencia
+• Diagrama de Secuencia del Chofer
+81
+• Diagrama de Secuencia del Pasajero
+82
+• Diagrama de Secuencia del Administrador
+83
+7.8.2 Diagrama de Colaboraci´ on
+84
+Prototipo
+Se dise˜ n´ o e implement´ o unprototipo funcional de alcance limitado que integra los tres
+nodos fundamentales de la plataforma de geolocalizaci´ on de buses rurales. El prop´ osito es
+demostrar la viabilidad t´ ecnica y operacional de la soluci´ on propuesta antes de escalarla a
+producci´ on.
+8.1 Objetivos
+1. Validar la precisi´ on y la robustez tecnol´ ogica. Se establece como meta
+preliminar una precisi´ on m´ ınima del 85% (error≤ 15m) y una latencia de transmisi´ on
+inferior a 20s en zonas con cobertura 4G.
+2. Comprobar la trazabilidad en tiempo real . El sistema debe permitir el
+monitoreo continuo de la flota de buses rurales durante toda la jornada operativa
+(05:00–23:00). Esto incluye inicio/fin de recorrido, paradas y desviaciones.
+8.2 Alcance y componentes implementados
+El prototipo concentra las funcionalidades cr´ ıticas de la soluci´ on final y se compone de los
+siguientes nodos:
+• Nodo Embarcado ( App Chofer ): aplicaci´ on Flutter instalada en dispositivos
+Android con conexi´ on a 4G. Env´ ıa la posici´ on cada 10 s utilizando mensajes utilizando
+operaciones POST en la API.
+• Nodo Servidor ( Backend): Persistencia de datos desplegada en Supabase. Ex-
+pone endpoints REST para realizar operaciones CRUD sobre una base de datos
+PostgreSQL, gestiona autenticaci´ on mediante JWT.
+• Nodo Cliente ( App Pasajero ): Single page aplication desarrollada con la uti-
+lizaci´ on del software Astro que consume la API y representa la flota sobre un mapa
+Leaflet; calcula el tiempo estimado de llegada b´ asico mediante interpolaci´ on lineal.
+85
+8.3 Funcionalidades principales
+• Registro de inicio y fin de recorridos, con sellos tiempo.
+• Env´ ıo y almacenamiento hist´ orico de geolocalizaci´ on (latitud, longitud, timestamp).
+• Visualizaci´ on en tiempo real de ubicaci´ on, rutas, y paradas de buses.
+8.4 Limitaciones actuales
+• Autenticaci´ on b´ asica sin reglas RDS en las tablas PostgreSQL.
+• Pruebas limitadas a redes urbanas 4G (Sin evaluaci´ on en zonas rurales reales como
+San Jos´ e de Maipo).
+• Sin cifrado de extremo a extremo en la comunicaci´ on Cliente− →Servidor.
+8.5 Criterios de aceptaci´ on
+El prototipo se considera satisfactorio si en la campa˜ na de pruebas de campo se cumplen
+los siguientes umbrales:
+• Precisi´ on media≤ 15m en al menos el 85% de las muestras.
+• P´ erdida de paquetes< 2% medida en el enlace m´ ovil.
+• Disponibilidad del sistema≥ 95% durante la ventana operativa.
+8.6 Pr´ oximos pasos
+• Escalar el backend para soportar m´ as clientes simultaneos con replicas y balanceadores
+de carga.
+• Integrar cifrado de extremo a extremo.
+• Implementar modelos de predicci´ on de seguimiento del bus, con el fin de suplir la
+falta de cobertura GPS o red movil.
+• Jerarquizar operaciones CRUD en el Backend.
+• Implementar integraci´ on con la API Red Metropolitana de Movilidad y Metro.
+86
+8.7 Prototipo Funcional
+8.7.1 Prototipo App Chofer
+Pantallas que conforman al prototipo
+• Login: Permite ingresar crednenciales y es la primera pantalla con la que el Chofer
+se encontrar´ a al iniciar la aplicaci´ on.
+• Selecci´ on de bus: Desplegar´ a la totalidad de buses disponibles que posee la
+empresa, donde el Chofer seleccionar´ a el que utilizar´ a en su recorrido.
+• Selecci´ on de Ruta: Desplegar´ a todas las rutas disponibles en funci´ on de la
+ubicaci´ on del chofer y su cercan´ ıa con el punto de inicio de la ruta.
+• Vista de Mapa: Al entrar a esta pantalla se genera un asignaci´ on de ruta en
+el Backend y comienza a emitir su ubicaci´ on, para luego mostrar en tiempo real
+informaci´ on sobre esa asignaci´ on de ruta.
+• Configuraci´ on:Incluye configuraciones b´ asicas de la aplicaci´ on, en este prototipo,
+solo permite configurar apriencia visual.
+• Crear Usuario: Es una ruta alternativa, luego de la pantalla de login que permite
+crear un usuario Chofer para ser aprobado y verificado por el administrador.
+Flujo de Uso del Sistema
+87
+Login: Pantalla inicial de la aplicaci´ on. El usuario debe ingresar sus credenciales (usuario
+y contrase˜ na) para autenticarse. Si la validaci´ on es exitosa, se redirige autom´ aticamente a
+la pantalla de selecci´ on de bus. En caso de error (credenciales inv´ alidas o problemas de
+conexi´ on), se presenta un mensaje informativo al usuario.
+88
+Crear Cuenta: Para conductores que no poseen una cuenta activa, se dispone de una
+opci´ on de registro que permite crear un nuevo perfil de chofer. El formulario de registro
+solicita informaci´ on b´ asica y valida los campos antes de enviar la solicitud al servidor que
+eventualmente ser´ a procesada por un administrador.
+89
+Seleccionar Bus: Esta pantalla muestra un listado din´ amico de los buses disponibles,
+es decir, aquellos que no se encuentran actualmente en ruta ni marcados como fuera de
+servicio. El chofer debe seleccionar el bus que utilizar´ a durante el recorrido. La informaci´ on
+se sincroniza en tiempo real con el backend para evitar conflictos de asignaci´ on.
+90
+Seleccionar Ruta: Una vez asignado un bus, el sistema muestra ´ unicamente las rutas
+habilitadas cuyo punto de inicio se encuentra dentro de un radio de 100 metros respecto a
+la ubicaci´ on actual del chofer. Adem´ as, se filtran las rutas que disponen de una frecuencia
+operativa compatible con la asignaci´ on de un nuevo bus, evitando sobrecarga en el trazado.
+91
+Asignaci´ on de Viaje:Al confirmar tanto el bus como la ruta, se genera una instancia de
+viaje que asocia los tres elementos clave: chofer, veh´ ıculo y recorrido. Esta informaci´ on es
+registrada en el backend y se inicia autom´ aticamente la transmisi´ on de datos de ubicaci´ on.
+La interfaz muestra un resumen de la asignaci´ on, seguido de la carga del mapa en tiempo
+real con los eventos asociados al trayecto.
+92
+Sin Conexi´ on:Si el dispositivo no dispone de conexi´ on a Internet en cualquier momento
+previo a la asignaci´ on del viaje (por ejemplo, durante el login o selecci´ on de recursos), se
+muestra esta pantalla con un aviso al usuario. No es posible continuar con el flujo normal
+hasta recuperar la conectividad.
+93
+8.7.2 Prototipo App Pasajero
+Pantallas que conforman al prototipo
+• Selecci´ on de Paradero: En esta pantalla se despliegan sobre el mapa todos
+los paraderos cercanos a la ubicaci´ on actual del pasajero, determinados mediante
+geolocalizaci´ on. El usuario puede interactuar con cada uno de ellos; al seleccionar un
+paradero, se presenta informaci´ on relevante como la distancia estimada y el tiempo
+de llegada del bus m´ as pr´ oximo a dicho punto. Adicionalmente, se muestra en el
+mapa la ubicaci´ on en tiempo real del bus en ruta hacia el paradero seleccionado.
+• Selecci´ on de Micro:Una vez visualizados los buses en ruta, el pasajero puede
+seleccionar un veh´ ıculo espec´ ıfico. Al hacerlo, se despliega informaci´ on b´ asica del
+bus, incluyendo su patente, para facilitar su identificaci´ on visual en terreno.
+94
+Selecci´ on de Paradero:Se despliegan todos los paraderos registrados en el backend
+sobre el mapa.
+95
+Informaci´ on de Bus:Al seleccionar el bus se muestra informaci´ on del mismo.
+96
+8.8 Casos de Uso del Sistema
+8.8.1 Casos de Uso del Sistema - Chofer
+Nombre: CUS01 - Inicio de Sesi´ on del Chofer
+Actores: Chofer, Sistema, API de autenticaci´ on
+Precondiciones:
+• El chofer tiene una cuenta registrada en el sistema.
+• El dispositivo cuenta con conexi´ on a internet.
+Flujo normal:
+1. El chofer abre la aplicaci´ on TurMaipoView.
+2. Se muestra la pantalla de inicio de sesi´ on con campos
+para correo electr´ onico y contrase˜ na.
+3. El chofer ingresa sus credenciales y pulsa el bot´ on “Iniciar
+Sesi´ on”.
+4. El sistema verifica los datos a trav´ es del servicio de
+autenticaci´ on.
+5. Si las credenciales son correctas, el sistema inicia sesi´ on
+y redirige al chofer a la pantalla principal de rastreo.
+Flujo alternativo:
+3a. Si las credenciales ingresadas son incorrectas, el sistema
+muestra un mensaje de error: “Credenciales inv´ alidas.
+Intente nuevamente.”
+3b. Si no hay conexi´ on a internet, el sistema muestra el
+mensaje: “Sin conexi´ on. Intente m´ as tarde.”
+Postcondiciones: El chofer ha accedido correctamente al sistema y se encuentra
+en la pantalla de seleccion de bus, listo para configurar el
+pr´ oximo recorrido.
+97
+Nombre: CUS02 - Registro de Nuevo Chofer
+Actores: Chofer, Sistema, API de autenticaci´ on
+Precondiciones:
+• El chofer no posee una cuenta activa en el sistema.
+• El dispositivo tiene conexi´ on a internet.
+Flujo normal:
+1. El chofer accede a la opci´ on “¿No tienes cuenta?
+Reg´ ıstrate aqu´ ı” desde la pantalla de inicio de sesi´ on.
+2. El sistema muestra el formulario de registro.
+3. El chofer completa los campos: correo electr´ onico, nom-
+bre de usuario y contrase˜ na.
+4. El chofer pulsa el bot´ on “Crear Cuenta”.
+5. El sistema valida los datos y registra al nuevo chofer en
+la base de datos.
+6. El sistema confirma el registro exitoso y redirige al chofer
+a la pantalla de inicio de sesi´ on.
+Flujo alternativo:
+3a. Si falta completar alg´ un campo obligatorio, el sistema
+muestra el mensaje: “Por favor complete todos los cam-
+pos.”
+4a. Si ya existe una cuenta registrada con ese correo, el
+sistema muestra: “Correo ya registrado. Intente iniciar
+sesi´ on.”
+4b. Si hay un error de conexi´ on, el sistema muestra:“Error
+de red. Intente m´ as tarde.”
+Postcondiciones: El chofer ha sido registrado exitosamente y est´ a habilitado
+para iniciar sesi´ on en el sistema.
+98
+Nombre: CUS03 - Selecci´ on de Bus Asignado
+Actores: Chofer, Sistema, Base de Datos de Flota
+Precondiciones:
+• El chofer ha iniciado sesi´ on correctamente.
+• El sistema tiene cargada la lista de buses disponibles y
+su relaci´ on con el chofer.
+Flujo normal:
+1. El chofer visualiza la lista de buses disponibles de la
+empresa.
+2. El chofer selecciona su bus asignado.
+3. El sistema marca la selecci´ on con un ´ ıcono de confir-
+maci´ on.
+4. El chofer presiona el bot´ on “Continuar a Rutas”.
+5. El sistema guarda la selecci´ on y avanza a la configuraci´ on
+de rutas.
+Flujo alternativo:
+1a. Si no hay buses asignados al chofer, el sistema muestra
+el mensaje: “No hay buses disponibles para su cuenta.”
+4a. Si hay un error de conexi´ on al guardar la selecci´ on,
+el sistema muestra: “No se pudo guardar la selecci´ on.
+Intente m´ as tarde.”
+Postcondiciones: El sistema ha identificado el bus desde el cual se enviar´ a
+informaci´ on de ubicaci´ on en tiempo real, y permite continuar
+con la selecci´ on de rutas.
+99
+Nombre: CUS04 - Selecci´ on de Ruta Asignada
+Actores: Chofer, Sistema, Base de Datos de Rutas
+Precondiciones:
+• El chofer ha seleccionado un bus asignado.
+• El sistema tiene rutas cargadas y asociadas al bus selec-
+cionado.
+Flujo normal:
+1. El sistema muestra la lista de rutas disponibles para el
+bus seleccionado.
+2. El chofer selecciona una ruta.
+3. El sistema marca la selecci´ on con un ´ ıcono de confir-
+maci´ on.
+4. El chofer presiona el bot´ on “Continuar al Mapa”.
+5. El sistema registra la ruta seleccionada y carga la vista
+de seguimiento en mapa.
+Flujo alternativo:
+1a. Si no hay rutas disponibles para el bus, se muestra el
+mensaje: “No hay rutas asociadas a este bus.”
+4a. Si ocurre un error al cargar la vista de mapa, se muestra:
+“Error al continuar. Intente nuevamente.”
+Postcondiciones: El sistema tiene definida la ruta activa del bus y se dispone a
+comenzar la transmisi´ on de ubicaci´ on en tiempo real.
+100
+Nombre: CUS05 - Seguimiento de Ruta y Transmisi´ on de Ubicaci´ on
+Actores: Chofer, Sistema, Servicio de Geolocalizaci´ on, Backend/API
+Precondiciones:
+• El chofer ha iniciado sesi´ on correctamente.
+• Se ha seleccionado un bus y una ruta asociada.
+• El dispositivo tiene acceso a geolocalizaci´ on y conexi´ on
+activa a internet.
+Flujo normal:
+1. El sistema accede a la ubicaci´ on en tiempo real del
+dispositivo del chofer.
+2. Se muestra el mapa con la ruta seleccionada y los pa-
+raderos correspondientes.
+3. En la parte superior se despliega un panel con:
+• Nombre del chofer.
+• Nombre de la empresa.
+• Bus seleccionado.
+• Ruta actual.
+4. El sistema transmite la ubicaci´ on del bus al backend en
+intervalos regulares.
+5. El chofer puede detener la ruta presionando el bot´ on
+“Detener Ruta”.
+Flujo alternativo:
+1a. Si la geolocalizaci´ on falla, se muestra el mensaje: “No
+se pudo obtener la ubicaci´ on. Verifique permisos.”
+4a. Si hay p´ erdida de conexi´ on, se reintenta la transmisi´ on de
+datos autom´ aticamente cuando se restablece la conexi´ on.
+Postcondiciones: La ubicaci´ on en tiempo real del bus queda registrada y
+disponible para su visualizaci´ on por los pasajeros en la app.
+101
+8.8.2 Casos de Uso del Sistema - Pasajero
+Nombre: CUS06 - Inicio de Aplicaci´ on y Selecci´ on de Paradero
+Actores: Pasajero, Sistema
+Precondiciones:
+• La app est´ a instalada en el dispositivo.
+• El dispositivo tiene conexi´ on a internet.
+Flujo normal:
+1. El pasajero abre la aplicaci´ on TurMaipoView.
+2. Se muestra la pantalla de bienvenida con el nombre de
+la app y el bot´ on “Seleccionar Paradero”.
+3. El pasajero pulsa el bot´ on “Seleccionar Paradero”.
+4. El sistema redirige al pasajero a la vista de mapa con
+paraderos y buses.
+Flujo alternativo:
+2a. Si no hay conexi´ on a internet, la aplicaci´ on no iniciar´ a
+hasta que el usuario tenga alg´ un tipo de conexi´ on.
+Postcondiciones:
+• El pasajero ha iniciado el flujo para interactuar con el
+sistema.
+• El sistema lo ha dirigido a la visualizaci´ on de paraderos.
+102
+Nombre: CUS07 - Visualizaci´ on de Paraderos y Selecci´ on
+Actores: Pasajero, Sistema, Servicio de geolocalizaci´ on
+Precondiciones:
+• El pasajero ha iniciado la aplicaci´ on y presionado “Se-
+leccionar Paradero”.
+• El dispositivo tiene acceso a geolocalizaci´ on.
+Flujo normal:
+1. El sistema solicita acceso a la ubicaci´ on del pasajero.
+2. Se muestra un mapa con paraderos cercanos.
+3. El pasajero selecciona un ´ ıcono de paradero.
+4. El sistema muestra:
+• Nombre del paradero.
+• Distancia aproximada de la micro al paradero se-
+leccionado.
+• Tiempo estimado de llegada del bus m´ as cercano
+(ETA).
+Flujo alternativo:
+1a. Si el pasajero deniega el acceso a la ubicaci´ on, el sistema
+muestra un mensaje de error: “No se pudo obtener su
+ubicaci´ on actual”y centra el mapa en una ubicaci´ on
+predeterminada de referencia.
+3a. Si no hay buses disponibles, se muestra el mensaje: “Sin
+buses disponibles en este momento” .
+Postcondiciones: El pasajero ha visualizado los paraderos disponibles en un
+mapa y ha obtenido informaci´ on relevante del paradero selec-
+cionado, habilitando la toma de decisiones sobre su trayecto.
+103
+Nombre: CUS08 - Visualizaci´ on de Micro Cercana Asociada a un Pa-
+radero
+Actores: Pasajero, Sistema, Backend GPS
+Precondiciones:
+• El pasajero ha accedido a la vista del mapa con pa-
+raderos.
+• El pasajero ha seleccionado un paradero del mapa.
+• Existen micros activas asociadas a dicho paradero.
+Flujo normal:
+1. El pasajero selecciona un paradero desde el mapa.
+2. El sistema consulta en tiempo real las micros que pasar´ an
+por ese paradero.
+3. Se identifica la micro m´ as cercana en tr´ ansito hacia el
+paradero seleccionado.
+4. El mapa actualiza su vista y muestra el ´ ıcono de dicha
+micro junto al mensaje ”Micro actual”.
+Flujo alternativo:
+2a. Si no hay micros activas asociadas al paradero, se muestra
+el mensaje: “No hay buses pr´ oximos a este paradero”.
+3a. Si ocurre una p´ erdida temporal de conexi´ on con el sis-
+tema GPS, se mantiene la ´ ultima ubicaci´ on conocida con
+un mensaje: “Ubicaci´ on desactualizada”.
+Postcondiciones: El pasajero visualiza en el mapa la micro m´ as cercana que se
+dirige al paradero seleccionado.
+104
+8.9 Estrategia de Poblamiento y Migraci´ on de Datos
+Durante la fase de prototipo se defini´ o unpoblamiento progresivo de las tablas cr´ ıticas,
+garantizando que las funcionalidades esenciales estuvieran operativas sin requerir un
+entorno productivo con datos hist´ oricos. A continuaci´ on se detallan las t´ acticas empleadas:
+• Poblamiento manual inicial
+En una primera iteraci´ on, las tablas est´ aticas—Company, User, Bus, User Company,
+Driver y Admin—se cargaron directamente desde el backend mediante scripts de
+administraci´ on. Una vez desplegada la aplicaci´ on de gesti´ on, la creaci´ on y manten-
+imiento de esta informaci´ on quedar´ a a cargo del rolAdministrador.
+• Datos simulados para rutas y paraderos
+Las tablas din´ amicasRoute y Bus Stop se poblaron con recorridos reales de la
+zona de San Jos´ e de Maipo, convertidos a formato GeoJSON. Las coordenadas
+se procesaron con geojson.io y herramientas internas para generar secuencias de
+puntos v´ alidas, respetando los requisitos de formato dePostGIS.
+• Integridad referencial
+Todas las relaciones incorporan claves for´ aneas, restricciones NOT NULL y reglas
+de cascada donde corresponde. Esto asegura consistencia transaccional y evita
+inserciones hu´ erfanas durante el poblamiento.
+• Poblamiento automatizado en tiempo de ejecuci´ on
+Tablas de operaci´ on—por ejemploRoute Assignment y Bus Location—se llenan
+de forma autom´ atica mediante el flujo normal de la App Chofer . Cada inicio de
+recorrido registra la asignaci´ on chofer–bus–ruta, y los paquetes GNSS sucesivos
+actualizan la posici´ on del veh´ ıculo en intervalos de 10 s.
+La estrategia de poblamiento fue concebida de forma incremental y controlada, acompa˜ nando
+el desarrollo del sistema y permitiendo probar los flujos funcionales del sistema en distintos
+momentos del ciclo de prototipado.
+105
+Dise˜ no Plan de Pruebas de Software
+9.1 Alcance de las Pruebas de Software
+Las pruebas se enfocar´ an en evaluar el comportamiento del prototipo funcional desarrollado,
+con el objetivo de identificar debilidades operativas, deficiencias t´ ecnicas y posibles cuellos
+de botella en el sistema. Los hallazgos obtenidos durante esta etapa ser´ an utilizados como
+retroalimentaci´ on directa para el dise˜ no y construcci´ on de la soluci´ on final en su versi´ on
+productiva.
+El alcance de las pruebas considera los siguientes componentes cr´ ıticos del sistema:
+• Aplicaci´ on M´ ovil del Chofer:Se validar´ a la estabilidad de la aplicaci´ on ante
+m´ ultiples sesiones activas en paralelo, evaluando el l´ ımite m´ aximo de buses conectados
+simult´ aneamente sin degradaci´ on del servicio ni ca´ ıdas. Se verificar´ a adem´ as el cor-
+recto registro de ubicaci´ on y asignaci´ on de rutas en distintos escenarios operacionales
+(cambios de red, p´ erdida de se˜ nal, errores GNSS, etc.).
+• Aplicaci´ on M´ ovil del Pasajero:Se probar´ a la carga din´ amica de paraderos y buses,
+as´ ı como la capacidad de respuesta del sistema ante m´ ultiples consultas concurrentes
+desde diferentes dispositivos. Tambi´ en se evaluar´ a la exactitud del c´ alculo de tiempos
+estimados de llegada (ETA) y la coherencia entre el mapa visualizado y los datos de
+backend.
+• Backend y API REST: Se medir´ a la capacidad del servidor para manejar m´ ultiples
+conexiones simult´ aneas provenientes tanto de la app del chofer como de la app del
+pasajero. Esto incluye pruebas de estr´ es sobre endpoints cr´ ıticos (/send-location,
+/get-buses, /assign-route), verificaci´ on de integridad de datos, manejo de errores,
+tolerancia a fallos y cumplimiento de los tiempos m´ aximos de respuesta definidos.
+• Base de Datos: Se observar´ a el comportamiento de las operaciones de lectura
+y escritura bajo carga, validando tiempos de inserci´ on de datos de localizaci´ on,
+consistencia de relaciones entre entidades y escalabilidad del esquema ante crecimiento
+de datos en tablas clave ( bus location, route assignment, etc.).
+106
+• Pruebas de Campo en Zona Rural: Se realizar´ an pruebas en entornos reales,
+espec´ ıficamente en zonas con cobertura m´ ovil intermitente, para evaluar la resiliencia
+del sistema ante p´ erdida de conectividad, latencias variables y errores GNSS. Esto per-
+mitir´ a ajustar los umbrales operativos y las pol´ ıticas de reconexi´ on o almacenamiento
+temporal de datos en el dispositivo.
+107
+Pruebas Funcionales
+Dentro del alcance, se contemplan pruebas funcionales que permiten verificar que cada com-
+ponente del sistema cumple con los requerimientos establecidos. Estas pruebas consideran
+los siguientes casos principales:
+• App del Chofer:
+– Autenticaci´ on correcta e incorrecta.
+– Registro de nuevo usuario (chofer).
+– Visualizaci´ on y selecci´ on de buses disponibles.
+– Visualizaci´ on y selecci´ on de rutas disponibles seg´ un la geolocalizaci´ on.
+– Asignaci´ on de viaje con almacenamiento correcto en backend.
+– Transmisi´ on de ubicaci´ on en tiempo real durante el recorrido.
+– Reintento de env´ ıo ante p´ erdida de conectividad.
+• App del Pasajero:
+– Carga de paraderos cercanos seg´ un ubicaci´ on actual.
+– Visualizaci´ on de informaci´ on de buses pr´ oximos a un paradero.
+– Visualizaci´ on en tiempo real del bus seleccionado en el mapa.
+– Precisi´ on en la estimaci´ on de tiempo de llegada (ETA).
+• Backend/API:
+– Respuesta correcta ante peticiones v´ alidas y manejo de errores ante entradas
+inv´ alidas.
+– Creaci´ on y actualizaci´ on de entidades como usuarios, rutas, buses y asignaciones.
+– Persistencia de datos de localizaci´ on enviados por la app del chofer.
+– Respuesta de los endpoints al panel de monitoreo o apps m´ oviles con datos
+actualizados.
+– Mantenimiento de integridad referencial entre entidades relacionadas.
+108
+Pruebas No Funcionales
+Adem´ as de validar el correcto funcionamiento l´ ogico del sistema, se realizar´ an pruebas no
+funcionales orientadas a evaluar atributos de calidad como el rendimiento, la escalabilidad,
+la disponibilidad y la experiencia de usuario. Estas pruebas consideran los siguientes
+aspectos:
+• Rendimiento:
+– Tiempo promedio de respuesta del backend ante peticiones concurrentes (meta:
+< 2 s en condiciones normales).
+– Evaluaci´ on de la carga m´ axima soportada por el backend sin p´ erdida de paquetes
+o errores HTTP.
+– Tiempo de carga inicial de las interfaces m´ oviles (Chofer y Pasajero).
+• Escalabilidad:
+– Capacidad del sistema para manejar un n´ umero creciente de buses conectados
+simult´ aneamente (meta de referencia: m´ ınimo 10 buses activos en prototipo).
+– Evaluaci´ on de la respuesta del sistema ante m´ ultiples pasajeros consultando
+ETA de forma simult´ anea.
+• Tolerancia a fallos:
+– Comportamiento del sistema ante p´ erdida de conectividad de red (reintentos,
+almacenamiento temporal en cach´ e, reconexi´ on autom´ atica).
+– Manejo de ca´ ıdas del servidor o desconexiones imprevistas de la base de datos.
+• Disponibilidad y confiabilidad:
+– Medici´ on de la disponibilidad del backend durante una jornada simulada com-
+pleta (≥ 95% de uptime).
+– Evaluaci´ on de la persistencia de datos ante reinicio de los servicios o del
+dispositivo m´ ovil.
+109
+• Usabilidad:
+– Evaluaci´ on cualitativa de la experiencia del usuario (chofer y pasajero) respecto
+a claridad de la interfaz, facilidad de uso y tiempo promedio para completar
+tareas clave.
+– Detecci´ on de ambig¨ uedades o problemas de flujo en la navegaci´ on de la app.
+• Seguridad:
+– Validaci´ on del control de acceso mediante autenticaci´ on de usuarios.
+– Verificaci´ on de que no se pueden acceder a rutas, buses o datos no autorizados.
+– Evaluaci´ on de transmisi´ on de datos bajo HTTPS (si est´ a implementado en el
+prototipo).
+– Verificaci´ on de tokens de sesi´ on y expiraci´ on autom´ atica si no hay actividad.
+110
+Pruebas de Integraci´ on
+Estas pruebas verifican la correcta interacci´ on entre los distintos m´ odulos del sistema,
+asegurando que el flujo de datos y la l´ ogica entre componentes est´ en correctamente
+implementados.
+• App Chofer⇔ Backend: verificaci´ on del env´ ıo correcto de ubicaci´ on, asignaci´ on de
+ruta y persistencia de datos.
+• App Pasajero⇔ Backend: consulta y visualizaci´ on en tiempo real de paraderos,
+buses y estimaci´ on de llegada.
+• Backend⇔ Base de Datos: integridad referencial y consistencia de registros en
+operaciones simult´ aneas.
+• Panel Web⇔ API: representaci´ on precisa de la ubicaci´ on y estado de buses asignados.
+Pruebas de Campo
+Estas pruebas se realizan en condiciones reales de operaci´ on, particularmente en zonas
+rurales con cobertura m´ ovil variable, para validar la confiabilidad del sistema en contexto
+operativo.
+• Seguimiento de un bus real en ruta durante una jornada completa.
+• Verificaci´ on de transmisi´ on de ubicaci´ on con latencias menores a 10 s.
+• Evaluaci´ on de recuperaci´ on ante p´ erdida de se˜ nal (offline buffer y reenv´ ıo).
+• Precisi´ on del posicionamiento GNSS en movimiento y zonas con interferencia.
+• Comprobaci´ on visual de coincidencia entre app del pasajero y posici´ on real del bus.
+111
+9.2 Herramientas de Gesti´ on de Pruebas, Manejo de Errores y
+Criterios de Aceptaci´ on
+Herramientas de Gesti´ on de Pruebas
+Para la planificaci´ on, ejecuci´ on y seguimiento de las pruebas del prototipo funcional se
+utilizar´ an herramientas ligeras y accesibles, compatibles con entornos de desarrollo ´ agil:
+• Google Sheets / Excel: Plantillas personalizadas para definir casos de prueba,
+registrar resultados, documentar errores y hacer seguimiento del avance.
+• Postman: Para pruebas manuales sobre la API REST, incluyendo validaci´ on de
+endpoints, estructuras de respuesta y manejo de errores HTTP.
+• JMeter (opcional): Para simulaci´ on de carga y evaluaci´ on de rendimiento del
+backend ante m´ ultiples conexiones concurrentes.
+• Herramientas de captura de pantalla y video: Para documentar fallos visuales
+y problemas de flujo en las aplicaciones m´ oviles.
+Manejo de Errores y Registro
+Durante la ejecuci´ on de pruebas se implementar´ a una estrategia sistem´ atica de detecci´ on
+y trazabilidad de errores:
+• Clasificaci´ on por severidad:
+– Cr´ ıtico: interrumpe el funcionamiento del sistema.
+– Alto: afecta funcionalidad clave, pero permite continuidad limitada.
+– Medio: errores funcionales menores o visuales.
+– Bajo: inconsistencias est´ eticas, errores tipogr´ aficos, etc.
+• Registro estructurado: Cada error se documenta con un identificador ´ unico,
+descripci´ on detallada, pasos para replicarlo, componente afectado, severidad, estado
+(pendiente, en revisi´ on, resuelto) y evidencia (captura o log).
+• Bit´ acora de pruebas:Se mantendr´ a una bit´ acora consolidada donde se cruzar´ an
+los casos de prueba con los errores detectados para facilitar el an´ alisis posterior.
+112
+Criterios de Aceptaci´ on
+Para considerar como exitoso el proceso de validaci´ on del prototipo funcional, se deben
+cumplir los siguientes umbrales m´ ınimos:
+• Al menos el 90 % de los casos de prueba deben obtener resultado exitoso.
+• No debe existir ning´ un error clasificado comocr´ ıticoo alto sin resolver al cierre de
+pruebas.
+• El sistema debe mantener una disponibilidad de al menos el 95 % durante simulaciones
+de operaci´ on continua.
+• Las funciones cr´ ıticas (asignaci´ on de ruta, transmisi´ on de ubicaci´ on, visualizaci´ on en
+mapa) deben comportarse conforme a los requisitos definidos.
+• La informaci´ on visualizada en las aplicaciones debe estar sincronizada con los datos
+persistidos en la base de datos, sin inconsistencias.
+113
+Realizaci´ on de Pruebas de Software
+Durante el desarrollo del sistema TurMaipo se realizaron pruebas funcionales y no fun-
+cionales orientadas a validar el cumplimiento de los requisitos definidos en las etapas
+previas. Esta secci´ on documenta la ejecuci´ on efectiva de dichas pruebas, los resultados
+obtenidos, los errores detectados y las lecciones aprendidas.
+10.1 Contexto de pruebas
+Las pruebas fueron ejecutadas principalmente en entornos locales de desarrollo y en
+escenarios controlados que simulan el contexto rural objetivo. Se utilizaron dispositivos
+Android (versi´ on 10 y superior) para la aplicaci´ on de choferes, navegadores m´ oviles (Chrome
+y Firefox) para la interfaz de pasajeros, y redes m´ oviles 4G con cobertura parcial para
+simular condiciones reales de conectividad.
+10.2 Resumen de ejecuci´ on
+Se probaron exitosamente los flujos principales del sistema, incluyendo:
+• Registro y autenticaci´ on de usuarios (chofer y pasajero) mediante JWT.
+• Transmisi´ on peri´ odica de datos de geolocalizaci´ on desde la app de chofer.
+• Visualizaci´ on en tiempo real de buses en movimiento sobre el mapa interactivo
+(Leaflet).
+• Consulta de rutas y paraderos definidos mediante la API.
+En cuanto a las pruebas no funcionales, se evalu´ o la latencia en actualizaciones de ubicaci´ on
+(media∼6s), la estabilidad ante p´ erdidas de se˜ nal, y la capacidad de renderizar mapas y
+elementos sin interrupciones en dispositivos de gama media.
+114
+10.3 Errores representativos detectados
+Durante el proceso de pruebas se identificaron m´ ultiples problemas, de los cuales los m´ as
+significativos fueron:
+• Bug de transmisi´ on GPS interrumpida:La app de chofer dejaba de enviar
+coordenadas si el usuario minimizaba la aplicaci´ on. Se solucion´ o manteniendo el
+proceso activo en segundo plano y revisando el flujo de reintento.
+• Errores de estimaci´ on de ETA:Inicialmente se estimaba el tiempo de llegada
+de buses de forma incorrecta, debido a una interpolaci´ on defectuosa de puntos
+geogr´ aficos. La l´ ogica fue ajustada y simplificada para trabajar con distancias
+lineales b´ asicas.
+• Problemas de reconexi´ on al backend: Ante cortes intermitentes de red, el
+frontend no reconectaba autom´ aticamente. Se implementaron reintentos autom´ aticos
+con un mecanismo b´ asico de fallback usandofetch.
+• Desbordes visuales en mapas: los ´ ıconos de paraderos y buses se sal´ ıan de la
+vista en algunos zooms o dispositivos. Se ajustaron los tama˜ nos y se reemplazaron
+´ ıconos oscuros por versiones claras, tras validar su visibilidad en pantallas peque˜ nas.
+10.4 Lecciones aprendidas y mejoras aplicadas
+El proceso de pruebas permiti´ o identificar varias oportunidades de mejora:
+• Se simplific´ o la arquitectura del frontend para reducir errores de renderizado, consol-
+idando estados con menos dependencias asincr´ onicas.
+• Se mejor´ o la l´ ogica de reconexi´ on al backend en situaciones de baja se˜ nal, incorporando
+indicadores de estado de conexi´ on para el usuario.
+• Se ajustaron los endpoints del backend para incluir validaciones m´ as estrictas y
+retornos m´ as claros ante errores comunes de ingreso de datos.
+115
+10.5 Cobertura y cumplimiento
+De los 22 casos de prueba definidos inicialmente (14 funcionales, 8 no funcionales), un
+total de 19 fueron completados exitosamente, 2 presentaron fallas menores corregidas, y 1
+fue reprogramado para una iteraci´ on posterior.
+• Tasa de ´ exito:80% (casos exitosos en primera iteraci´ on).
+• Criterios de aceptaci´ on cumplidos:
+– Latencia de geolocalizaci´ on promedio≤ 10s.
+– Tasa de disponibilidad del sistema en entorno simulado ≥ 95%.
+– Visualizaci´ on en tiempo real funcional con m´ ultiples buses.
+Estos resultados respaldan que el prototipo cumple con las expectativas t´ ecnicas m´ ınimas
+para su validaci´ on como MVP (Minimum Viable Product ).
+116
+Plan de Puesta en Marcha
+La implementaci´ on del sistema TurMaipo considera una estrategia gradual, controlada y
+supervisada, que permita validar su desempe˜ no en condiciones reales, corregir posibles fallos
+residuales y garantizar una adopci´ on efectiva por parte de los usuarios finales (choferes
+y pasajeros). Esta fase marca la transici´ on entre el entorno de desarrollo y la operaci´ on
+funcional del sistema como herramienta de apoyo a la gesti´ on del transporte rural.
+11.1 Etapas del Plan de Puesta en Marcha
+1. Capacitaci´ on Inicial a Choferes:Se coordinar´ an sesiones breves de inducci´ on
+con los conductores, donde se presentar´ a el uso b´ asico de la app (registro, inicio
+de sesi´ on, selecci´ on de bus y ruta, transmisi´ on de ubicaci´ on). La capacitaci´ on se
+apoyar´ a con material visual impreso y un video tutorial pregrabado.
+2. Carga de Datos Operativos Iniciales: Se poblar´ a la base de datos con las rutas
+reales, paraderos georreferenciados, y buses activos de la empresa local. Este proceso
+se realizar´ a desde un entorno administrativo mediante scripts y validaci´ on manual.
+3. Despliegue del Backend en Producci´ on: El sistema ser´ a alojado en una
+plataforma de hosting estable (como Render, Railway o VPS local), asegurando
+disponibilidad 24/7, conexi´ on segura y respaldo de datos.
+4. Publicaci´ on del Frontend M´ ovil:La app ser´ a publicada inicialmente como APK
+descargable mediante enlace directo o c´ odigo QR para facilitar la instalaci´ on sin
+depender de stores. La versi´ on para pasajeros estar´ a optimizada para navegadores
+m´ oviles y se desplegar´ a en Netlify o Vercel.
+5. Piloto Controlado en Ruta: Se asignar´ a un n´ umero reducido de choferes (2-3)
+para operar con el sistema durante un d´ ıa h´ abil completo. Durante este piloto se
+recopilar´ an logs de uso, retroalimentaci´ on directa y m´ etricas de latencia. El equipo
+t´ ecnico estar´ a disponible durante toda la jornada.
+117
+6. Evaluaci´ on y Ajustes:Finalizado el piloto, se consolidar´ a la informaci´ on recabada
+y se realizar´ an ajustes menores en las interfaces, flujo de datos y par´ ametros del
+backend, antes de permitir una adopci´ on extendida.
+7. Escalamiento Progresivo: Una vez validadas las mejoras, se habilitar´ a el sis-
+tema para todos los choferes activos de la l´ ınea, promoviendo el uso cotidiano y
+monitoreando su adopci´ on.
+8. Apoyo Continuo y Mantenimiento: Se mantendr´ a un canal de soporte abierto
+con respuestas r´ apidas (WhatsApp o correo) y se programar´ an revisiones peri´ odicas
+del sistema para mantener la estabilidad operativa.
+11.2 Criterios de ´Exito de la Puesta en Marcha
+La puesta en marcha se considerar´ a exitosa si:
+• Al menos un 70% de los choferes completan una jornada usando el sistema sin errores
+cr´ ıticos.
+• Los pasajeros logran visualizar la ubicaci´ on de los buses en tiempo real desde su
+dispositivo.
+• No se detectan p´ erdidas de datos ni errores de geolocalizaci´ on mayores durante el
+piloto.
+• Se recibe retroalimentaci´ on positiva de al menos 3 usuarios finales (choferes o
+pasajeros).
+118
+Conclusi´ on
+El desarrollo del sistema TurMaipo responde a una necesidad concreta de mejorar el acceso
+al transporte p´ ublico en zonas rurales como San Jos´ e de Maipo, mediante una soluci´ on
+tecnol´ ogica que conecta en tiempo real a choferes y pasajeros. A lo largo del informe se ha
+documentado detalladamente el proceso de dise˜ no, implementaci´ on, pruebas y validaci´ on
+del prototipo funcional, as´ ı como los desaf´ ıos espec´ ıficos que implica operar en contextos
+con conectividad limitada, recursos t´ ecnicos acotados y usuarios con distintos niveles de
+alfabetizaci´ on digital.
+Desde el punto de vista t´ ecnico, el sistema logr´ o integrar componentes modernos y eficientes
+como Astro, React, TailwindCSS y Flask, en una arquitectura modular capaz de operar
+con datos de geolocalizaci´ on en tiempo real. Las pruebas funcionales y no funcionales
+demostraron un alto grado de cumplimiento de los requisitos, con tasas de ´ exito superiores
+al 85 % y tiempos de respuesta aceptables incluso en condiciones adversas. No obstante, el
+proceso evidenci´ o vulnerabilidades inherentes al entorno rural, como la dependencia de
+redes m´ oviles poco estables, la necesidad de mecanismos offline robustos y el riesgo de
+asignaciones de ruta sin control de frecuencia. Estas observaciones fueron fundamentales
+para ajustar el sistema, fortaleciendo su tolerancia a fallos, su capacidad de reconexi´ on y
+la validaci´ on de flujos operacionales.
+En t´ erminos organizacionales, la puesta en marcha contempla un despliegue gradual,
+validado por pilotos reales y acompa˜ nado de mecanismos de capacitaci´ on accesibles para
+los usuarios finales. La experiencia adquirida en terreno y durante las iteraciones de
+prueba permiti´ o no solo mejorar la soluci´ on t´ ecnica, sino tambi´ en reafirmar la importancia
+de involucrar tempranamente a los actores clave en el dise˜ no de herramientas digitales
+que buscan transformar servicios cr´ ıticos como el transporte. En definitiva, TurMaipo
+constituye una base s´ olida para continuar su escalamiento hacia una soluci´ on completa,
+confiable y replicable en otros territorios rurales del pa´ ıs.
+119
+Anexo A: Recursos Complementarios del Prototipo
+A.1 Repositorios de C´ odigo Fuente
+A continuaci´ on se detallan los enlaces a los repositorios de GitHub donde se encuentra
+almacenado el c´ odigo del sistema TurMaipo, separados por componente funcional:
+• Aplicaci´ on de Chofer (Frontend + Backend): https://github.com/diegopastabass/
+busTrackerChofer
+• Aplicaci´ on de Usuario (Pasajero): https://github.com/KoourRp/TurMaipoUsuario
+Cada repositorio incluye instrucciones de instalaci´ on, dependencias requeridas y capturas
+de pantalla referenciales.
+A.2 Acceso a la Versi´ on de Demostraci´ on
+Para facilitar la revisi´ on del prototipo funcional en su versi´ on web para pasajeros, se
+dispone del siguiente c´ odigo QR, que redirige a la versi´ on desplegada temporalmente:
+Nota: El entorno de despliegue corresponde a una versi´ on de prueba con fines exclusiva-
+mente acad´ emicos.
+120
+A.3 Consideraciones Legales Relevantes
+El sistema desarrollado contempla el tratamiento de datos personales sensibles, tales
+como la geolocalizaci´ on en tiempo real de los conductores, su identificaci´ on mediante
+credenciales oficiales, y potencialmente informaci´ on relacionada a los pasajeros. En este
+contexto, se consideraron los principios y exigencias establecidas por la Ley N ° 19.628
+sobre Protecci´ on de la Vida Privada, as´ ı como las disposiciones de la futura Ley N° 21.719,
+que fortalece el marco normativo en esta materia y armoniza la legislaci´ on chilena con los
+est´ andares internacionales como el Reglamento General de Protecci´ on de Datos (GDPR).
+Se adoptaron pr´ acticas como el consentimiento informado, la minimizaci´ on de datos, la
+transparencia en su tratamiento, y medidas de seguridad desde el dise˜ no (Privacy by
+Design). Estas acciones buscan garantizar el respeto de los derechos de los titulares de los
+datos, prevenir vulneraciones y asegurar la sostenibilidad legal del sistema ante futuras
+exigencias regulatorias.
+Para un an´ alisis m´ as detallado sobre estos aspectos normativos y sus implicancias en el
+dise˜ no e implementaci´ on de la soluci´ on, se recomienda revisar el apartadoFactibilidad
+Legal incluido en el cuerpo principal del informe.
+121
+Bibliograf´ ıa y Referencias Legales
+13.1 13.1 Referencias Legales
+Biblioteca del Congreso Nacional de Chile. (s.f.). Ley N° 19.628 sobre Protecci´ on de la
+Vida Privada.
+https://www.bcn.cl/leychile/navegar?idNorma=141599
+Biblioteca del Congreso Nacional de Chile. (2024). Ley N° 21.719 que Regula la Protecci´ on
+y Tratamiento de los Datos Personales .
+https://www.bcn.cl/leychile/navegar?idNorma=1221879
+Biblioteca del Congreso Nacional de Chile. (s.f.). Decreto Supremo N ° 212/1992 –
+Transporte P´ ublico.
+https://www.bcn.cl/leychile/navegar?idNorma=111157
+Ministerio de Transportes y Telecomunicaciones. (2021). Resoluci´ on Exenta N° 2778:
+Requisitos de GPS para buses nuevos .
+https://www.diariooficial.interior.gob.cl/publicaciones/2021/10/28/43108/
+01/2041164.pdf
+Biblioteca del Congreso Nacional de Chile. (s.f.). Ley N° 17.336 sobre Propiedad Intelectual.
+https://www.bcn.cl/leychile/navegar?idNorma=28933
+13.2 13.2 Fuentes Institucionales
+Direcci´ on del Trabajo. (s.f.).Dictamen sobre monitoreo con GPS y derechos laborales .
+https://www.dt.gob.cl/legislacion/1624/w3-article-121166.html
+Departamento de Derechos Intelectuales. (s.f.). Registro de software en Chile .
+https://www.propiedadintelectual.gob.cl/registro-de-software/
+122
+13.3 13.3 Referencias T´ ecnicas y Frameworks
+Flutter. (s.f.). Flutter – Build apps for any screen .
+https://flutter.dev/
+Flask. (s.f.). Flask Documentation.
+https://flask.palletsprojects.com/
+Astro. (s.f.). Astro Documentation.
+https://docs.astro.build/
+React. (s.f.). React – A JavaScript Library for Building User Interfaces .
+https://reactjs.org/
+Tailwind CSS. (s.f.). Tailwind CSS Documentation.
+https://tailwindcss.com/
+Supabase. (s.f.). Supabase Documentation.
+https://supabase.com/docs
+Leaflet. (s.f.). Leaflet – JavaScript Library for Interactive Maps .
+https://leafletjs.com/
+13.4 13.4 Referencias de Contexto y UX
+Fundaci´ on Pa´ ıs Digital. (2022).Brecha digital en zonas rurales de Chile .
+https://paisdigital.org
+CEPAL. (2022). Inclusi´ on digital en Am´ erica Latina y el Caribe.
+https://www.cepal.org/es/publicaciones/48247-inclusion-digital-america-latina-caribe
+Nielsen Norman Group. (s.f.). Mobile UX Design: The Ultimate Guide .
+https://www.nngroup.com/articles/mobile-ux/
+ISO. (2019). ISO/IEC 25010:2011 – Systems and software Quality Requirements and
+Evaluation (SQuaRE).
+https://www.iso.org/standard/35733.html
+123

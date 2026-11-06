@@ -1,0 +1,29 @@
+@startuml sec_cu01
+!include sec_estilo.iuml
+actor "Atleta" as U
+participant "App Flutter" as A
+participant "API NestJS" as B
+database "MongoDB" as DB
+autonumber
+U -> A : Abre fuerza y elige anotar una sesión
+A -> B : GET /exercises y GET /routines
+B -> DB : Busca en exercises y routines
+DB --> B : Ejercicios y rutinas
+B --> A : Listas
+A --> U : Muestra ejercicios y rutinas
+opt Usa una rutina guardada
+  U -> A : Elige la rutina
+  A --> U : Carga sus ejercicios
+end
+U -> A : Ingresa series, repeticiones, peso y RPE, y pulsa Guardar
+alt Falta un dato o el peso no es un número
+  A --> U : Avisa cuál es y no envía nada
+else Datos válidos
+  A -> B : POST /workouts
+  B -> B : Valida y calcula la carga
+  B -> DB : Guarda en workouts
+  DB --> B : Confirmación
+  B --> A : Sesión creada
+  A --> U : Muestra la sesión en el historial
+end
+@enduml

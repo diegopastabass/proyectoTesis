@@ -1,0 +1,26 @@
+@startuml dga_cu12
+!include dga_estilo.iuml
+|Usuario|
+|Aplicación|
+|Aplicación|
+start
+:1. Muestra el\ncuestionario inicial;
+repeat
+  |Usuario|
+  :2. Responde sobre su experiencia,\nobjetivos, días, equipamiento,\ndisciplinas y datos corporales;
+  |Aplicación|
+repeat while (¿Falta una pregunta\nobligatoria?) is (Sí, pide completarla) not (No)
+:3. Calcula su nivel\ny su orientación;
+:4. Muestra el plan\nsemanal sugerido;
+if (¿Le acomoda\nel plan?) then (No)
+  |Usuario|
+  :Lo cambia o lo ignora;
+  stop
+else (Sí)
+  |Usuario|
+  :5. Acepta el plan;
+  |Aplicación|
+  :6. Lo guarda como su\nplan de la semana;
+endif
+stop
+@enduml

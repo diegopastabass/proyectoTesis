@@ -1,0 +1,30 @@
+@startuml dga_cu04
+!include dga_estilo.iuml
+|Usuario|
+|Aplicación|
+|Usuario|
+start
+:1. Elige subir\nun archivo;
+|Aplicación|
+:2. Abre los archivos\ndel teléfono;
+|Usuario|
+:3. Elige el archivo;
+|Aplicación|
+:4. Revisa el tipo y\nel tamaño del archivo;
+if (¿Es .fit de\nhasta 10 MB?) then (No)
+  :Explica el motivo\ny pide otro archivo;
+  stop
+else (Sí)
+endif
+if (¿Se puede\nleer?) then (No)
+  :Avisa que el archivo está\ndañado y no guarda nada;
+  stop
+else (Sí)
+  :5. Lee el archivo y muestra\nun resumen de la sesión;
+endif
+|Usuario|
+:6. Confirma la sesión;
+|Aplicación|
+:7. Guarda la sesión y actualiza\nla carga de la semana;
+stop
+@enduml

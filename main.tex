@@ -1,0 +1,145 @@
+\documentclass[12pt]{article}
+\usepackage{setspace}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{titling}
+\usepackage{tocloft}
+\usepackage{titlesec}
+\usepackage[letterpaper, left=3cm, right=2cm, top=2cm, bottom=2cm]{geometry}
+\usepackage{datetime}
+\usepackage{caption}
+\usepackage{wrapfig}
+\usepackage{microtype}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{tocloft}
+\usepackage{amsmath}
+\usepackage{gensymb}
+\usepackage[utf8]{inputenc}
+\usepackage{array}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{subfig}
+\usepackage{tikz}
+\usepackage{amssymb}
+\usepackage[utf8]{inputenc}
+\usepackage{colortbl}
+\usepackage[table]{xcolor}
+\usepackage{geometry}
+\geometry{margin=1cm}
+\usepackage{longtable}
+\captionsetup[figure]{font=small, labelformat=empty}
+\renewcommand{\contentsname}{Índice}
+\renewcommand{\listfigurename}{Tabla de figuras}
+\renewcommand{\tablename}{Tabla}
+
+\usepackage{xurl} % Permite saltos de línea en cualquier parte de una URL
+\usepackage[style=apa, backend=biber, natbib=true]{biblatex}
+\addbibresource{bibliografia/fonts.bib} 
+\setcounter{biburllcpenalty}{100}
+\setcounter{biburlucpenalty}{100}
+\setcounter{biburlnumpenalty}{100}
+\appto{\bibsetup}{\sloppy}
+
+\usepackage{xcolor}       % Para colores
+\usepackage{listings}     % Para mostrar código
+
+% Configuración de listings para JSON
+\lstdefinestyle{json}{
+    basicstyle=\ttfamily\footnotesize,
+    commentstyle=\color{gray},
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    stepnumber=1,
+    numbersep=5pt,
+    backgroundcolor=\color{white},
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    frame=single,
+    rulecolor=\color{black},
+    tabsize=2,
+    breaklines=true,
+    breakatwhitespace=true,
+    stringstyle=\color{blue},
+    keywordstyle=\color{red},
+    identifierstyle=\color{black},
+    literate=
+        *{0}{{{\color{red}0}}}{1}
+        {1}{{{\color{red}1}}}{1}
+        {2}{{{\color{red}2}}}{1}
+        {3}{{{\color{red}3}}}{1}
+        {4}{{{\color{red}4}}}{1}
+        {5}{{{\color{red}5}}}{1}
+        {6}{{{\color{red}6}}}{1}
+        {7}{{{\color{red}7}}}{1}
+        {8}{{{\color{red}8}}}{1}
+        {9}{{{\color{red}9}}}{1}
+        {:}{{{\color{purple}{:}}}}{1}
+        {,}{{{\color{purple}{,}}}}{1}
+        {\{}{{{\color{black}{\{}}}}{1}
+        {\}}{{{\color{black}{\}}}}}{1}
+        {[}{{{\color{black}{[}}}}{1}
+        {]}{{{\color{black}{]}}}}{1},
+}
+
+% Configuración de la página
+\geometry{a4paper, margin=2.5cm}
+\setlength{\parindent}{0cm}
+
+% Configuración de los títulos
+\titleformat{\section}[block]{\centering\bfseries\Large}{}{0em}{}
+\titlespacing*{\section}{0cm}{2cm}{1cm}
+
+\begin{document}
+\begin{titlepage}
+    \centering
+    \includegraphics[width=3cm]{recursos/logos/logo umayor.png}
+    
+    \vspace{2cm}
+    
+    \textbf{\LARGE Ingeniería Civil en Computación e Informática.}
+    
+    \vspace{1cm}
+    \textbf{\Large Facultad de Ciencias, Ingeniería y Tecnología.}
+    \vspace{1cm}
+    \textbf{\\Proyecto de Ingeniería II}
+    
+    \vspace{1cm}
+    \section*{\LARGE Solución tecnológica para el registro, cruce de datos y análisis del entrenamiento concurrente y la nutrición en deportistas aficionados.}
+    
+    \vspace{2cm}
+    \begin{flushleft}
+    \textbf{}\\
+        \begin{tabular}{ll}
+    \\
+        \end{tabular}
+    
+    \vspace{0.5cm}
+    \textbf{Por:} \\
+    Diego Enrique Vilches Jiménez\\
+    \vspace{1cm}
+    \vspace{2cm}
+    \end{flushleft}
+    Octubre - 2026
+\end{titlepage}
+\input{capitulos/00_resumen}
+\tableofcontents
+\newpage
+\listoffigures
+\newpage
+\setstretch{1.5}
+\newpage
+\input{capitulos/01_introduccion}
+\input{capitulos/02_planteamiento}
+\input{capitulos/03_marco_teorico}
+\input{capitulos/04_marco_metodologico}
+\input{capitulos/05_alternativas_solucion}
+\input{capitulos/06_ingenieria_requerimientos}
+\input{capitulos/07_ingenieria_diseno}
+\section{Bibliografía}
+\begingroup
+\sloppy
+\emergencystretch=3em
+\printbibliography[heading=none]
+\endgroup
+\end{document}

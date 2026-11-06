@@ -1,0 +1,41 @@
+@startuml cu_perfil
+!include cu_estilo.iuml
+skinparam usecase {
+    BackgroundColor #F8BBD0
+}
+
+actor "Atleta Básico\n(plan gratuito)" as B
+actor "Atleta Híbrido\n(plan premium)" as H
+actor "App de salud\ndel teléfono" as HC
+B <|-- H
+
+rectangle "Perfil, Cuenta y Seguimiento" {
+    usecase "CU-26: Aceptar los términos\nde uso y el aviso legal" as CU26
+    usecase "CU-24: Contratar\nel plan premium" as CU24
+    usecase "CU-25: Cancelar\nmi suscripción" as CU25
+    usecase "CU-12: Completar mi perfil\ny recibir un plan semanal" as CU12
+    usecase "CU-19: Revisar\nmi progreso" as CU19
+    usecase "CU-20: Anotar cómo\nme sentí" as CU20
+    usecase "CU-21: Controlar mis\ndatos personales" as CU21
+
+    usecase "Responder el\ncuestionario inicial" as P1 #FFFFFF
+    usecase "Cambiar el\nplan sugerido" as P2 #FFFFFF
+    usecase "Dar o quitar acceso a\nmis datos de salud" as P3 #FFFFFF
+    usecase "Eliminar\nmi cuenta" as P4 #FFFFFF
+}
+
+B -- CU26
+B -- CU24
+H -- CU25
+B -- CU12
+B -- CU19
+B -- CU20
+B -- CU21
+
+CU12 ..> P1 : <<include>>
+CU12 <.. P2 : <<extend>>
+CU21 <.. P3 : <<extend>>
+CU21 <.. P4 : <<extend>>
+P3 -- HC
+
+@enduml

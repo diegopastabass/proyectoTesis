@@ -1,0 +1,31 @@
+@startuml dga_cu05
+!include dga_estilo.iuml
+|Usuario|
+|Aplicación|
+|Usuario|
+start
+:1. Registra una sesión\nde fuerza o de cardio;
+|Aplicación|
+if (¿Hay suficientes\nsesiones?) then (No)
+  :Muestra que faltan datos\npara estimar la fatiga;
+  stop
+else (Sí)
+  :2. Cruza la carga con las otras\nsesiones y las comidas recientes;
+endif
+if (¿Hay riesgo de fatiga\no poco descanso?) then (No)
+  :No envía aviso;
+  stop
+else (Sí)
+  :3. Envía un aviso\ncon una sugerencia;
+endif
+|Usuario|
+:4. Abre el aviso y revisa\nsu resumen de carga;
+:5. Decide si sigue\nla sugerencia;
+|Aplicación|
+if (¿La acepta?) then (No)
+  :No cambia nada;
+else (Sí)
+  :6. Actualiza su plan\nde la semana;
+endif
+stop
+@enduml

@@ -1,0 +1,27 @@
+@startuml int_archivos
+!include sec_estilo.iuml
+participant "App Flutter" as A
+participant "API NestJS" as B
+participant "Amazon S3" as S3
+participant "CloudFront" as CF
+database "MongoDB" as DB
+autonumber
+== Subida ==
+A -> A : Comprime, crea la miniatura y borra la ubicación
+A -> B : POST /uploads/presign(tipo, tamaño, cantidad)
+B -> B : Valida los límites y firma la URL con el SDK de AWS
+B --> A : URL prefirmada(clave, vence en minutos)
+A -> S3 : PUT del archivo
+S3 --> A : Confirmación
+A -> B : POST /posts(texto, visibilidad, claves)
+B -> DB : guardar(posts, media.url, media.thumbUrl)
+== Visualización ==
+A -> CF : GET de la foto
+alt Está en caché
+  CF --> A : Foto
+else No está en caché
+  CF -> S3 : Lee la foto, con acceso exclusivo
+  S3 --> CF : Foto
+  CF --> A : Foto
+end
+@enduml

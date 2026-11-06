@@ -1,0 +1,25 @@
+@startuml sec_cu19
+!include sec_estilo.iuml
+actor "Atleta" as U
+participant "App Flutter" as A
+participant "API NestJS" as B
+database "MongoDB" as DB
+autonumber
+U -> A : Abre su historial
+A -> B : GET /timeline?date=hoy
+B -> DB : Lee workouts, meals y fatigueSnapshots
+DB --> B : Registros del día
+alt Sin registros
+  B --> A : Lista vacía
+  A --> U : Invita a registrar su primera sesión o comida
+else Con registros
+  B --> A : Línea de tiempo
+  A --> U : Muestra el día
+  U -> A : Elige otro día o un mes
+  A -> B : GET /timeline?from=&to=
+  B -> DB : Lee el periodo con índices por fecha
+  DB --> B : Registros
+  B --> A : Línea de tiempo
+  A --> U : Muestra el periodo
+end
+@enduml

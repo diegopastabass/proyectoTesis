@@ -1,0 +1,33 @@
+@startuml sec_cu09
+!include sec_estilo.iuml
+actor "Atleta" as U
+participant "App Flutter" as A
+participant "API NestJS" as B
+participant "Amazon S3" as S3
+database "MongoDB" as DB
+autonumber
+U -> A : Elige un registro y pulsa Publicar
+A --> U : Muestra el formulario
+U -> A : Escribe el texto y elige la visibilidad
+opt Agrega hasta 4 fotos
+  U -> A : Elige las fotos y declara que puede publicarlas
+  A -> A : Comprime, crea miniaturas y borra la ubicación
+  A -> B : POST /uploads/presign
+  B --> A : URL prefirmadas
+  A -> S3 : PUT de las fotos
+  S3 --> A : Confirmación
+end
+U -> A : Pulsa Publicar
+alt Sin conexión
+  A --> U : Avisa y conserva lo escrito
+else Con conexión
+  A -> B : POST /posts
+  opt Es una ruta
+    B -> B : Oculta los primeros y últimos 200 metros
+  end
+  B -> DB : Guarda en posts con las direcciones de las fotos
+  DB --> B : Confirmación
+  B --> A : Publicación creada
+  A --> U : Muestra la publicación
+end
+@enduml

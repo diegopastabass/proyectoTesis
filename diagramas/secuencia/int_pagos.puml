@@ -1,0 +1,23 @@
+@startuml int_pagos
+!include sec_estilo.iuml
+participant "App Flutter" as A
+participant "Google Play /\nApp Store" as T
+participant "API NestJS" as B
+database "MongoDB" as DB
+autonumber
+== Compra ==
+A -> T : consultarProductos(id del plan premium)
+T --> A : precio con impuestos y periodo
+A -> T : comprar(id del plan premium)
+T --> A : comprobante
+A -> B : POST /subscriptions(tienda, comprobante)
+B -> T : Valida el comprobante con la API de la tienda
+T --> B : estado, fecha de término
+B -> DB : guardar(users.role, users.subscription)
+B --> A : Plan premium activo
+== Cambios posteriores ==
+T -> B : Notificación(renovación, cancelación, vencimiento o reembolso)
+B -> T : Consulta el estado actual
+T --> B : estado, fecha de término
+B -> DB : actualizar(users.role, users.subscription)
+@enduml

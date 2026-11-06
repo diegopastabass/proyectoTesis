@@ -1,0 +1,24 @@
+@startuml dga_cu06
+!include dga_estilo.iuml
+|Usuario|
+|Aplicación|
+|Usuario|
+start
+repeat
+  |Usuario|
+  :1. Abre nutrición y\nbusca un alimento;
+  |Aplicación|
+repeat while (¿Encuentra\nel alimento?) is (No, avisa y permite\nbuscar otro nombre o\nescanear el código) not (Sí)
+:2. Muestra los alimentos\nque coinciden;
+repeat
+  |Usuario|
+  :3. Elige el alimento e\nindica cuánto comió;
+  |Aplicación|
+repeat while (¿Cantidad vacía\no en cero?) is (Sí, pide corregirla) not (No)
+:4. Muestra calorías\ny macronutrientes;
+|Usuario|
+:5. Confirma la comida;
+|Aplicación|
+:6. La guarda en el diario y\nactualiza el avance del día;
+stop
+@enduml

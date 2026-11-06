@@ -1,0 +1,17 @@
+' Estilo común de los diagramas de casos de uso
+!theme plain
+left to right direction
+skinparam dpi 200
+skinparam defaultFontName "Liberation Sans"
+skinparam defaultFontSize 13
+skinparam shadowing false
+skinparam ArrowColor #333333
+skinparam packageStyle rectangle
+skinparam actorStyle awesome
+skinparam actor {
+    BackgroundColor #FFFFE0
+    BorderColor #333333
+}
+skinparam usecase {
+    BorderColor #1F4E79
+}

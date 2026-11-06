@@ -1,0 +1,24 @@
+@startuml dga_cu22
+!include dga_estilo.iuml
+|Usuario|
+|Aplicación|
+|Usuario|
+start
+:1. Pulsa Reportar\nen la publicación;
+|Aplicación|
+:2. Muestra los\nmotivos posibles;
+|Usuario|
+if (¿Sigue con\nel reporte?) then (No)
+  :Cancela y no se\nenvía ningún reporte;
+  stop
+else (Sí)
+  :3. Elige el motivo\ny confirma;
+endif
+|Aplicación|
+if (¿Ya la había\nreportado?) then (Sí)
+  :Avisa y no crea\nun reporte nuevo;
+else (No)
+  :4. La deja en la lista de\nrevisión y lo confirma;
+endif
+stop
+@enduml

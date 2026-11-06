@@ -1,0 +1,24 @@
+@startuml dga_cu11
+!include dga_estilo.iuml
+|Usuario|
+|Aplicación|
+|Usuario|
+start
+:1. Abre la lista\nde reportes;
+|Aplicación|
+if (¿Hay reportes\npendientes?) then (No)
+  :Muestra la lista vacía;
+  stop
+else (Sí)
+  :2. Muestra las publicaciones\nreportadas, con su motivo;
+endif
+|Usuario|
+:3. Revisa una publicación;
+|Aplicación|
+if (¿Cumple\nlas normas?) then (Sí)
+  :Descarta el reporte y la\npublicación sigue visible;
+else (No)
+  :4. La saca del muro y guarda quién\ntomó la decisión y por qué;
+endif
+stop
+@enduml

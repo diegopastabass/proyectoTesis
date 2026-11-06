@@ -1,0 +1,657 @@
+================================================================================
+ANÁLISIS DETALLADO DE COSTOS Y FLUJOS DE CAJA ACTUALIZADOS
+PROYECTO: PLATAFORMA INTEGRAL DE ENTRENAMIENTO CONCURRENTE
+================================================================================
+Fecha: 01 de octubre de 2026
+Última actualización: 05 de noviembre de 2026 (precios reales de AWS en São Paulo,
+MongoDB Atlas, imágenes, IVA, comisión de tiendas e impuesto a la renta)
+Tipo de cambio referencial: $972,60 CLP/USD (Dólar observado, Banco Central de Chile)
+Valor UF referencial: $41.065 CLP
+
+================================================================================
+1. CONTEXTO Y METODOLOGÍA
+================================================================================
+
+1.1 ANTECEDENTES
+--------------------------------------------------------------------------------
+En la estimación inicial del proyecto (documentada en main.tex), los costos de
+desarrollo se calcularon aplicando una tarifa uniforme de $15.000 CLP/hora para
+todos los perfiles técnicos, sin diferenciar por nivel de experiencia ni
+especialización. Este enfoque simplificado generaba estimaciones que, tras una
+investigación más rigurosa de las tarifas reales del mercado laboral chileno,
+resultaron imprecisas en ambas direcciones:
+
+  - Las alternativas más simples (Alt. 1) resultaron MÁS CARAS de lo estimado,
+    porque el peso relativo de los perfiles Senior (JP Senior, Arquitecto) en
+    etapas tempranas (Análisis y Diseño Lógico) es proporcionalmente mayor
+    cuando el proyecto tiene pocas horas totales.
+
+  - Las alternativas más complejas (Alt. 2 y Alt. 3) resultaron MÁS BARATAS
+    de lo estimado, porque gran parte de las horas de Diseño Físico recaen
+    sobre desarrolladores con tarifas de mercado inferiores a los $15.000 CLP/h
+    originalmente asumidos para todos los perfiles.
+
+1.2 FUENTES DE TARIFAS UTILIZADAS
+--------------------------------------------------------------------------------
+Las tarifas por hora de cada cargo fueron investigadas en las siguientes
+fuentes del mercado laboral chileno:
+
+  - Computrabajo Chile (cl.computrabajo.com):
+    Fuente para JP Senior y JP Junior (Analista de Proyectos).
+    Referencia: https://cl.computrabajo.com/salarios/analista-de-proyectos
+
+  - Indeed Chile (cl.indeed.com):
+    Fuente para Dev. UX/UI, Dev. Backend, Ingeniero QA, DevOps.
+    Referencias:
+      * https://cl.indeed.com/career/analista-de-ux-/-ui/salaries/Santiago-de-Chile
+      * https://cl.indeed.com/career/desarrollador-back-end/salaries/Santiago-de-Chile
+      * https://cl.indeed.com/career/qa-engineer/salaries/Santiago-de-Chile
+      * https://cl.indeed.com/career/devops/salaries
+
+  - Reddit r/chileIT:
+    Fuente para Arquitecto Web / Consultor.
+    Referencia: https://www.reddit.com/r/chileIT/comments/1phcaoa/cuanto_cobrar_como_consultor/
+
+  - ClinicalWork Chile:
+    Fuente para Nutricionista / Coach Deportivo (Asesor de dominio).
+    Referencia: https://clinicalwork.cl/blog/cuanto-gana-nutricionista-chile-2026
+
+  - ITWorkers Chile:
+    Fuente para Científico de Datos (Data Scientist).
+    Referencia: https://www.itworkers.cl/sueldos/sueldo-data-scientist-chile-2026.html
+
+  - Talently Tech:
+    Fuente para Desarrollador Mobile.
+    Referencia: https://talently.tech/herramientas/chile/salario/developer/mobile-developer
+
+1.3 TARIFAS POR HORA RESULTANTES (CLP/hora)
+--------------------------------------------------------------------------------
+  Cargo                                    Valor Hora (CLP)
+  ─────────────────────────────────────    ─────────────────
+  Jefe de Proyecto Senior (JP Senior)          $73.917
+  Jefe de Proyecto Junior (JP Junior)          $32.852
+  Arquitecto Web / Cloud                       $32.852
+  Desarrollador UX/UI                          $28.746
+  Desarrollador Backend                        $28.746
+  Desarrollador Mobile                         $28.746
+  Científico de Datos / IA                     $28.746
+  Especialista Telemetría Wearables            $28.746
+  Ingeniero de Bases de Datos                  $28.746
+  Ingeniero QA                                 $24.639
+  DevOps                                       $32.852
+  Nutricionista/Coach Deportivo (Asesor)       $20.533 (análisis)
+                                               $12.320 (diseño/QA)
+
+
+================================================================================
+2. DESGLOSE DE COSTOS DE PERSONAL POR ALTERNATIVA Y ETAPA DEL SDLC
+================================================================================
+
+────────────────────────────────────────────────────────────────────────────────
+2.1 ALTERNATIVA 1: SOLUCIÓN MINIMALISTA (MVP LEAN)
+────────────────────────────────────────────────────────────────────────────────
+
+ETAPA 1: ANÁLISIS                                              Total: $911.643
+  Cargo                              Cant.  Horas   VH (CLP)     Total (CLP)
+  JP Senior                            1      8     $73.917        $591.336
+  JP Junior                            1      6     $32.852        $197.112
+  Nutricionista/Coach Dep. (Asesor)     1      6     $20.533        $123.195
+
+ETAPA 2: DISEÑO LÓGICO                                      Total: $2.135.380
+  Cargo                              Cant.  Horas   VH (CLP)     Total (CLP)
+  JP Senior                            1      8     $73.917        $591.336
+  JP Junior                            1     14     $32.852        $459.928
+  Arquitecto Web                       1     24     $32.852        $788.448
+  Desarrollador UX/UI                  1      6     $28.746        $172.473
+  Nutricionista/Coach Dep. (Asesor)     1     10     $12.320        $123.195
+
+ETAPA 3: DISEÑO FÍSICO                                      Total: $4.016.157
+  Cargo                              Cant.  Horas   VH (CLP)     Total (CLP)
+  JP Senior                            1     10     $73.917        $739.170
+  JP Junior                            1     10     $32.852        $328.520
+  Desarrollador UX/UI                  1     50     $28.746      $1.437.275
+  Desarrollador Backend                1     50     $28.746      $1.437.275
+  Nutricionista/Coach Dep. (Asesor)     1      6     $12.320         $73.917
+
+ETAPA 4: PRUEBAS QA                                           Total: $759.703
+  Cargo                              Cant.  Horas   VH (CLP)     Total (CLP)
+  JP Junior                            1     10     $32.852        $328.520
+  Ingeniero QA                         1     15     $24.639        $369.585
+  Nutricionista/Coach Dep. (Asesor)     1      5     $12.320         $61.598
+
+ETAPA 5: IMPLEMENTACIÓN                                       Total: $722.744
+  Cargo                              Cant.  Horas   VH (CLP)     Total (CLP)
+  JP Junior                            1     10     $32.852        $328.520
+  DevOps                               1     12     $32.852        $394.224
+
+  ═══════════════════════════════════════════════════════════════════════════
+  TOTAL PERSONAL ALTERNATIVA 1:                              $8.545.627 CLP
+  ═══════════════════════════════════════════════════════════════════════════
+
+
+────────────────────────────────────────────────────────────────────────────────
+2.2 ALTERNATIVA 2: SOLUCIÓN INTEGRADA CON BROKERS DEL SO
+────────────────────────────────────────────────────────────────────────────────
+
+ETAPA 1: ANÁLISIS                                            Total: $1.084.116
+  Cargo                              Cant.  Horas   VH (CLP)     Total (CLP)
+  JP Senior                            1      8     $73.917        $591.336
+  JP Junior                            1      6     $32.852        $197.112
+  Nutricionista/Coach Dep. (Asesor)     1      6     $20.533        $123.195
+  Científico de Datos / IA             1      6     $28.746        $172.473
+
+ETAPA 2: DISEÑO LÓGICO                                      Total: $2.546.030
+  Cargo                              Cant.  Horas   VH (CLP)     Total (CLP)
+  JP Senior                            1      8     $73.917        $591.336
+  JP Junior                            1     14     $32.852        $459.928
+  Arquitecto Web                       1     28     $32.852        $919.856
+  Desarrollador UX/UI                  1      6     $28.746        $172.473
+  Nutricionista/Coach Dep. (Asesor)     1     14     $12.320        $172.473
+  Científico de Datos / IA             1      8     $28.746        $229.964
+
+ETAPA 3: DISEÑO FÍSICO                                      Total: $6.878.388
+  Cargo                              Cant.  Horas   VH (CLP)     Total (CLP)
+  JP Senior                            1     10     $73.917        $739.170
+  JP Junior                            1     14     $32.852        $459.928
+  Desarrollador UX/UI                  1     60     $28.746      $1.724.730
+  Desarrollador Backend                1     60     $28.746      $1.724.730
+  Nutricionista/Coach Dep. (Asesor)     1      6     $12.320         $73.917
+  Científico de Datos / IA             1     30     $28.746        $862.365
+  Desarrollador Mobile                 1     30     $28.746        $862.365
+  Ingeniero de Bases de Datos          1     15     $28.746        $431.183
+
+ETAPA 4: PRUEBAS QA                                           Total: $759.703
+  Cargo                              Cant.  Horas   VH (CLP)     Total (CLP)
+  JP Junior                            1     10     $32.852        $328.520
+  Ingeniero QA                         1     15     $24.639        $369.585
+  Nutricionista/Coach Dep. (Asesor)     1      5     $12.320         $61.598
+
+ETAPA 5: IMPLEMENTACIÓN                                       Total: $854.152
+  Cargo                              Cant.  Horas   VH (CLP)     Total (CLP)
+  JP Junior                            1     12     $32.852        $394.224
+  DevOps                               1     14     $32.852        $459.928
+
+  ═══════════════════════════════════════════════════════════════════════════
+  TOTAL PERSONAL ALTERNATIVA 2:                             $12.122.388 CLP
+  ═══════════════════════════════════════════════════════════════════════════
+
+
+────────────────────────────────────────────────────────────────────────────────
+2.3 ALTERNATIVA 3: SOLUCIÓN POR CAPAS (ECOSISTEMA FLEXIBLE)
+────────────────────────────────────────────────────────────────────────────────
+
+ETAPA 1: ANÁLISIS                                            Total: $1.831.499
+  Cargo                              Cant.  Horas   VH (CLP)     Total (CLP)
+  JP Senior                            1     14     $73.917      $1.034.838
+  JP Junior                            1     10     $32.852        $328.520
+  Nutricionista/Coach Dep. (Asesor)     1      6     $20.533        $123.195
+  Científico de Datos / IA             1      6     $28.746        $172.473
+  Especialista Telemetría Wearables    1      6     $28.746        $172.473
+
+ETAPA 2: DISEÑO LÓGICO                                      Total: $3.301.626
+  Cargo                              Cant.  Horas   VH (CLP)     Total (CLP)
+  JP Senior                            1     12     $73.917        $887.004
+  JP Junior                            1     20     $32.852        $657.040
+  Arquitecto Web                       1     32     $32.852      $1.051.264
+  Desarrollador UX/UI                  1      6     $28.746        $172.473
+  Nutricionista/Coach Dep. (Asesor)     1     20     $12.320        $246.390
+  Científico de Datos / IA             1     10     $28.746        $287.455
+
+ETAPA 3: DISEÑO FÍSICO                                      Total: $9.231.412
+  Cargo                              Cant.  Horas   VH (CLP)     Total (CLP)
+  JP Senior                            1     10     $73.917        $739.170
+  JP Junior                            1     20     $32.852        $657.040
+  Desarrollador UX/UI                  1     70     $28.746      $2.012.185
+  Desarrollador Backend                1     70     $28.746      $2.012.185
+  Nutricionista/Coach Dep. (Asesor)     1      6     $12.320         $73.917
+  Científico de Datos / IA             1     40     $28.746      $1.149.820
+  Desarrollador Mobile                 1     35     $28.746      $1.006.093
+  Especialista Telemetría Wearables    1     35     $28.746      $1.006.093
+  Ingeniero de Bases de Datos          1     20     $28.746        $574.910
+
+ETAPA 4: PRUEBAS QA                                           Total: $759.703
+  Cargo                              Cant.  Horas   VH (CLP)     Total (CLP)
+  JP Junior                            1     10     $32.852        $328.520
+  Ingeniero QA                         1     15     $24.639        $369.585
+  Nutricionista/Coach Dep. (Asesor)     1      5     $12.320         $61.598
+
+ETAPA 5: IMPLEMENTACIÓN                                       Total: $985.560
+  Cargo                              Cant.  Horas   VH (CLP)     Total (CLP)
+  JP Junior                            1     14     $32.852        $459.928
+  DevOps                               1     16     $32.852        $525.632
+
+  ═══════════════════════════════════════════════════════════════════════════
+  TOTAL PERSONAL ALTERNATIVA 3:                             $16.109.800 CLP
+  ═══════════════════════════════════════════════════════════════════════════
+
+
+================================================================================
+3. COSTOS DE INFRAESTRUCTURA, SERVICIOS Y CONTRATOS
+================================================================================
+
+3.1 INFRAESTRUCTURA EN LA NUBE (AWS Y MONGODB ATLAS)
+--------------------------------------------------------------------------------
+La infraestructura se desplegará en AWS, región South America (São Paulo,
+sa-east-1). La base de datos es MongoDB Atlas en la misma región. Los costos se
+estiman en USD y se convierten a CLP al tipo de cambio del dólar observado
+($972,60 CLP/USD al 01 de octubre de 2026).
+
+Precios de AWS usados (lista oficial de precios, sa-east-1, noviembre de 2026):
+  - Fargate:      USD 0,0696 por vCPU-hora y USD 0,0076 por GB-hora
+  - ALB:          USD 0,034 por hora y USD 0,011 por LCU-hora
+  - IP pública:   USD 0,005 por dirección por hora
+  - CloudWatch:   USD 0,90 por GB de registros
+  - S3:           USD 0,0405 por GB al mes
+  - Secrets Mgr.: USD 0,40 por secreto al mes
+  - ECR:          USD 0,10 por GB al mes
+
+MongoDB Atlas M10: MongoDB publica USD 57 al mes en Virginia. NO SE CONFIRMÓ el
+precio en São Paulo. Como los servicios de AWS cuestan cerca de un 70% más en
+esa región, se usa una ESTIMACIÓN de USD 100 al mes, con almacenamiento y
+respaldos. Este valor se debe confirmar antes de contratar el servicio.
+
+Se eligió M10 porque es el nivel más bajo que permite una conexión privada con
+la red de AWS (VPC peering), lo que se considera necesario para datos sensibles.
+
+────────────────────────────────────────────────────────────────────────────────
+3.1.1 ALTERNATIVA 1: Infraestructura Minimalista
+────────────────────────────────────────────────────────────────────────────────
+Servicio                              Detalle                      USD/mes
+───────────────────────────────────   ────────────────────────     ────────
+AWS Fargate (NestJS)                  0,25 vCPU, 0,5 GB RAM          $16
+MongoDB Atlas M10                     Estimación São Paulo          $100
+Application Load Balancer (ALB)       Uso mínimo                     $27
+Direcciones IP públicas               3 direcciones                  $11
+CloudWatch / Logs                     Registros básicos               $3
+Secrets Manager, ECR y dominio        Servicios de apoyo              $4
+───────────────────────────────────   ────────────────────────     ────────
+TOTAL INFRAESTRUCTURA MENSUAL (USD)                                 $161
+TOTAL INFRAESTRUCTURA ANUAL (CLP)         $161 × 12 × $972,60 = $1.879.063
+
+────────────────────────────────────────────────────────────────────────────────
+3.1.2 ALTERNATIVA 2: Infraestructura con IA y Brokers
+────────────────────────────────────────────────────────────────────────────────
+Servicio                              Detalle                      USD/mes
+───────────────────────────────────   ────────────────────────     ────────
+AWS Fargate (NestJS)                  0,5 vCPU, 1 GB RAM             $31
+MongoDB Atlas M10                     Estimación São Paulo          $100
+Application Load Balancer (ALB)       Balanceo HTTPS                 $29
+Direcciones IP públicas               3 direcciones                  $11
+CloudWatch / Logs                     5 GB de registros               $5
+S3, sin contar las fotos              Archivos varios                 $1
+Secrets Manager, ECR y dominio        Servicios de apoyo              $4
+───────────────────────────────────   ────────────────────────     ────────
+TOTAL INFRAESTRUCTURA MENSUAL (USD)                                 $181
+TOTAL INFRAESTRUCTURA ANUAL (CLP)         $181 × 12 × $972,60 = $2.112.487
+
+────────────────────────────────────────────────────────────────────────────────
+3.1.3 ALTERNATIVA 3: Infraestructura Modular por Capas
+────────────────────────────────────────────────────────────────────────────────
+Servicio                              Detalle                      USD/mes
+───────────────────────────────────   ────────────────────────     ────────
+AWS Fargate (NestJS)                  0,5 vCPU, 1 GB, 1 a 3 tareas   $31
+AWS Lambda (Parser .FIT)              Dentro del nivel gratuito       $0
+MongoDB Atlas M10                     Estimación São Paulo          $100
+Application Load Balancer (ALB)       Balanceo HTTPS                 $29
+Direcciones IP públicas               3 direcciones                  $11
+CloudWatch / Logs                     5 GB de registros               $5
+S3 para archivos .FIT                 27 GB al cuarto año             $2
+Secrets Manager, ECR y dominio        Servicios de apoyo              $4
+───────────────────────────────────   ────────────────────────     ────────
+TOTAL INFRAESTRUCTURA MENSUAL (USD)                                 $182
+TOTAL INFRAESTRUCTURA ANUAL (CLP)         $182 × 12 × $972,60 = $2.124.158
+
+Justificación: Con una carga de 2 llamadas por segundo en la hora de mayor uso,
+un contenedor pequeño alcanza para la API. Se esperan unos 19 archivos .FIT al
+día, por lo que el parser se ejecuta en Lambda en vez de tener un contenedor
+siempre encendido. El dimensionamiento completo está en la sección 7.7 de la
+tesis. Las alternativas 1 y 2 se estimaron con el mismo criterio de precios, pero
+sin un dimensionamiento detallado.
+
+
+3.2 APIS DE INTELIGENCIA ARTIFICIAL (GOOGLE GEMINI)
+--------------------------------------------------------------------------------
+El proyecto consumirá la API de Google Gemini (modelo Flash) para las
+funcionalidades de PLN (registro por voz/texto) y Visión Artificial (fotos
+de platos). El pricing vigente (oct. 2026) de Gemini 3.8 Flash es:
+
+  - Input:  $0,75 USD por 1 millón de tokens
+  - Output: $3,75 USD por 1 millón de tokens
+
+Nota: Se dispone de un free tier de 5.000 solicitudes de búsqueda por mes
+      sin costo adicional.
+
+────────────────────────────────────────────────────────────────────────────────
+ALTERNATIVA 1: SIN USO DE IA
+  No aplica. Todos los registros son manuales via formularios.
+  Costo API IA anual: $0 CLP
+
+────────────────────────────────────────────────────────────────────────────────
+ALTERNATIVA 2: USO MODERADO DE IA (PLN + Visión)
+  Estimación de tráfico:
+    - ~500 solicitudes/día promedio (PLN nutrición, PLN fuerza, Visión fotos)
+    - ~1.000 tokens input y ~500 tokens output por solicitud promedio
+    - Input mensual: 500 × 1.000 × 30 = 15M tokens → 15 × $0,75 = $11,25/mes
+    - Output mensual: 500 × 500 × 30 = 7,5M tokens → 7,5 × $3,75 = $28,13/mes
+    - Total estimado: ~$40 USD/mes
+  Costo API IA anual: $40 × 12 × $972,60 = $466.848 CLP
+
+────────────────────────────────────────────────────────────────────────────────
+ALTERNATIVA 3: USO INTENSIVO DE IA (PLN + Visión + Escalado Social)
+  Estimación de tráfico:
+    - ~800 solicitudes/día (incluye motor de escalado social de recetas)
+    - Mayor complejidad promedio por solicitud (análisis de ingredientes)
+    - Total estimado: ~$55 USD/mes
+  Costo API IA anual: $55 × 12 × $972,60 = $641.916 CLP
+
+
+3.3 PUBLICACIÓN EN TIENDAS DE APLICACIONES
+--------------------------------------------------------------------------------
+
+  Tienda                    Tipo de Pago      Costo (USD)    Costo (CLP)
+  ─────────────────────     ───────────────   ───────────    ───────────
+  Google Play Console       Único (lifetime)       $25          $24.315
+  Apple Developer Program   Anual (recurrente)     $99          $96.287
+
+  Inversión inicial (Año 0):  $25 + $99 = $124 USD = $120.602 CLP
+  Costo anual (Años 1-4):    $99 USD = $96.287 CLP (solo Apple Developer)
+
+  Nota: Estos montos son idénticos para las tres alternativas.
+
+
+3.4 MANTENIMIENTO CORRECTIVO Y EVOLUTIVO
+--------------------------------------------------------------------------------
+Se mantiene el criterio de destinar un 10% del costo total de desarrollo
+(personal) para costear horas de mantenimiento anual: resolución de bugs
+post-producción, ajustes de funcionalidades, actualizaciones de dependencias
+y parches de seguridad.
+
+  Alternativa 1: $8.545.627 × 10% = $854.563 CLP/año
+  Alternativa 2: $12.122.388 × 10% = $1.212.239 CLP/año
+  Alternativa 3: $16.109.800 × 10% = $1.610.980 CLP/año
+
+
+
+3.5 ALMACENAMIENTO Y ENTREGA DE IMÁGENES
+--------------------------------------------------------------------------------
+Las fotos se guardan en S3 y se muestran a través de CloudFront. El detalle y
+los supuestos están en la tabla de costo de imágenes del capítulo 5.
+
+  Alternativa 1: USD 1 al mes = $11.671 CLP/año (solo fotos de perfil)
+  Alternativa 2: USD 1 al mes = $11.671 CLP/año (perfil y recetas)
+  Alternativa 3: USD 6 al mes = $70.027 CLP/año (perfil y hasta 4 fotos por
+                                                 publicación)
+
+
+3.6 INGRESO NETO POR SUSCRIPTOR
+--------------------------------------------------------------------------------
+El proyecto no recibe el precio completo de la suscripción:
+
+  Precio mensual con IVA:                  $7.990 CLP
+  Precio sin IVA (19%):                    $7.990 ÷ 1,19 = $6.714 CLP
+  Después de la comisión de tiendas (15%): $6.714 × 0,85 = $5.707 CLP
+  Ingreso neto anual por suscriptor:       $68.486 CLP
+
+Apple cobra 15% a desarrolladores con ingresos menores a USD 1 millón al año.
+Google indica un 15% o menos. Se usa 15% para ambas tiendas, que es el caso
+conservador.
+
+
+
+3.7 IMPUESTO A LA RENTA Y AMORTIZACIÓN
+--------------------------------------------------------------------------------
+Las utilidades pagan el Impuesto de Primera Categoría, de 27% en el régimen
+general. El software a medida no se deprecia como un activo físico, sino que es
+un gasto diferido, amortizable hasta en 6 años (SII). Se amortiza toda la
+inversión en partes iguales durante los 4 años del horizonte.
+
+  Alternativa 1: $2.166.557 CLP/año de amortización, $321.374 CLP/año de impuesto
+  Alternativa 2: $3.060.748 CLP/año de amortización, $454.012 CLP/año de impuesto
+  Alternativa 3: $4.057.601 CLP/año de amortización, $601.879 CLP/año de impuesto
+
+Nota: Se usa el régimen general por ser el caso conservador. El régimen Pro Pyme
+tiene una tasa menor. Esta opción y la forma de amortizar se deben confirmar con
+un contador antes de operar.
+
+================================================================================
+4. CONSOLIDADO FINANCIERO POR ALTERNATIVA
+================================================================================
+
+┌──────────────────────────────────┬──────────────┬──────────────┬──────────────┐
+│ CONCEPTO                         │  Alt. 1      │  Alt. 2      │  Alt. 3      │
+│                                  │ Minimalista  │ Brokers+IA   │ Por Capas    │
+├──────────────────────────────────┼──────────────┼──────────────┼──────────────┤
+│ INVERSIÓN INICIAL (AÑO 0)       │              │              │              │
+├──────────────────────────────────┼──────────────┼──────────────┼──────────────┤
+│ Desarrollo de personal           │  $8.545.627  │ $12.122.388  │ $16.109.800  │
+│ Publicación en tiendas           │    $120.602  │    $120.602  │    $120.602  │
+├──────────────────────────────────┼──────────────┼──────────────┼──────────────┤
+│ TOTAL INVERSIÓN (I0)             │  $8.666.229  │ $12.242.990  │ $16.230.402  │
+├──────────────────────────────────┼──────────────┼──────────────┼──────────────┤
+│ COSTOS OPERATIVOS ANUALES (1-4)  │              │              │              │
+├──────────────────────────────────┼──────────────┼──────────────┼──────────────┤
+│ Infraestructura Cloud            │  $1.879.063  │  $2.112.487  │  $2.124.158  │
+│ Imágenes (S3 y CloudFront)       │     $11.671  │     $11.671  │     $70.027  │
+│ APIs de IA (Gemini)              │         ---  │    $466.848  │    $641.916  │
+│ Mantención (10% desarrollo)      │    $854.563  │  $1.212.239  │  $1.610.980  │
+│ Apple Developer Program (anual)  │     $96.287  │     $96.287  │     $96.287  │
+├──────────────────────────────────┼──────────────┼──────────────┼──────────────┤
+│ TOTAL OPERATIVO ANUAL (Cop)      │  $2.841.584  │  $3.899.532  │  $4.543.368  │
+└──────────────────────────────────┴──────────────┴──────────────┴──────────────┘
+
+Nota: Todos los valores están expresados en Pesos Chilenos (CLP).
+
+
+================================================================================
+5. COMPARACIÓN CON ESTIMACIONES ANTERIORES (main.tex)
+================================================================================
+
+La siguiente tabla evidencia las diferencias entre las estimaciones originales
+(basadas en tarifa plana de $15.000 CLP/h) y las nuevas estimaciones
+(basadas en tarifas diferenciadas del mercado chileno):
+
+┌─────────────────────────┬──────────────┬──────────────┬──────────────┐
+│ CONCEPTO                │ Est. Anterior│ Est. Nueva   │  Diferencia  │
+├─────────────────────────┼──────────────┼──────────────┼──────────────┤
+│ ALTERNATIVA 1                                                        │
+│ Desarrollo personal     │  $7.500.000  │  $8.545.627  │  +$1.045.627 │
+│ Inversión total (I0)    │  $7.620.000  │  $8.666.229  │  +$1.046.229 │
+│ Costos operativos/año   │  $1.110.000  │  $2.841.584  │  +$1.731.584 │
+├─────────────────────────┼──────────────┼──────────────┼──────────────┤
+│ ALTERNATIVA 2                                                        │
+│ Desarrollo personal     │ $14.250.000  │ $12.122.388  │  -$2.127.612 │
+│ Inversión total (I0)    │ $14.370.000  │ $12.242.990  │  -$2.127.010 │
+│ Costos operativos/año   │  $2.385.000  │  $3.899.532  │  +$1.514.532 │
+├─────────────────────────┼──────────────┼──────────────┼──────────────┤
+│ ALTERNATIVA 3                                                        │
+│ Desarrollo personal     │ $19.800.000  │ $16.109.800  │  -$3.690.200 │
+│ Inversión total (I0)    │ $19.920.000  │ $16.230.402  │  -$3.689.598 │
+│ Costos operativos/año   │  $3.420.000  │  $4.543.368  │  +$1.123.368 │
+└─────────────────────────┴──────────────┴──────────────┴──────────────┘
+
+ANÁLISIS DE LAS DIFERENCIAS:
+  - INVERSIÓN INICIAL: La Alt. 1 sube un 13,7% porque los cargos Senior
+    (JP Senior a $73.917/h) pesan proporcionalmente más en un proyecto de
+    pocas horas totales. En cambio, las Alt. 2 y 3 bajan un 14,8% y 18,6%
+    respectivamente, porque la masa de horas de Diseño Físico corresponde a
+    desarrolladores con tarifas reales inferiores a la tarifa plana original.
+
+  - COSTOS OPERATIVOS: Suben en las tres alternativas porque ahora se usan los
+    precios reales de AWS en São Paulo, MongoDB Atlas M10 reemplaza a RDS
+    PostgreSQL, y se agregan las direcciones IP públicas y las imágenes. Además,
+    se incluye la renovación anual del Apple Developer Program ($96.287/año).
+
+
+================================================================================
+6. FLUJOS DE CAJA ACTUALIZADOS
+================================================================================
+
+Las hojas "Flujo ALT1", "Flujo ALT2" y "Flujo ALT3" de Flujo de Caja.xlsx
+contienen estos cálculos con fórmulas.
+
+Parámetros financieros:
+  - Tasa de descuento (r): 15% anual
+  - Horizonte temporal (n): 4 años
+  - Factor de anualidad descontada: Σ(1/1,15^t) para t=1..4 = 2,8550
+  - Precio suscripción premium: $7.990 CLP/mes con IVA
+  - Ingreso neto por suscriptor: $68.486 CLP/año (sección 3.6)
+  - Impuesto: 27%. Amortización: A = I0 / 4 (sección 3.7)
+  - Modelo de ingreso mínimo: FC = I0 / 2,8550; R = Cop + A + (FC - A) / 0,73
+  - Suscriptores: R / $68.486, redondeado hacia arriba para alcanzar el equilibrio
+
+────────────────────────────────────────────────────────────────────────────────
+6.1 FLUJO DE CAJA — ALTERNATIVA 1: SOLUCIÓN MINIMALISTA
+────────────────────────────────────────────────────────────────────────────────
+
+  FC₁ = $8.666.229 ÷ 2,8550 = $3.035.457 CLP/año
+  A₁  = $8.666.229 ÷ 4 = $2.166.557 CLP/año
+  R₁  = $2.841.584 + $2.166.557 + ($3.035.457 - $2.166.557) ÷ 0,73 = $6.198.415 CLP/año
+
+  Concepto (miles CLP)        Año 0      Año 1      Año 2      Año 3      Año 4
+  ─────────────────────      ───────    ───────    ───────    ───────    ───────
+  Inversión Inicial         -8.666        ---        ---        ---        ---
+  Ingresos netos              ---     6.198      6.198      6.198      6.198
+  Costos Operativos           ---    -2.842     -2.842     -2.842     -2.842
+  Amortización                ---    -2.167     -2.167     -2.167     -2.167
+  Utilidad antes de imp.      ---     1.190      1.190      1.190      1.190
+  Impuesto (27%)              ---      -321       -321       -321       -321
+  Utilidad después imp.       ---       869        869        869        869
+  Suma de amortización        ---     2.167      2.167      2.167      2.167
+  FLUJO NETO                -8.666     3.035      3.035      3.035      3.035
+  Flujo Acumulado           -8.666    -5.631     -2.595        440      3.476
+  Factor (1,15)^-t           1,000     0,870      0,756      0,658      0,572
+  Flujo Descontado          -8.666     2.640      2.295      1.996      1.736
+
+  VAN (15%):  ≈ $0 CLP
+  TIR:        15,0%
+  Payback:    2,85 años
+
+  Suscriptores requeridos: $6.198.415 ÷ $68.486 = 90,51 → 91 usuarios premium/año
+  Conversión sobre 1.500 usuarios (SOM): 6,07%
+
+────────────────────────────────────────────────────────────────────────────────
+6.2 FLUJO DE CAJA — ALTERNATIVA 2: SOLUCIÓN INTEGRADA CON BROKERS
+────────────────────────────────────────────────────────────────────────────────
+
+  FC₂ = $12.242.990 ÷ 2,8550 = $4.288.263 CLP/año
+  A₂  = $12.242.990 ÷ 4 = $3.060.748 CLP/año
+  R₂  = $3.899.532 + $3.060.748 + ($4.288.263 - $3.060.748) ÷ 0,73 = $8.641.807 CLP/año
+
+  Concepto (miles CLP)        Año 0      Año 1      Año 2      Año 3      Año 4
+  ─────────────────────      ───────    ───────    ───────    ───────    ───────
+  Inversión Inicial        -12.243        ---        ---        ---        ---
+  Ingresos netos              ---     8.642      8.642      8.642      8.642
+  Costos Operativos           ---    -3.900     -3.900     -3.900     -3.900
+  Amortización                ---    -3.061     -3.061     -3.061     -3.061
+  Utilidad antes de imp.      ---     1.682      1.682      1.682      1.682
+  Impuesto (27%)              ---      -454       -454       -454       -454
+  Utilidad después imp.       ---     1.228      1.228      1.228      1.228
+  Suma de amortización        ---     3.061      3.061      3.061      3.061
+  FLUJO NETO               -12.243     4.288      4.288      4.288      4.288
+  Flujo Acumulado          -12.243    -7.955     -3.666        622      4.910
+  Factor (1,15)^-t           1,000     0,870      0,756      0,658      0,572
+  Flujo Descontado         -12.243     3.729      3.243      2.820      2.452
+
+  VAN (15%):  ≈ $0 CLP
+  TIR:        15,0%
+  Payback:    2,85 años
+
+  Suscriptores requeridos: $8.641.807 ÷ $68.486 = 126,18 → 127 usuarios premium/año
+  Conversión sobre 1.500 usuarios (SOM): 8,47%
+
+────────────────────────────────────────────────────────────────────────────────
+6.3 FLUJO DE CAJA — ALTERNATIVA 3: SOLUCIÓN POR CAPAS
+────────────────────────────────────────────────────────────────────────────────
+
+  FC₃ = $16.230.402 ÷ 2,8550 = $5.684.904 CLP/año
+  A₃  = $16.230.402 ÷ 4 = $4.057.601 CLP/año
+  R₃  = $4.543.368 + $4.057.601 + ($5.684.904 - $4.057.601) ÷ 0,73 = $10.830.151 CLP/año
+
+  Concepto (miles CLP)        Año 0      Año 1      Año 2      Año 3      Año 4
+  ─────────────────────      ───────    ───────    ───────    ───────    ───────
+  Inversión Inicial        -16.230        ---        ---        ---        ---
+  Ingresos netos              ---    10.830     10.830     10.830     10.830
+  Costos Operativos           ---    -4.543     -4.543     -4.543     -4.543
+  Amortización                ---    -4.058     -4.058     -4.058     -4.058
+  Utilidad antes de imp.      ---     2.229      2.229      2.229      2.229
+  Impuesto (27%)              ---      -602       -602       -602       -602
+  Utilidad después imp.       ---     1.627      1.627      1.627      1.627
+  Suma de amortización        ---     4.058      4.058      4.058      4.058
+  FLUJO NETO               -16.230     5.685      5.685      5.685      5.685
+  Flujo Acumulado          -16.230   -10.545     -4.861        824      6.509
+  Factor (1,15)^-t           1,000     0,870      0,756      0,658      0,572
+  Flujo Descontado         -16.230     4.943      4.299      3.738      3.250
+
+  VAN (15%):  ≈ $0 CLP
+  TIR:        15,0%
+  Payback:    2,85 años
+
+  Suscriptores requeridos: $10.830.151 ÷ $68.486 = 158,14 → 159 usuarios premium/año
+  Conversión sobre 1.500 usuarios (SOM): 10,60%
+
+
+================================================================================
+7. RESUMEN COMPARATIVO DE INDICADORES FINANCIEROS (ACTUALIZADOS)
+================================================================================
+
+┌─────────────────────────────────┬──────────────┬──────────────┬──────────────┐
+│ INDICADOR                       │  Alt. 1      │  Alt. 2      │  Alt. 3      │
+├─────────────────────────────────┼──────────────┼──────────────┼──────────────┤
+│ Inversión Inicial (CLP)         │   $8.666.229 │  $12.242.990 │  $16.230.402 │
+│ Costos Operativos/año (CLP)     │   $2.841.584 │   $3.899.532 │   $4.543.368 │
+│ Impuesto a la renta/año (CLP)   │     $321.374 │     $454.012 │     $601.879 │
+│ Ingreso neto mínimo/año (CLP)   │   $6.198.415 │   $8.641.807 │  $10.830.151 │
+│ Flujo Neto anual (CLP)          │   $3.035.457 │   $4.288.263 │   $5.684.904 │
+│ Ingreso neto por suscriptor/año │      $68.486 │      $68.486 │      $68.486 │
+│ VAN (al 15%)                    │         ≈ $0 │         ≈ $0 │         ≈ $0 │
+│ TIR                             │        15,0% │        15,0% │        15,0% │
+│ Payback (Flujo Acumulado)       │    2,85 años │    2,85 años │    2,85 años │
+│ Suscriptores requeridos/año     │           91 │          127 │          159 │
+│ Conversión sobre SOM (1.500)    │        6,07% │        8,47% │       10,60% │
+├─────────────────────────────────┼──────────────┼──────────────┼──────────────┤
+│ EVOLUCIÓN DE LOS SUSCRIPTORES                                                │
+│ Primera estimación (tarifa)     │           40 │           78 │          109 │
+│ Tarifas de mercado (oct. 2026)  │           48 │           73 │          100 │
+│ Con IVA y comisión de tiendas   │           68 │          103 │          140 │
+│ Con costos reales (nov. 2026)   │           86 │          120 │          150 │
+│ Con impuesto a la renta         │           91 │          127 │          159 │
+└─────────────────────────────────┴──────────────┴──────────────┴──────────────┘
+
+
+================================================================================
+8. CONCLUSIONES DEL ANÁLISIS ACTUALIZADO
+================================================================================
+
+8.1 IMPACTO EN LA FACTIBILIDAD ECONÓMICA:
+    Las tres alternativas siguen siendo económicamente factibles con el nuevo
+    desglose. El hallazgo principal es que la brecha de costos entre las
+    alternativas se redujo significativamente:
+      - Antes: la Alt. 3 costaba 2,6× más que la Alt. 1 ($19.920k vs $7.620k)
+      - Ahora:  la Alt. 3 cuesta 1,9× más que la Alt. 1 ($16.230k vs $8.666k)
+
+    Esto fortalece la decisión de seleccionar la Alt. 3 como alternativa
+    definitiva, ya que el diferencial de inversión se redujo de $12.300.000
+    a $7.564.173 CLP, una brecha mucho más manejable.
+
+8.2 IMPACTO EN LOS SUSCRIPTORES REQUERIDOS:
+    La Alt. 3 requiere 159 suscriptores premium/año, que equivalen a un 10,6% de
+    la base conservadora de 1.500 usuarios. Es una meta exigente para esa base,
+    pero baja a un 8,8% con 1.800 usuarios y a un 3,2% con 5.000, que son los
+    extremos del mercado objetivo inicial. La Alt. 2 requiere 127 y la Alt. 1
+    requiere 91.
+
+8.3 OBSERVACIÓN SOBRE LOS COSTOS OPERATIVOS:
+    Los costos operativos subieron en las tres alternativas. El componente más
+    grande es MongoDB Atlas M10, cuyo precio en São Paulo (USD 100 al mes) es una
+    estimación que falta confirmar. Si cambia, también cambian los suscriptores
+    requeridos: cada USD 10 al mes equivalen a cerca de 1,7 suscriptores.
+
+8.4 CONSIDERACIONES NO INCLUIDAS EN ESTE ANÁLISIS:
+    - Costo de Adquisición de Clientes (CAC) y presupuesto de marketing.
+    - Eventuales incrementos de infraestructura ante crecimiento de usuarios.
+    - Costo de operar la moderación de contenido y el soporte a usuarios.
+    - Una eventual tasa menor de impuesto por el régimen Pro Pyme.
+
+================================================================================
+FIN DEL DOCUMENTO
+================================================================================

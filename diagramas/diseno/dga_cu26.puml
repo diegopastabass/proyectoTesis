@@ -1,0 +1,21 @@
+@startuml dga_cu26
+!include dga_estilo.iuml
+|Usuario|
+|Aplicación|
+|Aplicación|
+start
+:1. Muestra los términos de\nuso y el aviso legal;
+|Usuario|
+if (¿Los acepta?) then (No)
+  :No puede seguir;
+  |Aplicación|
+  :Explica que\nson necesarios;
+  stop
+else (Sí)
+  :2. Los lee y los acepta;
+endif
+|Aplicación|
+:3. Guarda la fecha y\nla versión aceptada;
+:4. Sigue con el cuestionario\ninicial (CU-12);
+stop
+@enduml

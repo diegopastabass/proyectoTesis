@@ -1,0 +1,36 @@
+@startuml sec_cu03
+!include sec_estilo.iuml
+actor "Atleta" as U
+participant "App Flutter" as A
+participant "Health Connect /\nApple Health" as HC
+participant "API NestJS" as B
+database "MongoDB" as DB
+autonumber
+U -> HC : El reloj guarda la sesión terminada
+A -> HC : Revisa el permiso de lectura
+alt Sin permiso
+  HC --> A : Permiso denegado
+  A --> U : Explica el uso de los datos y pide permiso
+else Con permiso
+  A -> HC : Lee las sesiones nuevas
+  HC --> A : Duración, distancia y pulso
+  A -> B : POST /workouts/sync
+  B -> DB : Busca la misma sesión en workouts
+  DB --> B : Resultado
+  alt Ya existe con más detalle
+    B -> B : Conserva la de mayor detalle
+  else Sesión nueva
+    B -> DB : Guarda en workouts con dataSource
+  end
+  B --> A : Sesión registrada
+  A --> U : Muestra la sesión y pide el RPE
+  alt Indica el RPE
+    U -> A : Indica qué tan duro la sintió
+    A -> B : PATCH /workouts/{id}
+  else No responde
+    B -> B : Estima el esfuerzo con el pulso
+  end
+  B -> B : Calcula la carga
+  B -> DB : Actualiza workouts
+end
+@enduml

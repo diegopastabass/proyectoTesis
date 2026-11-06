@@ -1,0 +1,32 @@
+@startuml sec_cu17
+!include sec_estilo.iuml
+actor "Atleta" as U
+participant "App Flutter" as A
+participant "API NestJS" as B
+database "MongoDB" as DB
+autonumber
+alt Registra con GPS
+  U -> A : Elige la disciplina e inicia la grabación
+  A -> A : Revisa el permiso de ubicación
+  alt Sin permiso
+    A --> U : Pide el permiso u ofrece anotarla a mano
+  else Con permiso
+    A -> A : Graba la ruta, el tiempo y la distancia
+    U -> A : Termina la sesión
+    A --> U : Pregunta el RPE
+    U -> A : Indica el RPE
+    A -> B : POST /workouts con la ruta
+    B -> B : Calcula la carga con volumen y RPE
+    B -> DB : Guarda en workouts y telemetry
+    B --> A : Sesión creada
+    A --> U : Muestra la sesión en el historial
+  end
+else Registra a mano
+  U -> A : Ingresa duración, distancia y RPE
+  A -> B : POST /workouts
+  B -> B : Calcula la carga con volumen y RPE
+  B -> DB : Guarda en workouts
+  B --> A : Sesión creada
+  A --> U : Muestra la sesión en el historial
+end
+@enduml

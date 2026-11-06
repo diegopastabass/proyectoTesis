@@ -1,0 +1,62 @@
+@startuml diagrama_arquitectura
+!theme plain
+left to right direction
+skinparam dpi 200
+skinparam defaultFontName "Liberation Sans"
+skinparam defaultFontSize 12
+skinparam shadowing false
+skinparam ArrowColor #333333
+skinparam nodesep 30
+skinparam ranksep 100
+skinparam actorStyle awesome
+skinparam actor {
+    BackgroundColor #FFFFE0
+    BorderColor #333333
+}
+skinparam rectangle {
+    RoundCorner 12
+    BorderColor #1F4E79
+}
+skinparam database {
+    BorderColor #1F4E79
+}
+
+actor "Atleta" as U
+actor "Administrador" as AD
+
+rectangle "Capa de presentación" #E3F2FD {
+  rectangle "Aplicación móvil\n(Flutter)" as APP #FFFFFF
+  rectangle "Panel web de\nadministración" as WEB #FFFFFF
+}
+
+rectangle "Capa de procesamiento (nube)" #E8F5E9 {
+  rectangle "API\n(NestJS en AWS Fargate)" as API #FFFFFF
+  database "Base de datos\n(MongoDB Atlas)" as DB #FFFFFF
+}
+
+rectangle "Capa de servicios externos" #FFF3C4 {
+  rectangle "Inteligencia artificial\n(Gemini)" as IA #FFFFFF
+  rectangle "Productos envasados\n(Open Food Facts)" as OFF #FFFFFF
+  rectangle "Notificaciones\n(Firebase)" as FCM #FFFFFF
+  rectangle "Archivos y fotos\n(Amazon S3 y CloudFront)" as S3 #FFFFFF
+  rectangle "Pagos\n(Google Play y App Store)" as T #FFFFFF
+}
+
+rectangle "Datos de salud\n(Health Connect y Apple Health)" as HC #E3F2FD
+
+U --> APP
+AD --> WEB
+HC --> APP : Lectura con permiso
+APP --> API : HTTPS con JWT
+WEB --> API : HTTPS con JWT
+API --> DB : Lectura y escritura
+API --> IA
+API --> OFF
+API --> FCM
+API --> S3
+API --> T
+FCM --> APP : Alertas
+APP --> S3 : Fotos y archivos .fit
+APP --> T : Compra
+
+@enduml

@@ -1,0 +1,26 @@
+@startuml dga_cu03
+!include dga_estilo.iuml
+|Usuario|
+|Aplicación|
+|Usuario|
+start
+:1. Termina de entrenar\ncon su reloj;
+|Aplicación|
+:2. Busca sesiones nuevas en\nla app de salud del teléfono;
+if (¿Tiene permiso\npara leerlas?) then (No)
+  :Explica para qué se usan\nlos datos y pide permiso;
+  stop
+else (Sí)
+endif
+if (¿La sesión ya existe\ncon más detalle?) then (Sí)
+  :Conserva la que\ntiene más detalle;
+else (No)
+  :3. Trae la sesión con duración,\ndistancia y pulso, y la guarda;
+endif
+:4. Muestra la sesión y pregunta\nqué tan duro la sintió;
+|Usuario|
+:5. Indica qué tan\nduro la sintió;
+|Aplicación|
+:6. Actualiza la carga\nde la semana;
+stop
+@enduml

@@ -1,0 +1,21 @@
+@startuml sec_cu18
+!include sec_estilo.iuml
+actor "Atleta" as U
+participant "App Flutter" as A
+participant "API NestJS" as B
+database "MongoDB" as DB
+autonumber
+U -> A : Abre su resumen de nutrición
+A -> B : GET /nutrition/today
+B -> DB : Lee users, workouts, trainingPlans y meals
+DB --> B : Perfil, sesiones, plan y comidas
+alt Tiene entrenamiento ese día
+  B -> B : Calcula metas según el gasto y la disciplina
+else No tiene entrenamiento
+  B -> B : Calcula metas para un día de descanso
+end
+B -> DB : Guarda las metas en dailyLogs
+B -> B : Calcula lo que falta y el mejor momento para comer
+B --> A : Metas, avance y sugerencias
+A --> U : Muestra el resumen
+@enduml

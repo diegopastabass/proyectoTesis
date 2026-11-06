@@ -1,0 +1,21 @@
+' Estilo común de los diagramas de secuencia
+!theme plain
+skinparam dpi 180
+skinparam defaultFontName "Liberation Sans"
+skinparam defaultFontSize 12
+skinparam shadowing false
+skinparam ArrowColor #333333
+skinparam responseMessageBelowArrow true
+skinparam sequenceMessageAlign left
+hide footbox
+skinparam sequence {
+    ParticipantBackgroundColor #E3F2FD
+    ParticipantBorderColor #1F4E79
+    ActorBackgroundColor #FFFFE0
+    ActorBorderColor #333333
+    DatabaseBackgroundColor #E8F5E9
+    DatabaseBorderColor #1F4E79
+    LifeLineBorderColor #777777
+    GroupBackgroundColor #FFF3C4
+    GroupBorderColor #8A6D1F
+}

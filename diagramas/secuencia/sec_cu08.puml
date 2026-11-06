@@ -1,0 +1,31 @@
+@startuml sec_cu08
+!include sec_estilo.iuml
+actor "Atleta" as U
+participant "App Flutter" as A
+participant "API NestJS" as B
+database "MongoDB" as DB
+autonumber
+U -> A : Pulsa Agregar en la receta
+A -> B : POST /posts/{id}/add
+B -> DB : Lee recipes, dailyLogs y meals del día
+DB --> B : Receta, metas y comidas
+B -> B : Calcula lo que le falta comer
+alt Ya cumplió sus metas
+  B -> B : Mantiene las porciones originales y avisa
+else Le falta comer
+  B -> B : Multiplica los ingredientes por un factor
+end
+B --> A : Receta ajustada
+A --> U : Muestra la receta
+opt Cambia las porciones
+  U -> A : Indica otras porciones
+  A -> A : Recalcula los ingredientes
+end
+U -> A : Confirma
+A -> B : POST /recipes con source
+B -> DB : Guarda la copia en recipes
+B -> DB : Suma uno a importsCount en posts
+DB --> B : Confirmación
+B --> A : Receta creada
+A --> U : Muestra la receta en nutrición
+@enduml

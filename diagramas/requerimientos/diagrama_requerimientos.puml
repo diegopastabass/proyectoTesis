@@ -1,0 +1,62 @@
+@startuml diagrama_requerimientos
+!theme plain
+left to right direction
+skinparam dpi 200
+skinparam defaultFontName "Liberation Sans"
+skinparam defaultFontSize 12
+skinparam shadowing false
+skinparam ArrowColor #333333
+skinparam nodesep 12
+skinparam ranksep 90
+skinparam rectangle {
+    BorderColor #555555
+    BackgroundColor<<Req>> #FFFFE0
+    BackgroundColor<<Proceso>> #ADD8E6
+    BackgroundColor<<Transversal>> #E0E0E0
+    RoundCorner<<Proceso>> 20
+    RoundCorner<<Transversal>> 20
+}
+hide stereotype
+
+rectangle "R01: Registro de entrenamientos de fuerza" as R01 <<Req>>
+rectangle "R02: Registro de entrenamientos de resistencia" as R02 <<Req>>
+rectangle "R03: Alertas de fatiga y ajuste del entrenamiento" as R03 <<Req>>
+rectangle "R04: Registro de comidas" as R04 <<Req>>
+rectangle "R05: Metas de alimentación según el entrenamiento" as R05 <<Req>>
+rectangle "R08: Red social deportiva" as R08 <<Req>>
+rectangle "R12: Agregar contenido de la comunidad a mis módulos" as R12 <<Req>>
+rectangle "R11: Administración de la plataforma" as R11 <<Req>>
+rectangle "R09: Control de datos personales" as R09 <<Req>>
+rectangle "R10: Uso simple y rápido" as R10 <<Req>>
+rectangle "R06: Seguimiento del progreso" as R06 <<Req>>
+rectangle "R07: Registro de sensaciones" as R07 <<Req>>
+rectangle "R13: Perfil del usuario y plan sugerido" as R13 <<Req>>
+rectangle "R14: Suscripción al plan premium" as R14 <<Req>>
+rectangle "R15: Términos de uso y aviso legal" as R15 <<Req>>
+
+rectangle "Proceso 4:\nRegistro de Fuerza" as P4 <<Proceso>>
+rectangle "Proceso 1: Registro de\nCardio y Fatiga Cruzada" as P1 <<Proceso>>
+rectangle "Proceso 2: Registro de\nComidas y Metas" as P2 <<Proceso>>
+rectangle "Proceso 3: Publicación y Uso\nde Contenido de la Comunidad" as P3 <<Proceso>>
+rectangle "Funciones transversales:\nCuenta, Planes, Uso y Administración" as T2 <<Transversal>>
+rectangle "Funciones transversales:\nSeguimiento y Sensaciones" as T1 <<Transversal>>
+rectangle "Proceso 5: Perfil del\nUsuario y Plan Sugerido" as P5 <<Proceso>>
+
+R01 ..> P4
+R02 ..> P1
+R03 ..> P1
+R04 ..> P2
+R05 ..> P2
+R08 ..> P3
+R12 ..> P3
+R11 ..> P3
+R11 ..> T2
+R09 ..> T2
+R10 ..> T2
+R06 ..> T1
+R07 ..> T1
+R13 ..> P5
+R14 ..> T2
+R15 ..> T2
+
+@enduml
