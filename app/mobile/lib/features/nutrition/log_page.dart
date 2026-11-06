@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../app/providers.dart';
+import '../../app/sim_providers.dart';
 import '../../app/theme.dart';
 import '../../core/common/date.dart';
 import '../../core/common/numbers.dart';
@@ -23,12 +24,15 @@ const _placeholder = 'Arroz 100g\n1 Tomate mediano\nHuevos x3\nAtún 150g';
 
 /// Registrar: lista en lenguaje natural → alimentos con gramos y macros.
 class LogPage extends ConsumerStatefulWidget {
-  const LogPage({super.key, this.initialDate, this.initialMeal});
+  const LogPage({super.key, this.initialDate, this.initialMeal, this.demo});
 
   final String? initialDate;
 
   /// Comida elegida al llegar desde un recordatorio; si no, se propone según la hora.
   final MealSlot? initialMeal;
+
+  /// lista o escaneo: deja el registro analizado de ejemplo (lo usa el modo de capturas).
+  final String? demo;
 
   @override
   ConsumerState<LogPage> createState() => _LogPageState();
@@ -40,6 +44,7 @@ class _LogPageState extends ConsumerState<LogPage> {
   final _text = TextEditingController();
   List<ResolvedItem>? _items;
   bool _saving = false;
+  bool _demoDone = false;
 
   @override
   void dispose() {
@@ -141,18 +146,36 @@ class _LogPageState extends ConsumerState<LogPage> {
     final counts = {for (final s in ItemStatus.values) s: items?.where((i) => i.status == s).length ?? 0};
     final totals = sumMacros((items ?? const <ResolvedItem>[]).where((i) => i.match != null).map((i) => i.macros));
     final canSave = items != null && items.isNotEmpty && counts[ItemStatus.missing] == 0 && !_saving;
+    if (widget.demo != null && ctx != null && !_demoDone) {
+      _demoDone = true;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
+        if (widget.demo == 'escaneo') {
+          final food = ctx.foods.values.where((f) => f.name.startsWith('Atún en lata al agua')).firstOrNull ?? ctx.foods.values.first;
+          _addScanned(food, '7802900123456', ctx);
+        } else {
+          _analyze(ctx);
+        }
+      });
+    }
 
     return PageBody(children: [
       DateNav(date: _date, onChanged: (d) => setState(() => _date = d)),
       Wrap(spacing: 6, runSpacing: 6, alignment: WrapAlignment.center, children: [
         for (final m in MealSlot.values)
           ChoiceChip(
-            avatar: Icon(mealMeta[m]!.icon, size: 16, color: m == _meal ? c.primary : c.muted),
+            avatar: Icon(mealMeta[m]!.icon, size: 16, color: m == _meal ? c.onPrimary : c.muted),
             label: Text(mealMeta[m]!.label),
             selected: m == _meal,
             onSelected: (_) => setState(() => _meal = m),
           ),
       ]),
+      if (ref.watch(previewEnabledProvider))
+        Row(children: [
+          Expanded(child: OutlinedButton.icon(onPressed: () => context.push('/ia/foto'), icon: const Icon(Icons.photo_camera_outlined, size: 18), label: const Text('Con foto'))),
+          const SizedBox(width: 8),
+          Expanded(child: OutlinedButton.icon(onPressed: () => context.push('/ia/comida'), icon: const Icon(Icons.auto_awesome, size: 18), label: const Text('Con palabras'))),
+        ]),
       if (data is AsyncError) ErrorView(data.error!),
       AppCard(
         padding: const EdgeInsets.all(12),

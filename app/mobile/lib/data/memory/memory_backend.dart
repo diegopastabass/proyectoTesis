@@ -401,13 +401,13 @@ class OfflineLookupRepository implements LookupRepository {
 
 /// Backend de demostración con el catálogo base cargado y algunos datos de ejemplo,
 /// para recorrer la app sin configurar nada.
-Backend memoryBackend({required List<Food> seedFoods, required LookupRepository lookup, bool withSampleData = true, bool signedIn = false}) {
+Backend memoryBackend({required List<Food> seedFoods, required LookupRepository lookup, bool withSampleData = true, bool signedIn = false, bool richSample = false}) {
   final today = todayKey();
   final weights = withSampleData
       ? [for (var i = 35; i >= 0; i -= 3) WeightEntry(date: addDays(today, -i), kg: 84.6 - (35 - i) * 0.07 + (i % 2) * 0.2)]
       : <WeightEntry>[];
 
-  Workout sample(int daysAgo, double kg, String id, {int? rpe}) {
+  Workout sample(int daysAgo, double kg, String id, {int? rpe, int minutes = 55}) {
     final start = fromDateKey(addDays(today, -daysAgo)).add(const Duration(hours: 19)).millisecondsSinceEpoch;
     return Workout(
       id: id,
@@ -415,7 +415,7 @@ Backend memoryBackend({required List<Food> seedFoods, required LookupRepository 
       name: 'Rutina de pecho',
       date: addDays(today, -daysAgo),
       startedAt: start,
-      finishedAt: start + 55 * 60000,
+      finishedAt: start + minutes * 60000,
       rpe: rpe,
       exercises: [
         WorkoutExercise(exerciseId: 'Barbell_Bench_Press_-_Medium_Grip', name: 'Press de banca con barra', sets: [
@@ -450,6 +450,14 @@ Backend memoryBackend({required List<Food> seedFoods, required LookupRepository 
           ?item(i.isEven ? 'pechuga-pollo-cocida' : 'salmon-cocido', 170, MealSlot.almuerzo),
           ?item('arroz-blanco-cocido', 200, MealSlot.almuerzo),
         ],
+    // Para las capturas: el día de hoy no parte vacío.
+    if (withSampleData && richSample)
+      today: [
+        ?item('avena-hojuelas', 60, MealSlot.desayuno),
+        ?item('leche-semidescremada', 250, MealSlot.desayuno),
+        ?item('pechuga-pollo-cocida', 170, MealSlot.almuerzo),
+        ?item('arroz-blanco-cocido', 200, MealSlot.almuerzo),
+      ],
   };
 
   return Backend(
@@ -476,7 +484,17 @@ Backend memoryBackend({required List<Food> seedFoods, required LookupRepository 
               ]),
             ]
           : const [],
-      workouts: withSampleData ? [sample(9, 52.5, 'demo-w1', rpe: 7), sample(2, 55, 'demo-w2')] : const [],
+      workouts: withSampleData
+          ? [
+              sample(9, 52.5, 'demo-w1', rpe: 7),
+              sample(2, 55, 'demo-w2', rpe: richSample ? 8 : null, minutes: richSample ? 60 : 55),
+              // Para las capturas: seis semanas de historia, con una última semana más exigente,
+              // para que el resumen de carga tenga datos confiables y muestre la alerta.
+              if (richSample) ...[
+                for (final d in const [44, 40, 37, 33, 30, 26, 23, 19, 16, 12]) sample(d, 50, 'rich-w$d', rpe: 7, minutes: 60),
+              ],
+            ]
+          : const [],
     ),
     cardio: MemoryCardioRepository(
       uid: demoUser.uid,
@@ -484,7 +502,9 @@ Backend memoryBackend({required List<Food> seedFoods, required LookupRepository 
           ? [
               sampleCardio(Discipline.running, daysAgo: 1, km: 7.2, speedMs: 3.1, rpe: 6),
               sampleCardio(Discipline.cycling, daysAgo: 4, km: 24, speedMs: 7.5, climbM: 40),
-              sampleCardio(Discipline.trekking, daysAgo: 6, km: 9.5, speedMs: 1.3, climbM: 120),
+              sampleCardio(Discipline.trekking, daysAgo: 6, km: richSample ? 5 : 9.5, speedMs: 1.3, climbM: 120),
+              if (richSample)
+                for (final d in const [42, 38, 35, 31, 28, 24, 21, 17, 14, 10]) sampleCardio(Discipline.running, daysAgo: d, km: 8, speedMs: 3, rpe: 6),
             ]
           : const [],
     ),

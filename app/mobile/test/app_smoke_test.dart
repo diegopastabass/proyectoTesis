@@ -187,6 +187,70 @@ void main() {
     }
   });
 
+  testWidgets('recorre las pantallas de diseño con datos simulados', (tester) async {
+    final container = await _boot(tester);
+    final screens = {
+      '/comunidad': 'Tu muro',
+      '/comunidad/buscar': 'Personas sugeridas',
+      '/comunidad/buscar?q=xyz': 'No encontramos a nadie',
+      '/comunidad/perfil': 'Aún no has publicado',
+      '/comunidad/usuario/camila': 'Triatleta',
+      '/comunidad/post/p1': 'Ejercicios',
+      '/comunidad/post/p2': 'Ingredientes',
+      '/comunidad/post/p3': 'Inicio y final ocultos',
+      '/comunidad/post/p1/agregar': 'Creada por',
+      '/comunidad/post/p1/agregar?estado=listo': 'Quedó agregada',
+      '/comunidad/post/p3/agregar': 'Agregar a mi cardio',
+      '/comunidad/post/p2/receta': 'Ingredientes ajustados',
+      '/comunidad/post/p2/receta?estado=metas': 'Ya cumpliste tus metas',
+      '/comunidad/post/p1/reportar': '¿Cuál es el motivo?',
+      '/comunidad/post/p1/reportar?estado=listo': 'Gracias por avisar',
+      '/comunidad/publicar?ejemplo=1': 'Son mías o tengo permiso',
+      '/comunidad/publicar?ejemplo=1&tipo=ruta': 'Ocultamos el inicio',
+      '/ia/fuerza': 'Ordenar con el asistente',
+      '/ia/fuerza?estado=analizando': 'El asistente está ordenando',
+      '/ia/fuerza?estado=revision': 'Falta confirmar un ejercicio',
+      '/ia/comida': 'Estimar con el asistente',
+      '/ia/comida?estado=revision': 'Alimentos detectados',
+      '/ia/foto': 'Encuadra tu plato',
+      '/ia/foto?estado=analizando': 'mirando tu plato',
+      '/ia/foto?estado=revision': 'Revisa lo marcado',
+      '/carga': 'Carga de esta semana',
+      '/carga?estado=faltan': 'Faltan datos',
+      '/carga/alerta': 'Bajar 10 %',
+      '/metas': 'Cuándo te conviene comer',
+      '/metas?dia=descanso': 'día de descanso',
+      '/cardio/manual?ejemplo=1': 'Datos de la sesión',
+      '/cardio/reloj': 'Conectar con Salud',
+      '/cardio/reloj?estado=conectado': 'Sesiones nuevas',
+      '/cardio/archivo': 'Elige tu archivo',
+      '/cardio/archivo?estado=error': 'No pudimos usar este archivo',
+      '/cardio/archivo?estado=resumen': 'Potencia',
+      '/bienvenida/terminos': 'Antes de empezar',
+      '/bienvenida/terminos?estado=cambios': 'Actualizamos los términos',
+      '/bienvenida/terminos?estado=rechazo': 'Son necesarios',
+      '/bienvenida/cuestionario?ejemplo=1': 'objetivo principal',
+      '/bienvenida/cuestionario?paso=1&ejemplo=1': 'equipamiento',
+      '/bienvenida/cuestionario?paso=2&ejemplo=1': 'Estatura',
+      '/bienvenida/cuestionario?estado=falta': 'Responde todas',
+      '/bienvenida/plan': 'Aceptar el plan',
+      '/bienvenida/plan?estado=listo': 'Es tu plan de esta semana',
+      '/ajustes/datos': 'Datos de salud',
+      '/ajustes/datos/eliminar?ejemplo=1': 'Esta acción no se puede deshacer',
+      '/premium': 'IVA incluido',
+      '/premium?estado=activo': 'Ya tienes el plan premium',
+      '/premium?estado=rechazado': 'No se pudo completar el pago',
+      '/premium/suscripcion': 'Próximo cobro',
+      '/premium/suscripcion?estado=cancelada': 'Premium hasta',
+    };
+    for (final MapEntry(key: location, value: text) in screens.entries) {
+      // Otra pantalla entre medio: cambiar solo la consulta reutilizaría el estado de la anterior.
+      await _go(tester, container, '/ajustes');
+      await _go(tester, container, location);
+      expect(find.textContaining(text), findsWidgets, reason: location);
+    }
+  });
+
   testWidgets('repite el desayuno de ayer con un toque', (tester) async {
     final container = await _boot(tester);
     expect(find.text('Repetir de ayer'), findsOneWidget);

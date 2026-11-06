@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../app/cardio_providers.dart';
+import '../../app/sim_providers.dart';
 import '../../app/providers.dart';
 import '../../app/theme.dart';
 import '../../core/cardio/activity.dart';
@@ -12,6 +13,7 @@ import '../../core/cardio/geo.dart';
 import '../../platform/capability.dart';
 import '../../platform/platform_providers.dart';
 import '../../ui/format.dart';
+import '../../ui/sim_widgets.dart';
 import '../../ui/widgets.dart';
 import 'cardio_widgets.dart';
 
@@ -152,6 +154,26 @@ class _CardioHomePageState extends ConsumerState<CardioHomePage> {
             ),
           ),
         ),
+        if (ref.watch(previewEnabledProvider))
+          Row(children: [
+            for (final (i, (icon, label, route)) in const [
+              (Icons.edit_note, 'A mano', '/cardio/manual'),
+              (Icons.watch_outlined, 'Del reloj', '/cardio/reloj'),
+              (Icons.upload_file, 'Archivo', '/cardio/archivo'),
+            ].indexed) ...[
+              if (i > 0) const SizedBox(width: 8),
+              Expanded(
+                child: OutlinedButton.icon(
+                  style: OutlinedButton.styleFrom(padding: const EdgeInsets.symmetric(horizontal: 4), minimumSize: const Size(0, 42), textStyle: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600)),
+                  onPressed: () => context.push(route),
+                  icon: Icon(icon, size: 17),
+                  label: Text(label),
+                ),
+              ),
+            ],
+          ]),
+        if (ref.watch(previewEnabledProvider))
+          EntryCard(icon: Icons.bolt, title: 'Carga de entrenamiento', subtitle: 'Fuerza y cardio sumados en la semana', onTap: () => context.push('/carga')),
         if (recent.isNotEmpty) ...[
           SectionTitle(
             'Últimas actividades',

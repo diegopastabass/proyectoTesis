@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../app/providers.dart';
+import '../../app/sim_providers.dart';
 import '../../app/theme.dart';
 import '../../core/common/date.dart';
 import '../../core/strength/calendar.dart';
@@ -11,6 +12,7 @@ import '../../core/strength/programs.dart';
 import '../../core/strength/session.dart';
 import '../../core/strength/stats.dart';
 import '../../ui/format.dart';
+import '../../ui/sim_widgets.dart';
 import '../../ui/widgets.dart';
 import 'active_workout_pill.dart';
 import 'programs_page.dart';
@@ -203,6 +205,10 @@ class StrengthHomePage extends ConsumerWidget {
               Icon(Icons.chevron_right, color: c.faint),
             ]),
           ),
+        if (ref.watch(previewEnabledProvider)) ...[
+          EntryCard(icon: Icons.auto_awesome, title: 'Contar mi sesión', subtitle: 'Escríbela o díctala con tus palabras', onTap: () => context.push('/ia/fuerza')),
+          EntryCard(icon: Icons.bolt, title: 'Carga de entrenamiento', subtitle: 'Fuerza y cardio sumados en la semana', onTap: () => context.push('/carga')),
+        ],
         SectionTitle(
           'Rutinas',
           trailing: Row(mainAxisSize: MainAxisSize.min, children: [

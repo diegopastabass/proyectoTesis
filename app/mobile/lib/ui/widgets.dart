@@ -289,6 +289,9 @@ class AsyncView<T> extends StatelessWidget {
       );
 }
 
+/// Desplazamiento inicial de [PageBody], solo para el modo de capturas (ver main.dart).
+double? captureScrollOffset;
+
 /// Contenido desplazable de una sección, con márgenes, ancho máximo y rebote de iOS.
 /// Deja espacio para las barras translúcidas (el contenido pasa por debajo) y los
 /// bloques aparecen escalonados la primera vez.
@@ -304,6 +307,7 @@ class PageBody extends StatelessWidget {
     // Bordes seguros y barras flotantes (Scaffold los entrega como padding).
     final inset = MediaQuery.paddingOf(context);
     return ListView(
+      controller: captureScrollOffset == null ? null : ScrollController(initialScrollOffset: captureScrollOffset!),
       padding: EdgeInsets.fromLTRB(16 + inset.left, 12 + inset.top, 16 + inset.right, bottomPadding + inset.bottom),
       physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
       keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,

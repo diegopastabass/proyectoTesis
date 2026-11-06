@@ -303,19 +303,20 @@ class _BackendBadge extends StatelessWidget {
   }
 }
 
-class _ModuleSwitcher extends StatelessWidget {
+class _ModuleSwitcher extends ConsumerWidget {
   const _ModuleSwitcher({required this.current});
 
   final AppModule current;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final c = context.colors;
+    final preview = ref.watch(backendProvider).kind == BackendKind.memory;
     return Container(
       padding: const EdgeInsets.all(3),
       decoration: ShapeDecoration(color: c.surface2.withValues(alpha: 0.8), shape: const StadiumBorder()),
       child: Row(mainAxisSize: MainAxisSize.min, children: [
-        for (final m in modules)
+        for (final m in modules.where((m) => preview || !m.previewOnly))
           Semantics(
             button: true,
             selected: m.id == current.id,

@@ -107,6 +107,22 @@ Sin Xcode también se puede revisar la interfaz en el navegador (no es el objeti
 flutter build web && python3 -m http.server 8091 --directory build/web
 ```
 
+## Pantallas de diseño y capturas de la tesis
+
+En modo demostración aparecen además las pantallas de diseño de los casos de uso que todavía no tienen backend: comunidad, IA, reloj y archivos `.fit`, alertas de fatiga, metas del día, cuestionario inicial, términos, privacidad y suscripción. Usan datos simulados (`lib/data/simulated/`, `lib/app/sim_providers.dart`) y sus rutas están en `_previewPaths` (`lib/app/router.dart`): **con Firebase real no se muestran**.
+
+Las capturas de `figuras/interfaces/` se toman en un simulador sin tocar la pantalla:
+
+```bash
+flutter build ios --simulator --debug --dart-define-from-file=env/memory.json
+```
+
+```bash
+python3 tool/capture_screens.py
+```
+
+La app abre cada pantalla por su ruta y avisa cuando ya se dibujó. El entrenamiento en curso y la grabación con GPS requieren tocar la pantalla: se usan `--open`, `--snap` y `--close` (ver el encabezado del script).
+
 ## Datos compartidos con la web
 
 `assets/data/` partió como copia de `../src/data` (semilla de alimentos, catálogo de ejercicios y nombres en español). Con la web en desuso, `assets/data/exercises_es.json` ya tiene nombres propios de la app (ejercicios de los programas sugeridos): **no ejecutes `tool/sync_assets.py`** sin revisar el resultado, porque los sobrescribiría. Para traer cambios de la web:

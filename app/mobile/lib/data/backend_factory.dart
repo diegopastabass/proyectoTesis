@@ -19,12 +19,12 @@ const _emulatorOptions = FirebaseOptions(
 );
 
 /// Crea el backend según la configuración de compilación.
-Future<Backend> createBackend(AppConfig config, {CatalogAssets? assets}) async {
+Future<Backend> createBackend(AppConfig config, {CatalogAssets? assets, bool capture = false}) async {
   final lookup = HttpLookupRepository();
   switch (config.backend) {
     case BackendKind.memory:
       final seed = await (assets ?? CatalogAssets()).seedFoods(demoUser.uid);
-      return memoryBackend(seedFoods: seed, lookup: lookup);
+      return memoryBackend(seedFoods: seed, lookup: lookup, signedIn: capture, richSample: capture);
     case BackendKind.emulator:
       await Firebase.initializeApp(options: _emulatorOptions);
       final auth = FirebaseAuth.instance;

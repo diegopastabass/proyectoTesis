@@ -37,6 +37,9 @@ import 'config.dart';
 
 final appConfigProvider = Provider<AppConfig>((ref) => AppConfig.fromEnvironment());
 
+/// Pantalla pedida por el modo de capturas (null en el uso normal).
+final captureProvider = Provider<CaptureRequest?>((ref) => null);
+
 final backendProvider = Provider<Backend>((ref) => throw UnimplementedError('backendProvider se define en main.dart'));
 
 final localStoreProvider = Provider<LocalStore>((ref) => throw UnimplementedError('localStoreProvider se define en main.dart'));

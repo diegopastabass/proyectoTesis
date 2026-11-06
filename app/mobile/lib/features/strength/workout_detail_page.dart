@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../app/providers.dart';
+import '../../app/sim_providers.dart';
 import '../../app/theme.dart';
 import '../../core/common/numbers.dart';
 import '../../core/strength/insights.dart';
@@ -14,6 +15,7 @@ import '../../core/strength/stats.dart';
 import '../../core/training/load.dart';
 import '../../ui/format.dart';
 import '../../ui/rpe.dart';
+import '../../ui/sim_widgets.dart';
 import '../../ui/widgets.dart';
 import 'exercise_widgets.dart';
 import 'set_options.dart';
@@ -32,29 +34,33 @@ const _insightIcon = {
 };
 
 class WorkoutDetailPage extends ConsumerWidget {
-  const WorkoutDetailPage({super.key, required this.id, this.isNew = false});
+  const WorkoutDetailPage({super.key, required this.id, this.isNew = false, this.exampleNote});
 
   final String id;
 
   /// Recién terminado: muestra la celebración y vuelve al inicio del módulo.
   final bool isNew;
 
+  /// Borrador de ejemplo de la nota (lo usa el modo de capturas).
+  final String? exampleNote;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return AsyncView(ref.watch(strengthDataProvider), builder: (data) {
       final workout = data.workouts.where((w) => w.id == id).firstOrNull;
       if (workout == null) return const LoadingView(text: 'Entrenamiento no encontrado.');
-      return _WorkoutDetail(key: ValueKey(id), workout: workout, data: data, isNew: isNew);
+      return _WorkoutDetail(key: ValueKey(id), workout: workout, data: data, isNew: isNew, exampleNote: exampleNote);
     });
   }
 }
 
 class _WorkoutDetail extends ConsumerStatefulWidget {
-  const _WorkoutDetail({super.key, required this.workout, required this.data, required this.isNew});
+  const _WorkoutDetail({super.key, required this.workout, required this.data, required this.isNew, this.exampleNote});
 
   final Workout workout;
   final StrengthData data;
   final bool isNew;
+  final String? exampleNote;
 
   @override
   ConsumerState<_WorkoutDetail> createState() => _WorkoutDetailState();
@@ -160,6 +166,7 @@ class _WorkoutDetailState extends ConsumerState<_WorkoutDetail> {
           tooltip: 'Carga de la sesión: esfuerzo percibido (1–10) × minutos. Sirve para comparar fuerza y cardio.',
         ),
       ]),
+      if (ref.watch(previewEnabledProvider)) FeelingNoteCard(noteKey: 'fuerza-${w.id}', initial: widget.exampleNote),
       if (insights.isNotEmpty)
         CardList(header: const CardHeader('Tus avances'), children: [
           for (final ins in insights)

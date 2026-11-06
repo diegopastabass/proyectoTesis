@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../app/cardio_providers.dart';
+import '../../app/sim_providers.dart';
 import '../../app/modules.dart';
 import '../../app/providers.dart';
 import '../../app/theme.dart';
@@ -13,6 +14,7 @@ import '../../core/common/date.dart';
 import '../../core/nutrition/models.dart';
 import '../../ui/format.dart';
 import '../../ui/widgets.dart';
+import '../../ui/sim_widgets.dart';
 import '../cardio/cardio_widgets.dart';
 
 const _weekDays = ['L', 'M', 'X', 'J', 'V', 'S', 'D'];
@@ -119,6 +121,8 @@ class _ActivityPageState extends ConsumerState<ActivityPage> {
         builder: (data) {
           final (days, s) = data;
           return PageBody(children: [
+            if (ref.watch(previewEnabledProvider))
+              EntryCard(icon: Icons.show_chart, title: 'Carga en el tiempo', subtitle: 'Cómo ha cambiado tu carga de entrenamiento', onTap: () => context.push('/carga')),
             _StreakCard(
               streak: s,
               restDays: ref.watch(streakRestDaysProvider).value ?? const {},

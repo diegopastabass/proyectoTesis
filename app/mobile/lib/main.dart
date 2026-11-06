@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
@@ -14,6 +15,7 @@ import 'data/backend_factory.dart';
 import 'data/local/cardio_store.dart';
 import 'data/local/local_store.dart';
 import 'data/repositories.dart';
+import 'ui/widgets.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,7 +24,8 @@ Future<void> main() async {
     runApp(const SetupNoticeApp());
     return;
   }
-  final backend = await createBackend(config);
+  final capture = config.backend == BackendKind.memory ? _readCaptureRequest() : null;
+  final backend = await createBackend(config, capture: capture != null);
   final prefs = await SharedPreferences.getInstance();
   // Las rutas de cardio se guardan en archivos del teléfono (funciona sin internet).
   // En modo demostración (y en la web) quedan en memoria, como el resto de los datos.
@@ -30,6 +33,7 @@ Future<void> main() async {
   runApp(ProviderScope(
     overrides: [
       appConfigProvider.overrideWithValue(config),
+      captureProvider.overrideWithValue(capture),
       backendProvider.overrideWithValue(backend),
       localStoreProvider.overrideWithValue(LocalStore(prefs)),
       if (support != null)
@@ -37,4 +41,20 @@ Future<void> main() async {
     ],
     child: const AsistenteApp(),
   ));
+}
+
+/// Modo de capturas (`tool/capture_screens.py`): el pedido llega en un archivo dentro de
+/// la carpeta temporal de la app, porque Dart no puede leer variables de entorno en iOS.
+CaptureRequest? _readCaptureRequest() {
+  if (kIsWeb) return null;
+  final temp = Directory.systemTemp.path;
+  final file = File('$temp/nutri_capture.json');
+  if (!file.existsSync()) return null;
+  final request = jsonDecode(file.readAsStringSync()) as Map<String, Object?>;
+  captureScrollOffset = (request['scroll'] as num?)?.toDouble();
+  return CaptureRequest(
+    route: request['route']! as String,
+    replace: request['go'] == true,
+    onReady: () => File('$temp/nutri_ready').writeAsStringSync('listo'),
+  );
 }

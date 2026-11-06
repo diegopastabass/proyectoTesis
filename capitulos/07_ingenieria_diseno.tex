@@ -2007,6 +2007,123 @@ La aplicación pide al backend la versión vigente de los textos. Si el usuario 
 
 \clearpage
 \subsection{Diseño de Interfaces de Usuario}
+En esta sección se muestran las pantallas que cubren cada caso de uso. Se construyeron en la aplicación Flutter del prototipo, y no en una herramienta de dibujo, para que el diseño sirva como base del desarrollo. El administrador usa un panel web, según lo definido en la arquitectura.
+
+La interfaz usa Material Design 3 como base y agrega patrones de iOS, como las tarjetas agrupadas y las transiciones entre pantallas. Se organiza en cuatro módulos, que se eligen en el selector superior: nutrición, fuerza, cardio y comunidad. Cada módulo tiene sus secciones en la barra inferior. La paleta de colores es Gruvbox, con una versión clara y otra oscura, y cada macronutriente mantiene siempre su color. Las figuras de esta sección usan el modo claro, porque se lee mejor en una hoja impresa, aunque la aplicación también cuenta con el modo oscuro exigido en los requisitos de las interfaces.
+
+\newlength{\uiancho}\setlength{\uiancho}{3.2cm}
+\newlength{\uiescritorio}\setlength{\uiescritorio}{7.85cm}
+\newcommand{\uifoto}[1]{\includegraphics[width=\uiancho]{figuras/interfaces/#1.jpg}}
+\newcommand{\uiweb}[1]{\includegraphics[width=\uiescritorio]{figuras/interfaces/#1.jpg}}
+\newcommand{\uitexto}[1]{{\setstretch{1.1}\small #1\par}}
+% Cuatro pantallas: el texto va arriba.
+\newcommand{\uicuatro}[8]{%
+\noindent\begin{minipage}{\linewidth}
+\textbf{#1}\par\vspace{0.1cm}
+\uitexto{#2}\vspace{0.2cm}
+\centering\uifoto{#3}\hspace{0.45cm}\uifoto{#4}\hspace{0.45cm}\uifoto{#5}\hspace{0.45cm}\uifoto{#6}
+\captionof{figure}{Interfaces -- #7.}\label{#8}
+\end{minipage}\par\vspace{0.3cm}}
+% Tres pantallas: el texto va a la izquierda.
+\newcommand{\uitres}[7]{%
+\noindent\begin{minipage}{\linewidth}
+\begin{minipage}[c]{5.5cm}\raggedright\textbf{#1}\par\vspace{0.15cm}\uitexto{#2}\end{minipage}\hfill
+\begin{minipage}[c]{10.1cm}\uifoto{#3}\hfill\uifoto{#4}\hfill\uifoto{#5}\end{minipage}
+\captionof{figure}{Interfaces -- #6.}\label{#7}
+\end{minipage}\par\vspace{0.3cm}}
+% Dos pantallas: el texto va a la izquierda.
+\newcommand{\uidos}[6]{%
+\noindent\begin{minipage}{\linewidth}
+\begin{minipage}[c]{9cm}\raggedright\textbf{#1}\par\vspace{0.15cm}\uitexto{#2}\end{minipage}\hfill
+\begin{minipage}[c]{6.7cm}\uifoto{#3}\hfill\uifoto{#4}\end{minipage}
+\captionof{figure}{Interfaces -- #5.}\label{#6}
+\end{minipage}\par\vspace{0.3cm}}
+% Dos casos de uso de dos pantallas, uno al lado del otro.
+\newcommand{\uipar}[6]{%
+\begin{minipage}[t]{7.75cm}\raggedright\textbf{#1}\par\vspace{0.1cm}\uitexto{#2}\vspace{0.2cm}\uifoto{#3}\hspace{0.3cm}\uifoto{#4}
+\captionof{figure}{Interfaces -- #5.}\label{#6}\end{minipage}}
+% Dos pantallas del panel web, con el texto arriba.
+\newcommand{\uiweblado}[6]{%
+\noindent\begin{minipage}{\linewidth}
+\textbf{#1}\par\vspace{0.1cm}
+\uitexto{#2}\vspace{0.2cm}
+\centering\uiweb{#3}\hfill\uiweb{#4}
+\captionof{figure}{Interfaces -- #5.}\label{#6}
+\end{minipage}\par\vspace{0.3cm}}
+
+\textbf{Estado de las pantallas.} El prototipo no tiene todavía el backend ni las integraciones diseñadas en este capítulo, por lo que no todas las pantallas funcionan de la misma manera. La Tabla \ref{tab:estado_interfaces} indica cuáles ya operan y cuáles muestran datos simulados. Las pantallas simuladas siguen el flujo de su caso de uso, pero sus resultados son ejemplos fijos y no se guardan en una base de datos. Las personas que aparecen son ficticias, y los recuadros de color reemplazan a las fotos.
+
+\begin{table}[h!]
+    \centering
+    \renewcommand{\arraystretch}{1.2}
+    \small
+    \begin{tabular}{|>{\raggedright\arraybackslash}p{3.1cm}|>{\raggedright\arraybackslash}p{4.4cm}|>{\raggedright\arraybackslash}p{7.4cm}|}
+        \hline
+        \rowcolor[HTML]{EFEFEF}
+        \textbf{Estado} & \textbf{Casos de uso} & \textbf{Qué significa} \\ \hline
+        Funcional & CU-01, CU-06, CU-15 & La pantalla opera con su lógica real en el prototipo. \\ \hline
+        Funcional en parte & CU-05, CU-12, CU-16, CU-17, CU-18, CU-19, CU-20, CU-21 & Una parte es real, como el cálculo de la carga o la grabación con GPS, y el resto se muestra con datos simulados. \\ \hline
+        Diseño con datos simulados & CU-02, CU-03, CU-04, CU-07, CU-08, CU-09, CU-10, CU-11, CU-13, CU-14, CU-22, CU-23, CU-24, CU-25, CU-26 & La pantalla muestra el flujo completo, pero falta conectar el servicio que la sostiene, como la IA, los pagos, la red social o la lectura del reloj. \\ \hline
+    \end{tabular}
+    \caption{Estado de las pantallas en el prototipo.}
+    \label{tab:estado_interfaces}
+\end{table}
+
+Cada figura se lee de izquierda a derecha, siguiendo el curso normal del caso de uso y, cuando corresponde, alguno de sus cursos alternos.
+\vspace{0.3cm}
+
+\uicuatro{CU-01. Anotar una sesión de fuerza}{Desde el módulo de fuerza, el atleta empieza una rutina guardada o una sesión libre. Durante la sesión anota el peso y las repeticiones de cada serie. Al terminar indica qué tan duro lo sintió, y la aplicación muestra el resumen con su carga.}{cu01_inicio}{cu01_entreno}{cu01_esfuerzo}{cu01_detalle}{CU-01: Anotar una sesión de fuerza}{fig:ui_cu01}
+
+\noindent\uipar{CU-02. Contar mi sesión de fuerza con mis palabras}{El atleta escribe o dicta lo que hizo. El asistente lo ordena en ejercicios y series. Si no reconoce un ejercicio, lo marca y no deja guardar hasta que se elija de la lista.}{cu02_escribir}{cu02_revision}{CU-02: Contar mi sesión de fuerza con mis palabras}{fig:ui_cu02}\hfill
+\uipar{CU-03. Traer mis sesiones desde el reloj}{La primera vez se explica para qué se usan los datos y se pide permiso. Luego las sesiones nuevas llegan solas, y se pregunta qué tan duro se sintió cada una.}{cu03_permiso}{cu03_sesiones}{CU-03: Traer mis sesiones desde el reloj}{fig:ui_cu03}
+\par\vspace{0.3cm}
+
+\uitres{CU-04. Subir el archivo de mi ciclocomputador}{El atleta elige un archivo \texttt{.fit} de hasta 10 MB. Si el archivo no sirve, se explica el motivo. Si es válido, se muestra la sesión con su potencia, su cadencia y su pulso antes de guardarla.}{cu04_elegir}{cu04_error}{cu04_resumen}{CU-04: Subir el archivo de mi ciclocomputador}{fig:ui_cu04}
+
+\uitres{CU-05. Revisar mi fatiga y recibir alertas}{El resumen suma la carga de fuerza y de cardio en una misma unidad. Si detecta un riesgo, muestra un aviso con una sugerencia que el atleta decide si sigue. Con pocas sesiones, avisa que faltan datos. La carga ya se calcula con los registros reales, y la alerta es un ejemplo.}{cu05_resumen}{cu05_alerta}{cu05_faltan}{CU-05: Revisar mi fatiga y recibir alertas}{fig:ui_cu05}
+
+\uitres{CU-06. Anotar una comida buscando los alimentos}{El diario muestra el avance del día. En Registrar, el usuario elige los alimentos y sus cantidades, y la aplicación calcula las calorías y los macronutrientes. El catálogo reúne los alimentos disponibles.}{cu06_diario}{cu06_registrar}{cu06_catalogo}{CU-06: Anotar una comida buscando los alimentos}{fig:ui_cu06}
+
+\uitres{CU-07. Registrar una comida con una foto}{El atleta saca la foto y el asistente estima los alimentos y sus cantidades. Lo que no es seguro queda marcado para revisarlo. La foto se descarta al guardar, salvo que el atleta decida publicarla.}{cu07_camara}{cu07_analizando}{cu07_revision}{CU-07: Registrar una comida con una foto}{fig:ui_cu07}
+
+\uitres{CU-08. Agregar una receta ajustada a mis metas}{Desde la receta, la aplicación calcula lo que le falta comer al usuario y ajusta todos los ingredientes con un mismo factor, que se puede cambiar. Si ya cumplió sus metas, lo avisa y propone las porciones originales.}{cu08_receta}{cu08_ajuste}{cu08_metas}{CU-08: Agregar una receta ajustada a mis metas}{fig:ui_cu08}
+
+\uidos{CU-09. Publicar una sesión, ruta o comida}{El atleta elige un registro, escribe un texto y decide quién lo puede ver. Puede agregar hasta 4 fotos, y para eso debe declarar que son suyas o que tiene permiso. Si publica una ruta, la aplicación oculta el inicio y el final del recorrido.}{cu09_sesion}{cu09_ruta}{CU-09: Publicar una sesión, ruta o comida}{fig:ui_cu09}
+
+\uiweblado{CU-10. Mantener el catálogo de ejercicios}{En el panel web, el administrador revisa la lista, agrega o cambia ejercicios y puede desactivarlos. Un ejercicio desactivado deja de aparecer para nuevas sesiones. Si el nombre ya existe, el panel lo avisa y no permite guardar.}{cu10_lista}{cu10_repetido}{CU-10: Mantener el catálogo de ejercicios}{fig:ui_cu10}
+
+\uiweblado{CU-11. Revisar el contenido reportado}{El administrador ve las publicaciones reportadas con su motivo. Al revisar una, debe explicar su decisión antes de ocultarla o de descartar el reporte, y queda guardado quién la tomó y por qué.}{cu11_lista}{cu11_revisar}{CU-11: Revisar el contenido reportado}{fig:ui_cu11}
+
+\uicuatro{CU-12. Completar mi perfil y recibir un plan semanal}{El cuestionario inicial se responde en tres pasos: experiencia y objetivo, disponibilidad y equipamiento, y datos personales. Con eso, la aplicación sugiere un plan para la semana, que el usuario puede aceptar, cambiar o dejar para después.}{cu12_cuestionario1}{cu12_cuestionario2}{cu12_cuestionario3}{cu12_plan}{CU-12: Completar mi perfil y recibir un plan semanal}{fig:ui_cu12}
+
+\uitres{CU-13. Agregar una publicación a mis módulos}{Desde una publicación, el atleta revisa qué se va a agregar y quién lo creó. Al confirmar, queda una copia propia en el módulo que corresponde, que puede cambiar sin afectar la original.}{cu13_publicacion}{cu13_agregar}{cu13_listo}{CU-13: Agregar una publicación a mis módulos}{fig:ui_cu13}
+
+\noindent\uipar{CU-14. Seguir a otro usuario}{El atleta busca a una persona por nombre o deporte, abre su perfil y la sigue. Puede dejar de seguirla con el mismo botón.}{cu14_buscar}{cu14_perfil}{CU-14: Seguir a otro usuario}{fig:ui_cu14}\hfill
+\uipar{CU-15. Registrar un producto con su código de barras}{El usuario escanea el producto o escribe el código, y luego ajusta la porción. La imagen del visor es de ejemplo, porque el simulador no tiene cámara.}{cu15_escaner}{cu15_porcion}{CU-15: Registrar un producto con su código de barras}{fig:ui_cu15}
+\par\vspace{0.3cm}
+
+\uidos{CU-16. Contar mi comida con mis palabras}{El atleta escribe o dicta lo que comió. El asistente estima los alimentos y sus cantidades, y lo que no es seguro queda marcado. El usuario corrige los gramos o quita un alimento antes de guardarlo en su diario.}{cu16_escribir}{cu16_revision}{CU-16: Contar mi comida con mis palabras}{fig:ui_cu16}
+
+\uicuatro{CU-17. Registrar una sesión de cardio sin reloj}{El usuario elige la disciplina y graba con un solo toque. Durante la salida ve el tiempo, las métricas y el mapa. Al terminar indica qué tan dura la sintió. Si no quiere usar el GPS, puede anotar la sesión a mano.}{cu17_inicio}{cu17_grabar}{cu17_guardar}{cu17_manual}{CU-17: Registrar una sesión de cardio sin reloj}{fig:ui_cu17}
+
+\uidos{CU-18. Ver mis metas de alimentación del día}{El resumen muestra las metas según el entrenamiento del día, cuánto falta y en qué momento conviene comer. Un día de descanso muestra metas distintas. Son sugerencias y no una dieta. El avance del día es real, y el ajuste de las metas es un ejemplo.}{cu18_entreno}{cu18_descanso}{CU-18: Ver mis metas de alimentación del día}{fig:ui_cu18}
+
+\uitres{CU-19. Revisar mi progreso}{El calendario muestra por día y por mes las comidas y los entrenamientos. La carga muestra cómo ha cambiado en el tiempo, y el progreso corporal muestra la tendencia del peso hacia la meta.}{cu19_calendario}{cu19_carga}{cu19_progreso}{CU-19: Revisar mi progreso}{fig:ui_cu19}
+
+\uidos{CU-20. Anotar cómo me sentí}{Al abrir un entrenamiento o una comida, el usuario escribe cómo se sintió y la nota queda junto a ese registro. Si pulsa Guardar sin escribir nada, no se crea ninguna nota.}{cu20_sesion}{cu20_comida}{CU-20: Anotar cómo me sentí}{fig:ui_cu20}
+
+\uitres{CU-21. Controlar mis datos personales}{Desde los ajustes, el usuario revisa y corrige sus datos, y decide qué permisos entrega. Para eliminar su cuenta debe confirmarlo escribiendo una palabra, y antes se le explica qué se borrará.}{cu21_ajustes}{cu21_datos}{cu21_eliminar}{CU-21: Controlar mis datos personales}{fig:ui_cu21}
+
+\noindent\uipar{CU-22. Reportar una publicación}{El atleta elige un motivo y envía el reporte, o cancela sin enviar nada. La publicación pasa a revisión y deja de aparecer en su muro.}{cu22_motivo}{cu22_listo}{CU-22: Reportar una publicación}{fig:ui_cu22}\hfill
+\uipar{CU-23. Ver el muro de la comunidad}{El muro reúne las publicaciones recientes de las personas que sigue. Desde cada una se puede abrir el detalle, agregarla a los módulos o reportarla.}{cu23_muro}{cu23_ruta}{CU-23: Ver el muro de la comunidad}{fig:ui_cu23}
+\par\vspace{0.3cm}
+
+\noindent\uipar{CU-24. Contratar el plan premium}{La pantalla muestra qué incluye cada plan, el precio final con IVA y cada cuánto se cobra. Al confirmar se abre el pago de la tienda y se activan las funciones.}{cu24_planes}{cu24_activo}{CU-24: Contratar el plan premium}{fig:ui_cu24}\hfill
+\uipar{CU-25. Cancelar mi suscripción}{El usuario ve su plan y la fecha del próximo cobro. La cancelación se confirma en la tienda, y mantiene el plan premium hasta que termina el periodo pagado.}{cu25_activa}{cu25_cancelada}{CU-25: Cancelar mi suscripción}{fig:ui_cu25}
+\par\vspace{0.3cm}
+
+\uidos{CU-26. Aceptar los términos de uso y el aviso legal}{Al crear su cuenta, el usuario lee los términos y los acepta para continuar. Si no los acepta, la aplicación explica que son necesarios y no permite seguir. Si cambian más adelante, se vuelven a mostrar.}{cu26_terminos}{cu26_rechazo}{CU-26: Aceptar los términos de uso y el aviso legal}{fig:ui_cu26}
+
 \subsection{Diagrama de Integraciones}
 La solución se conecta con seis sistemas que no son parte del proyecto. La Figura \ref{fig:diagrama_integraciones} muestra estas integraciones y desde dónde se usa cada una. Hay una regla general: las claves de acceso a los servicios externos se guardan solo en el backend y nunca en la aplicación, porque cualquier persona podría extraerlas del teléfono. Por eso, las únicas conexiones que parten desde la aplicación son las que no necesitan una clave secreta o las que usan un permiso temporal.
 \begin{center}
@@ -2289,9 +2406,9 @@ El sistema se compone de cuatro piezas que se instalan por separado:
 MongoDB Atlas lo opera su proveedor, por lo que no hay que instalar el motor de base de datos. Se debe crear el clúster, configurar la conexión privada con la red de AWS y definir los índices descritos en el modelo de datos. Las claves de los servicios externos se guardan en AWS Secrets Manager y no quedan en el código ni en la imagen Docker.
 \clearpage
 \subsection{Comentarios Generales del Capítulo}
-En este capítulo se definió cómo se va a construir la solución. A partir de los requerimientos del capítulo anterior, se describió cada caso de uso con sus precondiciones, sus flujos y su diagrama de actividades, y se detalló su funcionamiento técnico con un diagrama de secuencia. También se diseñó el modelo de datos en MongoDB, las integraciones con los seis sistemas externos, la infraestructura y su despliegue.
+En este capítulo se definió cómo se va a construir la solución. A partir de los requerimientos del capítulo anterior, se describió cada caso de uso con sus precondiciones, sus flujos y su diagrama de actividades, y se detalló su funcionamiento técnico con un diagrama de secuencia. También se diseñó el modelo de datos en MongoDB, las interfaces de usuario de cada caso de uso, las integraciones con los seis sistemas externos, la infraestructura y su despliegue.
 \\\\
 El diseño dejó dos aportes principales. El primero es que aclaró lo que faltaba. Al trazar cada caso de uso paso a paso, se encontraron datos necesarios que el modelo no tenía, como el registro de quién reporta una publicación, y se corrigieron antes de programar. El segundo es que se comprobaron los costos. Al dimensionar la infraestructura con precios reales de AWS en São Paulo, se vio que la estimación inicial era baja, lo que llevó a ajustar la factibilidad económica. Sumando el IVA, la comisión de las tiendas y el impuesto a la renta, la solución elegida necesita 159 suscriptores. También se tomaron decisiones para gastar solo en lo necesario, como usar una función Lambda para leer archivos \texttt{.fit} y subir las fotos directamente a Amazon S3, sin dejar de proteger los datos sensibles con una conexión privada a la base de datos.
 \\\\
-Algunos valores de este diseño todavía son supuestos que se deben confirmar, como la carga esperada, la compresión de los datos de telemetría y el precio de MongoDB Atlas en São Paulo. Esto es parte del prototipo evolutivo, ya que cada versión permitirá medir estos valores y ajustar el diseño. El diseño de las interfaces de usuario queda pendiente, y se completará a partir de las pantallas del prototipo. Con esta base, el proyecto puede avanzar a la implementación, donde se planifica la puesta en marcha y las pruebas del sistema.
+Algunos valores de este diseño todavía son supuestos que se deben confirmar, como la carga esperada, la compresión de los datos de telemetría y el precio de MongoDB Atlas en São Paulo. Esto es parte del prototipo evolutivo, ya que cada versión permitirá medir estos valores y ajustar el diseño. Lo mismo ocurre con las interfaces de usuario, ya que varias pantallas muestran por ahora datos simulados y se conectarán a medida que se implementen sus servicios. Con esta base, el proyecto puede avanzar a la implementación, donde se planifica la puesta en marcha y las pruebas del sistema.
 \newpage

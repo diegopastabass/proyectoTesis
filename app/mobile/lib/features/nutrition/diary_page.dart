@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../app/providers.dart';
+import '../../app/sim_providers.dart';
 import '../../app/theme.dart';
 import '../../core/common/date.dart';
 import '../../core/nutrition/copy.dart';
@@ -12,6 +13,7 @@ import '../../core/nutrition/score.dart';
 import '../../core/common/numbers.dart';
 import '../../ui/format.dart';
 import '../../ui/macros.dart';
+import '../../ui/sim_widgets.dart';
 import '../../ui/widgets.dart';
 import '../activity/steps_card.dart';
 
@@ -76,6 +78,8 @@ class _DiaryPageState extends ConsumerState<DiaryPage> {
           ),
         ]),
       ),
+      if (ref.watch(previewEnabledProvider) && _date == todayKey())
+        EntryCard(icon: Icons.track_changes, title: 'Metas de hoy', subtitle: 'Según tu entrenamiento, y cuándo conviene comer', onTap: () => context.push('/metas')),
       StepsCard(date: _date),
       if (entries is AsyncError) ErrorView(entries.error!),
       if (list == null && entries is! AsyncError) const LoadingView(),
@@ -99,6 +103,8 @@ class _DiaryPageState extends ConsumerState<DiaryPage> {
           if (list.any((e) => e.meal == slot))
             _MealCard(
               slot: slot,
+              date: _date,
+              preview: ref.watch(previewEnabledProvider),
               items: list.where((e) => e.meal == slot).toList(),
               onDelete: (e) => runGuarded(context, () => ref.read(nutritionActionsProvider).deleteEntry(_date, e)),
             ),
@@ -276,18 +282,26 @@ class _CopyMealsSheetState extends ConsumerState<CopyMealsSheet> {
 }
 
 class _MealCard extends StatelessWidget {
-  const _MealCard({required this.slot, required this.items, required this.onDelete});
+  const _MealCard({required this.slot, required this.items, required this.onDelete, this.date, this.preview = false});
 
   final MealSlot slot;
   final List<DiaryEntry> items;
   final void Function(DiaryEntry) onDelete;
+
+  /// Fecha del día, para abrir el detalle de la comida (solo en modo demostración).
+  final String? date;
+  final bool preview;
 
   @override
   Widget build(BuildContext context) {
     final c = context.colors;
     final meta = mealMeta[slot]!;
     return CardList(
-      header: CardHeader(meta.label, icon: meta.icon, trailing: MacroInline(sumMacros(items.map((i) => i.macros)), fontSize: 11)),
+      header: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: preview ? () => context.push('/diario/comida/${slot.name}${date == null ? '' : '?d=$date'}') : null,
+        child: CardHeader(meta.label, icon: meta.icon, trailing: MacroInline(sumMacros(items.map((i) => i.macros)), fontSize: 11)),
+      ),
       children: [
         for (final e in items)
           Padding(

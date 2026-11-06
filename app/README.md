@@ -30,6 +30,10 @@ La app tiene un menú con tres módulos: **Nutrición** y **Fuerza** (funcionale
 
 Los macros siempre salen del catálogo con aritmética determinista. La lógica de `src/core` no depende de React ni de Firebase, para reutilizarla en React Native.
 
+## Panel de administración
+
+`admin.html` es la pantalla de diseño del panel web del administrador (catálogo de ejercicios y contenido reportado), con datos simulados (`src/admin/`). Se abre con `npx vite --port 5174` en `http://localhost:5174/admin.html`.
+
 ## Puesta en marcha
 
 ```bash

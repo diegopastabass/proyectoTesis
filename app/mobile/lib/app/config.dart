@@ -47,6 +47,20 @@ class AppConfig {
   bool get missingFirebase => backend == BackendKind.firebase && firebase == null;
 }
 
+/// Abre una pantalla directamente al arrancar, para tomar las capturas del documento
+/// (`tool/capture_screens.py`). Solo se usa en modo demostración.
+class CaptureRequest {
+  const CaptureRequest({required this.route, this.replace = false, this.onReady});
+
+  final String route;
+
+  /// true = `go` (pestañas del marco); false = `push` (detalles, con su botón de volver).
+  final bool replace;
+
+  /// Avisa que la pantalla ya se dibujó y se puede capturar.
+  final void Function()? onReady;
+}
+
 /// Valores de la app de iOS registrada en Firebase (GoogleService-Info.plist).
 class FirebaseConfig {
   const FirebaseConfig({

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 
 import '../../app/theme.dart';
@@ -9,7 +10,10 @@ Future<String?> scanBarcode(BuildContext context) => Navigator.of(context, rootN
     .push<String>(MaterialPageRoute(fullscreenDialog: true, builder: (_) => const BarcodeScannerPage()));
 
 class BarcodeScannerPage extends StatefulWidget {
-  const BarcodeScannerPage({super.key});
+  const BarcodeScannerPage({super.key, this.simulated = false});
+
+  /// Muestra un visor de ejemplo en vez de la cámara: el simulador no tiene (modo de capturas).
+  final bool simulated;
 
   @override
   State<BarcodeScannerPage> createState() => _BarcodeScannerPageState();
@@ -46,6 +50,9 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
       appBar: AppBar(
         backgroundColor: Colors.black,
         foregroundColor: Colors.white,
+        // Sobre negro: el tema dejaría el título y la barra de estado oscuros.
+        systemOverlayStyle: SystemUiOverlayStyle.light,
+        titleTextStyle: const TextStyle(fontSize: 17, fontWeight: FontWeight.w600, letterSpacing: -0.4, color: Colors.white),
         title: const Text('Escanear código'),
         actions: [
           IconButton(tooltip: 'Linterna', onPressed: () => _controller.toggleTorch(), icon: const Icon(Icons.flashlight_on_outlined)),
@@ -54,7 +61,10 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
       body: Column(children: [
         Expanded(
           child: Stack(fit: StackFit.expand, children: [
-            MobileScanner(
+            if (widget.simulated)
+              const _SimulatedViewfinder()
+            else
+              MobileScanner(
               controller: _controller,
               onDetect: (capture) {
                 for (final b in capture.barcodes) {
@@ -106,4 +116,31 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
       ]),
     );
   }
+}
+
+/// Envase de ejemplo con su código de barras, para mostrar el visor sin cámara.
+class _SimulatedViewfinder extends StatelessWidget {
+  const _SimulatedViewfinder();
+
+  @override
+  Widget build(BuildContext context) => ColoredBox(
+        color: const Color(0xFF3A3531),
+        child: Center(
+          child: Container(
+            width: 216,
+            padding: const EdgeInsets.fromLTRB(14, 14, 14, 8),
+            decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(6)),
+            child: Column(mainAxisSize: MainAxisSize.min, children: [
+              SizedBox(
+                height: 74,
+                child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+                  for (var i = 0; i < 46; i++) Expanded(flex: 1 + (i * 7) % 3, child: ColoredBox(color: i.isEven ? Colors.black : Colors.white)),
+                ]),
+              ),
+              const SizedBox(height: 4),
+              const Text('7 802900 123456', style: TextStyle(fontSize: 13, letterSpacing: 1.6, color: Colors.black)),
+            ]),
+          ),
+        ),
+      );
 }

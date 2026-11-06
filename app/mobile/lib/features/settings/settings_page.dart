@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../app/providers.dart';
+import '../../app/sim_providers.dart';
 import '../../app/theme.dart';
 import '../../data/repositories.dart';
 import '../../platform/capability.dart';
@@ -19,6 +20,8 @@ class SettingsPage extends ConsumerWidget {
     final backend = ref.watch(backendProvider).kind;
     final theme = ref.watch(themeModeProvider);
     final capabilities = ref.watch(capabilitiesProvider);
+    final preview = ref.watch(previewEnabledProvider);
+    final plan = ref.watch(simProvider).plan;
 
     return Scaffold(
       appBar: AppBar(title: const Text('Ajustes')),
@@ -73,6 +76,30 @@ class SettingsPage extends ConsumerWidget {
             trailing: Icon(Icons.chevron_right, color: c.faint),
           ),
         ]),
+        if (preview)
+          CardList(children: [
+            ListTile(
+              onTap: () => context.push(plan == SimPlan.free ? '/premium' : '/premium/suscripcion'),
+              leading: const Icon(Icons.workspace_premium_outlined),
+              title: Text(plan == SimPlan.free ? 'Plan premium' : 'Mi suscripción', style: TextStyle(fontSize: 14, color: c.fgStrong)),
+              subtitle: Text(plan == SimPlan.free ? 'Qué incluye y cuánto cuesta' : 'Plan, próximo cobro y cancelación', style: TextStyle(fontSize: 12, color: c.muted)),
+              trailing: Icon(Icons.chevron_right, color: c.faint),
+            ),
+            ListTile(
+              onTap: () => context.push('/ajustes/datos'),
+              leading: const Icon(Icons.shield_outlined),
+              title: Text('Mis datos y privacidad', style: TextStyle(fontSize: 14, color: c.fgStrong)),
+              subtitle: Text('Permisos, corrección de datos y eliminación de la cuenta', style: TextStyle(fontSize: 12, color: c.muted)),
+              trailing: Icon(Icons.chevron_right, color: c.faint),
+            ),
+            ListTile(
+              onTap: () => context.push('/bienvenida/terminos'),
+              leading: const Icon(Icons.flag_outlined),
+              title: Text('Cuestionario inicial y plan semanal', style: TextStyle(fontSize: 14, color: c.fgStrong)),
+              subtitle: Text('El recorrido al crear una cuenta nueva', style: TextStyle(fontSize: 12, color: c.muted)),
+              trailing: Icon(Icons.chevron_right, color: c.faint),
+            ),
+          ]),
         const SectionTitle('Apariencia'),
         AppSegmented<ThemeMode>(
           value: theme,

@@ -8,6 +8,7 @@ import 'dart:math' as math;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
+import 'package:flutter/services.dart';
 
 import '../core/nutrition/models.dart';
 
@@ -245,6 +246,8 @@ ThemeData buildTheme(Brightness brightness) {
     appBarTheme: AppBarTheme(
       backgroundColor: c.canvas,
       foregroundColor: c.fgStrong,
+      // Explícito: con fondo transparente, Flutter deduce íconos claros y no se leen en el tema claro.
+      systemOverlayStyle: brightness == Brightness.dark ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark,
       surfaceTintColor: Colors.transparent,
       elevation: 0,
       scrolledUnderElevation: 0,
@@ -292,6 +295,7 @@ ThemeData buildTheme(Brightness brightness) {
       selectedColor: c.primary,
       side: BorderSide.none,
       labelStyle: TextStyle(color: c.fg, fontSize: 13),
+      secondaryLabelStyle: TextStyle(color: c.onPrimary, fontSize: 13, fontWeight: FontWeight.w600),
       shape: const StadiumBorder(),
       showCheckmark: false,
     ),

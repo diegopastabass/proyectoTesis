@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-enum ModuleId { nutricion, fuerza, cardio }
+enum ModuleId { nutricion, fuerza, cardio, comunidad }
 
 class Section {
   const Section(this.path, this.icon, this.label, {this.exact = false});
@@ -16,7 +16,7 @@ class Section {
 }
 
 class AppModule {
-  const AppModule({required this.id, required this.label, required this.icon, required this.path, required this.ready, required this.summary, this.sections = const []});
+  const AppModule({required this.id, required this.label, required this.icon, required this.path, required this.ready, required this.summary, this.sections = const [], this.previewOnly = false});
 
   final ModuleId id;
   final String label;
@@ -27,6 +27,9 @@ class AppModule {
 
   /// false mientras el módulo se muestra como "En desarrollo".
   final bool ready;
+
+  /// Solo se muestra en modo demostración (pantallas de diseño con datos simulados).
+  final bool previewOnly;
 
   /// Qué hace (o hará) el módulo.
   final String summary;
@@ -76,6 +79,20 @@ const modules = [
     sections: [
       Section('/cardio', Icons.radio_button_checked, 'Grabar', exact: true),
       Section('/cardio/historial', Icons.history, 'Historial'),
+    ],
+  ),
+  AppModule(
+    id: ModuleId.comunidad,
+    label: 'Comunidad',
+    icon: Icons.groups_outlined,
+    path: '/comunidad',
+    ready: true,
+    previewOnly: true,
+    summary: 'Muro, publicaciones y personas que sigues.',
+    sections: [
+      Section('/comunidad', Icons.dynamic_feed_outlined, 'Muro', exact: true),
+      Section('/comunidad/buscar', Icons.search, 'Buscar'),
+      Section('/comunidad/perfil', Icons.person_outline, 'Mi perfil'),
     ],
   ),
 ];
