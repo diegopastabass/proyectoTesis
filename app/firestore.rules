@@ -1,0 +1,66 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isUser(uid) {
+      return signedIn() && request.auth.uid == uid;
+    }
+
+    function validMacros(m) {
+      return m is map
+        && m.kcal is number && m.kcal >= 0
+        && m.protein is number && m.protein >= 0
+        && m.carbs is number && m.carbs >= 0
+        && m.fat is number && m.fat >= 0
+        && (!('fiber' in m) || (m.fiber is number && m.fiber >= 0));
+    }
+
+    function validFood(d) {
+      return d.name is string && d.name.size() > 0 && d.name.size() <= 120
+        && d.aliases is list && d.aliases.size() <= 20
+        && d.portions is list && d.portions.size() <= 20
+        && (!('barcode' in d) || d.barcode == null || (d.barcode is string && d.barcode.size() <= 14))
+        && validMacros(d.per100g);
+    }
+
+    // Catálogo público: cualquier usuario autenticado lee y agrega alimentos;
+    // solo quien creó un alimento puede editarlo o borrarlo.
+    match /foods/{foodId} {
+      allow read: if signedIn();
+      allow create: if signedIn()
+        && request.resource.data.createdBy == request.auth.uid
+        && validFood(request.resource.data);
+      allow update: if signedIn()
+        && resource.data.createdBy == request.auth.uid
+        && request.resource.data.createdBy == resource.data.createdBy
+        && validFood(request.resource.data);
+      allow delete: if signedIn() && resource.data.createdBy == request.auth.uid;
+    }
+
+    // Recetas privadas del usuario.
+    match /recipes/{recipeId} {
+      allow read, delete: if signedIn() && resource.data.ownerId == request.auth.uid;
+      allow create: if signedIn()
+        && request.resource.data.ownerId == request.auth.uid
+        && request.resource.data.name is string
+        && request.resource.data.servings is number && request.resource.data.servings > 0;
+      allow update: if signedIn()
+        && resource.data.ownerId == request.auth.uid
+        && request.resource.data.ownerId == resource.data.ownerId;
+    }
+
+    // Perfil, objetivos y diario: solo el propio usuario.
+    match /users/{uid} {
+      allow read, write: if isUser(uid);
+
+      match /{document=**} {
+        allow read, write: if isUser(uid);
+      }
+    }
+  }
+}
