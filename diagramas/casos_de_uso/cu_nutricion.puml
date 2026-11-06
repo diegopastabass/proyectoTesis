@@ -15,19 +15,23 @@ rectangle "Nutrición" {
     usecase "CU-18: Ver mis metas de\nalimentación del día" as CU18
     usecase "CU-07: Registrar una\ncomida con una foto" as CU07
     usecase "CU-16: Contar mi comida\ncon mis palabras" as CU16
+    usecase "CU-27: Crear\nuna receta" as CU27
 
     usecase "Indicar cuánto\ncomí" as P1 #FFFFFF
     usecase "Revisar la estimación\nde la IA" as P2 #FFFFFF
+    usecase "Elegir los ingredientes\ny sus gramos" as P3 #FFFFFF
 }
 
 B -- CU06
 B -- CU15
+B -- CU27
 H -- CU07
 H -- CU16
 H -- CU18
 
 CU06 ..> P1 : <<include>>
 CU15 ..> P1 : <<include>>
+CU27 ..> P3 : <<include>>
 CU07 ..> P2 : <<include>>
 CU16 ..> P2 : <<include>>
 

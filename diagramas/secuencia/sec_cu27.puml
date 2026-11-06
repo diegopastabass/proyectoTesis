@@ -1,0 +1,40 @@
+@startuml sec_cu27
+!include sec_estilo.iuml
+actor "Atleta" as U
+participant "App Flutter" as A
+participant "API NestJS" as B
+database "MongoDB" as DB
+autonumber
+U -> A : Abre sus recetas y elige crear una nueva
+A --> U : Muestra el formulario vacío y avisa qué falta
+loop Por cada ingrediente
+  U -> A : Busca un alimento
+  A -> B : GET /food-items?q=nombre
+  B -> DB : Busca en foodItems
+  DB --> B : Coincidencias
+  alt Sin resultados
+    B --> A : Lista vacía
+    A --> U : Ofrece crear el alimento
+    U -> A : Lo crea con sus valores
+    A -> B : POST /food-items
+    B -> DB : Guarda en foodItems
+  else Con resultados
+    B --> A : Alimentos
+    A --> U : Muestra los alimentos
+  end
+  U -> A : Elige e indica los gramos
+  A --> U : Muestra calorías y macronutrientes, el total y la porción
+end
+U -> A : Pulsa Guardar
+alt Falta el nombre, las porciones o algún ingrediente
+  A --> U : Avisa qué falta y no guarda
+else Receta completa
+  A -> B : POST /recipes
+  B -> DB : Lee los alimentos en foodItems
+  DB --> B : Valores por cada 100 g
+  B -> B : Recalcula el total y la porción
+  B -> DB : Guarda en recipes
+  B --> A : Receta creada
+  A --> U : Muestra la receta en su lista
+end
+@enduml

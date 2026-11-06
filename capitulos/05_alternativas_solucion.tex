@@ -13,7 +13,6 @@ Sea cual sea la alternativa elegida, la solución se construirá con las siguien
 \begin{itemize}
     \item \textbf{Frontend Móvil:} Flutter (Dart), un framework multiplataforma que permite crear aplicaciones para Android e iOS con un solo código, lo que reduce el tiempo de desarrollo y mantenimiento.
     \item \textbf{Backend / API:} NestJS (Node.js con TypeScript), un framework para construir aplicaciones del lado del servidor. Su estructura por módulos facilita que el sistema crezca y que cada parte (nutrición, fuerza, cardio y analítica) quede separada.
-    \newpage
     \item \textbf{Base de Datos:} MongoDB, una base de datos NoSQL orientada a documentos. Cada registro se guarda como un documento en formato BSON, sin necesidad de una estructura fija. Las sesiones de entrenamiento, las comidas y los datos de los dispositivos se guardan como documentos que se pueden consultar con índices aunque su estructura cambie (por ejemplo, una sesión de fuerza con 4 ejercicios y otra con 7).
     \item \textbf{Almacenamiento de Imágenes y Archivos:} Amazon S3, un servicio de almacenamiento de objetos, junto con Amazon CloudFront, una red de distribución de contenido (CDN) que guarda copias de las imágenes en servidores cercanos a los usuarios para que carguen rápido. Las fotos no se guardan dentro de MongoDB, porque harían crecer mucho la base de datos y sus respaldos. En la base de datos solo queda la dirección de cada archivo.
 \end{itemize}
@@ -25,7 +24,7 @@ Lo que más diferencia a esta plataforma es que cruza los datos de fuerza, resis
 \begin{enumerate}
     \item \textbf{Ventanas de recuperación:} El tiempo que pasa entre el fin de una sesión de fuerza y el inicio de la siguiente sesión de cardio, y al revés. Compara ese tiempo con lo que recomienda la literatura (al menos 6 a 8 horas entre sesiones de distinto tipo) para avisar cuando hay riesgo de interferencia.
     \item \textbf{Horario de las comidas:} Revisa si las comidas se hicieron en los momentos recomendados respecto al entrenamiento. Por ejemplo, carbohidratos 2 a 3 horas antes del cardio, proteínas dentro de las 2 horas posteriores a la fuerza, o si se comió en el momento adecuado durante una ruta larga.
-    \item \textbf{Fatiga acumulada semanal:} Suma el volumen de entrenamiento de los últimos 7 días. En fuerza se calcula como $\sum(\text{series} \times \text{repeticiones} \times \text{peso})$. En cardio, la medida depende de la alternativa, y va desde distancia $\times$ RPE en la más básica hasta una carga basada en zonas cardíacas y potencia en las más avanzadas.
+    \item \textbf{Carga y fatiga acumulada:} Calcula la carga de cada sesión como el RPE por los minutos, igual para fuerza y cardio, y con ella la carga aguda (ATL) y la crónica (CTL). La razón entre ambas es el índice de fatiga cruzada, definido en el Capítulo 3. Lo que cambia según la alternativa es cómo se obtiene el RPE: siempre lo indica el usuario, y cuando falta se estima con la frecuencia cardíaca o la potencia si la alternativa las tiene.
     \item \textbf{Detección de interferencia:} Si en días seguidos hay secuencias de fuerza $\rightarrow$ cardio (o al revés) con poca recuperación entre ellas, el sistema muestra una alerta y sugiere reorganizar el calendario.
 \end{enumerate}
 
@@ -60,14 +59,13 @@ Las comidas se registran solo con formularios. El usuario elige los ingredientes
 \textbf{Módulo de Fuerza}
 
 El usuario crea rutinas base (plantillas de ejercicios) y registra cada sesión con un formulario, eligiendo el ejercicio e ingresando series, repeticiones y peso. Incluye un campo de texto libre para anotar las sensaciones de cada ejercicio. No se incluye registro por lenguaje natural.
-\newpage
 \textbf{Módulo de Cardio}
 
 El registro de cardio usa solo el GPS del teléfono y la percepción del esfuerzo (RPE). La aplicación graba la ruta, la velocidad, la distancia y el tiempo con la ubicación del teléfono. Al terminar la sesión, el usuario indica su RPE en una escala de 1 a 10 y puede agregar notas. No hay integración con wearables, Health Connect, Apple Health ni archivos \texttt{.fit}.
 \\\\
 \textbf{Motor de Cruce de Datos}
 
-En este caso el motor de cruce trabaja con pocos datos. La fatiga del cardio se estima a partir de la distancia, el tiempo y el RPE. Como no hay datos de frecuencia cardíaca, no se pueden calcular las zonas de entrenamiento ni el gasto real de calorías, así que las estimaciones de fatiga cruzada son aproximaciones basadas en lo que el usuario declara.
+En este caso el motor de cruce trabaja con pocos datos. La fatiga del cardio se calcula con el tiempo y el RPE que declara el usuario. Como no hay datos de frecuencia cardíaca, no se pueden calcular las zonas de entrenamiento ni el gasto real de calorías, así que las estimaciones de fatiga cruzada son aproximaciones basadas en lo que el usuario declara.
 \\\\
 \textbf{Módulo Social}
 
@@ -109,7 +107,6 @@ La arquitectura de esta alternativa es monolítica y sencilla. La aplicación m�
 \captionof{figure}{Arquitectura de la Alternativa 1: Solución Minimalista.}
 \end{center}
 \vspace{0.5cm}
-\newpage
 \textbf{Estimación de Costos}
 
 La siguiente tabla resume los costos de esta alternativa. El costo de desarrollo viene del análisis por ciclo de vida (Tabla \ref{tab:ciclovida_alt1}), y los demás valores son los mismos que se usan en su flujo de caja dentro de la factibilidad económica.
@@ -139,7 +136,6 @@ La siguiente tabla resume los costos de esta alternativa. El costo de desarrollo
     \label{tab:costos_alt1}
 \end{table}
 
-\newpage
 \subsubsection{Alternativa 2: Solución Integrada con Brokers del Sistema Operativo}
 
 \textbf{Descripción General}
@@ -158,7 +154,6 @@ Ambas funciones usan una API de inteligencia artificial en la nube (Gemini, con 
 \textbf{Módulo de Fuerza}
 
 Además del formulario, se agrega el registro por lenguaje natural. El usuario puede dictar o escribir su rutina (por ejemplo, ``hice 3 series de 10 sentadillas con 80 kilos'') y el sistema identifica el ejercicio, las series, las repeticiones y el peso, y los guarda en la base de datos. También se mantiene el registro de sensaciones de cada ejercicio.
-\newpage
 \textbf{Módulo de Cardio}
 
 El sistema lee automáticamente los datos que reúnen Health Connect (Android) y Apple Health (iOS). Cuando el usuario termina una sesión de cardio registrada con un wearable compatible (Garmin, Polar, Apple Watch, Samsung Galaxy Watch, entre otros), los datos se sincronizan con el concentrador del teléfono y la aplicación los importa en segundo plano. Los datos disponibles a través de estos concentradores son:
@@ -180,7 +175,6 @@ Al contar con la frecuencia cardíaca y las calorías activas reales, el motor d
 \textbf{Módulo Social}
 
 Incluye la comunidad para compartir rutas, rutinas y recetas, y agrega el ajuste automático de porciones. El sistema toma una receta de la comunidad y ajusta las cantidades de cada ingrediente para cubrir los macronutrientes que el usuario necesita según el desgaste del día. Cada receta compartida puede llevar una foto del plato, además de la foto de perfil de cada usuario.
-\newpage
 \textbf{Arquitectura de la Solución}
 
 La arquitectura agrega la conexión con los SDKs de Health Connect y HealthKit, además de un servicio de inteligencia artificial en la nube para el procesamiento de lenguaje natural y la visión artificial. Las fotos de perfil y de las recetas se guardan en Amazon S3 y se muestran a través de CloudFront.
@@ -230,7 +224,6 @@ La arquitectura agrega la conexión con los SDKs de Health Connect y HealthKit, 
 \captionof{figure}{Arquitectura de la Alternativa 2: Solución Integrada con Brokers del SO.}
 \end{center}
 \vspace{0.5cm}
-\newpage
 \textbf{Estimación de Costos}
 
 La siguiente tabla resume los costos de esta alternativa. El costo de desarrollo viene del análisis por ciclo de vida (Tabla \ref{tab:ciclovida_alt2}), y los demás valores son los mismos que se usan en su flujo de caja dentro de la factibilidad económica.
@@ -262,7 +255,6 @@ La siguiente tabla resume los costos de esta alternativa. El costo de desarrollo
 
 \textbf{Principal limitación:} Los concentradores del sistema operativo suelen resumir la información que reciben de los wearables. Datos avanzados del ciclismo, como la potencia real del pedaleo (vatios), la cadencia o los registros segundo a segundo, normalmente no están disponibles a través de Health Connect ni de Apple Health. Esto limita la precisión del análisis para ciclistas que entrenan con potenciómetros o ciclocomputadores.
 
-\newpage
 \subsubsection{Alternativa 3: Solución por Capas (Ecosistema Flexible)}
 
 \textbf{Descripción General}
@@ -276,7 +268,6 @@ Incluye todo lo de la Alternativa 2 (lenguaje natural y visión artificial) y ag
 \textbf{Módulo de Fuerza}
 
 Igual que en la Alternativa 2, con formulario, registro por lenguaje natural (voz o texto) y registro de sensaciones para cada ejercicio y serie.
-\newpage
 \textbf{Módulo de Cardio: Sistema de Tres Capas}
 
 \begin{itemize}
@@ -289,12 +280,11 @@ Igual que en la Alternativa 2, con formulario, registro por lenguaje natural (vo
 
 El motor de cruce se adapta a los datos disponibles. Para cada sesión de cardio guarda un indicador de \textbf{confianza}, que depende de la capa con la que se registró:
 \begin{itemize}
-    \item Confianza baja: Solo GPS y RPE. La fatiga se estima por el volumen.
-    \item Confianza media: GPS y frecuencia cardíaca (desde el concentrador). La fatiga se calcula por zonas cardíacas.
-    \item Confianza alta: Archivo \texttt{.fit} procesado. La fatiga se calcula con la potencia real, la carga TSS (Training Stress Score) y un análisis más detallado del esfuerzo.
+    \item Confianza baja: Solo GPS y RPE. El RPE lo indica el usuario, y si falta se usa un valor típico.
+    \item Confianza media: GPS y frecuencia cardíaca (desde el concentrador). Si el usuario no indica el RPE, se estima por zonas cardíacas.
+    \item Confianza alta: Archivo \texttt{.fit} procesado. Si el usuario no indica el RPE, se estima con la potencia real y el pulso segundo a segundo.
 \end{itemize}
 Así, el sistema puede dar más o menos peso a sus estimaciones de interferencia y fatiga cruzada según la calidad de los datos, y evita dar alertas falsas cuando la información es limitada.
-\newpage
 \textbf{Módulo Social}
 
 Red social deportiva completa. Los usuarios pueden seguir a otras personas, ver un muro con sus publicaciones y publicar en su perfil sesiones de fuerza, rutas y comidas. Cualquier publicación se puede agregar con un botón al módulo correspondiente de quien la ve, con ajuste automático de porciones en las recetas. Esta alternativa incluye además el perfil del usuario, construido a partir de un cuestionario inicial y de lo que registra, con un plan semanal sugerido según su nivel y su orientación. Las publicaciones pueden llevar hasta 4 fotos, por lo que esta es la alternativa que más imágenes guarda. Los videos quedan para después del MVP.
@@ -357,7 +347,6 @@ La arquitectura se divide en módulos para poder trabajar con varias fuentes de 
 \captionof{figure}{Arquitectura de la Alternativa 3: Solución por Capas.}
 \end{center}
 \vspace{0.5cm}
-\newpage
 \textbf{Estimación de Costos}
 
 La siguiente tabla resume los costos de esta alternativa. El costo de desarrollo viene del análisis por ciclo de vida (Tabla \ref{tab:ciclovida_alt3}), y los demás valores son los mismos que se usan en su flujo de caja dentro de la factibilidad económica.
@@ -388,7 +377,6 @@ La siguiente tabla resume los costos de esta alternativa. El costo de desarrollo
 \end{table}
 
 \textbf{Complejidad adicional:} Los registros de cardio llegan desde fuentes con niveles de detalle muy distintos (desde el GPS del teléfono hasta archivos \texttt{.fit} con miles de puntos). Para poder usarlos en conjunto hay que diseñar una base de datos flexible y un proceso que los deje en un formato común que el motor de fatiga pueda consultar.
-\newpage
 \subsubsection{Cuadro Comparativo de Alternativas}
 La siguiente tabla resume las diferencias funcionales, técnicas y económicas entre las tres alternativas, como base para la elección que se hace en el estudio de factibilidad.
 
@@ -418,13 +406,11 @@ La siguiente tabla resume las diferencias funcionales, técnicas y económicas e
     \caption{Cuadro comparativo de las alternativas de solución.}
     \label{tab:comparativa_alternativas}
 \end{table}
-\newpage
 \subsection{Estudio de Factibilidad}
 El estudio de factibilidad sirve para evaluar si la solución propuesta se puede llevar a cabo antes de invertir recursos en ella. Este análisis se divide en tres partes, que son la factibilidad técnica, la económica y la operativa. Con esta evaluación se busca identificar restricciones y riesgos a tiempo, y confirmar que se cuenta con la tecnología, el presupuesto y las condiciones necesarias para construir el sistema y desarrollar el Producto Mínimo Viable (MVP) con la alternativa elegida.
 
 \subsubsection{Factibilidad Técnica}
 La factibilidad técnica evalúa si se cuenta con la tecnología, la infraestructura y los conocimientos necesarios para desarrollar y mantener el sistema. Considerando que el proyecto integra varias fuentes de datos y usa inteligencia artificial, el análisis se hace desde los siguientes puntos de vista:
-\newpage
 \textbf{1. Disponibilidad del Stack Tecnológico:}\\
 El sistema se basa en tecnologías maduras, de código abierto (open-source) y muy usadas en la industria. Esto reduce la dependencia de proveedores cerrados y facilita que el sistema pueda crecer más adelante.
 \begin{itemize}
@@ -435,7 +421,6 @@ El sistema se basa en tecnologías maduras, de código abierto (open-source) y m
 
 \textbf{2. Integración con Hardware y Concentradores (Brokers):}\\
 Leer automáticamente los datos de cardio de los wearables es técnicamente posible. Tanto Google (con Health Connect) como Apple (con HealthKit) ofrecen Kits de Desarrollo de Software (SDKs) bien documentados, con los que una aplicación puede pedir permisos de lectura al usuario y acceder a datos como la frecuencia cardíaca, los pasos y las calorías. Además, Flutter cuenta con librerías de la comunidad que permiten usar ambas plataformas con un mismo código en Dart, lo que reduce bastante el trabajo de integración.
-\newpage
 \textbf{3. Inteligencia Artificial (PLN y Visión Artificial):}\\
 Desarrollar y entrenar modelos propios de lenguaje natural o de reconocimiento de alimentos desde cero requeriría equipos con GPUs y especialistas en ciencia de datos, lo que haría inviable el MVP tanto en lo técnico como en lo económico.
 \\\\
@@ -446,7 +431,6 @@ Leer archivos \texttt{.fit} de ciclocomputadores es factible porque el consorcio
 \\\\
 \textbf{5. Red Social y Plan Sugerido:}\\
 La red social se construye con funciones conocidas, como seguir usuarios, un muro de publicaciones paginado y la copia de una publicación al módulo de quien la ve. Las fotos de las publicaciones tampoco son un problema técnico. El teléfono las comprime antes de subirlas y las envía directamente a Amazon S3, el mismo almacenamiento de los archivos \texttt{.fit}, usando un permiso temporal que entrega el backend. En MongoDB solo queda su dirección, y para mostrarlas se usa Amazon CloudFront, que guarda copias cerca de los usuarios. Los videos se dejan para después del MVP, porque pesan mucho más y hay que procesarlos antes de mostrarlos. El plan sugerido tampoco exige técnicas complejas, ya que parte de plantillas definidas para cada perfil (nivel y orientación) que se ajustan con reglas simples según la adherencia, el RPE y la fatiga registrada.
-\newpage
 \textbf{Conclusión de Factibilidad Técnica:}\\
 Se concluye que el proyecto es \textbf{técnicamente factible}. No requiere crear hardware nuevo, hacer descubrimientos científicos ni inventar algoritmos o lenguajes desde cero. La solución se basa en combinar servicios en la nube, SDKs públicos y frameworks que ya están probados, documentados y disponibles para cualquier desarrollador.
 
@@ -460,7 +444,6 @@ El objetivo es calcular, para cada alternativa, el \textbf{ingreso anual neto m�
 La plataforma funcionará con un modelo de suscripción freemium. Habrá una versión gratuita con el registro manual y el plan sugerido, y para acceder a todo lo demás, que incluye la integración con wearables, la asistencia por IA, el cruce de datos, las alertas, las metas de alimentación y la red social, se deberá pagar una suscripción mensual premium. Tomando como referencia precios del mercado chileno (Fitia Premium a \$6.990 CLP al mes, Strava a \$7.600 CLP al mes y Freeletics a \$8.000 CLP al mes), se fija un precio de \textbf{\$7.990 CLP al mes}, es decir, \textbf{\$95.880 CLP al año} por usuario.
 \\\\
 Sin embargo, el proyecto no recibe ese monto completo. El precio incluye un IVA de 19\% \citep{sii_iva_digital}, por lo que sin IVA queda en \$6.714 CLP al mes. Además, el cobro se hace a través de Google Play y App Store, que cobran una comisión de hasta 15\% para desarrolladores con ingresos menores a un millón de dólares al año \citep{apple_small_business, google_service_fees}. Se considera el 15\% sobre el precio sin IVA, por lo que quedan \$5.707 CLP al mes por suscriptor. Es decir, el \textbf{ingreso neto por suscriptor es de \$68.486 CLP al año}, y este es el valor que se usa para calcular cuántos suscriptores se necesitan.
-\newpage
 \textbf{Breve Estudio Exploratorio de Mercado}
 
 Para un producto enfocado en entrenamiento concurrente y nutrición, el tamaño del mercado en Chile se puede estimar de la siguiente forma \citep{mindep_habitos}:
@@ -489,7 +472,6 @@ Por su parte, el informe Year in Sport de Strava mostró que sus usuarios están
 \\\\
 Por lo tanto, se concluye que una base inicial (SOM) de unos 1.500 posibles usuarios en Chile que hacen entrenamiento concurrente es razonable, y las fuentes indican que este número va en aumento.
 
-\newpage
 \textbf{Estimación de Costos por Ciclo de Vida del Desarrollo de Software}
 
 Para respaldar los costos de desarrollo de cada alternativa, a continuación se presenta una estimación detallada basada en el ciclo de vida del software. El esfuerzo total se divide en cinco etapas. Las horas de trabajo (HH) se valorizaron con tarifas distintas según el cargo, obtenidas de una revisión del mercado laboral chileno en 2026 (portales como Computrabajo, Indeed e ITWorkers, entre otros). Estas tarifas van desde \textbf{\$12.320 CLP por hora} para asesores en la etapa de pruebas hasta \textbf{\$73.917 CLP por hora} para un Jefe de Proyecto Senior.
@@ -501,7 +483,6 @@ Para respaldar los costos de desarrollo de cada alternativa, a continuación se 
     \item \textbf{Pruebas QA:} Pruebas unitarias, de integración, funcionales y de rendimiento para asegurar la calidad del producto.
     \item \textbf{Implementación:} Configuración de la infraestructura, despliegue en la nube, publicación en las tiendas de aplicaciones y puesta en marcha del sistema.
 \end{enumerate}
-\newpage
 \textbf{Ciclo de Vida de la Alternativa 1: Solución Minimalista}
 
 \begin{table}[h!]
@@ -551,7 +532,6 @@ Para respaldar los costos de desarrollo de cada alternativa, a continuación se 
     \caption{Desglose detallado de costos de personal por etapa: Alternativa 1.}
     \label{tab:ciclovida_alt1}
 \end{table}
-\newpage
 \textbf{Ciclo de Vida de la Alternativa 2: Solución Integrada con Brokers}
 
 \begin{table}[h!]
@@ -607,7 +587,6 @@ Para respaldar los costos de desarrollo de cada alternativa, a continuación se 
     \label{tab:ciclovida_alt2}
 \end{table}
 
-\newpage
 \textbf{Ciclo de Vida de la Alternativa 3: Solución por Capas}
 
 \begin{table}[h!]
@@ -665,7 +644,6 @@ Para respaldar los costos de desarrollo de cada alternativa, a continuación se 
     \label{tab:ciclovida_alt3}
 \end{table}
 
-\newpage
 \textbf{Resumen Comparativo de Costos por Ciclo de Vida}
 
 La siguiente tabla resume cómo se reparte el costo de personal en cada etapa del ciclo de vida para las tres alternativas.
@@ -689,7 +667,6 @@ La siguiente tabla resume cómo se reparte el costo de personal en cada etapa de
     \label{tab:resumen_ciclovida}
 \end{table}
 
-\newpage
 \textbf{Estructura de Costos: Inversión Inicial vs. Costos Operativos}
 
 Para armar el flujo de caja, los costos se separan en dos grupos. El primero es la \textbf{inversión inicial} (Año 0), que incluye el desarrollo y la publicación inicial en las tiendas de aplicaciones. El segundo son los \textbf{costos operativos anuales} (Años 1 a 4), que incluyen la infraestructura en la nube (AWS Fargate, ALB y S3, junto con la base de datos administrada), el almacenamiento y la entrega de imágenes, el uso de APIs de IA (Gemini), la renovación del Apple Developer Program y un 10\% del costo de desarrollo para mantenimiento. Los videos no se consideran, porque quedan fuera del MVP.
@@ -718,7 +695,6 @@ Para armar el flujo de caja, los costos se separan en dos grupos. El primero es 
     \caption{Desglose de costos por categoría para cada alternativa (en CLP).}
     \label{tab:desglose_costos}
 \end{table}
-\newpage
 \textbf{Costo de la Infraestructura en la Nube}
 
 La Tabla \ref{tab:costo_infra} detalla el costo de la infraestructura de cada alternativa. Se calculó con los precios publicados por AWS para la región de São Paulo \citep{aws_fargate_pricing}, y al tipo de cambio de \$972,60 CLP por dólar. Las tres alternativas usan un clúster MongoDB Atlas M10, porque es el nivel más bajo que permite una conexión privada con la red de AWS, algo necesario al trabajar con datos sensibles. Su precio en São Paulo es una estimación, ya que MongoDB publica USD 57 al mes para Virginia \citep{atlas_pricing}. El dimensionamiento de la alternativa elegida se explica en el capítulo de diseño.
@@ -747,7 +723,6 @@ La Tabla \ref{tab:costo_infra} detalla el costo de la infraestructura de cada al
     \caption{Costo de la infraestructura en la nube por alternativa.}
     \label{tab:costo_infra}
 \end{table}
-\newpage
 \textbf{Costo de Almacenamiento y Entrega de Imágenes}
 
 El costo de las fotos se estimó por separado, porque depende de cuántas imágenes guarda cada alternativa. Se usaron los precios de Amazon S3 en la región de São Paulo, que son USD 0,0405 por GB al mes y USD 0,007 por cada 1.000 subidas \citep{aws_s3_pricing}, y el nivel gratuito permanente de CloudFront, que incluye 1 TB de transferencia y 10 millones de solicitudes al mes \citep{aws_cloudfront_pricing}. Los supuestos son los siguientes:
@@ -786,7 +761,6 @@ Como las fotos se acumulan, el costo crece año a año. Para tener un margen, se
 \end{table}
 
 El costo de las imágenes es bajo incluso en la Alternativa 3, porque las fotos se comprimen en el teléfono y CloudFront entrega gratis el volumen esperado. Si la aplicación creciera mucho más allá del mercado objetivo, la entrega de fotos superaría el nivel gratuito, pero en ese escenario también habría muchos más suscriptores para cubrirla.
-\newpage
 
 \textbf{Formulación del Análisis Financiero}
 
@@ -826,7 +800,6 @@ Con el impuesto, el flujo neto es la utilidad después de impuesto más la amort
     R = C_{op} + A + \frac{FC - A}{1 - 0{,}27}
 \end{equation}
 
-\newpage
 \textbf{Flujo de Caja Proyectado de la Alternativa 1: Solución Minimalista}
 
 $FC_1 = 8.666.229 \div 2{,}8550 = \$3.035.457$ CLP/año.\\
@@ -891,7 +864,6 @@ Ingreso anual neto requerido por suscripciones:\\ $R_1 = 2.841.584 + 2.166.557 +
 Suscriptores pagos requeridos: $6.198.415 \div 68.486 = 90,51$, lo que se redondea hacia arriba a \textbf{91 usuarios premium/año} para alcanzar el equilibrio.
 Esto representa un \textbf{6,07\%} de la base conservadora de 1.500 posibles usuarios (SOM).
 
-\newpage
 \textbf{Flujo de Caja Proyectado de la Alternativa 2: Solución Integrada con Brokers}
 
 $FC_2 = 12.242.990 \div 2{,}8550 = \$4.288.263$ CLP/año.\\
@@ -953,7 +925,6 @@ Ingreso anual neto requerido por suscripciones:\\ $R_2 = 3.899.532 + 3.060.748 +
 Suscriptores pagos requeridos: $8.641.807 \div 68.486 = 126,18$, lo que se redondea hacia arriba a \textbf{127 usuarios premium/año} para alcanzar el equilibrio.
 Esto representa un \textbf{8,47\%} de la base conservadora de 1.500 posibles usuarios (SOM).
 
-\newpage
 \textbf{Flujo de Caja Proyectado de la Alternativa 3: Solución por Capas}
 
 $FC_3 = 16.230.402 \div 2{,}8550 = \$5.684.904$ CLP/año.\\
@@ -1015,7 +986,6 @@ Ingreso anual neto requerido por suscripciones:\\ $R_3 = 4.543.368 + 4.057.601 +
 Suscriptores pagos requeridos: $10.830.151 \div 68.486 = 158,14$, lo que se redondea hacia arriba a \textbf{159 usuarios premium/año} para alcanzar el equilibrio.
 Esto representa un \textbf{10,60\%} de la base conservadora de 1.500 posibles usuarios (SOM).
 
-\newpage
 \textbf{Resumen Comparativo de Indicadores Financieros (Horizonte 4 años)}
 
 \begin{table}[h!]
@@ -1047,8 +1017,6 @@ Esto representa un \textbf{10,60\%} de la base conservadora de 1.500 posibles us
 \textbf{Conclusión de Factibilidad Económica}
 
 Las tres alternativas son \textbf{económicamente factibles} con un horizonte de recuperación de 4 años, logrando una TIR del 15\% y un VAN en equilibrio. El análisis, hecho con tarifas del mercado chileno, muestra que la diferencia de costos entre alternativas es menor de lo que se esperaba al principio. Después de descontar el IVA, la comisión de las tiendas y el impuesto a la renta, la Alternativa 1 necesita 91 suscriptores premium para ser viable, la Alternativa 2 necesita 127 y la Alternativa 3 necesita 159 suscriptores al año. Con una base (SOM) estimada en 1.500 usuarios, llegar a 159 suscriptores implica una tasa de conversión del 10,6\%. Es una meta exigente para esa base conservadora, pero la conversión baja a un 8,8\% con 1.800 usuarios y a un 3,2\% con 5.000, que son los extremos del mercado objetivo inicial, por lo que se considera alcanzable. La Alternativa 3, al automatizar más el registro y aprovechar datos más detallados (archivos \texttt{.fit}), es la que más valor entrega al usuario y la que tiene más posibilidades de que este siga usando la aplicación en el tiempo.
-\newpage
-\newpage
 \subsubsection{Factibilidad Operativa y Cumplimiento Normativo}
 La factibilidad operativa evalúa si la solución se puede poner en marcha y operar en el entorno real para el que fue pensada, sin entrar en conflicto con las normas y leyes vigentes. Como la plataforma recolecta y cruza datos biológicos y de hábitos de los usuarios, su funcionamiento en Chile depende directamente del marco legal.
 \\\\
@@ -1064,7 +1032,6 @@ Por eso, el sistema incluirá lo siguiente:
     \item Principio de Finalidad: Los términos de uso indicarán que los datos solo se usan para calcular la fatiga y entregar sugerencias dentro de la aplicación, y que nunca se venderán ni se cederán perfiles fisiológicos a terceros.
     \item Privacidad en la red social: El usuario elegirá si cada publicación es pública, solo para sus seguidores o privada. En las rutas publicadas se ocultarán el inicio y el final del recorrido, para no revelar dónde vive o trabaja. Por el mismo motivo, antes de subir una foto la aplicación le borrará los datos de ubicación que guarda el teléfono.
 \end{itemize}
-\newpage
 \textbf{2. Ciberseguridad y Gestión de Incidentes}\\
 Como la aplicación móvil, la API en NestJS y los servicios de IA en la nube están en comunicación constante, el sistema debe cumplir con la Ley N° 21.459 sobre Delitos Informáticos \citep{ley21459} y con la Ley Marco de Ciberseguridad (Ley N° 21.663) \citep{ley21663}.
 \\\\
@@ -1074,7 +1041,6 @@ Para operar de forma segura, toda la comunicación usará protocolos cifrados (H
 La aplicación cruza los datos de fatiga para sugerir cambios en la alimentación y en las cargas de entrenamiento. Sin embargo, en Chile el Código Sanitario (DFL N° 725) \citep{dfl725} y la Ley N° 20.584 sobre Derechos y Deberes de los Pacientes \citep{ley20584} establecen que el diagnóstico clínico, la prescripción médica y la planificación de dietas terapéuticas son exclusivos de profesionales de la salud titulados.
 \\\\
 Para evitar riesgos legales, como el ejercicio ilegal de la profesión, la aplicación mostrará un aviso legal (disclaimer) obligatorio durante el registro. Este aviso dejará claro que la plataforma es una herramienta de ``apoyo deportivo para atletas aficionados sanos'' y que ninguna sugerencia de la aplicación reemplaza la indicación de un médico o nutricionista. Del mismo modo, el plan de entrenamiento sugerido y las metas de alimentación son orientaciones generales. La aplicación no entrega dietas ni planes de alimentación prescritos.
-\newpage
 \textbf{4. Comercio Electrónico y Modelo de Suscripción}\\
 Como el modelo de ingresos se basa en una suscripción premium mensual de \$7.990 CLP, la parte comercial se rige por la Ley N° 19.496 sobre Protección de los Derechos de los Consumidores \citep{ley19496} y por el Reglamento de Comercio Electrónico (Decreto N° 6 del Ministerio de Economía).
 \\\\
@@ -1082,7 +1048,6 @@ Esto exige transparencia total. La aplicación debe mostrar el precio final con 
 \\\\
 \textbf{5. Propiedad Intelectual y Licenciamiento}\\
 El código fuente de la aplicación (Flutter y NestJS) queda protegido por la Ley N° 17.336 sobre Propiedad Intelectual \citep{ley17336}. Además, como la red social permite que los usuarios compartan sesiones, rutas, comidas, recetas y fotos, los términos de servicio incluirán una cláusula de licencia de uso no exclusiva, para que la aplicación pueda mostrar este contenido al resto de la comunidad y permitir que otros lo agreguen a sus módulos sin infringir derechos de autor. Al subir una foto, el usuario declarará que es suya o que tiene permiso para publicarla, y el administrador podrá retirar las que incumplan las normas de la comunidad. También se mantendrá un registro de las licencias open-source (MIT, Apache 2.0) de las librerías utilizadas (como el lector de archivos \texttt{.fit}), para cumplir con ellas al publicar en las tiendas de aplicaciones.
-\newpage
 \begin{table}[h!]
     \centering
     \renewcommand{\arraystretch}{1.5}
@@ -1102,7 +1067,6 @@ El código fuente de la aplicación (Flutter y NestJS) queda protegido por la Le
 
 \textbf{Conclusión de Factibilidad Operativa:}\\
 La plataforma es \textbf{operativamente factible}. Aunque trabajar con datos sensibles de salud implica un riesgo alto, los requisitos legales chilenos se pueden cumplir con decisiones de diseño incluidas desde el Producto Mínimo Viable, como el cifrado, la cancelación de la suscripción desde la aplicación, los avisos legales y el manejo de consentimientos.
-\newpage
 \subsubsection{Resumen del Estudio de Factibilidad y Selección de Alternativa}
 Después de evaluar el proyecto en sus tres dimensiones (técnica, económica y operativa), se concluye que está en condiciones de avanzar a la etapa de diseño e implementación.
 \\\\
@@ -1111,12 +1075,10 @@ En lo \textbf{técnico}, se cuenta con herramientas open-source probadas y con p
 En lo \textbf{económico}, el análisis muestra que el proyecto es rentable (VAN $\approx$ 0 y TIR del 15\%) con una cantidad acotada de usuarios de pago (hasta 159 suscriptores para la alternativa más compleja). Hay que tener en cuenta que estos cálculos no incluyen el Costo de Adquisición de Clientes (CAC) ni las campañas de marketing necesarias para llegar a esos usuarios. Aun considerando que el marketing tendría que financiarse por separado, la cantidad de suscriptores necesaria es acotada, por lo que la viabilidad comercial es favorable.
 \\\\
 \textbf{Decisión de arquitectura:} Según estos resultados, se decide \textbf{seleccionar la Alternativa 3 (Solución por Capas)} como arquitectura del proyecto. Aunque tiene la mayor inversión inicial, conseguir 159 usuarios premium dentro del nicho de entrenamiento híbrido en Chile es una meta alcanzable. Además, es la única alternativa que cubre el problema completo, porque automatiza el registro, puede crecer según el equipamiento del usuario y usa inteligencia artificial para facilitar el uso diario.
-\newpage
 \subsection{Solución a Implementar}
 La solución a implementar se basa en la \textbf{Alternativa 3 (Solución por Capas)}, elegida porque permite reunir en un solo lugar el seguimiento del rendimiento físico y de la nutrición en el entrenamiento concurrente, combinando datos de dispositivos e inteligencia artificial.
 \\\\
 A continuación se describe la arquitectura técnica, los módulos funcionales, cómo se relacionan entre sí y el modelo de datos del Producto Mínimo Viable (MVP).
-\newpage
 \subsubsection{Visión General de la Arquitectura Lógica}
 El sistema sigue un patrón Cliente-Servidor con una API REST. Está compuesto por los siguientes componentes:
 \begin{itemize}
@@ -1180,7 +1142,6 @@ El sistema sigue un patrón Cliente-Servidor con una API REST. Está compuesto p
 \captionof{figure}{Arquitectura técnica de la Solución (Alternativa 3).}
 \label{fig:arquitectura_solucion}
 \end{center}
-\newpage
 \subsubsection{Módulos Principales y Diagrama de Interacción}
 El sistema se divide en módulos funcionales que se comunican entre sí:
 
@@ -1193,17 +1154,15 @@ Se encarga de que registrar datos sea lo más simple posible para el deportista,
 \end{itemize}
 
 \textbf{2. Motor de Fatiga y Planificación (La Lógica de Negocio Central)}\\
-Este módulo cruza los datos fisiológicos que entrega el módulo de ingesta. Al final del día, o después de cada entrenamiento, calcula la carga crónica (CTL) y la carga aguda (ATL). Si el usuario tiene mucha fatiga acumulada por una sesión de resistencia exigente y tiene programada una sesión de fuerza máxima al día siguiente, el sistema le enviará una sugerencia (mediante una notificación push) para que considere bajar el número de series o la carga, y así evitar la interferencia y el sobreentrenamiento. La decisión final queda en manos del usuario.
+Este módulo cruza los datos fisiológicos que entrega el módulo de ingesta. Al final del día, o después de cada entrenamiento, calcula la carga de cada sesión (RPE por minutos), la carga crónica (CTL) y la carga aguda (ATL), y con ellas el índice de fatiga cruzada. Si el usuario tiene mucha fatiga acumulada por una sesión de resistencia exigente y tiene programada una sesión de fuerza máxima al día siguiente, el sistema le enviará una sugerencia (mediante una notificación push) para que considere bajar el número de series o la carga, y así evitar la interferencia y el sobreentrenamiento. La decisión final queda en manos del usuario.
 
 \textbf{3. Motor de Nutrición Asistida por IA}\\
 Deja de lado las metas calóricas fijas y se ajusta según el motor de fatiga. Si el usuario hizo un entrenamiento largo y exigente, el módulo sugiere subir su meta diaria de carbohidratos y la muestra en la aplicación. Además, el usuario puede enviar fotos de sus comidas. NestJS manda la imagen, junto con instrucciones predefinidas (prompt), a la API de visión artificial y recibe una estimación de los macronutrientes. Si la IA tiene poca seguridad en su resultado, le pide al usuario que lo revise, para que los datos guardados sean confiables.
-\newpage
 \textbf{4. Red Social Deportiva}\\
 Este módulo convierte la aplicación en una comunidad. Los usuarios pueden seguir a otras personas, ver un muro con sus publicaciones y publicar en su perfil sus sesiones de fuerza, sus rutas y sus comidas. Lo que lo diferencia es que lo publicado no queda solo como información para leer, sino que se puede usar. Por ejemplo, si un usuario publica su rutina de pecho, otro usuario puede agregarla con un botón a sus rutinas de fuerza, sin copiarla a mano. Lo mismo ocurre con una ruta, que pasa a su módulo de cardio, y con una receta, que pasa a su módulo de nutrición. En el caso de una receta como ``Panqueques Proteicos'', el sistema además ajusta las porciones y los gramos de cada ingrediente para que calcen con lo que ese usuario necesita. Todo lo agregado desde la comunidad entra al cruce de datos como cualquier otro registro. Las fotos de las publicaciones (hasta 4 por publicación) se suben desde el teléfono directamente a Amazon S3 con un permiso temporal que entrega este módulo, y se muestran a través de CloudFront.
 \\\\
 \textbf{5. Perfil del Usuario y Plan Sugerido}\\
 Al registrarse, el usuario responde un cuestionario corto sobre su experiencia, sus objetivos, los días disponibles, su equipamiento, las disciplinas que practica y sus datos corporales básicos. Con eso, el sistema lo clasifica según su nivel (principiante, intermedio o avanzado) y su orientación (más fuerza, más resistencia o equilibrada), y le sugiere un plan semanal a partir de una plantilla para ese perfil. Después, el plan se ajusta con lo que el usuario registra. Si no cumple las sesiones, si reporta un esfuerzo muy alto o si el motor de fatiga detecta una carga excesiva, el sistema sugiere un plan más liviano, y si progresa bien, uno más exigente. El usuario siempre puede modificar o ignorar el plan.
-\newpage
 El siguiente diagrama muestra cómo se relacionan estos módulos. Las flechas que bajan desde la aplicación indican lo que el usuario envía a cada módulo y lo que recibe de vuelta. Las flechas dentro del backend muestran cómo un módulo usa los resultados de otro. Por ejemplo, la carga de cada sesión alimenta al motor de fatiga, y este ajusta el plan sugerido y las metas de nutrición. Las cajas con borde punteado son servicios externos.
 
 \vspace{0.5cm}
@@ -1257,7 +1216,6 @@ El siguiente diagrama muestra cómo se relacionan estos módulos. Las flechas qu
 \captionof{figure}{Diagrama de Interacción entre módulos funcionales.}
 \label{fig:interaccion_modulos}
 \end{center}
-\newpage
 \subsubsection{Modelo de Datos (Esquema Conceptual)}
 Como los datos del sistema son de tipos muy distintos, la base de datos MongoDB se organizará en colecciones de documentos. Las colecciones principales serán:
 \begin{itemize}
@@ -1269,14 +1227,13 @@ Como los datos del sistema son de tipos muy distintos, la base de datos MongoDB 
     \item \textbf{trainingPlans (Plan Sugerido):} Guarda el plan semanal sugerido de cada usuario, junto con el perfil que se usó para generarlo.
     \item \textbf{meals (Comidas):} Registro de alimentación con sus alimentos dentro del documento. Si se registró con visión artificial, incluye un campo \texttt{aiConfidenceScore} que indica qué tan segura estaba la IA de su estimación.
 \end{itemize}
-\newpage
 \subsubsection{Requerimientos de Infraestructura y Despliegue}
 Para ponerla en marcha, la API de NestJS se empaquetará en contenedores \textbf{Docker}. Así, el entorno de desarrollo y el de producción son iguales. La imagen se desplegará en AWS Fargate, el servicio usado en la estimación de costos, que agrega más capacidad automáticamente cuando aumentan las peticiones, por ejemplo cuando muchos usuarios sincronizan sus dispositivos al mismo tiempo.
 \\\\
 La base de datos se alojará en MongoDB Atlas, el servicio administrado de MongoDB, que hace respaldos automáticos, permite recuperar los datos y cifra el almacenamiento, cumpliendo con los requisitos de ciberseguridad descritos en la factibilidad operativa.
 \\\\
 Las fotos y los archivos \texttt{.fit} se guardarán en un bucket privado de Amazon S3 en la región de São Paulo, con cifrado activado y una regla que borra los archivos que ya no se usan. Las fotos se mostrarán a través de Amazon CloudFront, que es el único servicio con permiso para leer ese bucket.
-\newpage
+\begin{spacing}{1.3}
 \subsection{Beneficios del Proyecto}
 La plataforma basada en la Alternativa 3 (Solución por Capas) trae varios beneficios, que se pueden separar entre los beneficios para el usuario (el atleta híbrido) y los beneficios comerciales del proyecto.
 
@@ -1288,14 +1245,12 @@ La plataforma basada en la Alternativa 3 (Solución por Capas) trae varios benef
     \item \textbf{Red social con contenido reutilizable:} El usuario puede seguir a otras personas y agregar sus sesiones, rutas y recetas a sus propios módulos con un botón, sin copiar nada a mano. Las recetas se adaptan automáticamente a sus necesidades del día.
     \item \textbf{Plan personalizado:} Incluso sin experiencia previa, el usuario recibe un plan semanal sugerido según su nivel y sus objetivos, que se ajusta con lo que registra.
 \end{itemize}
-\newpage
 \textbf{Beneficios Comerciales y Operativos:}
 \begin{itemize}
     \item \textbf{Modelo SaaS escalable:} Como se basa en infraestructura en la nube y en procesamiento automático con IA, el costo de sumar un nuevo suscriptor es muy bajo.
     \item \textbf{Historial acumulado:} A medida que el usuario acumula datos históricos de sus entrenamientos, le resulta menos conveniente cambiarse a otra aplicación o volver al registro manual, lo que favorece que siga usando la plataforma.
     \item \textbf{Ingresos directos:} Los atletas híbridos suelen estar dispuestos a pagar por herramientas que mejoren su rendimiento, lo que facilita conseguir usuarios premium.
 \end{itemize}
-\newpage
 \subsection{Análisis Costo - Beneficio}
 El análisis costo-beneficio compara la inversión necesaria para poner en marcha la Solución por Capas con los ingresos y beneficios esperados en un horizonte de 4 años.
 
@@ -1313,5 +1268,4 @@ El análisis costo-beneficio compara la inversión necesaria para poner en march
 
 \textbf{Conclusión del Análisis:}\\
 La relación costo-beneficio es \textbf{favorable}. Aunque el proyecto requiere un esfuerzo de desarrollo importante y es la alternativa más cara, necesitar 159 suscriptores es poco en comparación con el tamaño del mercado. Reunir en un solo lugar los datos de los dispositivos y las funciones de inteligencia artificial le da a la plataforma una ventaja clara frente a las aplicaciones aisladas, lo que justifica la inversión. Con esto se cierra el análisis de factibilidad y la definición de la arquitectura.
-
-\newpage
+\end{spacing}

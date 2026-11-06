@@ -14,17 +14,20 @@ import 'food_form_page.dart';
 import 'food_picker.dart';
 
 class RecipeEditorPage extends ConsumerWidget {
-  const RecipeEditorPage({super.key, required this.id});
+  const RecipeEditorPage({super.key, required this.id, this.example = false});
 
   /// "nueva" para crear.
   final String id;
+
+  /// Rellena una receta nueva con un ejemplo (lo usa el modo de capturas).
+  final bool example;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return AsyncView(ref.watch(nutritionDataProvider), builder: (data) {
       final recipe = id == 'nueva' ? null : data.recipes.where((r) => r.id == id).firstOrNull;
       if (id != 'nueva' && recipe == null) return const LoadingView(text: 'Receta no encontrada.');
-      return _RecipeEditor(key: ValueKey(recipe?.id ?? 'nueva'), recipe: recipe, data: data);
+      return _RecipeEditor(key: ValueKey(recipe?.id ?? 'nueva'), recipe: recipe, data: data, example: example);
     });
   }
 }
@@ -37,20 +40,26 @@ class _Row {
 }
 
 class _RecipeEditor extends ConsumerStatefulWidget {
-  const _RecipeEditor({super.key, required this.recipe, required this.data});
+  const _RecipeEditor({super.key, required this.recipe, required this.data, this.example = false});
 
   final Recipe? recipe;
   final NutritionData data;
+  final bool example;
 
   @override
   ConsumerState<_RecipeEditor> createState() => _RecipeEditorState();
 }
 
 class _RecipeEditorState extends ConsumerState<_RecipeEditor> {
-  late final _name = TextEditingController(text: widget.recipe?.name ?? '');
+  bool get _filled => widget.example && widget.recipe == null;
+
+  late final _name = TextEditingController(text: widget.recipe?.name ?? (_filled ? 'Avena con plátano y leche' : ''));
   late final _aliases = TextEditingController(text: widget.recipe?.aliases.join(', ') ?? '');
   late final _servings = TextEditingController(text: plain(widget.recipe?.servings ?? 1));
-  late final List<_Row> _rows = [for (final i in widget.recipe?.ingredients ?? const <RecipeIngredient>[]) _Row(i.foodId, plain(i.grams))];
+  late final List<_Row> _rows = [
+    for (final i in widget.recipe?.ingredients ?? const <RecipeIngredient>[]) _Row(i.foodId, plain(i.grams)),
+    if (_filled) ...[_Row('avena-hojuelas', '60'), _Row('leche-semidescremada', '250'), _Row('platano', '100')],
+  ];
 
   /// Alimentos creados aquí que aún no llegan al catálogo.
   final Map<String, Food> _created = {};
@@ -124,6 +133,13 @@ class _RecipeEditorState extends ConsumerState<_RecipeEditor> {
     final servings = numOr(_servings.text, 0).clamp(0, double.infinity).toDouble();
     final totals = computeRecipe(ingredients, servings, foods);
     final valid = _name.text.trim().isNotEmpty && servings > 0 && ingredients.isNotEmpty && totals.missing.isEmpty && ingredients.every((i) => i.grams > 0);
+    // Qué falta para poder guardar, dicho en una frase.
+    final missing = [
+      if (_name.text.trim().isEmpty) 'escribe un nombre',
+      if (servings <= 0) 'indica cuántas porciones rinde',
+      if (ingredients.isEmpty) 'agrega al menos un ingrediente' else if (ingredients.any((i) => i.grams <= 0)) 'indica los gramos de cada ingrediente',
+      if (totals.missing.isNotEmpty) 'quita el ingrediente que ya no está en el catálogo',
+    ];
 
     return PageBody(gap: 12, children: [
       PageHeader(
@@ -211,6 +227,17 @@ class _RecipeEditorState extends ConsumerState<_RecipeEditor> {
           ],
         ]),
       ),
+      if (!valid)
+        Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Icon(Icons.info_outline, size: 16, color: c.warning),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(
+              'Para guardar, ${missing.length > 1 ? '${missing.take(missing.length - 1).join(', ')} y ${missing.last}' : missing.single}.',
+              style: TextStyle(fontSize: 12, height: 1.35, color: c.muted),
+            ),
+          ),
+        ]),
     ]);
   }
 }

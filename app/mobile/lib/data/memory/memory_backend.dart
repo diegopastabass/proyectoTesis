@@ -17,6 +17,7 @@ import '../../core/common/date.dart';
 import '../../core/nutrition/macros.dart';
 import '../../core/nutrition/models.dart';
 import '../../core/nutrition/open_food_facts.dart';
+import '../../core/nutrition/recipe.dart';
 import '../../core/nutrition/score.dart';
 import '../../core/strength/models.dart';
 import '../../core/strength/plan.dart';
@@ -131,7 +132,9 @@ class MemoryFoodRepository implements FoodRepository {
 }
 
 class MemoryRecipeRepository implements RecipeRepository {
-  final _recipes = _Live<List<Recipe>>([]);
+  MemoryRecipeRepository({List<Recipe> initial = const []}) : _recipes = _Live<List<Recipe>>([...initial]);
+
+  final _Live<List<Recipe>> _recipes;
 
   @override
   Stream<List<Recipe>> watchRecipes(String uid) =>
@@ -464,7 +467,18 @@ Backend memoryBackend({required List<Food> seedFoods, required LookupRepository 
     kind: BackendKind.memory,
     auth: MemoryAuthRepository(signedIn: signedIn),
     foods: MemoryFoodRepository(seedFoods),
-    recipes: MemoryRecipeRepository(),
+    // Para las capturas de la tesis: una receta ya guardada, para ver la lista de «Mis recetas».
+    recipes: MemoryRecipeRepository(
+      initial: withSampleData && richSample
+          ? [
+              () {
+                const items = [RecipeIngredient(foodId: 'pechuga-pollo-cocida', grams: 150), RecipeIngredient(foodId: 'arroz-blanco-cocido', grams: 180), RecipeIngredient(foodId: 'tomate', grams: 80), RecipeIngredient(foodId: 'aceite-oliva', grams: 5)];
+                final t = computeRecipe(items, 1, foods);
+                return Recipe(id: 'demo-bowl', ownerId: demoUser.uid, name: 'Bowl de pollo y arroz', servings: 1, ingredients: items, totalGrams: t.totalGrams, totals: t.totals, perServing: t.perServing);
+              }(),
+            ]
+          : const [],
+    ),
     diary: MemoryDiaryRepository(initial: sampleDiary, uid: demoUser.uid),
     profile: MemoryProfileRepository(
       weights: weights,

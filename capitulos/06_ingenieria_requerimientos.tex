@@ -8,24 +8,22 @@ En el presente capítulo se aborda la fase de Ingeniería de Requerimientos, un 
 En este capítulo, el modelo de negocios no se refiere a cómo gana dinero el proyecto, porque eso ya se analizó en la factibilidad económica del capítulo anterior. Aquí se refiere a los procesos principales que entregan valor al atleta. Se describen cinco procesos, y entre ellos cubren el registro de fuerza, de cardio y de comidas, el cruce de datos, la red social y el plan sugerido.
 \\\\
 Los procesos se dibujan con carriles, al estilo de BPMN (Business Process Model and Notation). Cada carril representa a un participante, el círculo simple marca el inicio, el círculo doble marca el fin y los rombos marcan las decisiones. Las tareas están numeradas, y después de cada diagrama se explica qué ocurre en cada una.
-\newpage
 \subsubsection{Proceso 1: Registro de Cardio y Cálculo de Fatiga Cruzada}
 Este proceso muestra cómo una sesión de cardio entra a la aplicación, venga de donde venga, y cómo se cruza con el resto de los datos para avisar al atleta si está acumulando demasiada fatiga. Los participantes son el atleta, la aplicación y el reloj junto con la app de salud del teléfono. Responde a los requerimientos R02 y R03.
 
-\begin{figure}[h!]
+\begin{figure}[!htbp]
     \centering
     \includegraphics[width=0.68\textwidth]{figuras/procesos/bpmn_proceso1.png}
     \caption{Proceso 1: Registro de cardio y cálculo de fatiga cruzada.}
     \label{fig:bpmn_fatiga}
 \end{figure}
-\newpage
 \textbf{Tareas del proceso}
 
 \begin{enumerate}
     \item \textbf{Termina una sesión de cardio:} El proceso parte cuando el atleta termina una salida de ciclismo, running o trekking.
     \item \textbf{Guarda la sesión:} Si entrenó con un reloj, este guarda la sesión en Health Connect o Apple Salud. La aplicación la trae sola, siempre que el atleta haya dado permiso para leer esos datos.
     \item \textbf{Sube el archivo, graba o anota:} Si no usó un reloj, el atleta tiene tres opciones. Puede subir el archivo \texttt{.fit} de su ciclocomputador, grabar la ruta con el GPS del teléfono o anotar la sesión a mano. En las dos últimas también indica qué tan duro la sintió (RPE).
-    \item \textbf{Guarda la sesión y calcula su carga:} La carga se calcula según la disciplina y los datos disponibles, como la potencia en ciclismo, el ritmo en running y el desnivel en trekking. Si faltan esos datos, se usan el pulso o el RPE. Si la misma sesión llega por dos vías, se usa la que tiene más detalle.
+    \item \textbf{Guarda la sesión y calcula su carga:} La carga se calcula con el esfuerzo percibido (RPE) por los minutos de la sesión, igual que en fuerza. Si el atleta no indicó el RPE, la aplicación lo estima con los datos disponibles, como el pulso, la potencia, la velocidad o el desnivel. Si la misma sesión llega por dos vías, se usa la que tiene más detalle.
     \item \textbf{Cruza la carga:} La aplicación junta esta carga con las sesiones de fuerza y las comidas de los últimos días para estimar la fatiga cruzada. También revisa cuánto tiempo pasó entre sesiones de distinto tipo.
     \item \textbf{Actualiza las metas de alimentación:} Las metas del día cambian según lo entrenado, por ejemplo con más carbohidratos después de una salida larga. Son sugerencias y no una dieta.
     \item \textbf{Envía una alerta:} Si el atleta tiene mucha fatiga y una sesión exigente de la otra disciplina en las próximas 24 horas, o si dejó menos de 6 horas entre una sesión de fuerza y una de cardio, la aplicación le avisa y le sugiere, por ejemplo, bajar la carga o mover la sesión. Si además viene comiendo bastante menos de lo que gasta, el aviso también lo menciona.
@@ -34,11 +32,10 @@ Este proceso muestra cómo una sesión de cardio entra a la aplicación, venga d
 \end{enumerate}
 
 El plan gratuito llega hasta el registro con GPS o a mano. La lectura desde el reloj, el archivo \texttt{.fit}, el cruce de datos, las metas y las alertas son parte del plan premium.
-\newpage
 \subsubsection{Proceso 2: Registro de Comidas y Metas de Alimentación}
 Este proceso muestra las cuatro formas de registrar una comida y cómo cada una se compara con las metas del día. Los participantes son el atleta, la aplicación y el asistente de inteligencia artificial. Responde a los requerimientos R04 y R05.
 
-\begin{figure}[h!]
+\begin{figure}[!htbp]
     \centering
     \includegraphics[width=0.9\textwidth]{figuras/procesos/bpmn_proceso2.png}
     \caption{Proceso 2: Registro de comidas y metas de alimentación.}
@@ -57,22 +54,20 @@ Este proceso muestra las cuatro formas de registrar una comida y cómo cada una 
     \item \textbf{Muestra el avance:} La aplicación suma la comida al día y muestra cuánto falta para las metas calculadas en el Proceso 1. También puede sugerir en qué momento conviene comer, por ejemplo proteína después de una sesión de fuerza.
 \end{enumerate}
 
-La búsqueda en la lista y el código de barras son parte del plan gratuito. La foto, la descripción y las metas según el entrenamiento son parte del plan premium.
-\newpage
+Además, el atleta puede armar sus propias recetas y luego buscarlas en la lista como cualquier alimento (CU-27). La búsqueda en la lista, el código de barras y las recetas propias son parte del plan gratuito. La foto, la descripción y las metas según el entrenamiento son parte del plan premium.
 \subsubsection{Proceso 3: Publicación y Uso de Contenido de la Comunidad}
 Este proceso muestra cómo una sesión, una ruta o una comida que publica un atleta llega a otro, que puede agregarla a sus propios módulos o reportarla. Los participantes son el atleta que publica, el atleta que ve la publicación, la aplicación y el administrador. Responde a los requerimientos R08, R11 y R12.
 
-\begin{figure}[h!]
+\begin{figure}[!htbp]
     \centering
     \includegraphics[width=0.85\textwidth]{figuras/procesos/bpmn_proceso3.png}
     \caption{Proceso 3: Publicación y uso de contenido de la comunidad.}
     \label{fig:bpmn_recetas}
 \end{figure}
-\newpage
 \textbf{Tareas del proceso}
 
 \begin{enumerate}
-    \item \textbf{Publica un registro:} El atleta elige una sesión, una ruta o una comida que ya registró, le agrega un texto y hasta 4 fotos, y elige quién la puede ver (todos, sus seguidores o solo él).
+    \item \textbf{Publica un registro:} El atleta elige una sesión, una ruta, una comida o una receta que ya tiene, le agrega un texto y hasta 4 fotos, y elige quién la puede ver (todos, sus seguidores o solo él).
     \item \textbf{Prepara y muestra la publicación:} La aplicación comprime las fotos, les borra los datos de ubicación y, si es una ruta, oculta el inicio y el final del recorrido. Luego la publicación aparece en el muro de quienes pueden verla.
     \item \textbf{Ve la publicación:} Otro atleta la encuentra en su muro. Si le interesa, puede agregarla a sus módulos o reportarla.
     \item \textbf{Ajusta las porciones:} Si agrega una receta, la aplicación ajusta la cantidad de cada ingrediente según lo que le falta comer ese día, manteniendo las proporciones de la receta original.
@@ -81,11 +76,10 @@ Este proceso muestra cómo una sesión, una ruta o una comida que publica un atl
     \item \textbf{Revisa la publicación:} El administrador evalúa si cumple las normas de la comunidad o si puede ser peligrosa para la salud.
     \item \textbf{Oculta la publicación:} Si no cumple las normas, el administrador la oculta y queda registro de quién tomó la decisión y por qué.
 \end{enumerate}
-\newpage
 \subsubsection{Proceso 4: Registro de Fuerza}
 Este proceso muestra las dos formas de registrar una sesión de fuerza, ya sea con el formulario o con las propias palabras del atleta, para que anotar una sesión tome poco tiempo. Los participantes son el atleta, la aplicación y el asistente de inteligencia artificial. Responde al requerimiento R01.
 
-\begin{figure}[h!]
+\begin{figure}[!htbp]
     \centering
     \includegraphics[width=0.9\textwidth]{figuras/procesos/bpmn_proceso4.png}
     \caption{Proceso 4: Registro de fuerza.}
@@ -105,11 +99,10 @@ Este proceso muestra las dos formas de registrar una sesión de fuerza, ya sea c
 \end{enumerate}
 
 El formulario es parte del plan gratuito. El registro con las propias palabras y el cruce de datos son parte del plan premium.
-\newpage
 \subsubsection{Proceso 5: Perfil del Usuario y Plan Sugerido}
 Este proceso muestra cómo la aplicación conoce a un usuario nuevo, le sugiere un plan de entrenamiento y lo va ajustando cada semana con lo que registra. Es el proceso que da una guía a quien recién empieza. Los participantes son el atleta y la aplicación. Responde al requerimiento R13.
 
-\begin{figure}[h!]
+\begin{figure}[!htbp]
     \centering
     \includegraphics[width=0.62\textwidth]{figuras/procesos/bpmn_proceso5.png}
     \caption{Proceso 5: Perfil del usuario y plan sugerido.}
@@ -126,17 +119,15 @@ Este proceso muestra cómo la aplicación conoce a un usuario nuevo, le sugiere 
     \item \textbf{Revisa la semana:} La aplicación compara las sesiones cumplidas con las sugeridas y revisa qué tan duro las sintió el atleta. En el plan premium también considera su fatiga cruzada.
     \item \textbf{Sugiere el plan siguiente:} Con reglas simples, la aplicación propone un plan más liviano, igual o más exigente, y explica por qué cambió. El ciclo se repite cada semana mientras el atleta siga usando el plan.
 \end{enumerate}
-\newpage
 \subsection{Modelo de Requerimientos}
 El Modelo de Requerimientos reúne lo que el sistema debe hacer de cara al usuario (requerimientos funcionales) y la forma técnica en que se va a lograr (requerimientos no funcionales). A continuación se presenta el diagrama de trazabilidad, que relaciona los procesos de negocio de la sección anterior (cardio y fatiga, comidas y metas, comunidad, registro de fuerza y plan sugerido) con los requerimientos funcionales que los hacen posibles. Los requerimientos que no pertenecen a un proceso en particular se agrupan como funciones transversales de la plataforma.
 
-\begin{figure}[h!]
+\begin{figure}[!htbp]
     \centering
     \includegraphics[width=0.8\textwidth]{figuras/requerimientos/diagrama_requerimientos.png}
     \caption{Diagrama de trazabilidad: relación entre requerimientos y procesos de negocio.}
     \label{fig:diagrama_requerimientos}
 \end{figure}
-\newpage
 \subsubsection{Requerimientos Funcionales}
 Los requerimientos funcionales describen lo que la aplicación permite hacer al usuario y lo que le entrega a cambio. Se presentan en quince requerimientos, escritos desde el punto de vista de quien usa la aplicación y no de los procesos internos del sistema. Catorce corresponden al deportista y uno al administrador de la plataforma.
 
@@ -178,7 +169,6 @@ Los requerimientos funcionales describen lo que la aplicación permite hacer al 
         \textbf{Prioridad} & Crítica \\ \hline
     \end{tabular}
 \end{table}
-\newpage
 \begin{table}[h!]
     \centering
     \renewcommand{\arraystretch}{1.3}
@@ -187,7 +177,7 @@ Los requerimientos funcionales describen lo que la aplicación permite hacer al 
         \rowcolor[HTML]{EFEFEF} 
         \textbf{Identificador} & \textbf{R04} \\ \hline
         \textbf{Nombre} & Registro de comidas \\ \hline
-        \textbf{Descripción} & La aplicación debe permitir al usuario registrar lo que come de cuatro formas: buscando alimentos en un listado, describiéndolos con sus propias palabras, sacando una foto al plato o leyendo el código de barras de un producto comercial. En todos los casos, debe mostrar las calorías y los macronutrientes para que el usuario pueda revisarlos y corregirlos. \\ \hline
+        \textbf{Descripción} & La aplicación debe permitir al usuario registrar lo que come de cuatro formas: buscando alimentos en un listado, describiéndolos con sus propias palabras, sacando una foto al plato o leyendo el código de barras de un producto comercial. En todos los casos, debe mostrar las calorías y los macronutrientes para que el usuario pueda revisarlos y corregirlos. También debe permitir crear recetas propias, con sus ingredientes y porciones, para volver a registrarlas con un solo paso o compartirlas con la comunidad. \\ \hline
         \textbf{Prioridad} & Alta \\ \hline
     \end{tabular}
 \end{table}
@@ -230,7 +220,6 @@ Los requerimientos funcionales describen lo que la aplicación permite hacer al 
         \textbf{Prioridad} & Baja \\ \hline
     \end{tabular}
 \end{table}
-\newpage
 \begin{table}[h!]
     \centering
     \renewcommand{\arraystretch}{1.3}
@@ -281,7 +270,6 @@ Los requerimientos funcionales describen lo que la aplicación permite hacer al 
         \textbf{Prioridad} & Media \\ \hline
     \end{tabular}
 \end{table}
-\newpage
 \begin{table}[h!]
     \centering
     \renewcommand{\arraystretch}{1.3}
@@ -307,7 +295,6 @@ Los requerimientos funcionales describen lo que la aplicación permite hacer al 
         \textbf{Prioridad} & Alta \\ \hline
     \end{tabular}
 \end{table}
-\newpage
 \begin{table}[h!]
     \centering
     \renewcommand{\arraystretch}{1.3}
@@ -333,7 +320,6 @@ Los requerimientos funcionales describen lo que la aplicación permite hacer al 
         \textbf{Prioridad} & Alta \\ \hline
     \end{tabular}
 \end{table}
-\newpage
 
 \subsubsection{Características de los Usuarios del Sistema}
 El sistema contempla tres perfiles de usuario con niveles de acceso diferenciados, diseñados para cubrir desde el deportista principiante hasta la administración técnica de la plataforma.
@@ -373,7 +359,6 @@ La Tabla \ref{tab:funciones_plan} resume qué incluye cada plan.
     \caption{Funciones de cada plan.}
     \label{tab:funciones_plan}
 \end{table}
-\newpage
 \subsubsection{Propósito del Sistema}
 El propósito del sistema es centralizar la captura, el almacenamiento y el análisis cruzado de datos provenientes de tres dominios históricamente fragmentados: el entrenamiento de fuerza, la resistencia cardiovascular y la nutrición deportiva. A través de la integración de telemetría de wearables, inteligencia artificial (visión computacional y procesamiento de lenguaje natural) y un motor algorítmico de fatiga concurrente, la plataforma busca:
 \begin{enumerate}
@@ -383,7 +368,6 @@ El propósito del sistema es centralizar la captura, el almacenamiento y el aná
     \item Entregar información personalizada, con un plan semanal sugerido según el perfil de cada usuario, incluso si no tiene experiencia previa.
     \item Fomentar la adherencia a largo plazo mediante una red social deportiva, donde el contenido que publican otros usuarios se puede agregar directamente a los propios módulos.
 \end{enumerate}
-\newpage
 \subsubsection{Restricciones Generales}
 Las siguientes restricciones condicionan el diseño, desarrollo y operación de la solución tecnológica:
 
@@ -395,7 +379,6 @@ Las siguientes restricciones condicionan el diseño, desarrollo y operación de 
     \item \textbf{Disciplinas deportivas acotadas:} El módulo de resistencia se limita exclusivamente a ciclismo, running y trekking. No se contempla soporte para natación, remo u otras disciplinas de resistencia.
     \item \textbf{Cuotas de API externas:} El consumo de la API de Gemini está sujeto a límites de uso (rate limits) y costos por token. El diseño del backend debe implementar mecanismos de caché y control de gasto para evitar sobrecostos operativos.
 \end{itemize}
-\newpage
 \subsubsection{Requisitos Específicos del Producto}
 Los requisitos específicos detallan las capacidades particulares que cada módulo del producto debe ofrecer para satisfacer los requerimientos funcionales previamente definidos.
 
@@ -410,7 +393,7 @@ Los requisitos específicos detallan las capacidades particulares que cada módu
     \item \textbf{Módulo de Resistencia (Cardio):}
     \begin{itemize}
         \item El sistema debe sincronizar automáticamente las sesiones de ciclismo, running y trekking registradas en Health Connect o Apple HealthKit.
-        \item El parser de archivos \texttt{.fit} debe extraer, como mínimo: duración, distancia, frecuencia cardíaca promedio y máxima, potencia promedio (si aplica), cadencia y Training Stress Score (TSS).
+        \item El parser de archivos \texttt{.fit} debe extraer, como mínimo: duración, distancia, frecuencia cardíaca promedio y máxima, potencia promedio (si aplica), cadencia y Training Stress Score (TSS), que se guarda como dato informativo de la sesión.
         \item La telemetría segundo a segundo debe almacenarse en una colección de series temporales (\texttt{telemetry}) asociada a la sesión.
     \end{itemize}
     \item \textbf{Módulo de Nutrición:}
@@ -421,9 +404,9 @@ Los requisitos específicos detallan las capacidades particulares que cada módu
     \end{itemize}
     \item \textbf{Motor de Fatiga y Cruce de Datos:}
     \begin{itemize}
-        \item El motor debe calcular diariamente la carga aguda (ATL) y crónica (CTL) del atleta, utilizando un modelo de media móvil exponencial ponderada.
+        \item El motor debe calcular diariamente la carga aguda (ATL, constante de 7 días) y crónica (CTL, constante de 42 días) del atleta, utilizando un modelo de media móvil exponencial ponderada, según las definiciones de la Tabla \ref{tab:def_operativas}.
         \item Para poder comparar la fuerza y el cardio, todas las sesiones deben tener una carga en una misma escala, basada en el RPE de la sesión multiplicado por sus minutos.
-        \item Las alertas de fatiga cruzada deben generarse cuando el ratio ATL/CTL supere un umbral configurable y exista una sesión de la disciplina opuesta programada en las próximas 24 horas.
+        \item Las alertas de fatiga cruzada deben generarse cuando el índice de fatiga cruzada (la razón ATL/CTL de la carga total) supere un umbral configurable, que parte en 1,3, y el plan semanal sugerido indique una sesión de la disciplina opuesta en las próximas 24 horas. El índice solo se muestra con al menos 28 días de historial.
         \item Si entre una sesión de fuerza y una de cardio hay menos de 6 horas, el sistema debe avisar al usuario y sugerirle separarlas.
         \item Si en días seguidos se repiten sesiones de fuerza y de cardio con poca recuperación entre ellas, el sistema debe sugerir reorganizar el calendario.
         \item El sistema debe revisar si las comidas se hicieron en los momentos recomendados, como carbohidratos 2 a 3 horas antes del cardio y proteínas dentro de las 2 horas posteriores a la fuerza, y mostrar una sugerencia cuando no sea así.
@@ -448,7 +431,6 @@ Los requisitos específicos detallan las capacidades particulares que cada módu
         \item El plan debe revisarse cada semana según la adherencia, el RPE promedio y el índice de fatiga cruzada.
     \end{itemize}
 \end{itemize}
-\newpage
 \subsubsection{Requisitos No Funcionales}
 Los requisitos no funcionales explican cómo se van a lograr, desde el punto de vista técnico, los requerimientos funcionales descritos antes. Cada uno indica a qué requerimientos funcionales apoya.
 
@@ -477,7 +459,6 @@ Los requisitos no funcionales explican cómo se van a lograr, desde el punto de 
         \textbf{Descripción} & El usuario subirá el archivo desde la aplicación y el backend en NestJS lo leerá con una librería de código abierto, obteniendo duración, distancia, frecuencia cardíaca, potencia, cadencia y TSS. Un archivo de hasta 10 MB (unas 4 horas de registro) debe procesarse en menos de 3 segundos. Los datos segundo a segundo se guardarán en la colección de series temporales \texttt{telemetry} de MongoDB, y el archivo original en almacenamiento en la nube (Amazon S3). \\ \hline
     \end{tabular}
 \end{table}
-\newpage
 \begin{table}[h!]
     \centering
     \renewcommand{\arraystretch}{1.3}
@@ -487,7 +468,7 @@ Los requisitos no funcionales explican cómo se van a lograr, desde el punto de 
         \textbf{Identificador} & \textbf{RNF-03} \\ \hline
         \textbf{Nombre} & Cálculo de fatiga y envío de alertas \\ \hline
         \textbf{Requerimientos asociados} & R03, R05, R06 \\ \hline
-        \textbf{Descripción} & Como el volumen de la fuerza y la carga del cardio se miden en unidades distintas, cada sesión tendrá una carga común, igual al RPE de la sesión multiplicado por sus minutos \citep{foster2001monitoring}. Si una sesión llega sin RPE, como las que vienen del reloj, se le pedirá al usuario o se estimará con su frecuencia cardíaca. Con esa carga, el backend calculará cada día la carga aguda (ATL) y la carga crónica (CTL) con una media móvil exponencial \citep{williams2017better}. Cuando la relación ATL/CTL supere un umbral configurable y haya una sesión de la otra disciplina programada en las próximas 24 horas, enviará una notificación push con Firebase Cloud Messaging. El umbral partirá en 1,5 \citep{gabbett2016training} y se ajustará con las evaluaciones del prototipo, porque el uso de esta relación todavía se discute en la literatura \citep{impellizzeri2020acute}. El backend también revisará el tiempo entre sesiones de distinto tipo, el horario de las comidas y si el usuario viene comiendo bastante menos de lo que gasta, para incluirlo en las alertas y sugerencias. Cada sesión guardará un indicador de confianza (GPS, pulsómetro o archivo \texttt{.fit}) para dar más o menos peso al cálculo. \\ \hline
+        \textbf{Descripción} & Como el volumen de la fuerza y la carga del cardio se miden en unidades distintas, cada sesión tendrá una carga común, igual al RPE de la sesión multiplicado por sus minutos \citep{foster2001monitoring}. Si una sesión llega sin RPE, como las que vienen del reloj, se le pedirá al usuario o se estimará con su frecuencia cardíaca. Con esa carga, el backend calculará cada día la carga aguda (ATL) y la carga crónica (CTL) con una media móvil exponencial \citep{williams2017better}. Cuando el índice de fatiga cruzada (la razón ATL/CTL de la carga total, según la Tabla \ref{tab:def_operativas}) supere un umbral configurable y el plan semanal sugerido indique una sesión de la otra disciplina en las próximas 24 horas, enviará una notificación push con Firebase Cloud Messaging. El umbral partirá en 1,3, el límite superior de la zona habitual \citep{gabbett2016training}, y se ajustará con las evaluaciones del prototipo, porque el uso de esta relación todavía se discute en la literatura \citep{impellizzeri2020acute}. El backend también revisará el tiempo entre sesiones de distinto tipo, el horario de las comidas y si el usuario viene comiendo bastante menos de lo que gasta, para incluirlo en las alertas y sugerencias. Cada sesión guardará un indicador de confianza (GPS, pulsómetro o archivo \texttt{.fit}) para dar más o menos peso al cálculo. \\ \hline
     \end{tabular}
 \end{table}
 
@@ -516,7 +497,6 @@ Los requisitos no funcionales explican cómo se van a lograr, desde el punto de 
         \textbf{Descripción} & La aplicación usará la cámara del teléfono para leer el código de barras (EAN o UPC) de un producto, y el backend consultará sus datos nutricionales en una base de datos de alimentos (como OpenFoodFacts). Los productos consultados se guardarán en la colección \texttt{foodItems} de la base de datos propia, para que las siguientes consultas sean más rápidas y no dependan del servicio externo. \\ \hline
     \end{tabular}
 \end{table}
-\newpage
 \begin{table}[h!]
     \centering
     \renewcommand{\arraystretch}{1.3}
@@ -555,7 +535,6 @@ Los requisitos no funcionales explican cómo se van a lograr, desde el punto de 
         \textbf{Descripción} & Toda la comunicación entre la aplicación y el servidor usará HTTPS con TLS 1.3, y el acceso se controlará con tokens JWT de corta duración, renovables con un token de larga duración. Los tokens de acceso a servicios externos se guardarán cifrados (AES-256). Antes de leer datos de salud se mostrará una pantalla de consentimiento. El usuario podrá ver, corregir y eliminar sus datos desde la configuración, y al eliminar su cuenta se borrarán todos los documentos asociados a ella, según la Ley N° 19.628. \\ \hline
     \end{tabular}
 \end{table}
-\newpage
 \begin{table}[h!]
     \centering
     \renewcommand{\arraystretch}{1.3}
@@ -607,7 +586,6 @@ Los requisitos no funcionales explican cómo se van a lograr, desde el punto de 
         \textbf{Descripción} & El backend se organizará en módulos independientes de NestJS (fuerza, resistencia, nutrición, fatiga, comunidad y administración), usando inyección de dependencias. Así se podrán agregar nuevas disciplinas o cambiar el proveedor de IA sin modificar el resto del sistema. \\ \hline
     \end{tabular}
 \end{table}
-\newpage
 \begin{table}[h!]
     \centering
     \renewcommand{\arraystretch}{1.3}
@@ -673,7 +651,6 @@ Los requisitos no funcionales explican cómo se van a lograr, desde el punto de 
     \end{tabular}
 \end{table}
 
-\newpage
 \subsubsection{Requisitos de las Interfaces}
 Los requisitos de interfaz especifican cómo el sistema se comunica con los usuarios, con otros sistemas de software y con los dispositivos de hardware externos.
 \\\\
@@ -689,7 +666,6 @@ Los requisitos de interfaz especifican cómo el sistema se comunica con los usua
 \begin{itemize}
     \item \textbf{Health Connect (Android) y Apple HealthKit (iOS):} Integración mediante los SDKs nativos oficiales para lectura de actividades físicas, frecuencia cardíaca, pasos y gasto calórico. La integración es solo de lectura.
     \item \textbf{APIs de IA Generativa:} Comunicación vía API REST (HTTPS) con la API de Gemini, en sus modelos Flash, para el procesamiento de imágenes de alimentos (visión) y la interpretación de rutinas en lenguaje natural (NLP). Las solicitudes incluyen un prompt sistémico predefinido para estructurar las respuestas en formato JSON.
-    \newpage
     \item \textbf{Google Play y App Store:} Integración con sus sistemas de compra para cobrar la suscripción premium y consultar su estado.
     \item \textbf{Almacenamiento en la nube:} Integración con un servicio de almacenamiento de objetos (Amazon S3 o equivalente) para guardar los archivos \texttt{.fit} y las fotos de las publicaciones, junto con Amazon CloudFront para mostrar esas fotos de forma rápida. El teléfono sube las fotos directamente al almacenamiento con un permiso temporal que entrega el backend. Las fotos que se sacan solo para registrar una comida se envían al servicio de IA para su análisis y no se guardan, salvo que el usuario decida publicarlas.
 \end{itemize}
@@ -707,7 +683,6 @@ Los requisitos de interfaz especifican cómo el sistema se comunica con los usua
     \item \textbf{GPS del dispositivo:} Acceso al sensor de ubicación para el registro opcional de rutas de ciclismo, running o trekking cuando el usuario no disponga de un wearable externo.
     \item \textbf{Wearables y ciclocomputadores:} Comunicación indirecta a través de los concentradores del sistema operativo (Health Connect / HealthKit). No se establece conexión Bluetooth directa entre la aplicación y los dispositivos. Toda la telemetría fluye mediante los brokers nativos del SO o la carga manual de archivos \texttt{.fit}.
 \end{itemize}
-\newpage
 \subsection{Casos de Uso}
 \subsubsection{Actores}
 Los actores son las personas y los servicios externos que se relacionan con la aplicación. Los actores primarios son los que inician las acciones, y los secundarios son los servicios externos que participan en ellas.
@@ -719,7 +694,7 @@ Los actores son las personas y los servicios externos que se relacionan con la a
         \hline
         \rowcolor[HTML]{EFEFEF}
         \textbf{ID} & \textbf{Actor} & \textbf{Tipo} & \textbf{Descripción} \\ \hline
-        A-01 & Atleta Básico & Primario & Usuario del plan gratuito. Responde el cuestionario inicial, recibe su plan sugerido y anota a mano sus entrenamientos de fuerza y de cardio y sus comidas, incluida la lectura del código de barras. También revisa su progreso, controla sus datos y puede contratar el plan premium. \\ \hline
+        A-01 & Atleta Básico & Primario & Usuario del plan gratuito. Responde el cuestionario inicial, recibe su plan sugerido y anota a mano sus entrenamientos de fuerza y de cardio y sus comidas, incluida la lectura del código de barras, y arma sus propias recetas. También revisa su progreso, controla sus datos y puede contratar el plan premium. \\ \hline
         A-02 & Atleta Híbrido & Primario & Usuario del plan premium. Puede hacer todo lo que hace el Atleta Básico y, además, trae sus sesiones desde su reloj o ciclocomputador, registra con ayuda de la inteligencia artificial, recibe alertas de fatiga y metas de alimentación, y participa en la red social deportiva. \\ \hline
         A-03 & Administrador & Primario & Persona del equipo que mantiene la lista de ejercicios y revisa lo que reportan los usuarios, incluidas las fotos, para retirar lo que no cumpla las normas de la comunidad. \\ \hline
         A-04 & App de salud del teléfono & Secundario & Health Connect en Android o Salud en iPhone. Reúne lo que registran el reloj y otros sensores, y se lo entrega a la aplicación solo si el usuario lo autoriza. \\ \hline
@@ -730,39 +705,37 @@ Los actores son las personas y los servicios externos que se relacionan con la a
 \end{table}
 
 Los servicios que la aplicación usa por dentro, como el envío de notificaciones, la base de datos de productos envasados o el almacenamiento de fotos, no se muestran como actores, porque el usuario no se relaciona con ellos directamente. Se describen en los requisitos de interfaces de este capítulo y en el diseño.
-\newpage
 \subsubsection{Diagrama de Casos de Uso}
 Los casos de uso se muestran en cuatro diagramas, uno por cada parte de la aplicación. Se escribieron desde el punto de vista del usuario y sin términos técnicos, para que cualquier persona pueda entender qué hará la aplicación. Los diagramas incluyen relaciones de inclusión (``include''), que son pasos que siempre ocurren, y de extensión (``extend''), que son pasos opcionales. Cuando aparecen los dos atletas, el Atleta Híbrido hereda los casos de uso del Atleta Básico, porque el plan premium incluye todo lo del plan gratuito.
 
-\begin{figure}[h!]
+\begin{figure}[!htbp]
     \centering
     \includegraphics[width=0.9\textwidth]{figuras/casos_de_uso/cu_perfil.png}
     \caption{Diagrama de Casos de Uso: Perfil, Cuenta y Seguimiento.}
     \label{fig:cu_perfil}
 \end{figure}
 
-\begin{figure}[h!]
+\begin{figure}[!htbp]
     \centering
     \includegraphics[width=0.95\textwidth]{figuras/casos_de_uso/cu_entrenamiento.png}
     \caption{Diagrama de Casos de Uso: Entrenamiento (Fuerza y Resistencia).}
     \label{fig:cu_entrenamiento}
 \end{figure}
-\begin{figure}[h!]
+\begin{figure}[!htbp]
     \centering
     \includegraphics[width=0.95\textwidth]{figuras/casos_de_uso/cu_nutricion.png}
     \caption{Diagrama de Casos de Uso: Nutrición.}
     \label{fig:cu_nutricion}
 \end{figure}
 
-\begin{figure}[h!]
+\begin{figure}[!htbp]
     \centering
     \includegraphics[width=0.85\textwidth]{figuras/casos_de_uso/cu_comunidad.png}
     \caption{Diagrama de Casos de Uso: Red Social y Administración.}
     \label{fig:cu_comunidad}
 \end{figure}
-\clearpage
 \subsubsection{Descripción de Alto Nivel de Casos de Uso}
-A continuación se describe cada caso de uso de los diagramas anteriores, con el requerimiento funcional al que responde. Su flujo normal y sus flujos alternativos se detallan en el Diseño Funcional del capítulo siguiente. Los casos CU-01 a CU-14 vienen de las versiones anteriores del documento, y los casos CU-15 a CU-26 se agregaron para que todos los requerimientos tengan al menos un caso de uso.
+A continuación se describe cada caso de uso de los diagramas anteriores, con el requerimiento funcional al que responde. Su flujo normal y sus flujos alternativos se detallan en el Diseño Funcional del capítulo siguiente. Cada requerimiento funcional tiene al menos un caso de uso, como se muestra en la Tabla \ref{tab:cu_requerimientos}.
 
 \noindent
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
@@ -788,7 +761,6 @@ A continuación se describe cada caso de uso de los diagramas anteriores, con el
     \textbf{RF Asociados} & R01 \\ \hline
 \end{tabular}
 \vspace{0.5cm}
-\newpage
 \noindent
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
     \hline
@@ -825,7 +797,6 @@ A continuación se describe cada caso de uso de los diagramas anteriores, con el
     \textbf{RF Asociados} & R03 \\ \hline
 \end{tabular}
 \vspace{0.5cm}
-\newpage
 \noindent
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
     \hline
@@ -862,7 +833,6 @@ A continuación se describe cada caso de uso de los diagramas anteriores, con el
     \textbf{RF Asociados} & R12 \\ \hline
 \end{tabular}
 \vspace{0.5cm}
-\newpage
 \noindent
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
     \hline
@@ -870,8 +840,8 @@ A continuación se describe cada caso de uso de los diagramas anteriores, con el
     \textbf{Identificador} & \textbf{CU-09} \\ \hline
     \textbf{Nombre} & Publicar una sesión, ruta o comida \\ \hline
     \textbf{Actor Principal} & Atleta Híbrido \\ \hline
-    \textbf{Descripción} & El usuario elige una sesión de fuerza, una ruta o una comida que ya registró, le agrega un texto y, si quiere, hasta 4 fotos, declarando que son suyas o que tiene permiso para publicarlas. Luego elige quién la puede ver (todos, sus seguidores o solo él). Si publica una ruta, la aplicación oculta el inicio y el final del recorrido para que no se sepa dónde vive. \\ \hline
-    \textbf{RF Asociados} & R08 \\ \hline
+    \textbf{Descripción} & El usuario elige una sesión de fuerza, una ruta, una comida o una receta que ya tiene, le agrega un texto y, si quiere, hasta 4 fotos, declarando que son suyas o que tiene permiso para publicarlas. Luego elige quién la puede ver (todos, sus seguidores o solo él). Si publica una ruta, la aplicación oculta el inicio y el final del recorrido para que no se sepa dónde vive. \\ \hline
+    \textbf{RF Asociados} & R08, R15 \\ \hline
 \end{tabular}
 \vspace{0.5cm}
 
@@ -898,7 +868,6 @@ A continuación se describe cada caso de uso de los diagramas anteriores, con el
     \textbf{RF Asociados} & R11 \\ \hline
 \end{tabular}
 \vspace{0.5cm}
-\newpage
 \noindent
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
     \hline
@@ -934,7 +903,6 @@ A continuación se describe cada caso de uso de los diagramas anteriores, con el
     \textbf{RF Asociados} & R08 \\ \hline
 \end{tabular}
 \vspace{0.5cm}
-\newpage
 \noindent
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
     \hline
@@ -971,7 +939,6 @@ A continuación se describe cada caso de uso de los diagramas anteriores, con el
     \textbf{RF Asociados} & R02 \\ \hline
 \end{tabular}
 \vspace{0.5cm}
-\newpage
 \noindent
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
     \hline
@@ -1007,7 +974,6 @@ A continuación se describe cada caso de uso de los diagramas anteriores, con el
     \textbf{RF Asociados} & R07 \\ \hline
 \end{tabular}
 \vspace{0.5cm}
-\newpage
 \noindent
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
     \hline
@@ -1080,7 +1046,18 @@ A continuación se describe cada caso de uso de los diagramas anteriores, con el
     \textbf{RF Asociados} & R15 \\ \hline
 \end{tabular}
 \vspace{0.5cm}
-\newpage
+
+\noindent
+\begin{tabular}{|p{3.5cm}|p{11.5cm}|}
+    \hline
+    \rowcolor[HTML]{EFEFEF}
+    \textbf{Identificador} & \textbf{CU-27} \\ \hline
+    \textbf{Nombre} & Crear una receta \\ \hline
+    \textbf{Actor Principal} & Atleta Básico / Atleta Híbrido \\ \hline
+    \textbf{Descripción} & El usuario arma una receta eligiendo sus ingredientes de la lista de alimentos e indicando los gramos de cada uno y cuántas porciones rinde. La aplicación calcula las calorías y los macronutrientes de la receta y de cada porción. La receta queda guardada en su módulo de nutrición, donde la puede encontrar al registrar una comida (CU-06) o, si es Atleta Híbrido, publicar (CU-09). \\ \hline
+    \textbf{RF Asociados} & R04 \\ \hline
+\end{tabular}
+\vspace{0.5cm}
 \begin{table}[h!]
     \centering
     \renewcommand{\arraystretch}{1.3}
@@ -1091,7 +1068,7 @@ A continuación se describe cada caso de uso de los diagramas anteriores, con el
         R01 & Registro de entrenamientos de fuerza & CU-01, CU-02 \\ \hline
         R02 & Registro de entrenamientos de resistencia & CU-03, CU-04, CU-17 \\ \hline
         R03 & Alertas de fatiga y ajuste del entrenamiento & CU-05 \\ \hline
-        R04 & Registro de comidas & CU-06, CU-07, CU-15, CU-16 \\ \hline
+        R04 & Registro de comidas & CU-06, CU-07, CU-15, CU-16, CU-27 \\ \hline
         R05 & Metas de alimentación según el entrenamiento & CU-18 \\ \hline
         R06 & Seguimiento del progreso & CU-19 \\ \hline
         R07 & Registro de sensaciones & CU-20 \\ \hline
@@ -1107,11 +1084,12 @@ A continuación se describe cada caso de uso de los diagramas anteriores, con el
     \caption{Relación entre los requerimientos funcionales y los casos de uso.}
     \label{tab:cu_requerimientos}
 \end{table}
-\newpage
+\begin{spacing}{1.3}
 \subsection{Comentarios Generales del Capítulo}
 En este capítulo se ha consolidado el puente entre la visión de negocio y la implementación técnica de la plataforma. El capítulo partió con un Modelo de Negocios de cinco procesos, que son el registro de cardio con el cálculo de fatiga, el registro de comidas con sus metas, la publicación y el uso de contenido de la comunidad, el registro de fuerza y el plan sugerido. Posteriormente, la trazabilidad de los requerimientos garantizó que cada especificación funcional y no funcional del software nazca directamente de una necesidad operativa comprobada, mitigando el riesgo de desarrollar funcionalidades superfluas. 
 
 Además, se incorporaron requerimientos centrados en la personalización, como el perfil del usuario con su plan sugerido, y en la red social deportiva, donde el contenido que publican otros usuarios se puede agregar directamente a los propios módulos.
-\\\\
-Finalmente, la especificación de los Casos de Uso, apoyada por sus respectivos diagramas e identificación de actores primarios y secundarios, delimitó con exactitud la frontera del sistema. Con este sólido marco de requerimientos finalizado, alineado a las restricciones normativas chilenas y a las dependencias de hardware de terceros, el proyecto cuenta con las bases necesarias para transicionar hacia la fase de Ingeniería de Diseño, donde se definirá la arquitectura de software detallada, el modelo de datos orientado a documentos y las interfaces de usuario.\newpage
-\newpage
+
+\medskip
+Finalmente, la especificación de los Casos de Uso, apoyada por sus respectivos diagramas e identificación de actores primarios y secundarios, delimitó con exactitud la frontera del sistema. Con este sólido marco de requerimientos finalizado, alineado a las restricciones normativas chilenas y a las dependencias de hardware de terceros, el proyecto cuenta con las bases necesarias para transicionar hacia la fase de Ingeniería de Diseño, donde se definirá la arquitectura de software detallada, el modelo de datos orientado a documentos y las interfaces de usuario.
+\end{spacing}

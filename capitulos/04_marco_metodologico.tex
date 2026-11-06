@@ -8,7 +8,6 @@ En este capítulo se define la forma de trabajo con la que se va a desarrollar l
 
 Elegir la metodología de desarrollo es una decisión importante para que el proyecto salga bien. Este proyecto incluye la integración con dispositivos de terceros (wearables), el cálculo de la fatiga cruzada y el procesamiento de lenguaje natural. Por lo tanto, tiene una complejidad técnica alta y requerimientos que pueden ir cambiando a medida que se prueban las funcionalidades. Por este motivo se evalúan tres enfoques: Scrum, Kanban y el modelo de prototipo evolutivo \citep{sommerville2015, pressman2010}.
 
-\newpage
 \subsubsection{Scrum}
 \textbf{Enfoque:} Es una metodología ágil basada en el desarrollo iterativo e incremental, es decir, el producto se construye por partes que se van sumando. Se apoya en la experiencia que se gana en cada ciclo, lo que permite adaptarse rápido a los cambios. El trabajo se divide en periodos cortos y de duración fija llamados Sprints \citep{schwaber2020scrum}.
 
@@ -40,7 +39,6 @@ Elegir la metodología de desarrollo es una decisión importante para que el pro
 \captionof{figure}{Ciclo de Vida de Scrum}
 \end{center}
 \vspace{0.5cm}
-\newpage
 \subsubsection{Kanban}
 \textbf{Enfoque:} Está basado en los principios Lean y se centra en hacer visible el flujo de trabajo y en entregar de forma continua. En vez de usar Sprints de duración fija, regula el ritmo limitando la cantidad de tareas que pueden estar en curso al mismo tiempo, lo que se conoce como límite de trabajo en progreso o WIP (Work in Progress) \citep{anderson2010kanban}.
 
@@ -79,7 +77,6 @@ Elegir la metodología de desarrollo es una decisión importante para que el pro
 \captionof{figure}{Tablero Kanban Básico}
 \end{center}
 \vspace{0.5cm}
-\newpage
 \subsubsection{Prototipo Evolutivo}
 \textbf{Enfoque:} Es un modelo en el que se construye rápidamente una primera versión funcional del sistema, que se muestra al usuario y se va mejorando en versiones sucesivas hasta convertirse en el producto final. A diferencia del prototipo desechable, que solo sirve para aclarar requisitos y después se descarta, en el prototipo evolutivo el código no se bota, sino que cada versión parte de la anterior. Es útil cuando los requisitos no están del todo claros al inicio y se necesita ver algo funcionando para definirlos mejor \citep{sommerville2015, pressman2010}.
 
@@ -114,7 +111,6 @@ Elegir la metodología de desarrollo es una decisión importante para que el pro
 \captionof{figure}{Ciclo del Prototipo Evolutivo}
 \end{center}
 \vspace{0.5cm}
-\newpage
 \subsection{Evaluación de Alternativas}
 Para elegir la metodología más adecuada, los tres enfoques se evaluaron según los siguientes criterios:
 
@@ -128,7 +124,6 @@ Para elegir la metodología más adecuada, los tres enfoques se evaluaron según
     \item \textbf{Carga de documentación:} Cuánto trabajo exige documentar el proceso, como reuniones, tableros y registros de avance.
     \item \textbf{Ajuste al plazo del MVP:} Qué tanto ayuda a llegar a un producto mínimo viable antes de diciembre de 2026.
 \end{itemize}
-\newpage
 \subsection{Cuadro Comparativo}
 \begin{table}[h!]
     \centering
@@ -149,7 +144,6 @@ Para elegir la metodología más adecuada, los tres enfoques se evaluaron según
     \caption{Cuadro comparativo de alternativas metodológicas.}
     \label{tab:comparativa_metodologias}
 \end{table}
-\newpage
 \subsection{Justificación Metodología Seleccionada}
 
 Después de evaluar las alternativas, se eligió el \textbf{modelo de prototipo evolutivo} como metodología de desarrollo del proyecto. Scrum y Kanban fueron analizadas porque son metodologías muy usadas y con buenos resultados, pero se descartaron por las siguientes razones:
@@ -167,7 +161,7 @@ El prototipo evolutivo, en cambio, se ajusta mejor a este proyecto por cuatro mo
 \end{itemize}
 
 Para controlar el principal riesgo de este modelo, que es que el código crezca de forma desordenada, al final de cada versión se reservará tiempo para ordenar el código, y el backend se organizará en módulos independientes desde el comienzo.
-\newpage
+\begin{spacing}{1.15}
 \subsection{Diseño del Plan Metodológico del Proyecto}
 
 El desarrollo se organiza en versiones sucesivas del prototipo, de 2 a 3 semanas cada una. Cada versión pasa por las cinco fases del modelo:
@@ -228,7 +222,34 @@ Hay que distinguir entre el prototipo de demostración y el MVP. El prototipo qu
 \captionof{figure}{Evolución del prototipo hasta el MVP}
 \end{center}
 
+\subsection{Validación de la Solución}
+Para comprobar que la solución cumple lo que plantean los objetivos, cada objetivo se asocia a una forma de verificación y a un criterio de cumplimiento (Tabla \ref{tab:validacion}). Los objetivos 1 a 4 se verifican con este documento. El objetivo 5 se verifica con las pruebas técnicas de la fase de evaluación de cada versión del prototipo y con una evaluación con usuarios al final.
+
+{\setstretch{1.05}\small
+\renewcommand{\arraystretch}{1.3}
+\begin{longtable}{|>{\raggedright\arraybackslash}p{2.9cm}|>{\raggedright\arraybackslash}p{4.6cm}|>{\raggedright\arraybackslash}p{4.4cm}|>{\raggedright\arraybackslash}p{2.6cm}|}
+    \caption{Validación de los objetivos del proyecto. Los criterios numéricos son propuestas iniciales.}\label{tab:validacion}\\
+    \hline
+    \rowcolor[HTML]{EFEFEF}
+        \textbf{Objetivo} & \textbf{Cómo se verifica} & \textbf{Criterio de cumplimiento} & \textbf{Dónde y cuándo} \\ \hline
+    \endfirsthead
+    \hline
+    \rowcolor[HTML]{EFEFEF}
+        \textbf{Objetivo} & \textbf{Cómo se verifica} & \textbf{Criterio de cumplimiento} & \textbf{Dónde y cuándo} \\ \hline
+    \endhead
+
+        1. Identificar las variables y definir los datos a registrar & Revisión de la literatura y definición operativa de la carga y de la fatiga cruzada. & Cada variable y cada fórmula tienen respaldo bibliográfico (Tabla \ref{tab:def_operativas}). & Capítulos 2 y 3. Cumplido en este documento. \\ \hline
+        2. Comparar aplicaciones e identificar brechas & Tabla comparativa y análisis de cada aplicación frente a la propuesta. & Las aplicaciones se comparan en las mismas dimensiones y se identifica lo que la propuesta agrega. & Capítulos 1 y 3. Cumplido en este documento. \\ \hline
+        3. Especificar los requerimientos & Trazabilidad entre procesos, requerimientos y casos de uso. & Cada requerimiento funcional tiene al menos un caso de uso (Tabla \ref{tab:cu_requerimientos}). & Capítulo 6. Cumplido en este documento. \\ \hline
+        4. Diseñar la arquitectura, los datos y las interfaces & Revisión de cada caso de uso con su flujo, su diagrama de actividades, su diagrama de secuencia y su pantalla. & Todos los casos de uso tienen esos cuatro elementos y su pantalla sigue el flujo descrito. & Capítulo 7. Cumplido en este documento. \\ \hline
+        5. Implementar el MVP y verificar el cruce de datos & Pruebas técnicas en la fase de evaluación de cada versión: cálculo de la carga con casos de valor conocido (por ejemplo, 60 minutos con RPE 7 dan 420 UA), alerta de fatiga con datos simulados de los tres módulos, metas de alimentación según el entrenamiento y agregar una publicación a los módulos de otro usuario. & Al menos una sugerencia de carga y una de alimentación generadas con datos de los tres módulos. Una publicación agregada aparece en el módulo correcto de otro usuario. & Versiones 4 y 5 del prototipo. \\ \hline
+        Objetivo general: información objetiva y personalizada para el deportista & Evaluación con usuarios al final de la versión 5, con un cuestionario de usabilidad. & Al menos 5 deportistas registran una sesión y una comida sin ayuda, y la usabilidad alcanza 68 puntos o más en la escala SUS (System Usability Scale), que es su promedio de referencia. & Versión 5 del prototipo. \\ \hline
+\end{longtable}
+}
+
+\textbf{Cómo se valida el objetivo general.} El objetivo general busca que el deportista pueda reducir el riesgo de acumular fatiga cruzada. Las pruebas técnicas comprueban que el sistema calcula la carga, detecta un aumento brusco y avisa, que es la condición necesaria para que el deportista pueda reaccionar a tiempo. El efecto de esos avisos sobre las lesiones no se mide en este proyecto, porque exigiría seguir a los usuarios durante varios meses. En su lugar, la evaluación con usuarios comprueba que la información es entendible y útil para decidir. Los criterios numéricos son propuestas iniciales y se ajustarán con los resultados de la versión 4 del prototipo.
+
 \subsection{Comentarios Generales del Capítulo}
 
-En resumen, definir la metodología permite ordenar el trabajo y reducir la incertidumbre propia de este proyecto. Se analizaron Scrum, Kanban y el prototipo evolutivo, y se eligió este último. Scrum y Kanban se descartaron porque exigen documentar y mantener todo el proceso, algo poco práctico para una sola persona con un plazo acotado. El prototipo evolutivo, en cambio, permite tener una versión funcional desde temprano, ajustar los requisitos con lo que se aprende en cada evaluación y llegar al MVP con la última versión. Con esta base, en el siguiente capítulo se presentan las alternativas de solución y los estudios de factibilidad técnica, económica y operativa.
-\newpage
+En resumen, definir la metodología permite ordenar el trabajo y reducir la incertidumbre propia de este proyecto. Se analizaron Scrum, Kanban y el prototipo evolutivo, y se eligió este último. Scrum y Kanban se descartaron porque exigen documentar y mantener todo el proceso, algo poco práctico para una sola persona con un plazo acotado. El prototipo evolutivo, en cambio, permite tener una versión funcional desde temprano, ajustar los requisitos con lo que se aprende en cada evaluación y llegar al MVP con la última versión. También se definió cómo se validará cada objetivo del proyecto. Con esta base, en el siguiente capítulo se presentan las alternativas de solución y los estudios de factibilidad técnica, económica y operativa.
+\end{spacing}

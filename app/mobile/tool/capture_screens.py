@@ -60,6 +60,7 @@ SHOTS = [
     ("cu08_metas", "/comunidad/post/p2/receta?estado=metas", {}),
     ("cu09_sesion", "/comunidad/publicar?ejemplo=1", {}),
     ("cu09_ruta", "/comunidad/publicar?ejemplo=1&tipo=ruta", {}),
+    ("cu09_receta", "/comunidad/publicar?ejemplo=1&tipo=receta", {}),
     ("cu12_cuestionario1", "/bienvenida/cuestionario?ejemplo=1", {}),
     ("cu12_cuestionario2", "/bienvenida/cuestionario?paso=1&ejemplo=1", {}),
     ("cu12_cuestionario3", "/bienvenida/cuestionario?paso=2&ejemplo=1", {}),
@@ -95,6 +96,10 @@ SHOTS = [
     ("cu25_cancelada", "/premium/suscripcion?estado=cancelada", {}),
     ("cu26_terminos", "/bienvenida/terminos?estado=listo", {}),
     ("cu26_rechazo", "/bienvenida/terminos?estado=rechazo", {"scroll": 300}),
+    # CU-27: las pantallas reales del editor de recetas. El selector de ingredientes y la lista
+    # con la receta ya guardada requieren tocar la pantalla (ver --open y --snap).
+    ("cu27_nueva", "/recetas/nueva", {"go": True}),
+    ("cu27_completa", "/recetas/nueva?ejemplo=1", {"go": True}),
 ]
 
 

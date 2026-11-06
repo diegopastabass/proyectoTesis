@@ -4,6 +4,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../app/cardio_providers.dart';
 import '../../app/providers.dart';
+import '../../core/common/numbers.dart';
+import '../../core/nutrition/models.dart';
 import '../../app/sim_providers.dart';
 import '../../app/theme.dart';
 import '../../data/simulated/sim_data.dart';
@@ -42,6 +44,7 @@ class _ComposePostPageState extends ConsumerState<ComposePostPage> {
   late SimPostKind _kind = switch (widget.initialKind) {
     'ruta' => SimPostKind.route,
     'comida' => SimPostKind.meal,
+    'receta' => SimPostKind.recipe,
     _ => SimPostKind.workout,
   };
   late final _text = TextEditingController(text: widget.example ? 'Buena sesión antes del fin de semana. ¡Se sintió liviano!' : '');
@@ -63,7 +66,9 @@ class _ComposePostPageState extends ConsumerState<ComposePostPage> {
     setState(() => _photos++);
   }
 
-  void _publish(String title) {
+  void _publish(String title, {Recipe? recipe}) {
+    final foods = ref.read(foodsProvider).value ?? const <Food>[];
+    final names = {for (final f in foods) f.id: f.name};
     ref.read(simProvider.notifier).publish(SimPost(
           id: 'mine-${DateTime.now().millisecondsSinceEpoch}',
           authorId: 'me',
@@ -73,6 +78,16 @@ class _ComposePostPageState extends ConsumerState<ComposePostPage> {
           when: 'Ahora · ${_visibility.label}',
           photos: _photos,
           routeSeed: _kind == SimPostKind.route ? 2 : null,
+          // Una receta lleva sus ingredientes y lo que aporta cada porción.
+          ingredients: [if (recipe != null) for (final i in recipe.ingredients) SimIngredient(names[i.foodId] ?? 'Alimento', i.grams)],
+          macros: recipe == null ? null : SimMacros(recipe.perServing.kcal, recipe.perServing.protein, recipe.perServing.carbs, recipe.perServing.fat),
+          stats: recipe == null
+              ? const []
+              : [
+                  SimStat('Calorías', '${recipe.perServing.kcal.round()} kcal'),
+                  SimStat('Proteína', '${recipe.perServing.protein.round()} g'),
+                  SimStat('Porciones', plain(recipe.servings)),
+                ],
         ));
     showToast(context, 'Publicación compartida');
     context.go('/comunidad');
@@ -83,17 +98,21 @@ class _ComposePostPageState extends ConsumerState<ComposePostPage> {
     final c = context.colors;
     final workouts = ref.watch(workoutsProvider).value ?? const [];
     final routes = ref.watch(cardioActivitiesProvider).value ?? const [];
+    final recipes = ref.watch(recipesProvider).value ?? const <Recipe>[];
     final (recordTitle, recordDetail) = switch (_kind) {
+      SimPostKind.recipe => recipes.isEmpty
+          ? ('Aún no tienes recetas', 'Crea una en Nutrición › Recetas')
+          : (recipes.first.name, '${plain(recipes.first.servings)} ${recipes.first.servings == 1 ? 'porción' : 'porciones'} · ${recipes.first.ingredients.length} ingredientes'),
       SimPostKind.route => routes.isEmpty ? ('Sin rutas registradas', '') : (routes.first.title, capitalize(weekdayDate(routes.first.date))),
       SimPostKind.meal => ('Almuerzo de hoy', 'Pechuga de pollo y arroz'),
       _ => workouts.isEmpty ? ('Sin sesiones registradas', '') : (workouts.first.name, capitalize(weekdayDate(workouts.first.date))),
     };
-    final canPublish = _text.text.trim().isNotEmpty && (_photos == 0 || _declared);
+    final canPublish = _text.text.trim().isNotEmpty && (_photos == 0 || _declared) && (_kind != SimPostKind.recipe || recipes.isNotEmpty);
 
     return Scaffold(
       appBar: AppBar(title: const Text('Nueva publicación')),
       bottomNavigationBar: BottomActions(children: [
-        FilledButton(onPressed: canPublish ? () => _publish(recordTitle) : null, child: const Text('Publicar')),
+        FilledButton(onPressed: canPublish ? () => _publish(recordTitle, recipe: _kind == SimPostKind.recipe ? recipes.first : null) : null, child: const Text('Publicar')),
       ]),
       body: PageBody(children: [
         AppSegmented<SimPostKind>(
@@ -102,6 +121,7 @@ class _ComposePostPageState extends ConsumerState<ComposePostPage> {
             SimPostKind.workout: Text('Sesión'),
             SimPostKind.route: Text('Ruta'),
             SimPostKind.meal: Text('Comida'),
+            SimPostKind.recipe: Text('Receta'),
           },
           onChanged: (k) => setState(() => _kind = k),
         ),
@@ -111,6 +131,7 @@ class _ComposePostPageState extends ConsumerState<ComposePostPage> {
             GradientIcon(switch (_kind) {
               SimPostKind.route => Icons.route_outlined,
               SimPostKind.meal => Icons.restaurant,
+              SimPostKind.recipe => Icons.menu_book_outlined,
               _ => Icons.fitness_center,
             }),
             const SizedBox(width: 12),

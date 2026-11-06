@@ -7,24 +7,20 @@ El presente capítulo detalla la Ingeniería de Diseño de la solución tecnoló
 \subsection{Diagrama de Sistema de Alto Nivel}
 La Figura \ref{fig:arquitectura_alto_nivel} muestra las partes principales de la plataforma y cómo se comunican. El sistema sigue un modelo cliente-servidor con una API REST, y se divide en tres capas, que son la capa de presentación, la capa de procesamiento en la nube y la capa de servicios externos.
 
-\begin{figure}[h!]
+\begin{figure}[!htbp]
     \centering
     \includegraphics[width=1\textwidth]{figuras/arquitectura/diagrama_arquitectura.png}
     \caption{Arquitectura de Alto Nivel del Sistema.}
     \label{fig:arquitectura_alto_nivel}
 \end{figure}
-\newpage
 La \textbf{capa de presentación} es lo que usan las personas. El atleta usa la aplicación móvil hecha en \textbf{Flutter}, y el administrador usa un panel web. Además, la aplicación lee, con permiso del usuario, los datos de salud que Health Connect o Apple Health reúnen en el mismo teléfono.
 
 La \textbf{capa de procesamiento} está en la nube. Una API hecha en \textbf{NestJS}, que corre en AWS Fargate, concentra la lógica del sistema, como el cálculo de la fatiga, las metas de alimentación y el plan sugerido. Es la única parte con acceso a la base de datos \textbf{MongoDB}, alojada en MongoDB Atlas, y revisa cada documento antes de guardarlo.
 
 La \textbf{capa de servicios externos} reúne lo que el proyecto no construye por su cuenta. Gemini interpreta las fotos de comida y los textos, Open Food Facts entrega los datos de los productos envasados, Firebase envía las alertas al teléfono, Amazon S3 y CloudFront guardan y muestran los archivos y las fotos, y Google Play y App Store se encargan de los pagos. La mayoría de estas conexiones parte desde la API. Las excepciones son la subida de archivos, la visualización de fotos y el pago, que la aplicación hace directamente. El detalle de cada conexión se explica en la sección Diagrama de Integraciones.
-\newpage
 \subsection{Diseño Funcional}
 A continuación se presentan los flujos de cada uno de los casos de uso descritos en la fase de requerimientos. Para cada uno se indican sus precondiciones y poscondiciones, su curso normal de eventos y sus cursos alternos. Cada curso alterno lleva el número del paso del curso normal en el que ocurre.
 
-\clearpage
-\clearpage
 \subsubsection{CU-01. Anotar una sesión de fuerza}
 
 \textbf{Diagrama de Actividades}
@@ -67,7 +63,6 @@ A continuación se presentan los flujos de cada uno de los casos de uso descrito
 \end{minipage}
 \vspace{0.4cm}
 
-\clearpage
 \subsubsection{CU-02. Contar mi sesión de fuerza con mis palabras}
 
 \textbf{Diagrama de Actividades}
@@ -110,7 +105,6 @@ A continuación se presentan los flujos de cada uno de los casos de uso descrito
 \end{minipage}
 \vspace{0.4cm}
 
-\clearpage
 \subsubsection{CU-03. Traer mis sesiones desde el reloj}
 
 \textbf{Diagrama de Actividades}
@@ -155,7 +149,6 @@ A continuación se presentan los flujos de cada uno de los casos de uso descrito
 \end{minipage}
 \vspace{0.4cm}
 
-\clearpage
 \subsubsection{CU-04. Subir el archivo de mi ciclocomputador}
 
 \textbf{Diagrama de Actividades}
@@ -199,7 +192,6 @@ A continuación se presentan los flujos de cada uno de los casos de uso descrito
 \end{minipage}
 \vspace{0.4cm}
 
-\clearpage
 \subsubsection{CU-05. Revisar mi fatiga y recibir alertas}
 
 \textbf{Diagrama de Actividades}
@@ -244,7 +236,6 @@ A continuación se presentan los flujos de cada uno de los casos de uso descrito
 \end{minipage}
 \vspace{0.4cm}
 
-\clearpage
 \subsubsection{CU-06. Anotar una comida buscando los alimentos}
 
 \textbf{Diagrama de Actividades}
@@ -287,7 +278,6 @@ A continuación se presentan los flujos de cada uno de los casos de uso descrito
 \end{minipage}
 \vspace{0.4cm}
 
-\clearpage
 \subsubsection{CU-07. Registrar una comida con una foto}
 
 \textbf{Diagrama de Actividades}
@@ -331,7 +321,6 @@ A continuación se presentan los flujos de cada uno de los casos de uso descrito
 \end{minipage}
 \vspace{0.4cm}
 
-\clearpage
 \subsubsection{CU-08. Agregar una receta ajustada a mis metas}
 
 \textbf{Diagrama de Actividades}
@@ -374,7 +363,6 @@ A continuación se presentan los flujos de cada uno de los casos de uso descrito
 \end{minipage}
 \vspace{0.4cm}
 
-\clearpage
 \subsubsection{CU-09. Publicar una sesión, ruta o comida}
 
 \textbf{Diagrama de Actividades}
@@ -391,7 +379,7 @@ A continuación se presentan los flujos de cada uno de los casos de uso descrito
 {\renewcommand{\arraystretch}{1.25}\setstretch{1}\small
 \begin{tabular}{|>{\raggedright\arraybackslash}p{2.9cm}|>{\raggedright\arraybackslash}p{12.1cm}|}
     \hline
-    \rowcolor[HTML]{EFEFEF} \textbf{Propósito} & Compartir con la comunidad algo que el atleta ya registró. \\ \hline
+    \rowcolor[HTML]{EFEFEF} \textbf{Propósito} & Compartir con la comunidad algo que el atleta ya registró o creó, como una receta propia (CU-27). \\ \hline
     \textbf{Tipo} & Primario \\ \hline
     \textbf{Actores} & Atleta Híbrido \\ \hline
     \textbf{Requerimientos} & R08, R15 \\ \hline
@@ -405,7 +393,7 @@ A continuación se presentan los flujos de cada uno de los casos de uso descrito
     \hline
     \rowcolor[HTML]{D9E1F2} \multicolumn{2}{|c|}{\textbf{Curso Normal de los Eventos}} \\ \hline
     \rowcolor[HTML]{EFEFEF} \multicolumn{1}{|c|}{\textbf{Usuario}} & \multicolumn{1}{c|}{\textbf{Respuesta del Sistema}} \\ \hline
-        1. Elige un registro y pulsa Publicar. & 2. Muestra el formulario de la publicación. \\ \hline
+        1. Elige un registro (una sesión, una ruta, una comida o una receta) y pulsa Publicar. & 2. Muestra el formulario de la publicación. \\ \hline
         3. Escribe un texto y elige quién la puede ver (todos, sus seguidores o solo él). &  \\ \hline
         4. Pulsa Publicar. & 5. Prepara la publicación. Si es una ruta, oculta el inicio y el final del recorrido. \\ \hline
          & 6. Muestra la publicación en el muro de quienes pueden verla. \\ \hline
@@ -419,7 +407,6 @@ A continuación se presentan los flujos de cada uno de los casos de uso descrito
 \end{minipage}
 \vspace{0.4cm}
 
-\clearpage
 \subsubsection{CU-10. Mantener el catálogo de ejercicios}
 
 \textbf{Diagrama de Actividades}
@@ -461,7 +448,6 @@ A continuación se presentan los flujos de cada uno de los casos de uso descrito
 \end{minipage}
 \vspace{0.4cm}
 
-\clearpage
 \subsubsection{CU-11. Revisar el contenido reportado}
 
 \textbf{Diagrama de Actividades}
@@ -503,7 +489,6 @@ A continuación se presentan los flujos de cada uno de los casos de uso descrito
 \end{minipage}
 \vspace{0.4cm}
 
-\clearpage
 \subsubsection{CU-12. Completar mi perfil y recibir un plan semanal}
 
 \textbf{Diagrama de Actividades}
@@ -547,7 +532,6 @@ A continuación se presentan los flujos de cada uno de los casos de uso descrito
 \end{minipage}
 \vspace{0.4cm}
 
-\clearpage
 \subsubsection{CU-13. Agregar una publicación a mis módulos}
 
 \textbf{Diagrama de Actividades}
@@ -589,7 +573,6 @@ A continuación se presentan los flujos de cada uno de los casos de uso descrito
 \end{minipage}
 \vspace{0.4cm}
 
-\clearpage
 \subsubsection{CU-14. Seguir a otro usuario}
 
 \textbf{Diagrama de Actividades}
@@ -631,7 +614,6 @@ A continuación se presentan los flujos de cada uno de los casos de uso descrito
 \end{minipage}
 \vspace{0.4cm}
 
-\clearpage
 \subsubsection{CU-15. Registrar un producto con su código de barras}
 
 \textbf{Diagrama de Actividades}
@@ -673,7 +655,6 @@ A continuación se presentan los flujos de cada uno de los casos de uso descrito
 \end{minipage}
 \vspace{0.4cm}
 
-\clearpage
 \subsubsection{CU-16. Contar mi comida con mis palabras}
 
 \textbf{Diagrama de Actividades}
@@ -716,7 +697,6 @@ A continuación se presentan los flujos de cada uno de los casos de uso descrito
 \end{minipage}
 \vspace{0.4cm}
 
-\clearpage
 \subsubsection{CU-17. Registrar una sesión de cardio sin reloj}
 
 \textbf{Diagrama de Actividades}
@@ -759,7 +739,6 @@ A continuación se presentan los flujos de cada uno de los casos de uso descrito
 \end{minipage}
 \vspace{0.4cm}
 
-\clearpage
 \subsubsection{CU-18. Ver mis metas de alimentación del día}
 
 \textbf{Diagrama de Actividades}
@@ -801,7 +780,6 @@ A continuación se presentan los flujos de cada uno de los casos de uso descrito
 \end{minipage}
 \vspace{0.4cm}
 
-\clearpage
 \subsubsection{CU-19. Revisar mi progreso}
 
 \textbf{Diagrama de Actividades}
@@ -842,7 +820,6 @@ A continuación se presentan los flujos de cada uno de los casos de uso descrito
 \end{minipage}
 \vspace{0.4cm}
 
-\clearpage
 \subsubsection{CU-20. Anotar cómo me sentí}
 
 \textbf{Diagrama de Actividades}
@@ -883,7 +860,6 @@ A continuación se presentan los flujos de cada uno de los casos de uso descrito
 \end{minipage}
 \vspace{0.4cm}
 
-\clearpage
 \subsubsection{CU-21. Controlar mis datos personales}
 
 \textbf{Diagrama de Actividades}
@@ -925,7 +901,6 @@ A continuación se presentan los flujos de cada uno de los casos de uso descrito
 \end{minipage}
 \vspace{0.4cm}
 
-\clearpage
 \subsubsection{CU-22. Reportar una publicación}
 
 \textbf{Diagrama de Actividades}
@@ -967,7 +942,6 @@ A continuación se presentan los flujos de cada uno de los casos de uso descrito
 \end{minipage}
 \vspace{0.4cm}
 
-\clearpage
 \subsubsection{CU-23. Ver el muro de la comunidad}
 
 \textbf{Diagrama de Actividades}
@@ -1009,7 +983,6 @@ A continuación se presentan los flujos de cada uno de los casos de uso descrito
 \end{minipage}
 \vspace{0.4cm}
 
-\clearpage
 \subsubsection{CU-24. Contratar el plan premium}
 
 \textbf{Diagrama de Actividades}
@@ -1052,7 +1025,6 @@ A continuación se presentan los flujos de cada uno de los casos de uso descrito
 \end{minipage}
 \vspace{0.4cm}
 
-\clearpage
 \subsubsection{CU-25. Cancelar mi suscripción}
 
 \textbf{Diagrama de Actividades}
@@ -1094,7 +1066,6 @@ A continuación se presentan los flujos de cada uno de los casos de uso descrito
 \end{minipage}
 \vspace{0.4cm}
 
-\clearpage
 \subsubsection{CU-26. Aceptar los términos de uso y el aviso legal}
 
 \textbf{Diagrama de Actividades}
@@ -1137,7 +1108,51 @@ A continuación se presentan los flujos de cada uno de los casos de uso descrito
 \end{minipage}
 \vspace{0.4cm}
 
-\clearpage
+\subsubsection{CU-27. Crear una receta}
+
+\textbf{Diagrama de Actividades}
+\begin{center}
+    \includegraphics[width=0.9\textwidth,height=0.76\textheight,keepaspectratio]{figuras/diseno/dga_cu27.png}
+    \captionof{figure}{Diagrama de Actividades -- CU-27: Crear una receta.}
+    \label{fig:dga_cu27}
+\end{center}
+
+\noindent\begin{minipage}{\linewidth}
+\textbf{Descripción Esencial Expandida del Caso de Uso}
+\par\vspace{0.2cm}
+\noindent
+{\renewcommand{\arraystretch}{1.25}\setstretch{1}\small
+\begin{tabular}{|>{\raggedright\arraybackslash}p{2.9cm}|>{\raggedright\arraybackslash}p{12.1cm}|}
+    \hline
+    \rowcolor[HTML]{EFEFEF} \textbf{Propósito} & Guardar una receta propia, con sus ingredientes y porciones, para volver a registrarla con un solo paso o compartirla. \\ \hline
+    \textbf{Tipo} & Primario \\ \hline
+    \textbf{Actores} & Atleta Básico, Atleta Híbrido \\ \hline
+    \textbf{Requerimientos} & R04 \\ \hline
+    \textbf{Precondiciones} & El usuario inició sesión en la aplicación. \\ \hline
+    \textbf{Poscondiciones} & La receta queda guardada en el módulo de nutrición del atleta y se puede encontrar al buscar alimentos (CU-06). Un Atleta Híbrido puede publicarla (CU-09). \\ \hline
+\end{tabular}
+
+\vspace{0.15cm}
+\noindent
+\begin{tabular}{|>{\raggedright\arraybackslash}p{7.5cm}|>{\raggedright\arraybackslash}p{7.5cm}|}
+    \hline
+    \rowcolor[HTML]{D9E1F2} \multicolumn{2}{|c|}{\textbf{Curso Normal de los Eventos}} \\ \hline
+    \rowcolor[HTML]{EFEFEF} \multicolumn{1}{|c|}{\textbf{Usuario}} & \multicolumn{1}{c|}{\textbf{Respuesta del Sistema}} \\ \hline
+        1. Abre sus recetas y elige crear una nueva. & 2. Muestra el formulario vacío y avisa qué falta para poder guardar. \\ \hline
+        3. Escribe el nombre y cuántas porciones rinde. &  \\ \hline
+        4. Pulsa agregar ingrediente. & 5. Muestra el catálogo de alimentos con un buscador. \\ \hline
+        6. Elige un alimento e indica cuántos gramos lleva. & 7. Muestra sus calorías y sus macronutrientes, y actualiza el total y lo que aporta cada porción. \\ \hline
+        8. Repite los pasos 4 a 7 con cada ingrediente y pulsa Guardar. & 9. Revisa que la receta esté completa, la guarda y la muestra en su lista de recetas. \\ \hline
+    \rowcolor[HTML]{F2D9D9} \multicolumn{2}{|c|}{\textbf{Cursos Alternos}} \\ \hline
+    \rowcolor[HTML]{EFEFEF} \multicolumn{1}{|c|}{\textbf{Usuario}} & \multicolumn{1}{c|}{\textbf{Respuesta del Sistema}} \\ \hline
+         & 5. Si el alimento no está en el catálogo, permite crearlo desde la misma búsqueda y lo agrega a la receta. \\ \hline
+        7. Si se equivoca con un ingrediente, lo quita o cambia sus gramos, y el total se recalcula. &  \\ \hline
+         & 9. Si falta el nombre, las porciones, algún ingrediente o los gramos de uno de ellos, no deja guardar y avisa qué falta. \\ \hline
+\end{tabular}
+}
+\end{minipage}
+\vspace{0.4cm}
+
 \subsection{Diseño Técnico}
 Esta sección aborda la estructura técnica interna del sistema, detallando cómo se organizan y relacionan las entidades de información, tanto a nivel de persistencia en base de datos como a nivel de la lógica de negocio en el backend.
 
@@ -1152,7 +1167,6 @@ El modelo sigue dos reglas simples:
 \end{itemize}
 
 Con estas reglas, el modelo queda formado por 15 colecciones, que se resumen en la Tabla \ref{tab:colecciones}.
-\newpage
 \begin{table}[h!]
     \centering
     \renewcommand{\arraystretch}{1.3}
@@ -1168,7 +1182,7 @@ Con estas reglas, el modelo queda formado por 15 colecciones, que se resumen en 
         Nutrición & \texttt{foodItems} & Catálogo de alimentos, con su código de barras. \\ \hline
         Nutrición & \texttt{meals} & Comidas, con sus alimentos embebidos. \\ \hline
         Fatiga & \texttt{fatigueSnapshots} & Cálculo diario de carga y fatiga, con sus alertas. \\ \hline
-        Comunidad & \texttt{recipes} & Recetas compartidas, con sus ingredientes. \\ \hline
+        Nutrición y comunidad & \texttt{recipes} & Recetas propias o agregadas desde la comunidad, con sus ingredientes. \\ \hline
         Comunidad & \texttt{posts} & Publicaciones de sesiones, rutas y comidas en la red social. \\ \hline
         Perfil y plan & \texttt{trainingPlans} & Plan semanal sugerido de cada usuario y sus ajustes. \\ \hline
         Red social & \texttt{follows} & Relaciones entre seguidores. \\ \hline
@@ -1179,7 +1193,6 @@ Con estas reglas, el modelo queda formado por 15 colecciones, que se resumen en 
     \caption{Colecciones del modelo de datos en MongoDB.}
     \label{tab:colecciones}
 \end{table}
-\newpage
 \textbf{Índices principales}
 
 Para que las consultas más frecuentes sean rápidas, se definen los siguientes índices:
@@ -1198,7 +1211,6 @@ Para que las consultas más frecuentes sean rápidas, se definen los siguientes 
 
 Las funciones de la red social que quedan para después del MVP, como los récords de tramo y los retos entre seguidores, necesitarán colecciones adicionales (por ejemplo \texttt{segments}, \texttt{segmentEfforts} y \texttt{challenges}), que se diseñarán en esas versiones.
 
-\newpage
 \subsubsection{Diccionario de Datos}
 A continuación se detalla la estructura de cada colección. Los campos que están dentro de un subdocumento se escriben con punto (por ejemplo, \texttt{profile.weightKg}), y los arreglos de subdocumentos se marcan con corchetes (por ejemplo, \texttt{sets[].reps}). Todos los documentos tienen un campo \texttt{\_id} de tipo \texttt{ObjectId}, que MongoDB genera automáticamente.
 \\\\
@@ -1251,7 +1263,6 @@ Descripción: Guarda la identidad del usuario, su perfil físico y sus conexione
     deletedAt & Date & Opcional & Fecha de eliminación lógica. \\ \hline
 \end{longtable}
 }
-\newpage
 \noindent\textbf{Colección: dailyLogs} \\
 Descripción: Representa un día del usuario. Guarda sus metas de calorías y macronutrientes y sus reportes de sensaciones. Hay un solo documento por usuario y fecha.
 {\footnotesize
@@ -1282,7 +1293,6 @@ Descripción: Representa un día del usuario. Guarda sus metas de calorías y ma
     updatedAt & Date & Obligatorio & Fecha de modificación. \\ \hline
 \end{longtable}
 }
-\newpage
 \noindent\textbf{Colección: exercises} \\
 Descripción: Catálogo de ejercicios de fuerza, tanto oficiales como creados por los usuarios. Los grupos musculares van dentro del documento, porque son pocos y casi no cambian.
 {\footnotesize
@@ -1308,7 +1318,6 @@ Descripción: Catálogo de ejercicios de fuerza, tanto oficiales como creados po
     createdAt & Date & Obligatorio & Fecha de creación. \\ \hline
 \end{longtable}
 }
-\newpage
 \noindent\textbf{Colección: workouts} \\
 Descripción: Guarda todas las sesiones de entrenamiento. El campo \texttt{type} indica si es de fuerza o de resistencia, y según eso el documento tiene unos campos u otros. Esta flexibilidad es una de las ventajas del modelo de documentos.
 {\footnotesize
@@ -1325,18 +1334,19 @@ Descripción: Guarda todas las sesiones de entrenamiento. El campo \texttt{type}
     type & String & Obligatorio & Tipo de sesión (STRENGTH o CARDIO). \\ \hline
     startedAt & Date & Índice con userId & Inicio de la sesión. \\ \hline
     finishedAt & Date & Opcional & Fin de la sesión. \\ \hline
-    sessionRpe & Int32 & Opcional & Esfuerzo percibido de la sesión (1 a 10). \\ \hline
+    sessionRpe & Int32 & Obligatorio & Esfuerzo percibido de la sesión (1 a 10), indicado por el usuario o estimado por la aplicación. \\ \hline
+    rpeSource & String & Obligatorio & Origen del RPE: USER (lo indicó el usuario) o ESTIMATED (lo estimó la aplicación). \\ \hline
+    loadAu & Double & Obligatorio & Carga de la sesión en unidades arbitrarias: RPE por minutos. \\ \hline
     notes & String & Opcional & Notas de la sesión. \\ \hline
     createdAt & Date & Obligatorio & Fecha de registro. \\ \hline
     \multicolumn{4}{|l|}{\cellcolor[HTML]{E3F2FD}\textbf{Solo cuando type = STRENGTH}} \\ \hline
     trainingType & String & Opcional & Tipo de fuerza (MAX\_STRENGTH, HYPERTROPHY, POWER, MUSCULAR\_ENDURANCE, ISOMETRIC o CALISTHENICS). \\ \hline
     inputMethod & String & Obligatorio & Forma de registro (MANUAL o NLP). \\ \hline
     nlpRawInput & String & Opcional & Texto original si se registró con lenguaje natural. \\ \hline
-    totalVolumeKg & Double & Obligatorio & Volumen total (series por repeticiones por peso). \\ \hline
+    totalVolumeKg & Double & Obligatorio & Volumen total (series por repeticiones por peso), solo informativo. \\ \hline
     exercises[]\allowbreak  & Array & Embebido & Ejercicios realizados en la sesión. \\ \hline
     exercises[]\allowbreak .\allowbreak exerciseId & ObjectId & Ref. exercises & Ejercicio del catálogo. \\ \hline
     exercises[]\allowbreak .\allowbreak exerciseName & String & Obligatorio & Copia del nombre, para mostrarlo sin consultar el catálogo. \\ \hline
-    \newpage
     exercises[]\allowbreak .\allowbreak order & Int32 & Obligatorio & Orden de ejecución. \\ \hline
     exercises[]\allowbreak .\allowbreak sets[]\allowbreak  & Array & Embebido & Series del ejercicio. \\ \hline
     exercises[]\allowbreak .\allowbreak sets[]\allowbreak .\allowbreak reps & Int32 & Opcional & Repeticiones (no aplica en isométricos). \\ \hline
@@ -1360,11 +1370,10 @@ Descripción: Guarda todas las sesiones de entrenamiento. El campo \texttt{type}
     power.\allowbreak maxWatts & Int32 & Opcional & Potencia máxima (W). \\ \hline
     power.\allowbreak normalizedPower & Int32 & Opcional & Potencia normalizada (NP). \\ \hline
     power.\allowbreak avgCadence & Int32 & Opcional & Cadencia promedio. \\ \hline
-    power.\allowbreak tss & Double & Opcional & Training Stress Score. \\ \hline
+    power.\allowbreak tss & Double & Opcional & Training Stress Score, solo informativo. \\ \hline
     fitFileUrl & String & Opcional & Ubicación en S3 del archivo .fit original. \\ \hline
 \end{longtable}
 }
-\newpage
 \noindent\textbf{Colección: telemetry} \\
 Descripción: Colección de series temporales (time series) de MongoDB. Cada documento es una medición segundo a segundo de una sesión de resistencia. Se separa de \texttt{workouts} porque una sesión larga puede tener miles de puntos y un documento no puede superar los 16 MB.
 {\footnotesize
@@ -1387,7 +1396,6 @@ Descripción: Colección de series temporales (time series) de MongoDB. Cada doc
     location & Object & Opcional & Posición GPS en formato GeoJSON (punto). \\ \hline
 \end{longtable}
 }
-\newpage
 \noindent\textbf{Colección: foodItems} \\
 Descripción: Catálogo de alimentos, ya sea cargados desde una base externa (como OpenFoodFacts), creados por los usuarios o estimados por la IA.
 {\footnotesize
@@ -1426,7 +1434,6 @@ Descripción: Registro de cada comida. Los alimentos consumidos van dentro del d
     dailyLogId & ObjectId & Ref. dailyLogs & Día al que descuenta los macronutrientes. \\ \hline
     mealType & String & Obligatorio & Momento (BREAKFAST, LUNCH, DINNER o SNACK). \\ \hline
     inputMethod & String & Obligatorio & Forma de registro (MANUAL, TEXT, PHOTO o BARCODE). \\ \hline
-    \newpage
     aiConfidenceScore & Double & Opcional & Seguridad de la estimación de la IA (0 a 100). \\ \hline
     items[]\allowbreak  & Array & Embebido & Alimentos de la comida. \\ \hline
     items[]\allowbreak .\allowbreak foodItemId & ObjectId & Ref. foodItems & Alimento del catálogo. \\ \hline
@@ -1447,7 +1454,6 @@ Descripción: Registro de cada comida. Los alimentos consumidos van dentro del d
     createdAt & Date & Obligatorio & Fecha de registro. \\ \hline
 \end{longtable}
 }
-\newpage
 \noindent\textbf{Colección: fatigueSnapshots} \\
 Descripción: Guarda el cálculo diario de carga y fatiga de cada usuario. Las alertas que genera el cálculo van dentro del mismo documento.
 {\footnotesize
@@ -1466,7 +1472,10 @@ Descripción: Guarda el cálculo diario de carga y fatiga de cada usuario. Las a
     cardio.\allowbreak ctl & Double & Obligatorio & Carga crónica de resistencia. \\ \hline
     cardio.\allowbreak atl & Double & Obligatorio & Carga aguda de resistencia. \\ \hline
     cardio.\allowbreak tsb & Double & Obligatorio & Balance de forma (TSB) de resistencia. \\ \hline
-    crossFatigueIndex & Double & Opcional & Índice de fatiga cruzada. \\ \hline
+    total.\allowbreak ctl & Double & Obligatorio & Carga crónica total (fuerza más cardio). \\ \hline
+    total.\allowbreak atl & Double & Obligatorio & Carga aguda total (fuerza más cardio). \\ \hline
+    total.\allowbreak tsb & Double & Obligatorio & Balance de forma (TSB) total. \\ \hline
+    crossFatigueIndex & Double & Opcional & Índice de fatiga cruzada: razón ATL/CTL de la carga total (Tabla \ref{tab:def_operativas}). Queda vacío mientras no hay 28 días de historial. \\ \hline
     calculatedAt & Date & Obligatorio & Momento del cálculo. \\ \hline
     alerts[]\allowbreak  & Array & Embebido & Alertas generadas por el cálculo. \\ \hline
     alerts[]\allowbreak .\allowbreak alertType & String & Obligatorio & Tipo de alerta (CROSS\_FATIGUE, etc.). \\ \hline
@@ -1478,9 +1487,8 @@ Descripción: Guarda el cálculo diario de carga y fatiga de cada usuario. Las a
     alerts[]\allowbreak .\allowbreak createdAt & Date & Obligatorio & Fecha de la alerta. \\ \hline
 \end{longtable}
 }
-\newpage
 \noindent\textbf{Colección: recipes} \\
-Descripción: Recetas compartidas por la comunidad. Los ingredientes van dentro del documento, en el orden de preparación.
+Descripción: Recetas creadas por el usuario (CU-27) o agregadas desde una publicación de la comunidad (CU-08). Los ingredientes van dentro del documento, en el orden de preparación.
 {\footnotesize
 \renewcommand{\arraystretch}{1.2}
 \begin{longtable}{|>{\raggedright\arraybackslash}p{4.7cm}|>{\raggedright\arraybackslash}p{1.8cm}|>{\raggedright\arraybackslash}p{2.3cm}|>{\raggedright\arraybackslash}p{5.4cm}|}
@@ -1504,14 +1512,13 @@ Descripción: Recetas compartidas por la comunidad. Los ingredientes van dentro 
     totals.\allowbreak proteinG & Double & Obligatorio & Proteínas totales. \\ \hline
     totals.\allowbreak carbsG & Double & Obligatorio & Carbohidratos totales. \\ \hline
     totals.\allowbreak fatG & Double & Obligatorio & Grasas totales. \\ \hline
-    visibility & String & Obligatorio & Visibilidad (PUBLIC o PRIVATE). \\ \hline
+    visibility & String & Obligatorio & Visibilidad (PUBLIC o PRIVATE). Una receta nueva parte como PRIVATE. \\ \hline
     isModerated & Boolean & Obligatorio & Indica si fue ocultada por moderación. \\ \hline
     isActive & Boolean & Obligatorio & Estado de la receta. \\ \hline
     createdAt & Date & Obligatorio & Fecha de creación. \\ \hline
     updatedAt & Date & Obligatorio & Fecha de la última edición. \\ \hline
 \end{longtable}
 }
-\newpage
 \noindent\textbf{Colección: posts} \\
 Descripción: Publicaciones de la red social. Pueden referirse a una sesión de fuerza, una ruta, una comida o una receta. Pueden incluir hasta 4 fotos. Los videos quedan para después del MVP.
 {\footnotesize
@@ -1523,7 +1530,7 @@ Descripción: Publicaciones de la red social. Pueden referirse a una sesión de 
     \endhead
     \_id & ObjectId & Obligatorio & Identificador de la publicación. \\ \hline
     authorId & ObjectId & Ref. users & Autor de la publicación. \\ \hline
-    postType & String & Obligatorio & Tipo (WORKOUT\_SHARE, ROUTE\_SHARE o MEAL\_SHARE). \\ \hline
+    postType & String & Obligatorio & Tipo (WORKOUT\_SHARE, ROUTE\_SHARE, MEAL\_SHARE o RECIPE\_SHARE). \\ \hline
     content & String & Obligatorio & Texto de la publicación. \\ \hline
     media[] & Array & Opcional & Fotos de la publicación (máximo 4). \\ \hline
     media[].\allowbreak url & String & Obligatorio & Dirección de la foto en S3. \\ \hline
@@ -1543,7 +1550,6 @@ Descripción: Publicaciones de la red social. Pueden referirse a una sesión de 
     createdAt & Date & Índice & Fecha de publicación. \\ \hline
 \end{longtable}
 }
-\newpage
 \noindent\textbf{Colección: follows} \\
 Descripción: Relaciones entre usuarios de la red social. Cada documento indica que un usuario sigue a otro.
 {\footnotesize
@@ -1559,7 +1565,6 @@ Descripción: Relaciones entre usuarios de la red social. Cada documento indica 
     createdAt & Date & Obligatorio & Fecha en que comenzó a seguirlo. \\ \hline
 \end{longtable}
 }
-\newpage
 \noindent\textbf{Colección: routines} \\
 Descripción: Rutinas de fuerza del usuario. Pueden ser creadas por él o agregadas desde una publicación de la comunidad, en cuyo caso guardan una referencia al autor original.
 {\footnotesize
@@ -1587,7 +1592,6 @@ Descripción: Rutinas de fuerza del usuario. Pueden ser creadas por él o agrega
     updatedAt & Date & Obligatorio & Fecha de la última edición. \\ \hline
 \end{longtable}
 }
-\newpage
 \noindent\textbf{Colección: routes} \\
 Descripción: Rutas de cardio del usuario, propias o agregadas desde la comunidad. Al publicarse, se ocultan el inicio y el final del recorrido.
 {\footnotesize
@@ -1611,7 +1615,6 @@ Descripción: Rutas de cardio del usuario, propias o agregadas desde la comunida
     createdAt & Date & Obligatorio & Fecha de creación. \\ \hline
 \end{longtable}
 }
-\newpage
 \noindent\textbf{Colección: trainingPlans} \\
 Descripción: Plan semanal sugerido para cada usuario. Se genera a partir de una plantilla según su perfil y guarda los ajustes que se le hacen, para que el usuario pueda ver por qué cambió.
 {\footnotesize
@@ -1642,7 +1645,6 @@ Descripción: Plan semanal sugerido para cada usuario. Se genera a partir de una
     updatedAt & Date & Obligatorio & Fecha de la última actualización. \\ \hline
 \end{longtable}
 }
-\newpage
 \noindent\textbf{Colección: moderationLogs} \\
 Descripción: Bitácora de las acciones de moderación que realiza el administrador.
 {\footnotesize
@@ -1666,7 +1668,6 @@ Descripción: Bitácora de las acciones de moderación que realiza el administra
 A continuación se presenta el diagrama de secuencia de cada caso de uso. Estos diagramas muestran cómo se comunican las partes del sistema, es decir, la aplicación en Flutter, la API en NestJS, la base de datos MongoDB y los servicios externos. A diferencia de los casos de uso, aquí sí se usan términos técnicos, porque esta información es para quien va a construir el sistema.
 \\\\
 Las flechas continuas son llamadas y las punteadas son respuestas. Los recuadros \texttt{alt} muestran caminos que se excluyen entre sí, que corresponden a los cursos alternos del Diseño Funcional, y los recuadros \texttt{opt} muestran pasos que ocurren solo en algunos casos. Todas las llamadas a la API van por HTTPS y llevan el token JWT del usuario, por lo que no se repite en cada diagrama. Las llamadas pueden cambiar a medida que avance el prototipo evolutivo.
-\newpage
 \noindent\begin{minipage}{\linewidth}
 \textbf{CU-01. Anotar una sesión de fuerza}
 
@@ -2005,7 +2006,19 @@ La aplicación pide al backend la versión vigente de los textos. Si el usuario 
 \end{minipage}
 \vspace{0.6cm}
 
-\clearpage
+\noindent\begin{minipage}{\linewidth}
+\textbf{CU-27. Crear una receta}
+
+Para el caso de uso CU-27 se genera el diagrama de secuencia que se muestra en la Figura \ref{fig:sec_cu27}.
+\begin{center}
+    \includegraphics[width=0.95\textwidth,height=0.6\textheight,keepaspectratio]{figuras/secuencia/sec_cu27.png}
+    \captionof{figure}{Diagrama de Secuencia -- CU-27: Crear una receta.}
+    \label{fig:sec_cu27}
+\end{center}
+Por cada ingrediente, la aplicación busca en el catálogo \texttt{foodItems} a través del backend, y si el alimento no existe permite crearlo. Mientras el usuario arma la receta, la aplicación muestra los valores calculados, pero al guardar el backend los recalcula con los datos del catálogo y no confía en los que envía el teléfono. La receta se guarda en \texttt{recipes}, con su autor, y parte como privada. Si el usuario la publica después, se sigue el caso de uso CU-09.
+\end{minipage}
+\vspace{0.6cm}
+
 \subsection{Diseño de Interfaces de Usuario}
 En esta sección se muestran las pantallas que cubren cada caso de uso. Se construyeron en la aplicación Flutter del prototipo, y no en una herramienta de dibujo, para que el diseño sirva como base del desarrollo. El administrador usa un panel web, según lo definido en la arquitectura.
 
@@ -2061,7 +2074,7 @@ La interfaz usa Material Design 3 como base y agrega patrones de iOS, como las t
         \hline
         \rowcolor[HTML]{EFEFEF}
         \textbf{Estado} & \textbf{Casos de uso} & \textbf{Qué significa} \\ \hline
-        Funcional & CU-01, CU-06, CU-15 & La pantalla opera con su lógica real en el prototipo. \\ \hline
+        Funcional & CU-01, CU-06, CU-15, CU-27 & La pantalla opera con su lógica real en el prototipo. \\ \hline
         Funcional en parte & CU-05, CU-12, CU-16, CU-17, CU-18, CU-19, CU-20, CU-21 & Una parte es real, como el cálculo de la carga o la grabación con GPS, y el resto se muestra con datos simulados. \\ \hline
         Diseño con datos simulados & CU-02, CU-03, CU-04, CU-07, CU-08, CU-09, CU-10, CU-11, CU-13, CU-14, CU-22, CU-23, CU-24, CU-25, CU-26 & La pantalla muestra el flujo completo, pero falta conectar el servicio que la sostiene, como la IA, los pagos, la red social o la lectura del reloj. \\ \hline
     \end{tabular}
@@ -2088,7 +2101,7 @@ Cada figura se lee de izquierda a derecha, siguiendo el curso normal del caso de
 
 \uitres{CU-08. Agregar una receta ajustada a mis metas}{Desde la receta, la aplicación calcula lo que le falta comer al usuario y ajusta todos los ingredientes con un mismo factor, que se puede cambiar. Si ya cumplió sus metas, lo avisa y propone las porciones originales.}{cu08_receta}{cu08_ajuste}{cu08_metas}{CU-08: Agregar una receta ajustada a mis metas}{fig:ui_cu08}
 
-\uidos{CU-09. Publicar una sesión, ruta o comida}{El atleta elige un registro, escribe un texto y decide quién lo puede ver. Puede agregar hasta 4 fotos, y para eso debe declarar que son suyas o que tiene permiso. Si publica una ruta, la aplicación oculta el inicio y el final del recorrido.}{cu09_sesion}{cu09_ruta}{CU-09: Publicar una sesión, ruta o comida}{fig:ui_cu09}
+\uitres{CU-09. Publicar una sesión, ruta o comida}{El atleta elige un registro (una sesión, una ruta, una comida o una receta que creó), escribe un texto y decide quién lo puede ver. Puede agregar hasta 4 fotos, y para eso debe declarar que son suyas o que tiene permiso. Si publica una ruta, la aplicación oculta el inicio y el final del recorrido. Una receta se publica con sus ingredientes.}{cu09_sesion}{cu09_ruta}{cu09_receta}{CU-09: Publicar una sesión, ruta o comida}{fig:ui_cu09}
 
 \uiweblado{CU-10. Mantener el catálogo de ejercicios}{En el panel web, el administrador revisa la lista, agrega o cambia ejercicios y puede desactivarlos. Un ejercicio desactivado deja de aparecer para nuevas sesiones. Si el nombre ya existe, el panel lo avisa y no permite guardar.}{cu10_lista}{cu10_repetido}{CU-10: Mantener el catálogo de ejercicios}{fig:ui_cu10}
 
@@ -2124,6 +2137,8 @@ Cada figura se lee de izquierda a derecha, siguiendo el curso normal del caso de
 
 \uidos{CU-26. Aceptar los términos de uso y el aviso legal}{Al crear su cuenta, el usuario lee los términos y los acepta para continuar. Si no los acepta, la aplicación explica que son necesarios y no permite seguir. Si cambian más adelante, se vuelven a mostrar.}{cu26_terminos}{cu26_rechazo}{CU-26: Aceptar los términos de uso y el aviso legal}{fig:ui_cu26}
 
+\uicuatro{CU-27. Crear una receta}{El usuario abre el formulario de una receta nueva, que le avisa qué falta para poder guardarla. Agrega cada ingrediente desde el catálogo de alimentos e indica sus gramos, y la aplicación calcula el total y lo que aporta cada porción. Al guardarla, la receta aparece en su lista de recetas, donde la puede buscar al registrar una comida. Estas pantallas son las del prototipo y operan con su lógica real.}{cu27_nueva}{cu27_ingredientes}{cu27_completa}{cu27_lista}{CU-27: Crear una receta}{fig:ui_cu27}
+
 \subsection{Diagrama de Integraciones}
 La solución se conecta con seis sistemas que no son parte del proyecto. La Figura \ref{fig:diagrama_integraciones} muestra estas integraciones y desde dónde se usa cada una. Hay una regla general: las claves de acceso a los servicios externos se guardan solo en el backend y nunca en la aplicación, porque cualquier persona podría extraerlas del teléfono. Por eso, las únicas conexiones que parten desde la aplicación son las que no necesitan una clave secreta o las que usan un permiso temporal.
 \begin{center}
@@ -2152,7 +2167,6 @@ La Tabla \ref{tab:integraciones} resume cada integración y lo que ocurre cuando
     \caption{Resumen de las integraciones con sistemas externos.}
     \label{tab:integraciones}
 \end{table}
-\newpage
 A continuación se presenta el diseño de cada integración, indicando los datos que se envían y se reciben en cada mensaje.
 \vspace{0.4cm}
 
@@ -2234,7 +2248,6 @@ El pago se hace completo en la tienda, por lo que el sistema nunca recibe los da
 \end{minipage}
 \vspace{0.6cm}
 
-\clearpage
 \subsection{Dimensionamiento y Arquitectura Detallada de la Solución}
 Esta sección indica qué infraestructura se necesita para operar el MVP y cuánta capacidad debe tener. El cálculo usa como base los 1.500 usuarios del mercado objetivo inicial. La Figura \ref{fig:arquitectura_detallada} muestra la arquitectura.
 \begin{center}
@@ -2277,7 +2290,6 @@ La Tabla \ref{tab:carga_esperada} muestra la carga estimada. Son supuestos que s
     \label{tab:carga_esperada}
 \end{table}
 
-\clearpage
 \textbf{Almacenamiento}
 
 La Tabla \ref{tab:almacenamiento} estima el espacio que usará MongoDB al cuarto año. La colección más grande es \texttt{telemetry}. Se asume que sus puntos ocupan 60 bytes cada uno y que las colecciones de series temporales de MongoDB los comprimen en un 70\%. Este último valor es un supuesto que se debe medir con datos reales.
@@ -2305,7 +2317,6 @@ La Tabla \ref{tab:almacenamiento} estima el espacio que usará MongoDB al cuarto
 \end{table}
 
 El primer año se usarían cerca de 5 GB, por lo que los 10 GB iniciales de un clúster M10 alcanzan durante los primeros dos años. Después, el almacenamiento se puede ampliar sin cambiar de nivel, ya que M10 permite hasta 128 GB \citep{atlas_pricing}. En Amazon S3 se acumularían unos 118 GB de fotos (Tabla \ref{tab:costo_imagenes}) y 29 GB de archivos \texttt{.fit} al cuarto año.
-\clearpage
 \textbf{Dimensionamiento por ambiente}
 
 La Tabla \ref{tab:ambientes} muestra los recursos de cada ambiente. Como una sola persona desarrolla el proyecto, se usan tres ambientes simples. Los datos de prueba nunca se mezclan con los de producción.
@@ -2334,7 +2345,6 @@ La Tabla \ref{tab:ambientes} muestra los recursos de cada ambiente. Como una sol
 \end{table}
 
 La API se dimensionó con una tarea, porque la carga esperada es baja. Si esa tarea falla, AWS la reemplaza automáticamente, aunque el servicio puede quedar interrumpido por uno o dos minutos. Tener dos tareas permanentes evitaría esa interrupción, pero duplicaría el costo de este componente. Por eso se deja como una mejora para cuando la cantidad de usuarios lo justifique.
-\newpage
 \textbf{Costo mensual de producción}
 
 La Tabla \ref{tab:costo_produccion} muestra el costo de este dimensionamiento. Los precios de AWS son los publicados para la región de São Paulo \citep{aws_fargate_pricing}. MongoDB publica un valor de USD 57 al mes para M10 en Virginia \citep{atlas_pricing}, pero no se pudo confirmar el valor en São Paulo. Como los servicios de AWS cuestan cerca de un 70\% más en esa región, se considera USD 100 al mes, incluidos el almacenamiento y los respaldos. Este valor se debe confirmar antes de contratar el servicio.
@@ -2364,7 +2374,6 @@ La Tabla \ref{tab:costo_produccion} muestra el costo de este dimensionamiento. L
 \end{table}
 
 Este total es el que se usa en la factibilidad económica, donde corresponde a USD 182 al mes de infraestructura (Tabla \ref{tab:costo_infra}) y USD 6 al mes de imágenes (Tabla \ref{tab:costo_imagenes}). Con estos costos, y después de descontar el IVA, la comisión de las tiendas y el impuesto a la renta, la Alternativa 3 necesita 159 suscriptores para alcanzar el equilibrio.
-\newpage
 \textbf{Cuándo aumentar la capacidad}
 
 La Tabla \ref{tab:escalamiento} indica qué señal avisa que se debe ampliar cada componente.
@@ -2385,7 +2394,6 @@ La Tabla \ref{tab:escalamiento} indica qué señal avisa que se debe ampliar cad
     \caption{Señales para aumentar la capacidad.}
     \label{tab:escalamiento}
 \end{table}
-\clearpage
 \subsection{Diagrama de Despliegue}
 La Figura \ref{fig:diagrama_despliegue} muestra dónde se instala cada parte del sistema y cómo se comunican.
 \begin{center}
@@ -2404,11 +2412,13 @@ El sistema se compone de cuatro piezas que se instalan por separado:
 \end{itemize}
 
 MongoDB Atlas lo opera su proveedor, por lo que no hay que instalar el motor de base de datos. Se debe crear el clúster, configurar la conexión privada con la red de AWS y definir los índices descritos en el modelo de datos. Las claves de los servicios externos se guardan en AWS Secrets Manager y no quedan en el código ni en la imagen Docker.
-\clearpage
+\begin{spacing}{1.0}
 \subsection{Comentarios Generales del Capítulo}
 En este capítulo se definió cómo se va a construir la solución. A partir de los requerimientos del capítulo anterior, se describió cada caso de uso con sus precondiciones, sus flujos y su diagrama de actividades, y se detalló su funcionamiento técnico con un diagrama de secuencia. También se diseñó el modelo de datos en MongoDB, las interfaces de usuario de cada caso de uso, las integraciones con los seis sistemas externos, la infraestructura y su despliegue.
-\\\\
+
+\medskip
 El diseño dejó dos aportes principales. El primero es que aclaró lo que faltaba. Al trazar cada caso de uso paso a paso, se encontraron datos necesarios que el modelo no tenía, como el registro de quién reporta una publicación, y se corrigieron antes de programar. El segundo es que se comprobaron los costos. Al dimensionar la infraestructura con precios reales de AWS en São Paulo, se vio que la estimación inicial era baja, lo que llevó a ajustar la factibilidad económica. Sumando el IVA, la comisión de las tiendas y el impuesto a la renta, la solución elegida necesita 159 suscriptores. También se tomaron decisiones para gastar solo en lo necesario, como usar una función Lambda para leer archivos \texttt{.fit} y subir las fotos directamente a Amazon S3, sin dejar de proteger los datos sensibles con una conexión privada a la base de datos.
-\\\\
-Algunos valores de este diseño todavía son supuestos que se deben confirmar, como la carga esperada, la compresión de los datos de telemetría y el precio de MongoDB Atlas en São Paulo. Esto es parte del prototipo evolutivo, ya que cada versión permitirá medir estos valores y ajustar el diseño. Lo mismo ocurre con las interfaces de usuario, ya que varias pantallas muestran por ahora datos simulados y se conectarán a medida que se implementen sus servicios. Con esta base, el proyecto puede avanzar a la implementación, donde se planifica la puesta en marcha y las pruebas del sistema.
-\newpage
+
+\medskip
+Algunos valores de este diseño todavía son supuestos que se deben confirmar, como la carga esperada, la compresión de los datos de telemetría y el precio de MongoDB Atlas en São Paulo. Esto es parte del prototipo evolutivo, ya que cada versión permitirá medir estos valores y ajustar el diseño. Lo mismo ocurre con las interfaces de usuario, ya que varias pantallas muestran por ahora datos simulados y se conectarán a medida que se implementen sus servicios. Con este capítulo quedan cumplidos los objetivos específicos 1 a 4, según los criterios de la Tabla \ref{tab:validacion}. El objetivo 5, que es implementar el MVP y verificar el cruce de datos, corresponde a la etapa siguiente. Para ello ya existe un prototipo funcional en iOS que implementa el registro de fuerza, el registro de cardio con GPS y la nutrición, además del cálculo de la carga y de la fatiga cruzada definido en el Capítulo 3, con pruebas unitarias. Con esta base, el proyecto puede avanzar a la implementación, donde se planifica la puesta en marcha y las pruebas del sistema.
+\end{spacing}

@@ -1,0 +1,28 @@
+@startuml dga_cu27
+!include dga_estilo.iuml
+|Usuario|
+|Aplicación|
+|Usuario|
+start
+:1. Abre sus recetas y\nelige crear una nueva;
+|Aplicación|
+:2. Muestra el formulario vacío y\navisa qué falta para guardar;
+|Usuario|
+:3. Escribe el nombre y\ncuántas porciones rinde;
+repeat
+  repeat
+    :4. Pulsa agregar ingrediente;
+    |Aplicación|
+    :5. Muestra el catálogo con un buscador\n(permite crear el alimento si falta);
+    |Usuario|
+    :6. Elige el alimento e\nindica sus gramos;
+    |Aplicación|
+    :7. Muestra calorías, macros,\nel total y la porción;
+    |Usuario|
+  repeat while (¿Agrega otro\ningrediente?) is (Sí) not (No)
+  :8. Pulsa Guardar;
+  |Aplicación|
+repeat while (¿Receta completa?) is (No, avisa qué\nfalta y no guarda) not (Sí)
+:9. Guarda la receta y\nla muestra en su lista;
+stop
+@enduml

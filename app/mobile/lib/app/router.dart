@@ -161,7 +161,7 @@ final routerProvider = Provider<GoRouter>((ref) {
           GoRoute(
             path: '/recetas',
             pageBuilder: (_, _) => _section(const RecipesPage()),
-            routes: [GoRoute(path: ':id', builder: (_, s) => RecipeEditorPage(id: s.pathParameters['id']!))],
+            routes: [GoRoute(path: ':id', builder: (_, s) => RecipeEditorPage(id: s.pathParameters['id']!, example: s.uri.queryParameters['ejemplo'] == '1'))],
           ),
           GoRoute(path: '/progreso', pageBuilder: (_, _) => _section(const ProgressPage())),
           GoRoute(path: '/objetivos', pageBuilder: (_, _) => _section(const GoalsPage())),

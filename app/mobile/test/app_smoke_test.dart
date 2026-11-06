@@ -8,6 +8,8 @@ import 'dart:io';
 import 'package:asistente_deportivo/app/app.dart';
 import 'package:asistente_deportivo/app/providers.dart';
 import 'package:asistente_deportivo/app/router.dart';
+import 'package:asistente_deportivo/app/sim_providers.dart';
+import 'package:asistente_deportivo/data/simulated/sim_data.dart';
 import 'package:asistente_deportivo/core/body/energy.dart';
 import 'package:asistente_deportivo/core/common/date.dart';
 import 'package:asistente_deportivo/core/nutrition/models.dart';
@@ -249,6 +251,72 @@ void main() {
       await _go(tester, container, location);
       expect(find.textContaining(text), findsWidgets, reason: location);
     }
+  });
+
+  // CU-27: crear una receta. Sigue el curso normal y el alterno del capítulo 7.
+  testWidgets('CU-27: crea una receta, avisa lo que falta y la deja disponible para publicar', (tester) async {
+    final container = await _boot(tester);
+    FilledButton save() => tester.widget<FilledButton>(find.widgetWithText(FilledButton, 'Guardar'));
+
+    // 1-2. Abre «Mis recetas» y pulsa Nueva receta: el formulario está vacío.
+    await _go(tester, container, '/recetas');
+    expect(find.text('Aún no tienes recetas'), findsOneWidget);
+    await _tap(tester, find.byTooltip('Nueva receta'));
+    expect(find.text('Nueva receta'), findsOneWidget);
+    // Curso alterno: sin nombre ni ingredientes no se puede guardar, y la aplicación dice por qué.
+    expect(save().onPressed, isNull);
+    expect(find.text('Para guardar, escribe un nombre y agrega al menos un ingrediente.'), findsOneWidget);
+
+    // 3. Escribe el nombre (las porciones parten en 1).
+    await tester.enterText(find.byType(TextField).first, 'Avena con leche');
+    await _settle(tester);
+    expect(find.text('Para guardar, agrega al menos un ingrediente.'), findsOneWidget);
+
+    // 4-6. Agrega un ingrediente desde el catálogo.
+    await _tap(tester, find.byTooltip('Agregar ingrediente'));
+    await tester.enterText(find.byWidgetPredicate((w) => w is TextField && w.decoration?.hintText == 'Buscar en el catálogo…'), 'avena');
+    await _settle(tester);
+    await _tap(tester, find.text('Avena en hojuelas'));
+    expect(find.text('Avena en hojuelas'), findsOneWidget);
+    // 7. Muestra el total y lo que aporta cada porción.
+    expect(find.textContaining('Por porción'), findsOneWidget);
+    expect(save().onPressed, isNotNull);
+    expect(find.textContaining('Para guardar'), findsNothing);
+
+    // Curso alterno: un ingrediente en cero gramos impide guardar.
+    await tester.enterText(find.widgetWithText(TextFormField, '100'), '0');
+    await _settle(tester);
+    expect(save().onPressed, isNull);
+    expect(find.text('Para guardar, indica los gramos de cada ingrediente.'), findsOneWidget);
+    await tester.enterText(find.widgetWithText(TextFormField, '0'), '60');
+    await _settle(tester);
+
+    // 8-9. Guarda: vuelve a la lista con la receta.
+    await _tap(tester, find.widgetWithText(FilledButton, 'Guardar'));
+    final recipes = container.read(recipesProvider).value!;
+    expect(recipes.map((r) => r.name), ['Avena con leche']);
+    expect(recipes.single.ingredients.single.grams, 60);
+    expect(find.text('Avena con leche'), findsOneWidget);
+
+    // CU-09: la receta guardada se puede publicar, con sus ingredientes.
+    await _go(tester, container, '/comunidad/publicar?tipo=receta');
+    expect(find.text('Avena con leche'), findsOneWidget);
+    await tester.enterText(find.byType(TextField).first, 'Mi desayuno de los días de pesas');
+    await _settle(tester);
+    await _tap(tester, find.widgetWithText(FilledButton, 'Publicar'));
+    final post = container.read(simProvider).published.single;
+    expect(post.kind, SimPostKind.recipe);
+    expect(post.title, 'Avena con leche');
+    expect(post.ingredients.single.grams, 60);
+  });
+
+  testWidgets('CU-09: sin recetas creadas no se puede publicar una receta', (tester) async {
+    final container = await _boot(tester);
+    await _go(tester, container, '/comunidad/publicar?tipo=receta');
+    expect(find.text('Aún no tienes recetas'), findsOneWidget);
+    await tester.enterText(find.byType(TextField).first, 'Texto');
+    await _settle(tester);
+    expect(tester.widget<FilledButton>(find.widgetWithText(FilledButton, 'Publicar')).onPressed, isNull);
   });
 
   testWidgets('repite el desayuno de ayer con un toque', (tester) async {
