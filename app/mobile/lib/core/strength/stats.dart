@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import '../common/numbers.dart';
+import '../common/units.dart';
 import 'models.dart';
 
 bool isEffective(StrengthSet s) => s.type != SetType.warmup;
@@ -152,6 +153,22 @@ int? lastRestFor(List<Workout> workouts, String exerciseId) {
     }
   }
   return rest;
+}
+
+/// Unidad en que se anotó el ejercicio la última vez (null si nunca se registró).
+/// Sirve para recordar que una máquina está en libras.
+WeightUnit? lastUnitFor(List<Workout> workouts, String exerciseId, {int? before}) {
+  int? bestAt;
+  WeightUnit? unit;
+  for (final w in workouts) {
+    if (before != null && w.startedAt >= before) continue;
+    final e = w.exercises.where((x) => x.exerciseId == exerciseId && x.sets.isNotEmpty).firstOrNull;
+    if (e != null && (bestAt == null || w.startedAt > bestAt)) {
+      bestAt = w.startedAt;
+      unit = e.unit;
+    }
+  }
+  return unit;
 }
 
 class ExerciseFrequency {

@@ -1,5 +1,12 @@
 /// Modelo del módulo de fuerza (mismos documentos que la versión web).
+///
+/// Los pesos se guardan siempre en kg (`StrengthSet.kg`). Cada ejercicio de una
+/// sesión o rutina guarda además la unidad en que se anotó (`unit`), para volver a
+/// mostrar "45 lb" y proponer libras la próxima vez en esa máquina. Sin el campo
+/// (documentos antiguos) se entiende kg.
 library;
+
+import '../common/units.dart';
 
 /// Calentamiento no cuenta como serie efectiva; al fallo sí. Un drop es la
 /// bajada de peso sin descanso tras la serie anterior: suma volumen, pero forma
@@ -86,7 +93,7 @@ const defaultRestSec = 90;
 int? restFrom(Object? v) => (v as num?)?.toInt();
 
 class RoutineExercise {
-  const RoutineExercise({required this.exerciseId, required this.sets, this.restSec});
+  const RoutineExercise({required this.exerciseId, required this.sets, this.restSec, this.unit});
 
   final String exerciseId;
   final List<StrengthSet> sets;
@@ -94,7 +101,12 @@ class RoutineExercise {
   /// Descanso entre series en segundos (0 = sin temporizador; null = el por defecto).
   final int? restSec;
 
-  Map<String, dynamic> toMap() => {'exerciseId': exerciseId, 'sets': sets.map((s) => s.toMap()).toList(), 'restSec': ?restSec};
+  /// Unidad de la máquina o las pesas de este ejercicio. null = no se indicó (se
+  /// usa la de la última sesión o la preferida).
+  final WeightUnit? unit;
+
+  Map<String, dynamic> toMap() =>
+      {'exerciseId': exerciseId, 'sets': sets.map((s) => s.toMap()).toList(), 'restSec': ?restSec, 'unit': ?unit?.name};
 }
 
 /// Plantilla reutilizable: "Rutina de pecho", "Pierna A"…
@@ -108,7 +120,7 @@ class Routine {
 }
 
 class WorkoutExercise {
-  const WorkoutExercise({required this.exerciseId, required this.name, required this.sets, this.restSec});
+  const WorkoutExercise({required this.exerciseId, required this.name, required this.sets, this.restSec, this.unit = WeightUnit.kg});
 
   final String exerciseId;
 
@@ -119,14 +131,29 @@ class WorkoutExercise {
   /// Descanso usado (se propone la próxima vez y al actualizar la rutina).
   final int? restSec;
 
-  Map<String, dynamic> toMap() => {'exerciseId': exerciseId, 'name': name, 'sets': sets.map((s) => s.toMap()).toList(), 'restSec': ?restSec};
+  /// Unidad en que se anotó (los kg de las series ya están convertidos).
+  final WeightUnit unit;
+
+  Map<String, dynamic> toMap() => {
+        'exerciseId': exerciseId,
+        'name': name,
+        'sets': sets.map((s) => s.toMap()).toList(),
+        'restSec': ?restSec,
+        // Solo se escribe si no es kg: los documentos de siempre no cambian.
+        if (unit != WeightUnit.kg) 'unit': unit.name,
+      };
 
   @override
   bool operator ==(Object other) =>
-      other is WorkoutExercise && other.exerciseId == exerciseId && other.name == name && other.restSec == restSec && _listEquals(other.sets, sets);
+      other is WorkoutExercise &&
+      other.exerciseId == exerciseId &&
+      other.name == name &&
+      other.restSec == restSec &&
+      other.unit == unit &&
+      _listEquals(other.sets, sets);
 
   @override
-  int get hashCode => Object.hash(exerciseId, name, restSec, Object.hashAll(sets));
+  int get hashCode => Object.hash(exerciseId, name, restSec, unit, Object.hashAll(sets));
 }
 
 bool _listEquals<T>(List<T> a, List<T> b) {

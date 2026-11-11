@@ -56,7 +56,7 @@ class HistoryPage extends ConsumerWidget {
                                 style: TextStyle(fontSize: 12, color: c.faint)),
                           ]),
                         ),
-                        Text(formatVolume(t.volume), style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: c.fgStrong, fontFeatures: tabular)),
+                        Text(formatVolume(t.volume, ref.watch(weightUnitProvider)), style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: c.fgStrong, fontFeatures: tabular)),
                         Icon(Icons.chevron_right, color: c.faint),
                       ]),
                     ),

@@ -58,7 +58,7 @@ Page<void> _section(Widget child) => CustomTransitionPage(
     );
 
 /// Rutas de las pantallas de diseño con datos simulados (solo en modo demostración).
-const _previewPaths = ['/escaner', '/comunidad', '/ia/', '/carga', '/metas', '/premium', '/bienvenida', '/ajustes/datos', '/cardio/manual', '/cardio/reloj', '/cardio/archivo', '/diario/comida'];
+const _previewPaths = ['/escaner', '/comunidad', '/ia/', '/metas', '/premium', '/bienvenida/terminos', '/ajustes/datos', '/cardio/manual', '/cardio/reloj', '/cardio/archivo', '/diario/comida'];
 
 final routerProvider = Provider<GoRouter>((ref) {
   final auth = ValueNotifier<AsyncValue<AppUser?>>(ref.read(authStateProvider));
@@ -94,6 +94,7 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(path: '/ia/foto', builder: (_, s) => AiPhotoPage(estado: s.uri.queryParameters['estado'])),
       GoRoute(path: '/carga', builder: (_, s) => TrainingLoadPage(showShortHistory: s.uri.queryParameters['estado'] == 'faltan')),
       GoRoute(path: '/carga/alerta', builder: (_, _) => const FatigueAlertPage()),
+      GoRoute(path: '/carga/alerta/:id', builder: (_, s) => FatigueAlertPage(key: ValueKey(s.pathParameters['id']), id: s.pathParameters['id'])),
       GoRoute(path: '/metas', builder: (_, s) => DayTargetsPage(rest: s.uri.queryParameters['dia'] == 'descanso')),
       GoRoute(
         path: '/diario/comida/:slot',

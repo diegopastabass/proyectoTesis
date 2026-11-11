@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../core/common/date.dart';
 import '../core/common/numbers.dart';
+import '../core/common/units.dart';
 import '../core/nutrition/models.dart';
 import '../core/strength/insights.dart';
 import '../core/strength/models.dart';
@@ -62,7 +63,17 @@ String relativeDay(String date) => date == todayKey() ? 'hoy' : sinceText(date, 
 
 String formatKgValue(num n) => formatNumber(n, maxFractionDigits: 1);
 
-String formatVolume(num kg) => '${formatNumber(jsRound(kg), maxFractionDigits: 0)} kg';
+/// Número de un peso guardado en kg, mostrado en `unit`: "61,25" en kg (discos de
+/// 1,25) o "45" en lb (con un decimal, que basta para las libras).
+String formatWeightValue(num kg, [WeightUnit unit = WeightUnit.kg]) =>
+    unit == WeightUnit.kg ? formatKg(kg) : formatNumber(fromKg(kg.toDouble(), unit), maxFractionDigits: 1);
+
+/// "45 lb", "20 kg".
+String formatWeight(num kg, [WeightUnit unit = WeightUnit.kg]) => '${formatWeightValue(kg, unit)} ${unit.symbol}';
+
+/// Volumen (guardado en kg) en la unidad pedida: "12.500 kg".
+String formatVolume(num kg, [WeightUnit unit = WeightUnit.kg]) =>
+    '${formatNumber(jsRound(fromKg(kg.toDouble(), unit)), maxFractionDigits: 0)} ${unit.symbol}';
 
 String formatDuration(int min) {
   if (min < 60) return '$min min';
@@ -71,10 +82,10 @@ String formatDuration(int min) {
   return m > 0 ? '$h h $m min' : '$h h';
 }
 
-/// "55 kg × 5" o "12 reps".
-String formatSet({double? kg, double? reps}) {
+/// "55 kg × 5", "45 lb × 10" o "12 reps".
+String formatSet({double? kg, double? reps, WeightUnit unit = WeightUnit.kg}) {
   if (reps == null) return '—';
-  return kg != null && kg > 0 ? '${formatKg(kg)} kg × ${plain(reps)}' : '${plain(reps)} reps';
+  return kg != null && kg > 0 ? '${formatWeight(kg, unit)} × ${plain(reps)}' : '${plain(reps)} reps';
 }
 
 /// Descanso: "1:30", "45 s" o "Sin descanso".

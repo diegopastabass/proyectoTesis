@@ -84,6 +84,10 @@ Usa `env/firebase.json` si existe (si no, el modo demostración); se le puede pa
 3. Ejecuta con `flutter run --dart-define-from-file=env/firebase.json`. El ingreso usa `signInWithProvider(GoogleAuthProvider())`, que abre Google en una hoja segura de Safari; la sesión queda guardada en el teléfono.
 4. Las reglas de `../firestore.rules` no cambian: todo lo propio de la app vive bajo `users/{uid}`.
 
+## Temporizador del descanso (isla dinámica y alarma)
+
+En iOS 26 o superior, el descanso entre series usa AlarmKit: cuenta regresiva en la isla dinámica y en la pantalla bloqueada, con pausar, seguir y cancelar, y una alarma al terminar ([../docs/modulo-fuerza.md](../docs/modulo-fuerza.md) §2.2.2). Va en una extensión de widgets propia (`ios/RestTimerWidget`, bundle `cl.asistentedeportivo.asistenteDeportivo.RestTimerWidget`) que se firma junto con la app; si cambias el *Bundle Identifier* de Runner, cambia también el de esta extensión (debe empezar igual). El permiso de alarmas se pide la primera vez que empieza un descanso. **En el simulador el diálogo de permiso no aparece** (limitación del simulador): para ver la isla dinámica y la alarma hay que instalar la app en un iPhone con iOS 26+ (`sh tool/install_iphone.sh`).
+
 ## Apple Salud (pasos)
 
 El Diario muestra los pasos del día y de la semana leídos de Apple Salud (`lib/platform/health/healthkit_health_service.dart`, paquete `health`). La capacidad HealthKit está en `ios/Runner/Runner.entitlements` y los textos de permiso en `Info.plist`. iOS no informa si el usuario negó la lectura: si todo sale en 0, revisar *Salud → perfil → Apps → Asistente*. En el simulador funciona, pero solo con datos que se agreguen a mano en la app Salud.
@@ -109,7 +113,7 @@ flutter build web && python3 -m http.server 8091 --directory build/web
 
 ## Pantallas de diseño y capturas de la tesis
 
-En modo demostración aparecen además las pantallas de diseño de los casos de uso que todavía no tienen backend: comunidad, IA, reloj y archivos `.fit`, alertas de fatiga, metas del día, cuestionario inicial, términos, privacidad y suscripción. Usan datos simulados (`lib/data/simulated/`, `lib/app/sim_providers.dart`) y sus rutas están en `_previewPaths` (`lib/app/router.dart`): **con Firebase real no se muestran**.
+En modo demostración aparecen además las pantallas de diseño de los casos de uso que todavía no tienen backend: comunidad, IA, reloj y archivos `.fit`, metas del día, términos, privacidad y suscripción (el cuestionario inicial, el plan semanal y las alertas de fatiga ya son reales desde el 09-11-2026, ver [../docs/motor-de-sugerencias.md](../docs/motor-de-sugerencias.md)). Usan datos simulados (`lib/data/simulated/`, `lib/app/sim_providers.dart`) y sus rutas están en `_previewPaths` (`lib/app/router.dart`): **con Firebase real no se muestran**.
 
 Las capturas de `figuras/interfaces/` se toman en un simulador sin tocar la pantalla:
 

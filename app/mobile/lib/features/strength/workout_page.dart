@@ -8,8 +8,11 @@ import 'package:go_router/go_router.dart';
 import '../../app/providers.dart';
 import '../../app/theme.dart';
 import '../../core/common/numbers.dart';
+import '../../core/common/units.dart';
 import '../../core/strength/models.dart';
 import '../../core/strength/session.dart';
+import '../../core/strength/unit_check.dart';
+import '../../core/strength/weights.dart';
 import '../../platform/capability.dart';
 import '../../platform/platform_providers.dart';
 import '../../ui/format.dart';
@@ -19,6 +22,7 @@ import 'active_workout_pill.dart';
 import 'exercise_block.dart';
 import 'exercise_widgets.dart';
 import 'set_options.dart';
+import 'unit_sheets.dart';
 
 /// Sesión en curso: marcar series, agregar ejercicios y terminar.
 class WorkoutPage extends ConsumerStatefulWidget {
@@ -46,13 +50,32 @@ class _WorkoutPageState extends ConsumerState<WorkoutPage> {
   Future<void> _startRest(int seconds) async {
     final now = DateTime.now().millisecondsSinceEpoch;
     _ctrl.update((w) => w.withRest(RestTimer(endsAt: now + seconds * 1000, seconds: seconds)));
-    // La primera vez se pide permiso para avisar el fin del descanso con la pantalla bloqueada.
-    if (await ref.read(notificationStatusProvider.future) == CapabilityStatus.notDetermined) {
-      await requestNotifications(ref);
-      // Con el permiso recién dado, se programa el aviso del descanso que ya corre.
-      final rest = ref.read(activeWorkoutProvider)?.rest;
-      if (rest != null) await ref.read(notificationServiceProvider).scheduleRestEnd(DateTime.fromMillisecondsSinceEpoch(rest.endsAt));
+    // La primera vez se pide permiso: de alarmas en iOS 26+ (isla dinámica, pantalla
+    // bloqueada y alarma al terminar) o de notificaciones en versiones anteriores.
+    final timer = ref.read(restTimerServiceProvider);
+    var status = await timer.status();
+    if (status == CapabilityStatus.notDetermined) {
+      status = await timer.requestAccess();
+      if (!await timer.systemTimer) ref.invalidate(notificationStatusProvider);
+      // Con el permiso recién dado, se envía el descanso que ya corre.
+      if (status == CapabilityStatus.granted) await _ctrl.resyncRest();
     }
+    // Sin permiso de alarmas, el fin del descanso se avisa con una notificación.
+    if (status == CapabilityStatus.denied && await timer.systemTimer && await ref.read(notificationStatusProvider.future) == CapabilityStatus.notDetermined) {
+      if (await requestNotifications(ref) == CapabilityStatus.granted) await _ctrl.resyncRest();
+    }
+  }
+
+  /// Cambia kg ↔ lb. Si ya hay pesos escritos, pregunta si convertirlos o mantenerlos.
+  Future<void> _switchUnit(DraftExercise ex, WeightUnit to) async {
+    var convert = false;
+    if (ex.sets.any((s) => parseAmount(s.kg) != null)) {
+      final answer = await askUnitSwitch(context, to: to);
+      if (answer == null) return;
+      convert = answer;
+    }
+    HapticFeedback.selectionClick();
+    _updateExercise(ex.key, (e) => switchUnit(e, to, convert: convert));
   }
 
   Future<void> _finish(ActiveWorkout active, StrengthData data) async {
@@ -68,6 +91,17 @@ class _WorkoutPageState extends ConsumerState<WorkoutPage> {
     }
     // La hora de término es la de tocar Terminar, no la de responder el esfuerzo.
     final now = DateTime.now().millisecondsSinceEpoch;
+    if (!mounted) return;
+    // ¿Algún peso parece anotado en la otra unidad (kg en una máquina en libras)?
+    final suspicions = suspectUnits(active, data.workouts);
+    if (suspicions.isNotEmpty) {
+      final fixes = await reviewUnits(context, suspicions, data.nameOf);
+      if (fixes == null || !mounted) return;
+      if (fixes.isNotEmpty) {
+        active = applyUnitFixes(active, fixes);
+        _ctrl.set(active);
+      }
+    }
     if (!mounted) return;
     final answer = await askSessionRpe(context, title: '¿Qué tan duro fue el entrenamiento?');
     if (answer == null || !mounted) return;
@@ -120,6 +154,12 @@ class _WorkoutPageState extends ConsumerState<WorkoutPage> {
                   rest: rest,
                   onAdjust: (d) => _ctrl.update((w) => w.rest == null ? w : w.withRest(adjustRest(w.rest!, d, DateTime.now().millisecondsSinceEpoch))),
                   onDone: () => _ctrl.update((w) => w.withRest(null)),
+                  onPause: () => _ctrl.update((w) {
+                    final r = w.rest;
+                    if (r == null) return w;
+                    final now = DateTime.now().millisecondsSinceEpoch;
+                    return w.withRest(r.paused ? r.resume(now) : r.pause(now));
+                  }),
                 ),
               ),
             ),
@@ -158,7 +198,7 @@ class _WorkoutPageState extends ConsumerState<WorkoutPage> {
               child: Row(children: [
                 Icon(Icons.scale_outlined, size: 15, color: c.primary),
                 const SizedBox(width: 4),
-                Text(formatVolume(volume), style: TextStyle(fontSize: 12, color: c.muted, fontFeatures: tabular)),
+                Text(formatVolume(volume, ref.watch(weightUnitProvider)), style: TextStyle(fontSize: 12, color: c.muted, fontFeatures: tabular)),
               ]),
             ),
             const SizedBox(width: 16),
@@ -176,19 +216,21 @@ class _WorkoutPageState extends ConsumerState<WorkoutPage> {
         () {
           final ex = active.exercises[i];
           final prev = previousFor(ex, data.workouts, active.startedAt);
-          final progress = progressionKg(ex, prev, step: progressionStep(data.exercise(ex.exerciseId)));
+          final progress = progressionKg(ex, prev, step: progressionStepIn(data.exercise(ex.exerciseId), ex.unit));
           final range = ex.sets.where((s) => s.type != SetType.warmup && s.targetRepsMax != null).firstOrNull;
           return ExerciseBlock(
             note: range == null ? null : 'Objetivo: ${repsRangeLabel(range.targetReps, range.targetRepsMax)} reps por serie',
             highlight: progress == null
                 ? null
-                : 'La última vez llegaste al tope en todas las series: sube a ${formatKgValue(progress)} kg y vuelve a ${plainEs(range?.targetReps)} reps.',
+                : 'La última vez llegaste al tope en todas las series: sube a ${formatWeight(progress, ex.unit)} y vuelve a ${plainEs(range?.targetReps)} reps.',
             key: ValueKey(ex.key),
             index: i,
             total: active.exercises.length,
             exercise: data.exercise(ex.exerciseId),
             name: data.nameOf(ex.exerciseId),
             previous: prev,
+            unit: ex.unit,
+            onUnitChange: (to) => _switchUnit(ex, to),
             rows: [
               for (var j = 0; j < ex.sets.length; j++)
                 () {
@@ -202,11 +244,11 @@ class _WorkoutPageState extends ConsumerState<WorkoutPage> {
                 ])),
             onRemoveSet: (j) => _updateExercise(ex.key, (e) => e.withSets([...e.sets]..removeAt(j))),
             onAddSet: () => _updateExercise(ex.key, (e) => e.withSets(appendSet(e.sets))),
-            onAddDrop: (j) => _updateExercise(ex.key, (e) => e.withSets(insertDrop(e.sets, j, fromKg: suggestion(e.sets[j], prev[j], progressKg: progress).kg))),
+            onAddDrop: (j) => _updateExercise(ex.key, (e) => e.withSets(insertDrop(e.sets, j, fromKg: suggestion(e.sets[j], prev[j], progressKg: progress).kg, unit: e.unit))),
             restSec: ex.restSec,
             onRestChange: (sec) => _updateExercise(ex.key, (e) => e.withRest(sec)),
             onToggleDone: (j) {
-              final next = toggleDone(ex.sets[j], prev[j], progressKg: progress);
+              final next = toggleDone(ex.sets[j], prev[j], progressKg: progress, unit: ex.unit);
               if (next == null) {
                 showToast(context, 'Escribe las repeticiones de la serie', error: true);
                 return;
@@ -243,6 +285,7 @@ class _WorkoutPageState extends ConsumerState<WorkoutPage> {
                   exerciseId: exercise.id,
                   sets: setsForNewExercise(exercise.id, data.workouts),
                   restSec: restForNewExercise(exercise.id, data.workouts),
+                  unit: unitForExercise(exercise.id, data.workouts, fallback: ref.read(weightUnitProvider)),
                 ),
               ]));
         },

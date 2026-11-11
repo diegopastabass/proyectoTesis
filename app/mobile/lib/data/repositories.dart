@@ -16,6 +16,9 @@ import '../core/nutrition/models.dart';
 import '../core/nutrition/open_food_facts.dart';
 import '../core/strength/models.dart';
 import '../core/strength/plan.dart';
+import '../core/suggestions/profile.dart';
+import '../core/suggestions/reason.dart';
+import '../core/suggestions/weekly_plan.dart';
 
 class AppUser {
   const AppUser({required this.uid, this.displayName, this.email, this.photoUrl, this.isAnonymous = false});
@@ -113,6 +116,18 @@ abstract interface class ProfileRepository {
   /// Días de entrenamiento y programa que se sigue.
   Stream<TrainingPlan> watchTrainingPlan(String uid);
   Future<void> saveTrainingPlan(String uid, TrainingPlan plan);
+
+  /// Respuestas del cuestionario inicial (null si no lo ha respondido).
+  Stream<AthleteProfile?> watchAthleteProfile(String uid);
+  Future<void> saveAthleteProfile(String uid, AthleteProfile profile);
+
+  /// Plan semanal aceptado (fuerza y cardio); null si no hay.
+  Stream<WeeklyPlan?> watchWeeklyPlan(String uid);
+  Future<void> saveWeeklyPlan(String uid, WeeklyPlan? plan);
+
+  /// Respuestas a las sugerencias y alertas del motor, por id.
+  Stream<Map<String, SuggestionResponse>> watchSuggestionResponses(String uid);
+  Future<void> saveSuggestionResponse(String uid, SuggestionResponse response);
 }
 
 abstract interface class StrengthRepository {

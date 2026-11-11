@@ -8,9 +8,10 @@ import '../../app/providers.dart';
 import '../../app/theme.dart';
 import '../../core/common/date.dart';
 import '../../core/common/numbers.dart';
+import '../../core/common/units.dart';
 import '../../core/strength/calendar.dart';
-import '../../core/strength/insights.dart';
 import '../../core/strength/models.dart';
+import '../../core/strength/session.dart';
 import '../../core/strength/stats.dart';
 import '../../ui/format.dart';
 import '../../ui/trend_chart.dart';
@@ -58,9 +59,10 @@ class _StrengthProgressPageState extends ConsumerState<StrengthProgressPage> {
       }
       final groupList = groups.entries.toList()..sort((a, b) => b.value.$2.compareTo(a.value.$2));
       final selected = _group ?? groupList.firstOrNull?.key ?? 'todas';
+      final unit = ref.watch(weightUnitProvider);
       final points = [
         for (final w in sorted)
-          if (selected == 'todas' || _groupKey(w) == selected) TrendPoint(date: w.date, value: workoutTotals(w).volume.toDouble(), data: w),
+          if (selected == 'todas' || _groupKey(w) == selected) TrendPoint(date: w.date, value: fromKg(workoutTotals(w).volume.toDouble(), unit), data: w),
       ];
       final frequent = exerciseFrequency(workouts);
 
@@ -98,7 +100,7 @@ class _StrengthProgressPageState extends ConsumerState<StrengthProgressPage> {
           padding: const EdgeInsets.all(12),
           child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
             Text('Peso total por sesión', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: c.fgStrong)),
-            Text('kg × repeticiones de las series efectivas. Compara sesiones de la misma rutina.', style: TextStyle(fontSize: 11, color: c.faint)),
+            Text('Peso × repeticiones de las series efectivas, en ${unit.symbol}. Compara sesiones de la misma rutina.', style: TextStyle(fontSize: 11, color: c.faint)),
             const SizedBox(height: 8),
             ChoicePills<String>(
               scrollable: true,
@@ -111,7 +113,7 @@ class _StrengthProgressPageState extends ConsumerState<StrengthProgressPage> {
             TrendChart<Workout>(
               key: ValueKey(selected),
               points: points,
-              unit: 'kg',
+              unit: unit.symbol,
               label: 'peso total por sesión',
               format: (n) => formatNumber(jsRound(n), maxFractionDigits: 0),
               axisFormat: compactNumber,
@@ -130,19 +132,20 @@ class _StrengthProgressPageState extends ConsumerState<StrengthProgressPage> {
               final history = exerciseHistory(workouts, f.exerciseId);
               final best = history.reduce((b, h) => h.maxKg > b.maxKg || (h.maxKg == b.maxKg && h.repsAtMax > b.repsAtMax) ? h : b);
               final gain = history.last.best1RM - history.first.best1RM;
+              final exUnit = unitForExercise(f.exerciseId, workouts, fallback: unit);
               return ListTile(
                 onTap: () => context.push('/fuerza/ejercicios/${Uri.encodeComponent(f.exerciseId)}'),
                 leading: ExerciseThumb(data.exercise(f.exerciseId), size: 36),
                 title: Text(data.nameOf(f.exerciseId, f.name), maxLines: 1, overflow: TextOverflow.ellipsis),
                 subtitle: Text(
-                  '${f.sessions} ${f.sessions == 1 ? 'sesión' : 'sesiones'} · mejor ${formatSet(kg: best.maxKg, reps: best.repsAtMax)}',
+                  '${f.sessions} ${f.sessions == 1 ? 'sesión' : 'sesiones'} · mejor ${formatSet(kg: best.maxKg, reps: best.repsAtMax, unit: exUnit)}',
                   style: TextStyle(fontSize: 12, color: c.faint),
                 ),
                 trailing: Row(mainAxisSize: MainAxisSize.min, children: [
                   if (history.length > 1 && gain != 0)
                     Tooltip(
                       message: 'Cambio del 1RM estimado desde la primera sesión',
-                      child: Text('${gain > 0 ? '+' : '−'}${formatKg(round1(gain.abs()))} kg',
+                      child: Text('${gain > 0 ? '+' : '−'}${formatWeight(round1(gain.abs()), exUnit)}',
                           style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: gain > 0 ? c.success : c.faint)),
                     ),
                   Icon(Icons.chevron_right, color: c.faint),

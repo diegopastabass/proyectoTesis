@@ -15,10 +15,14 @@ import '../../core/body/energy.dart';
 import '../../core/body/progress.dart';
 import '../../core/cardio/activity.dart';
 import '../../core/common/date.dart';
+import '../../core/common/units.dart';
 import '../../core/nutrition/models.dart';
 import '../../core/nutrition/score.dart';
 import '../../core/strength/models.dart';
 import '../../core/strength/plan.dart';
+import '../../core/suggestions/profile.dart';
+import '../../core/suggestions/reason.dart';
+import '../../core/suggestions/weekly_plan.dart';
 import '../repositories.dart';
 
 AppUser? _toUser(fa.User? u) =>
@@ -354,6 +358,30 @@ class FirestoreProfileRepository implements ProfileRepository {
   @override
   Future<void> saveTrainingPlan(String uid, TrainingPlan plan) =>
       _user(uid).set({'trainingPlan': plan.toMap(), 'updatedAt': FieldValue.serverTimestamp()}, SetOptions(merge: true));
+
+  @override
+  Stream<AthleteProfile?> watchAthleteProfile(String uid) => _user(uid).snapshots().map((s) => AthleteProfile.fromMap(s.data()?['athlete']));
+
+  @override
+  Future<void> saveAthleteProfile(String uid, AthleteProfile profile) =>
+      _user(uid).set({'athlete': profile.toMap(), 'updatedAt': FieldValue.serverTimestamp()}, SetOptions(merge: true));
+
+  @override
+  Stream<Map<String, SuggestionResponse>> watchSuggestionResponses(String uid) => _user(uid)
+      .collection('suggestions')
+      .snapshots()
+      .map((s) => {for (final d in s.docs) d.id: SuggestionResponse.fromMap(d.id, d.data())});
+
+  @override
+  Future<void> saveSuggestionResponse(String uid, SuggestionResponse response) =>
+      _user(uid).collection('suggestions').doc(response.id).set({...response.toMap(), 'at': FieldValue.serverTimestamp()});
+
+  @override
+  Stream<WeeklyPlan?> watchWeeklyPlan(String uid) => _user(uid).snapshots().map((s) => WeeklyPlan.fromMap(s.data()?['weeklyPlan']));
+
+  @override
+  Future<void> saveWeeklyPlan(String uid, WeeklyPlan? plan) =>
+      _user(uid).set({'weeklyPlan': plan?.toMap(), 'updatedAt': FieldValue.serverTimestamp()}, SetOptions(merge: true));
 }
 
 class FirestoreStrengthRepository implements StrengthRepository {
@@ -370,6 +398,7 @@ class FirestoreStrengthRepository implements StrengthRepository {
             name: e['name'] as String? ?? '',
             sets: setsFrom(e['sets']),
             restSec: restFrom(e['restSec']),
+            unit: WeightUnit.from(e['unit']),
           ),
       ];
 
@@ -381,7 +410,12 @@ class FirestoreStrengthRepository implements StrengthRepository {
             name: d.data()['name'] as String? ?? '',
             exercises: [
               for (final e in d.data()['exercises'] as List? ?? const [])
-                RoutineExercise(exerciseId: (e as Map)['exerciseId'] as String? ?? '', sets: setsFrom(e['sets']), restSec: restFrom(e['restSec'])),
+                RoutineExercise(
+                  exerciseId: (e as Map)['exerciseId'] as String? ?? '',
+                  sets: setsFrom(e['sets']),
+                  restSec: restFrom(e['restSec']),
+                  unit: WeightUnit.tryParse(e['unit']),
+                ),
             ],
             updatedAt: d.data()['updatedAt'] is Timestamp ? (d.data()['updatedAt'] as Timestamp).millisecondsSinceEpoch : 0,
           ),

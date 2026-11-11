@@ -48,6 +48,9 @@ final Map<String, UnitAlias> _unitAliases = () {
 
   alias(Unit.g, 1, ['g', 'gr', 'grs', 'gramo', 'gramos']);
   alias(Unit.g, 1000, ['kg', 'kgs', 'kilo', 'kilos', 'kilogramo', 'kilogramos']);
+  // Etiquetas y recetas en unidades de EE. UU. ("8 oz de pechuga", "1 lb de carne molida").
+  alias(Unit.g, 28.349523125, ['oz', 'onza', 'onzas']);
+  alias(Unit.g, 453.59237, ['lb', 'lbs', 'libra', 'libras']);
   alias(Unit.ml, 1, ['ml', 'cc', 'mililitro', 'mililitros']);
   alias(Unit.ml, 1000, ['l', 'lt', 'lts', 'litro', 'litros']);
   alias(Unit.unidad, 1, ['unidad', 'unidades', 'u', 'ud', 'uds', 'und', 'pieza', 'piezas']);

@@ -15,5 +15,9 @@ import UserNotifications
 
   func didInitializeImplicitFlutterEngine(_ engineBridge: FlutterImplicitEngineBridge) {
     GeneratedPluginRegistrant.register(with: engineBridge.pluginRegistry)
+    // Temporizador del descanso (AlarmKit): isla dinámica, pantalla bloqueada y alarma.
+    if let registrar = engineBridge.pluginRegistry.registrar(forPlugin: "RestTimerPlugin") {
+      RestTimerPlugin.register(with: registrar)
+    }
   }
 }

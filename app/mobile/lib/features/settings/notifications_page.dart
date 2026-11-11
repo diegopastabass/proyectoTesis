@@ -87,6 +87,14 @@ class NotificationsPage extends ConsumerWidget {
             onChanged: (on) => update(settings.copyWith(training: on), enabling: on),
             trailing: timeButton(settings.trainingAt, (m) => update(settings.copyWith(trainingAt: m)), enabled: settings.training),
           ),
+          _SwitchRow(
+            icon: Icons.speed,
+            title: 'Alertas de fatiga',
+            subtitle: 'El día de una sesión exigente si vienes con mucha carga, 2 h antes de tu hora de entrenar',
+            value: settings.fatigue,
+            onChanged: (on) => update(settings.copyWith(fatigue: on), enabling: on),
+            trailing: const SizedBox.shrink(),
+          ),
           Padding(
             padding: const EdgeInsets.fromLTRB(12, 10, 12, 12),
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -134,6 +142,7 @@ class NotificationsPage extends ConsumerWidget {
                   ReminderKind.meal => Icons.restaurant,
                   ReminderKind.training => Icons.fitness_center,
                   ReminderKind.streak => Icons.local_fire_department_outlined,
+                  ReminderKind.fatigue => Icons.speed,
                 }, size: 20, color: c.muted),
                 title: Text(r.title, style: TextStyle(fontSize: 13, color: c.fgStrong)),
                 subtitle: Text(

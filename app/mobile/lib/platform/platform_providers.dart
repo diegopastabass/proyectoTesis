@@ -22,6 +22,7 @@ import 'location/location_service.dart';
 import 'motion/pedometer_service.dart';
 import 'notifications/local_notification_service.dart';
 import 'notifications/notification_service.dart';
+import 'rest_timer/rest_timer_service.dart';
 
 bool get _isIos => !kIsWeb && defaultTargetPlatform == TargetPlatform.iOS;
 
@@ -41,6 +42,13 @@ final notificationServiceProvider = Provider<NotificationService>((ref) {
 });
 
 /// Estado del permiso de notificaciones. Se invalida al pedir el permiso.
+/// Temporizador del descanso: AlarmKit en iOS 26+ (isla dinámica, pantalla
+/// bloqueada y alarma), notificación en versiones anteriores, nada en web y pruebas.
+final restTimerServiceProvider = Provider<RestTimerService>((ref) {
+  final notifications = ref.watch(notificationServiceProvider);
+  return _isIos ? IosRestTimerService(notifications) : NotificationRestTimerService(notifications);
+});
+
 final notificationStatusProvider = FutureProvider<CapabilityStatus>((ref) => ref.watch(notificationServiceProvider).status());
 
 /// Pide el permiso de notificaciones (iOS muestra el diálogo una sola vez).

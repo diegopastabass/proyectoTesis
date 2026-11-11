@@ -70,6 +70,44 @@
 - La sesión se guarda en el dispositivo mientras dura: **sobrevive a recargar o cerrar la pestaña**. Desde otras pantallas del módulo aparece un botón flotante para volver a ella.
 - **Terminar** (arriba y al final de la lista, donde se llega tras la última serie) guarda solo las series marcadas (avisa si quedan sin marcar). **Descartar** pide confirmación.
 
+### 2.2.1 Kilos y libras (app iOS, 09-11-2026)
+
+En Chile casi todo está en kg, pero no falta la máquina o las mancuernas en libras. Convertir de cabeza en cada cambio de máquina es tedioso y propenso a errores, así que la app lo hace sola.
+
+- **Todo se guarda en kg** (`sets[].kg`), igual que antes: el volumen, el 1RM, la carga de entrenamiento y las comparaciones entre sesiones no cambian. No hubo que migrar datos.
+- **Cada ejercicio recuerda su unidad.** En la sesión y en el editor de rutinas, el menú ⋮ del ejercicio tiene **"Anotar en libras (lb)"** / **"Anotar en kilos (kg)"**. La columna pasa a **LB** y aparece la etiqueta **"En lb"** junto al descanso. La sesión guarda `unit: 'lb'` en ese ejercicio, y la próxima vez que lo agregues (o empieces una rutina que lo incluya) parte en libras: la máquina suele ser la misma.
+  - Orden para elegir la unidad: la que indica la rutina → la de la última sesión con ese ejercicio → la preferida (**Ajustes › Unidades**, kg por defecto).
+  - Si ya escribiste pesos, al cambiar pregunta: **mantener los números** (los leíste de una máquina en libras) o **convertirlos** (100 kg → 220,5 lb).
+  - ANTERIOR, las sugerencias, los drop sets (80 % redondeado a 5 lb o a 1 lb en pesos bajos) y la progresión (+5 lb, o +10 lb en básicos de pierna con barra) se calculan en la unidad del ejercicio.
+- **Detección al terminar.** Si un ejercicio quedó anotado en una unidad y los números calzan con la otra, antes de pedir el esfuerzo aparece **"¿Revisamos las unidades?"** con una casilla por ejercicio (por ejemplo: "Anotaste 100 kg; la última vez, 45,4 kg. Si eran libras: 100 lb = 45,4 kg"). Corregir cambia la unidad y mantiene los números.
+  - La regla (`core/strength/unit_check.dart`) compara la mediana de lo anotado (sin calentamientos) con la mediana de la última sesión del ejercicio o, si no hay, con los pesos de la rutina. Avisa si la razón está a ±20 % de 2,2046 (libras anotadas como kg) o de 0,4536 (kg anotados como libras). Una progresión normal (±30 %) nunca avisa, y sin una referencia no adivina.
+- **Calculadora de discos** (menú ⋮ en ejercicios con barra o barra Z): discos por lado para un peso total, con barra de 20/15/10 kg o 45/35/25 lb, y aviso si no se puede armar exacto con discos estándar.
+- **Pantallas de lectura:** el detalle de la sesión, las curvas del ejercicio y los mensajes de avance muestran cada ejercicio en la unidad en que se anotó; los totales (peso total, gráfico por sesión) usan la unidad preferida.
+
+### 2.2.2 Temporizador del descanso en la isla dinámica (app iOS, 10-11-2026)
+
+Antes, al terminar el descanso llegaba una notificación que desaparecía en segundos. Ahora el descanso funciona como el temporizador del reloj de iPhone, con **AlarmKit** (iOS 26 o superior):
+
+- **Isla dinámica y pantalla bloqueada:** al marcar una serie, la cuenta regresiva aparece en la isla dinámica (compacta: ícono y tiempo; expandida: tiempo grande y botones) y en la pantalla bloqueada, con barra de progreso y el nombre del entrenamiento. La cuenta la lleva el sistema: sigue aunque la app se cierre.
+- **Pausar, seguir y cancelar desde fuera de la app:** botones en la isla expandida y en la pantalla bloqueada. Lo que se haga ahí vuelve a la app (la barra del descanso muestra "Descanso en pausa" o desaparece), y lo que se haga en la app (pausar con el nuevo botón ⏸, ±15 s, Saltar) se refleja afuera.
+- **Alarma al terminar:** suena la alarma del sistema, también en modo silencio o con un modo de concentración, y se apaga desde su propio aviso, como la del reloj.
+- **Permiso:** se pide la primera vez que empieza un descanso ("Alarmas"). Si se niega, o en iOS anterior a 26, el fin del descanso se avisa con una notificación, como antes.
+
+**Cómo está hecho**
+
+| Parte | Archivo | Qué hace |
+|---|---|---|
+| Lógica pura | `lib/core/strength/rest_sync.dart` | Qué decirle al sistema cuando el descanso cambia en la app (empezar, pausar, seguir, reemplazar al ajustar ±15 s, cancelar) y cómo aplicar lo que llega de la pantalla bloqueada. Si el descanso llegó a cero solo, quitarlo de la app no apaga la alarma que está sonando |
+| Modelo | `RestTimer` en `session.dart` | Ahora tiene pausa (`pausedLeft`), que sobrevive a cerrar la app |
+| Servicio | `lib/platform/rest_timer/rest_timer_service.dart` | Canal `nutriapp/rest_timer` hacia iOS; si no hay AlarmKit o se negó el permiso, usa la notificación |
+| Puente iOS | `ios/Runner/RestTimerPlugin.swift` | Programa, pausa, sigue y cancela la alarma con `AlarmManager` e informa a Flutter los cambios hechos fuera de la app |
+| Compartido | `ios/Shared/RestTimerShared.swift` | Datos de la alarma y las acciones de los botones (`LiveActivityIntent`: corren en la app aunque se toquen en la pantalla bloqueada) |
+| Extensión | `ios/RestTimerWidget/` (target nuevo, iOS 26) | Cómo se ve la actividad en vivo en la isla dinámica y en la pantalla bloqueada (SwiftUI) |
+
+`Info.plist` suma `NSAlarmKitUsageDescription` y `NSSupportsLiveActivities`. La extensión se incrusta en la app ("Embed Foundation Extensions") y se firma con el mismo equipo.
+
+**Pruebas:** `test/core/rest_timer_test.dart` (8 pruebas: pausa, ajuste en pausa, guardado, cada orden al sistema, la alarma que suena al llegar a cero y los cambios desde la pantalla bloqueada). La app compila para el simulador de iOS 27 con la extensión incluida, y en el simulador se comprobó que Flutter llega a AlarmKit. **El simulador no puede mostrar el diálogo de permiso de alarmas** (SpringBoard rechaza el aviso de `mobiletimerd`: `CFUserNotification authorization failure`), así que la isla dinámica y la alarma se prueban en un iPhone real con iOS 26 o superior.
+
 ### 2.3 Al terminar: resumen y avances
 
 - **Peso total levantado** de la sesión: suma de kg × repeticiones de todas las series efectivas (el calentamiento no cuenta, para no inflar el número). Se compara con la última vez que hiciste la misma rutina (+/− %).
@@ -105,13 +143,14 @@
 
 | Ruta de Firestore | Contenido |
 |---|---|
-| `users/{uid}/routines/{id}` | `name`, `exercises: [{ exerciseId, sets: [{ type, kg, reps }] }]` |
-| `users/{uid}/workouts/{id}` | `routineId` (o null), `name`, `date` (AAAA-MM-DD), `startedAt`, `finishedAt`, `exercises: [{ exerciseId, name, sets }]` |
+| `users/{uid}/routines/{id}` | `name`, `exercises: [{ exerciseId, sets: [{ type, kg, reps }], unit? }]` |
+| `users/{uid}/workouts/{id}` | `routineId` (o null), `name`, `date` (AAAA-MM-DD), `startedAt`, `finishedAt`, `exercises: [{ exerciseId, name, sets, unit? }]` |
 | `users/{uid}/exercises/{id}` | Ejercicios propios: `name`, `primary`, `equipment` (su id en la app es `u:{id}`) |
 
 - Todo es privado: lo cubre la regla existente de `users/{uid}/**` (no hubo que publicar reglas nuevas). Aún no se validan los campos de estas colecciones.
 - Cada sesión guarda una copia del nombre del ejercicio, por si después se borra.
 - La sesión en curso vive en `localStorage` (`fuerza-activa:{uid}`), no en Firestore.
+- `unit` (app iOS) solo se escribe cuando el ejercicio se anotó en libras (`'lb'`); en las rutinas, cuando se eligió explícitamente. Sin el campo se entiende kg, así que los documentos anteriores y la web siguen funcionando.
 
 ## 4. Código
 
@@ -128,7 +167,7 @@ Pruebas: `src/core/__tests__/strength.test.ts` (17 pruebas).
 
 - Nombres en español solo para 106 ejercicios; las instrucciones están en inglés (wger podría aportar traducciones).
 - Las imágenes dependen de jsDelivr; para producción conviene alojarlas en Firebase Hosting.
-- Sin temporizador de descanso, notas por ejercicio, superseries ni conversión a libras.
+- La web no tiene temporizador de descanso, notas por ejercicio, superseries ni libras (la app iOS ya tiene descanso con isla dinámica y alarma, y libras).
 - Desde el 28-10-2026 hay programas sugeridos, rangos de repeticiones y progresión sugerida en la app iOS ([recordatorios-y-programas.md](recordatorios-y-programas.md)).
 - Los ejercicios con peso corporal suman 0 kg al volumen (se siguen por repeticiones).
 - Una sesión no se puede editar después de guardarla (solo eliminar).

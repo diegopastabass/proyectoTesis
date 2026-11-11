@@ -5,6 +5,7 @@ import 'dart:math' as math;
 
 import '../common/date.dart';
 import '../common/numbers.dart';
+import '../common/units.dart';
 import 'calendar.dart';
 import 'models.dart';
 import 'stats.dart';
@@ -39,8 +40,12 @@ String sinceText(String from, String to) {
 
 String _reps(double r) => plain(r);
 
+/// Peso guardado (kg) en la unidad en que se anotó el ejercicio: "60 kg", "135 lb".
+String _w(double kg, WeightUnit unit) =>
+    unit == WeightUnit.kg ? '${formatKg(kg)} kg' : '${formatNumber(fromKg(kg, unit), maxFractionDigits: 1)} ${unit.symbol}';
+
 /// Mejor mensaje para un ejercicio comparado con su historial previo.
-Insight? _exerciseInsight(String name, String id, ExerciseSession cur, List<ExerciseSession> history) {
+Insight? _exerciseInsight(String name, String id, ExerciseSession cur, List<ExerciseSession> history, {WeightUnit unit = WeightUnit.kg}) {
   final prev = history.lastOrNull;
   if (prev == null) return null;
   final bestKg = history.map((h) => h.maxKg).reduce(math.max);
@@ -52,7 +57,7 @@ Insight? _exerciseInsight(String name, String id, ExerciseSession cur, List<Exer
       kind: InsightKind.record,
       priority: 100,
       exerciseId: id,
-      text: 'Nuevo récord en $name: ${formatKg(cur.maxKg)} kg × ${_reps(cur.repsAtMax)}.',
+      text: 'Nuevo récord en $name: ${_w(cur.maxKg, unit)} × ${_reps(cur.repsAtMax)}.',
     );
   }
   if (cur.maxKg > prev.maxKg) {
@@ -60,7 +65,7 @@ Insight? _exerciseInsight(String name, String id, ExerciseSession cur, List<Exer
       kind: InsightKind.weight,
       priority: 80,
       exerciseId: id,
-      text: 'Subiste el peso en $name: ${formatKg(cur.maxKg)} kg (antes ${formatKg(prev.maxKg)} kg).',
+      text: 'Subiste el peso en $name: ${_w(cur.maxKg, unit)} (antes ${_w(prev.maxKg, unit)}).',
     );
   }
   if (cur.maxKg > 0 && cur.maxKg == prev.maxKg && cur.repsAtMax > prev.repsAtMax) {
@@ -68,7 +73,7 @@ Insight? _exerciseInsight(String name, String id, ExerciseSession cur, List<Exer
       kind: InsightKind.reps,
       priority: 70,
       exerciseId: id,
-      text: 'Más repeticiones en $name con ${formatKg(cur.maxKg)} kg: ${_reps(cur.repsAtMax)} (antes ${_reps(prev.repsAtMax)}).',
+      text: 'Más repeticiones en $name con ${_w(cur.maxKg, unit)}: ${_reps(cur.repsAtMax)} (antes ${_reps(prev.repsAtMax)}).',
     );
   }
   if (cur.maxKg == 0 && prev.maxKg == 0 && cur.maxReps > prev.maxReps) {
@@ -84,7 +89,7 @@ Insight? _exerciseInsight(String name, String id, ExerciseSession cur, List<Exer
       kind: InsightKind.record,
       priority: 90,
       exerciseId: id,
-      text: 'Mejor 1RM estimado en $name: ${formatKg(round1(cur.best1RM))} kg.',
+      text: 'Mejor 1RM estimado en $name: ${_w(round1(cur.best1RM), unit)}.',
     );
   }
   if (cur.sets > prev.sets) {
@@ -128,7 +133,7 @@ List<Insight> workoutInsights(Workout current, List<Workout> all, {int limit = 6
       fresh.add(e.name);
       continue;
     }
-    final insight = _exerciseInsight(e.name, e.exerciseId, summarizeExercise(current, e), history);
+    final insight = _exerciseInsight(e.name, e.exerciseId, summarizeExercise(current, e), history, unit: e.unit);
     if (insight != null) out.add(insight);
   }
 

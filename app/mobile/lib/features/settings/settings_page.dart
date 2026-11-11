@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../app/providers.dart';
 import '../../app/sim_providers.dart';
 import '../../app/theme.dart';
+import '../../core/common/units.dart';
 import '../../data/repositories.dart';
 import '../../platform/capability.dart';
 import '../../platform/platform_providers.dart';
@@ -19,6 +20,7 @@ class SettingsPage extends ConsumerWidget {
     final user = ref.watch(sessionUserProvider);
     final backend = ref.watch(backendProvider).kind;
     final theme = ref.watch(themeModeProvider);
+    final weightUnit = ref.watch(weightUnitProvider);
     final capabilities = ref.watch(capabilitiesProvider);
     final preview = ref.watch(previewEnabledProvider);
     final plan = ref.watch(simProvider).plan;
@@ -62,6 +64,13 @@ class SettingsPage extends ConsumerWidget {
             trailing: Icon(Icons.chevron_right, color: c.faint),
           ),
           ListTile(
+            onTap: () => context.push('/bienvenida/plan'),
+            leading: const Icon(Icons.insights),
+            title: Text('Mi plan semanal', style: TextStyle(fontSize: 14, color: c.fgStrong)),
+            subtitle: Text('Cuestionario inicial y semana sugerida de fuerza y cardio', style: TextStyle(fontSize: 12, color: c.muted)),
+            trailing: Icon(Icons.chevron_right, color: c.faint),
+          ),
+          ListTile(
             onTap: () => context.push('/notificaciones'),
             leading: const Icon(Icons.notifications_none),
             title: Text('Notificaciones', style: TextStyle(fontSize: 14, color: c.fgStrong)),
@@ -95,8 +104,8 @@ class SettingsPage extends ConsumerWidget {
             ListTile(
               onTap: () => context.push('/bienvenida/terminos'),
               leading: const Icon(Icons.flag_outlined),
-              title: Text('Cuestionario inicial y plan semanal', style: TextStyle(fontSize: 14, color: c.fgStrong)),
-              subtitle: Text('El recorrido al crear una cuenta nueva', style: TextStyle(fontSize: 12, color: c.muted)),
+              title: Text('Términos de uso', style: TextStyle(fontSize: 14, color: c.fgStrong)),
+              subtitle: Text('El recorrido al crear una cuenta nueva: términos, cuestionario y plan', style: TextStyle(fontSize: 12, color: c.muted)),
               trailing: Icon(Icons.chevron_right, color: c.faint),
             ),
           ]),
@@ -109,6 +118,21 @@ class SettingsPage extends ConsumerWidget {
             ThemeMode.dark: Row(mainAxisSize: MainAxisSize.min, children: [Icon(Icons.dark_mode), SizedBox(width: 6), Text('Oscuro')]),
           },
           onChanged: (m) => ref.read(themeModeProvider.notifier).set(m),
+        ),
+        const SectionTitle('Unidades'),
+        AppSegmented<WeightUnit>(
+          value: weightUnit,
+          segments: const {
+            WeightUnit.kg: Text('Kilos (kg)'),
+            WeightUnit.lb: Text('Libras (lb)'),
+          },
+          onChanged: (u) => ref.read(weightUnitProvider.notifier).set(u),
+        ),
+        Text(
+          'Unidad para los ejercicios nuevos y los totales de Fuerza. Si una máquina está en la otra unidad, cámbiala en el '
+          'menú del ejercicio (⋮) durante el entrenamiento: la app la recuerda para la próxima vez. Todo se guarda en kg, '
+          'así que cambiar de unidad no altera tu historial.',
+          style: TextStyle(fontSize: 11, color: c.faint, height: 1.4),
         ),
         const SectionTitle('Integraciones del sistema'),
         AsyncView(

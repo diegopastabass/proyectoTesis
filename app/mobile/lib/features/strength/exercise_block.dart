@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 
 import '../../app/theme.dart';
 import '../../core/common/numbers.dart';
+import '../../core/common/units.dart';
 import '../../core/strength/catalog.dart';
 import '../../core/strength/models.dart';
 import '../../ui/format.dart';
 import '../../ui/widgets.dart';
 import 'exercise_widgets.dart';
 import 'set_options.dart';
+import 'unit_sheets.dart';
 
 /// Fila editable de la tabla de series (rutina o sesión en curso).
 class SetRow {
@@ -21,7 +23,7 @@ class SetRow {
   /// Solo en la sesión en curso.
   final bool? done;
 
-  /// Sugerencias (placeholder) cuando el campo está vacío.
+  /// Sugerencias (placeholder) cuando el campo está vacío. El peso, en kg.
   final double? hintKg;
   final double? hintReps;
 }
@@ -55,6 +57,8 @@ class ExerciseBlock extends StatelessWidget {
     this.onToggleDone,
     this.note,
     this.highlight,
+    this.unit = WeightUnit.kg,
+    this.onUnitChange,
   });
 
   final int index;
@@ -86,6 +90,19 @@ class ExerciseBlock extends StatelessWidget {
 
   /// Aviso destacado (sugerencia de subir el peso).
   final String? highlight;
+
+  /// Unidad en que se escriben los pesos (la de la máquina o las pesas).
+  final WeightUnit unit;
+
+  /// Si se entrega, el menú permite cambiar entre kg y lb.
+  final ValueChanged<WeightUnit>? onUnitChange;
+
+  /// Peso con que abrir la calculadora de discos: el de la primera serie pendiente.
+  double? get _plateStart {
+    final row = rows.where((r) => r.done != true).firstOrNull ?? rows.lastOrNull;
+    if (row == null) return null;
+    return parseNum(row.kg) ?? (row.hintKg == null ? null : displayWeight(row.hintKg!, unit));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -124,9 +141,13 @@ class ExerciseBlock extends StatelessWidget {
               onSelected: (v) => switch (v) {
                 'up' => onMove(-1),
                 'down' => onMove(1),
+                'unit' => onUnitChange?.call(unit.other),
+                'plates' => showPlateCalculator(context, unit: unit, initial: _plateStart),
                 _ => onRemove(),
               },
               itemBuilder: (_) => [
+                if (onUnitChange != null) PopupMenuItem(value: 'unit', child: Text('Anotar en ${unit.other.plural} (${unit.other.symbol})')),
+                if (usesPlates(exercise?.equipment)) const PopupMenuItem(value: 'plates', child: Text('Calcular discos')),
                 PopupMenuItem(value: 'up', enabled: index > 0, child: const Text('Subir')),
                 PopupMenuItem(value: 'down', enabled: index < total - 1, child: const Text('Bajar')),
                 PopupMenuItem(value: 'remove', child: Text('Quitar', style: TextStyle(color: c.danger))),
@@ -155,13 +176,17 @@ class ExerciseBlock extends StatelessWidget {
                 if (picked != null) onRestChange(picked);
               },
             ),
+            if (unit != WeightUnit.kg) ...[
+              const SizedBox(width: 8),
+              _UnitBadge(unit: unit, onTap: onUnitChange == null ? null : () => onUnitChange!(unit.other)),
+            ],
             if (note != null) ...[
               const SizedBox(width: 8),
               Expanded(child: Text(note!, textAlign: TextAlign.end, style: TextStyle(fontSize: 11, color: c.muted))),
             ],
           ]),
         ),
-        _SetTable(rows: rows, previous: previous, onChange: onChange, onRemove: onRemoveSet, onAddDrop: onAddDrop, onToggleDone: onToggleDone),
+        _SetTable(rows: rows, previous: previous, unit: unit, onChange: onChange, onRemove: onRemoveSet, onAddDrop: onAddDrop, onToggleDone: onToggleDone),
         Padding(
           padding: const EdgeInsets.fromLTRB(12, 4, 12, 10),
           child: TextButton.icon(
@@ -176,12 +201,46 @@ class ExerciseBlock extends StatelessWidget {
   }
 }
 
+/// Etiqueta "lb" junto al descanso, para que se note que el ejercicio no está en kg.
+class _UnitBadge extends StatelessWidget {
+  const _UnitBadge({required this.unit, this.onTap});
+
+  final WeightUnit unit;
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final c = context.colors;
+    return Tooltip(
+      message: 'Pesos en ${unit.plural}. Toca para cambiar',
+      child: InkWell(
+        borderRadius: BorderRadius.circular(8),
+        onTap: onTap,
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+          decoration: BoxDecoration(color: c.warning.withValues(alpha: 0.18), borderRadius: BorderRadius.circular(8)),
+          child: Text('En ${unit.symbol}', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: c.fgStrong)),
+        ),
+      ),
+    );
+  }
+}
+
 /// Tabla SERIE · ANTERIOR · KG · REPS · ✓
 class _SetTable extends StatelessWidget {
-  const _SetTable({required this.rows, required this.previous, required this.onChange, required this.onRemove, required this.onAddDrop, this.onToggleDone});
+  const _SetTable({
+    required this.rows,
+    required this.previous,
+    required this.unit,
+    required this.onChange,
+    required this.onRemove,
+    required this.onAddDrop,
+    this.onToggleDone,
+  });
 
   final List<SetRow> rows;
   final List<StrengthSet?> previous;
+  final WeightUnit unit;
   final void Function(int, SetPatch) onChange;
   final void Function(int) onRemove;
   final void Function(int) onAddDrop;
@@ -211,7 +270,7 @@ class _SetTable extends StatelessWidget {
         child: cells(
           serie: Text('SERIE', textAlign: TextAlign.center, style: head),
           prev: Text('ANTERIOR', style: head),
-          kg: Text('KG', textAlign: TextAlign.center, style: head),
+          kg: Text(unit.symbol.toUpperCase(), textAlign: TextAlign.center, style: head),
           reps: Text('REPS', textAlign: TextAlign.center, style: head),
           check: onToggleDone != null ? Icon(Icons.check, size: 14, color: c.faint) : null,
           options: const SizedBox(),
@@ -223,6 +282,7 @@ class _SetTable extends StatelessWidget {
           row: rows[i],
           label: labels[i],
           prev: i < previous.length ? previous[i] : null,
+          unit: unit,
           cells: cells,
           canDrop: i > 0,
           onChange: (p) => onChange(i, p),
@@ -240,6 +300,7 @@ class _SetRowView extends StatefulWidget {
     required this.row,
     required this.label,
     required this.prev,
+    required this.unit,
     required this.cells,
     required this.canDrop,
     required this.onChange,
@@ -251,6 +312,7 @@ class _SetRowView extends StatefulWidget {
   final SetRow row;
   final String label;
   final StrengthSet? prev;
+  final WeightUnit unit;
   final Widget Function({required Widget serie, required Widget prev, required Widget kg, required Widget reps, Widget? check, required Widget options}) cells;
 
   /// Puede ser un drop (tiene una serie antes).
@@ -326,15 +388,17 @@ class _SetRowViewState extends State<_SetRowView> {
           ),
         ),
         prev: InkWell(
-          onTap: prev == null ? null : () => widget.onChange(SetPatch(kg: plainEs(prev.kg), reps: plainEs(prev.reps))),
-          child: Text(prev == null ? '—' : formatSet(kg: prev.kg, reps: prev.reps),
+          onTap: prev == null
+              ? null
+              : () => widget.onChange(SetPatch(kg: prev.kg == null ? '' : plainEs(displayWeight(prev.kg!, widget.unit)), reps: plainEs(prev.reps))),
+          child: Text(prev == null ? '—' : formatSet(kg: prev.kg, reps: prev.reps, unit: widget.unit),
               maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 12, color: c.faint, fontFeatures: tabular)),
         ),
         kg: NumberField(
           controller: _kg,
           dense: true,
           textAlign: TextAlign.center,
-          hint: plainEs(row.hintKg).isEmpty ? '0' : plainEs(row.hintKg),
+          hint: row.hintKg == null ? '0' : plainEs(displayWeight(row.hintKg!, widget.unit)),
           onChanged: (v) => widget.onChange(SetPatch(kg: v)),
         ),
         reps: NumberField(

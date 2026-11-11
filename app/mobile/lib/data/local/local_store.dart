@@ -61,6 +61,16 @@ class LocalStore {
 
   Future<void> setCardioDiscipline(String name) => _prefs.setString('cardio-discipline', name);
 
+  /// Unidad de peso preferida para los ejercicios nuevos y los totales ('kg' o 'lb').
+  String? get weightUnit => _prefs.getString('weight-unit');
+
+  Future<void> setWeightUnit(String unit) => _prefs.setString('weight-unit', unit);
+
+  /// Razón ATL/CTL desde la que se avisa la fatiga (1,3 por defecto).
+  double? get fatigueThreshold => _prefs.getDouble('fatigue-threshold');
+
+  Future<void> setFatigueThreshold(double value) => _prefs.setDouble('fatigue-threshold', value);
+
   /// 'system', 'light' o 'dark'.
   String get themeMode => _prefs.getString('theme') ?? 'system';
 

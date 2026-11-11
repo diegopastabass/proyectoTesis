@@ -54,6 +54,10 @@
 	<array>
 		<string>location</string>
 	</array>
+	<key>NSAlarmKitUsageDescription</key>
+	<string>Para mostrar la cuenta regresiva del descanso entre series en la isla dinámica y en la pantalla bloqueada, y sonar una alarma cuando termine.</string>
+	<key>NSSupportsLiveActivities</key>
+	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>La cámara se usa para escanear el código de barras de los alimentos.</string>
 	<key>NSHealthShareUsageDescription</key>

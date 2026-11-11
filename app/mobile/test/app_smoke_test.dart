@@ -16,6 +16,11 @@ import 'package:asistente_deportivo/core/nutrition/models.dart';
 import 'package:asistente_deportivo/core/nutrition/score.dart';
 import 'package:asistente_deportivo/core/nutrition/seed.dart';
 import 'package:asistente_deportivo/core/strength/models.dart';
+import 'package:asistente_deportivo/core/suggestions/profile.dart';
+import 'package:asistente_deportivo/core/suggestions/reason.dart';
+import 'package:asistente_deportivo/core/strength/session.dart';
+import 'package:asistente_deportivo/core/common/units.dart';
+import 'package:asistente_deportivo/core/common/numbers.dart';
 import 'package:asistente_deportivo/app/cardio_providers.dart';
 import 'package:asistente_deportivo/core/activity/models.dart';
 import 'package:asistente_deportivo/core/activity/reminders.dart';
@@ -219,7 +224,7 @@ void main() {
       '/ia/foto?estado=revision': 'Revisa lo marcado',
       '/carga': 'Carga de esta semana',
       '/carga?estado=faltan': 'Faltan datos',
-      '/carga/alerta': 'Bajar 10 %',
+      '/carga/alerta': 'Baja un 10 a 20 %',
       '/metas': 'Cuándo te conviene comer',
       '/metas?dia=descanso': 'día de descanso',
       '/cardio/manual?ejemplo=1': 'Datos de la sesión',
@@ -520,6 +525,149 @@ void main() {
     await _tap(tester, find.bySemanticsLabel(RegExp('^Esfuerzo 5')));
     expect(container.read(workoutsProvider).value!.first.rpe, 5);
     expect(find.text('5/10'), findsOneWidget);
+  });
+
+  testWidgets('CU-05: una sesión de fuerza y una ruta pegadas generan un aviso que se responde una vez', (tester) async {
+    final container = await _boot(tester, withSampleData: false);
+    final now = DateTime.now();
+    final start = DateTime(now.year, now.month, now.day).subtract(const Duration(hours: 14)); // ayer a las 10:00
+    final strength = container.read(backendProvider).strength;
+    await tester.runAsync(() => strength.saveWorkout(demoUser.uid, NewWorkout(
+          routineId: null,
+          name: 'Pierna A',
+          date: toDateKey(start),
+          startedAt: start.millisecondsSinceEpoch,
+          finishedAt: start.add(const Duration(hours: 1)).millisecondsSinceEpoch,
+          exercises: const [],
+          rpe: 7,
+        )));
+    final rideStart = start.add(const Duration(hours: 3));
+    await container.read(cardioActivitiesProvider.notifier).add(
+          CardioActivity(
+            id: 'r1',
+            discipline: Discipline.cycling,
+            title: 'Ruta corta',
+            startedAt: rideStart.millisecondsSinceEpoch,
+            finishedAt: rideStart.add(const Duration(minutes: 45)).millisecondsSinceEpoch,
+            stats: const CardioStats(durationS: 2700, movingS: 2700),
+            updatedAt: 0,
+            rpe: 5,
+          ),
+          const CardioTrack([]),
+        );
+    await _go(tester, container, '/fuerza');
+    expect(find.text('Poco tiempo entre fuerza y cardio'), findsOneWidget);
+    await _tap(tester, find.text('Poco tiempo entre fuerza y cardio'));
+    expect(find.textContaining('con 2 h entre una y otra'), findsOneWidget);
+    await _tap(tester, find.text('Entendido'));
+    expect(find.text('No te volveremos a mostrar este aviso.'), findsOneWidget);
+    final responses = await tester.runAsync(() => container.read(backendProvider).profile.watchSuggestionResponses(demoUser.uid).first);
+    expect(responses!.values.single.response, ResponseKind.dismissed);
+
+    await _go(tester, container, '/carga');
+    expect(find.text('Poco tiempo entre fuerza y cardio'), findsNothing);
+    expect(find.text('Avisar desde'), findsOneWidget);
+  });
+
+  testWidgets('CU-12: responde el cuestionario, ve el plan sugerido y lo acepta', (tester) async {
+    final container = await _boot(tester, withSampleData: false);
+    await _go(tester, container, '/fuerza');
+    await _tap(tester, find.text('¿No sabes qué entrenar?'));
+    expect(find.text('Paso 1 de 3'), findsOneWidget);
+
+    // Sin responder no avanza.
+    await _tap(tester, find.text('Continuar'));
+    expect(find.text('Responde todas las preguntas para continuar.'), findsOneWidget);
+    await _tap(tester, find.text('6 meses a 2 años'));
+    await _tap(tester, find.text('Fuerza y resistencia por igual'));
+    await _tap(tester, find.text('Continuar'));
+
+    await _tap(tester, find.text('5 días'));
+    await _tap(tester, find.text('Gimnasio completo'));
+    await _tap(tester, find.text('Ciclismo'));
+    await _tap(tester, find.text('Continuar'));
+
+    await tester.enterText(find.widgetWithText(TextField, 'Edad (años)'), '29');
+    await tester.enterText(find.widgetWithText(TextField, 'Estatura (cm)'), '178');
+    await tester.enterText(find.widgetWithText(TextField, 'Peso (kg)'), '82');
+    await _tap(tester, find.text('Hombre'));
+    await _tap(tester, find.text('Ver mi plan'));
+
+    // Se guardaron las respuestas y los datos corporales.
+    final athlete = container.read(athleteProfileProvider).value!;
+    expect(athlete.goal, AthleteGoal.hybrid);
+    expect(athlete.disciplines, {Discipline.cycling});
+    final profileRepo = container.read(backendProvider).profile;
+    final body = await tester.runAsync(() => profileRepo.watchBodyProfile(demoUser.uid).first);
+    final weights = await tester.runAsync(() => profileRepo.watchWeights(demoUser.uid).first);
+    expect(body!.heightCm, 178);
+    expect(weights!.last.kg, 82);
+
+    expect(find.text('Nivel intermedio · Orientación equilibrada'), findsOneWidget);
+    expect(find.text('¿Por qué este plan?'), findsOneWidget);
+    await _tap(tester, find.text('Aceptar el plan'));
+    expect(find.text('Es tu plan de esta semana'), findsOneWidget);
+
+    final strengthRepo = container.read(backendProvider).strength;
+    final weekly = (await tester.runAsync(() => profileRepo.watchWeeklyPlan(demoUser.uid).first))!;
+    final training = (await tester.runAsync(() => profileRepo.watchTrainingPlan(demoUser.uid).first))!;
+    expect(training.programId, weekly.programId);
+    expect(training.weekdays, weekly.strengthWeekdays);
+    final routines = (await tester.runAsync(() => strengthRepo.watchRoutines(demoUser.uid).first))!;
+    expect(routines, hasLength(training.routineIds.length));
+
+    // Aceptarlo otra vez (tras rehacer el cuestionario) no duplica las rutinas.
+    await tester.runAsync(() => container.read(strengthActionsProvider).acceptWeeklyPlan(weekly));
+    await _settle(tester);
+    expect(await tester.runAsync(() => strengthRepo.watchRoutines(demoUser.uid).first), hasLength(routines.length));
+
+    await _tap(tester, find.text('Empezar'));
+    expect(find.textContaining(RegExp('Hoy en tu plan|Hoy descansas')), findsOneWidget);
+  });
+
+  testWidgets('al terminar sugiere corregir un peso anotado en kg en una máquina en libras', (tester) async {
+    final container = await _boot(tester);
+    const bench = 'Barbell_Bench_Press_-_Medium_Grip';
+    final last = container.read(workoutsProvider).value!.first.exercises.firstWhere((e) => e.exerciseId == bench);
+    final kg = last.sets.last.kg!;
+    // Escribe los números de una máquina en libras sin cambiar la unidad (sigue en kg).
+    final lb = plainEs(displayWeight(kg, WeightUnit.lb, decimals: 0));
+    container.read(activeWorkoutProvider.notifier).set(ActiveWorkout(name: 'Pecho', startedAt: DateTime.now().millisecondsSinceEpoch, exercises: [
+      DraftExercise(key: 'b', exerciseId: bench, sets: [DraftSet(key: '1', kg: lb, reps: '8', done: true), DraftSet(key: '2', kg: lb, reps: '8', done: true)]),
+    ]));
+    await _go(tester, container, '/fuerza/entrenar');
+    expect(find.text('KG'), findsOneWidget);
+
+    await _tap(tester, find.text('Terminar'));
+    expect(find.text('¿Revisamos las unidades?'), findsOneWidget);
+    await _tap(tester, find.text('Corregir y seguir'));
+    expect(container.read(activeWorkoutProvider)!.exercises.single.unit, WeightUnit.lb);
+    await _tap(tester, find.bySemanticsLabel(RegExp('^Esfuerzo 7')));
+
+    final saved = container.read(workoutsProvider).value!.first.exercises.single;
+    expect(saved.unit, WeightUnit.lb);
+    expect(saved.sets.first.kg, closeTo(kg, 0.5));
+    // El detalle lo muestra en libras, como se anotó.
+    expect(find.text('$lb lb × 8'), findsNWidgets(2));
+  });
+
+  testWidgets('el menú del ejercicio cambia a libras y abre la calculadora de discos', (tester) async {
+    final container = await _boot(tester);
+    await _go(tester, container, '/fuerza');
+    await _tap(tester, find.byTooltip('Empezar Rutina de pecho'));
+    await _tap(tester, find.byTooltip('Opciones de Press de banca con barra'));
+    await _tap(tester, find.text('Anotar en libras (lb)'));
+    final ex = container.read(activeWorkoutProvider)!.exercises.first;
+    expect(ex.unit, WeightUnit.lb);
+    expect(find.text('LB'), findsOneWidget);
+    expect(find.text('En lb'), findsOneWidget);
+
+    await _tap(tester, find.byTooltip('Opciones de Press de banca con barra'));
+    await _tap(tester, find.text('Calcular discos'));
+    expect(find.text('Discos por lado'), findsOneWidget);
+    await tester.enterText(find.widgetWithText(TextField, 'Peso total (lb)'), '225');
+    await _settle(tester);
+    expect(find.text('2 × 45'), findsOneWidget);
   });
 
   testWidgets('al marcar una serie empieza el descanso y se agregan drop sets desde las opciones', (tester) async {

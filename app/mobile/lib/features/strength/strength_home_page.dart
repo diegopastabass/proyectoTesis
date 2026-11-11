@@ -11,6 +11,9 @@ import '../../core/strength/models.dart';
 import '../../core/strength/programs.dart';
 import '../../core/strength/session.dart';
 import '../../core/strength/stats.dart';
+import '../../core/suggestions/alerts.dart';
+import '../../core/suggestions/weekly_plan.dart';
+import '../load/load_pages.dart';
 import '../../ui/format.dart';
 import '../../ui/sim_widgets.dart';
 import '../../ui/widgets.dart';
@@ -26,7 +29,11 @@ Future<void> startWorkout(BuildContext context, WidgetRef ref, [Routine? routine
     return;
   }
   final now = DateTime.now().millisecondsSinceEpoch;
-  ref.read(activeWorkoutProvider.notifier).set(routine != null ? workoutFromRoutine(routine, now) : emptyWorkout(now));
+  final workouts = ref.read(workoutsProvider).value ?? const <Workout>[];
+  final preferred = ref.read(weightUnitProvider);
+  ref.read(activeWorkoutProvider.notifier).set(routine != null
+      ? workoutFromRoutine(routine, now, unitFor: (id) => unitForExercise(id, workouts, fallback: preferred))
+      : emptyWorkout(now));
   if (context.mounted) context.push('/fuerza/entrenar');
 }
 
@@ -42,6 +49,7 @@ class StrengthHomePage extends ConsumerWidget {
     final next = ref.watch(nextRoutineProvider);
     final program = programById(plan?.programId);
     final remindersOn = ref.watch(reminderSettingsProvider).training;
+    final weekly = ref.watch(weeklyPlanProvider).value;
 
     return AsyncView(data, builder: (s) {
       final today = todayKey();
@@ -100,7 +108,7 @@ class StrengthHomePage extends ConsumerWidget {
                     final done = trainedDays.contains(date);
                     final isToday = date == today;
                     final future = date.compareTo(today) > 0;
-                    final planned = plan?.weekdays.contains(i + 1) ?? false;
+                    final planned = (plan?.weekdays.contains(i + 1) ?? false) || (weekly?.trainingWeekdays.contains(i + 1) ?? false);
                     return Column(children: [
                       Text(_weekDays[i], style: TextStyle(fontSize: 10, fontWeight: FontWeight.w500, color: isToday ? c.primary : c.faint)),
                       const SizedBox(height: 4),
@@ -128,6 +136,7 @@ class StrengthHomePage extends ConsumerWidget {
             ]),
           ]),
         ),
+        if (weekly != null) _TodayInPlan(weekly),
         if (program != null && plan!.hasProgram)
           AppCard(
             padding: const EdgeInsets.fromLTRB(12, 10, 4, 12),
@@ -192,23 +201,35 @@ class StrengthHomePage extends ConsumerWidget {
         else
           AppCard(
             padding: const EdgeInsets.all(12),
-            onTap: () => context.push('/fuerza/programas'),
+            onTap: () => context.push(ref.read(athleteProfileProvider).value == null ? '/bienvenida/cuestionario' : '/bienvenida/plan'),
             child: Row(children: [
               const GradientIcon(Icons.auto_awesome, size: 36),
               const SizedBox(width: 12),
               Expanded(
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   Text('¿No sabes qué entrenar?', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: c.fgStrong)),
-                  Text('Te sugerimos un programa según tus días, objetivo y cardio.', style: TextStyle(fontSize: 12, color: c.muted)),
+                  Text(
+                    ref.watch(athleteProfileProvider).value == null
+                        ? 'Responde 10 preguntas y te armamos una semana de fuerza y cardio.'
+                        : 'Tu semana sugerida de fuerza y cardio está lista.',
+                    style: TextStyle(fontSize: 12, color: c.muted),
+                  ),
                 ]),
               ),
               Icon(Icons.chevron_right, color: c.faint),
             ]),
           ),
-        if (ref.watch(previewEnabledProvider)) ...[
+        // La alerta más importante, arriba de todo lo demás del módulo.
+        if (ref.watch(fatigueAlertsProvider).value?.where((a) => a.severity != Severity.info).firstOrNull case final alert?) AlertCard(alert: alert),
+        if (ref.watch(previewEnabledProvider))
           EntryCard(icon: Icons.auto_awesome, title: 'Contar mi sesión', subtitle: 'Escríbela o díctala con tus palabras', onTap: () => context.push('/ia/fuerza')),
-          EntryCard(icon: Icons.bolt, title: 'Carga de entrenamiento', subtitle: 'Fuerza y cardio sumados en la semana', onTap: () => context.push('/carga')),
-        ],
+        EntryCard(
+          icon: Icons.bolt,
+          title: 'Carga de entrenamiento',
+          subtitle: 'Fuerza y cardio sumados en la semana',
+          badge: switch (ref.watch(fatigueAlertsProvider).value?.length ?? 0) { 0 => null, final n => '$n' },
+          onTap: () => context.push('/carga'),
+        ),
         SectionTitle(
           'Rutinas',
           trailing: Row(mainAxisSize: MainAxisSize.min, children: [
@@ -268,7 +289,7 @@ class StrengthHomePage extends ConsumerWidget {
                 title: Text(w.name, maxLines: 1, overflow: TextOverflow.ellipsis),
                 subtitle: () {
                   final t = workoutTotals(w);
-                  return Text('${shortDate(w.date)} · ${t.sets} series · ${formatVolume(t.volume)}', style: TextStyle(fontSize: 12, color: c.faint));
+                  return Text('${shortDate(w.date)} · ${t.sets} series · ${formatVolume(t.volume, ref.watch(weightUnitProvider))}', style: TextStyle(fontSize: 12, color: c.faint));
                 }(),
                 trailing: Icon(Icons.chevron_right, color: c.faint),
               ),
@@ -276,5 +297,46 @@ class StrengthHomePage extends ConsumerWidget {
         ],
       ]);
     });
+  }
+}
+
+/// Lo que el plan semanal sugiere para hoy (y, si hoy es descanso, lo próximo).
+class _TodayInPlan extends StatelessWidget {
+  const _TodayInPlan(this.plan);
+
+  final WeeklyPlan plan;
+
+  @override
+  Widget build(BuildContext context) {
+    final c = context.colors;
+    final today = DateTime.now().weekday;
+    var day = today;
+    var sessions = plan.on(day);
+    for (var k = 1; sessions.isEmpty && k < 7; k++) {
+      day = (today - 1 + k) % 7 + 1;
+      sessions = plan.on(day);
+    }
+    final label = day == today ? 'Hoy en tu plan' : 'Hoy descansas · ${weekdayShort[day - 1].toLowerCase()}';
+    return AppCard(
+      padding: const EdgeInsets.all(12),
+      onTap: () => context.push('/bienvenida/plan'),
+      child: Row(children: [
+        const GradientIcon(Icons.insights, size: 36),
+        const SizedBox(width: 12),
+        Expanded(
+          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Text(label, style: TextStyle(fontSize: 11, color: c.muted)),
+            for (final s in sessions)
+              Text(
+                '${s.kind == SessionKind.strength ? 'Fuerza: ' : ''}${s.title} · ${s.minutes} min',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: c.fgStrong),
+              ),
+          ]),
+        ),
+        Icon(Icons.chevron_right, color: c.faint),
+      ]),
+    );
   }
 }

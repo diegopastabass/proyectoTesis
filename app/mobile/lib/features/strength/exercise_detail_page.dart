@@ -7,8 +7,10 @@ import 'package:go_router/go_router.dart';
 import '../../app/providers.dart';
 import '../../app/theme.dart';
 import '../../core/common/numbers.dart';
+import '../../core/common/units.dart';
 import '../../core/strength/insights.dart';
 import '../../core/strength/models.dart';
+import '../../core/strength/session.dart';
 import '../../core/strength/stats.dart';
 import '../../ui/format.dart';
 import '../../ui/trend_chart.dart';
@@ -16,21 +18,23 @@ import '../../ui/widgets.dart';
 import 'exercise_widgets.dart';
 
 enum _Metric {
-  e1rm('1RM est.', 'kg', 'Fuerza máxima estimada de tu mejor serie (fórmula de Epley)'),
-  maxKg('Peso máx.', 'kg', 'Mayor peso de la sesión'),
-  volume('Volumen', 'kg', 'kg × repeticiones de las series efectivas'),
-  reps('Reps máx.', 'reps', 'Más repeticiones en una serie');
+  e1rm('1RM est.', 'Fuerza máxima estimada de tu mejor serie (fórmula de Epley)'),
+  maxKg('Peso máx.', 'Mayor peso de la sesión'),
+  volume('Volumen', 'Peso × repeticiones de las series efectivas'),
+  reps('Reps máx.', 'Más repeticiones en una serie');
 
-  const _Metric(this.label, this.unit, this.hint);
+  const _Metric(this.label, this.hint);
 
   final String label;
-  final String unit;
   final String hint;
 
-  double value(ExerciseSession s) => switch (this) {
-        _Metric.e1rm => round1(s.best1RM),
-        _Metric.maxKg => s.maxKg,
-        _Metric.volume => s.volume,
+  String unitLabel(WeightUnit unit) => this == _Metric.reps ? 'reps' : unit.symbol;
+
+  /// Valor en la unidad del ejercicio (los pesos se guardan en kg).
+  double value(ExerciseSession s, WeightUnit unit) => switch (this) {
+        _Metric.e1rm => round1(fromKg(s.best1RM, unit)),
+        _Metric.maxKg => fromKg(s.maxKg, unit),
+        _Metric.volume => fromKg(s.volume, unit),
         _Metric.reps => s.maxReps,
       };
 }
@@ -73,6 +77,8 @@ class _ExerciseDetailState extends ConsumerState<_ExerciseDetail> {
     final weighted = history.any((h) => h.maxKg > 0);
     final metric = _metric ?? (weighted ? _Metric.e1rm : _Metric.reps);
     final exercise = widget.exercise;
+    // La unidad en que se anotó la última vez (la de la máquina) o la preferida.
+    final unit = unitForExercise(widget.id, widget.workouts, fallback: ref.watch(weightUnitProvider));
 
     ExerciseSession? bestKg;
     for (final h in history) {
@@ -103,10 +109,10 @@ class _ExerciseDetailState extends ConsumerState<_ExerciseDetail> {
       else ...[
         TileGrid(children: [
           if (weighted && bestKg != null)
-            StatTile(icon: Icons.emoji_events_outlined, label: 'Mejor serie', value: formatSet(kg: bestKg.maxKg, reps: bestKg.repsAtMax)),
-          if (weighted) StatTile(icon: Icons.scale_outlined, label: '1RM estimado', value: '${formatKg(round1(best1RM))} kg'),
+            StatTile(icon: Icons.emoji_events_outlined, label: 'Mejor serie', value: formatSet(kg: bestKg.maxKg, reps: bestKg.repsAtMax, unit: unit)),
+          if (weighted) StatTile(icon: Icons.scale_outlined, label: '1RM estimado', value: formatWeight(round1(best1RM), unit)),
           StatTile(icon: Icons.repeat, label: 'Más repeticiones', value: plain(bestReps)),
-          if (weighted) StatTile(icon: Icons.scale_outlined, label: 'Mayor volumen', value: formatVolume(bestVolume)),
+          if (weighted) StatTile(icon: Icons.scale_outlined, label: 'Mayor volumen', value: formatVolume(bestVolume, unit)),
         ]),
         AppCard(
           padding: const EdgeInsets.all(12),
@@ -123,18 +129,18 @@ class _ExerciseDetailState extends ConsumerState<_ExerciseDetail> {
             const SizedBox(height: 8),
             TrendChart<ExerciseSession>(
               key: ValueKey(metric),
-              points: [for (final h in history) TrendPoint(date: h.date, value: metric.value(h), data: h)],
-              unit: metric.unit,
+              points: [for (final h in history) TrendPoint(date: h.date, value: metric.value(h, unit), data: h)],
+              unit: metric.unitLabel(unit),
               label: '${metric.label} de ${widget.name}',
               format: metric == _Metric.volume ? (n) => formatNumber(jsRound(n), maxFractionDigits: 0) : formatKg,
               axisFormat: metric == _Metric.volume ? compactNumber : formatKg,
               minPad: switch (metric) {
                 _Metric.volume => 50,
                 _Metric.reps => 1,
-                _ => 2.5,
+                _ => unit == WeightUnit.kg ? 2.5 : 5,
               },
               compareLabel: 'vs. sesión anterior',
-              detail: (s) => 'Mejor serie ${formatSet(kg: s.maxKg, reps: s.repsAtMax)} · ${s.sets} series',
+              detail: (s) => 'Mejor serie ${formatSet(kg: s.maxKg, reps: s.repsAtMax, unit: unit)} · ${s.sets} series',
               onSelect: (s) => context.push('/fuerza/historial/${s.workoutId}'),
             ),
             if (history.length == 1)
@@ -154,7 +160,7 @@ class _ExerciseDetailState extends ConsumerState<_ExerciseDetail> {
                   SizedBox(
                     width: 100,
                     child: Text(
-                      formatSet(kg: h.maxKg, reps: h.maxKg > 0 ? h.repsAtMax : h.maxReps),
+                      formatSet(kg: h.maxKg, reps: h.maxKg > 0 ? h.repsAtMax : h.maxReps, unit: unit),
                       textAlign: TextAlign.right,
                       style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: c.fgStrong, fontFeatures: tabular),
                     ),

@@ -74,7 +74,7 @@ class _RestLeftState extends State<_RestLeft> {
   Widget build(BuildContext context) {
     final left = widget.rest.remaining(DateTime.now().millisecondsSinceEpoch);
     return Text(
-      left == 0 ? 'Descanso listo' : 'Descanso ${formatElapsed(Duration(seconds: left))}',
+      left == 0 ? 'Descanso listo' : '${widget.rest.paused ? 'En pausa' : 'Descanso'} ${formatElapsed(Duration(seconds: left))}',
       style: widget.style.copyWith(fontFeatures: const [FontFeature.tabularFigures()]),
     );
   }

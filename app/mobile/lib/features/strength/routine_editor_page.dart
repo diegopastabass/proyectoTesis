@@ -5,12 +5,15 @@ import 'package:go_router/go_router.dart';
 import '../../app/providers.dart';
 import '../../app/theme.dart';
 import '../../core/common/numbers.dart';
+import '../../core/common/units.dart';
 import '../../core/strength/models.dart';
 import '../../core/strength/session.dart';
 import '../../core/strength/stats.dart';
+import '../../core/strength/weights.dart';
 import '../../ui/widgets.dart';
 import 'exercise_block.dart';
 import 'exercise_widgets.dart';
+import 'unit_sheets.dart';
 
 class RoutineEditorPage extends ConsumerWidget {
   const RoutineEditorPage({super.key, required this.id});
@@ -29,15 +32,27 @@ class RoutineEditorPage extends ConsumerWidget {
 }
 
 class _Block {
-  _Block(this.exerciseId, this.sets, this.restSec) : key = newKey();
+  _Block(this.exerciseId, this.sets, this.restSec, this.unit, {this.explicitUnit = false}) : key = newKey();
 
   final String key;
   final String exerciseId;
   List<SetRow> sets;
   int restSec;
+
+  /// Unidad de los pesos escritos (la de la máquina).
+  WeightUnit unit;
+
+  /// La rutina ya indicaba la unidad o el usuario la cambió: se guarda con ella.
+  bool explicitUnit;
 }
 
 SetRow _row(SetType type, String kg, String reps) => SetRow(key: newKey(), type: type, kg: kg, reps: reps);
+
+/// Peso guardado (kg) como texto en la unidad del ejercicio.
+String _kgText(double? kg, WeightUnit unit) => kg == null ? '' : plainEs(displayWeight(kg, unit, decimals: 2));
+
+/// Los pesos se escriben en la unidad del ejercicio y se guardan en kg.
+double? _parseKg(String text, WeightUnit unit) => switch (parseAmount(text)) { final v? => toKg(v, unit), null => null };
 
 class _RoutineEditor extends ConsumerStatefulWidget {
   const _RoutineEditor({super.key, required this.routine, required this.data});
@@ -51,9 +66,22 @@ class _RoutineEditor extends ConsumerStatefulWidget {
 
 class _RoutineEditorState extends ConsumerState<_RoutineEditor> {
   late final _name = TextEditingController(text: widget.routine?.name ?? '');
+  late final WeightUnit _preferred = ref.read(weightUnitProvider);
+
+  WeightUnit _unitFor(String exerciseId) => unitForExercise(exerciseId, widget.data.workouts, fallback: _preferred);
+
   late final List<_Block> _blocks = [
     for (final e in widget.routine?.exercises ?? const <RoutineExercise>[])
-      _Block(e.exerciseId, [for (final s in e.sets) _row(s.type, plainEs(s.kg), formatRepsRange(s.reps, s.repsMax))], e.restSec ?? defaultRestSec),
+      () {
+        final unit = e.unit ?? _unitFor(e.exerciseId);
+        return _Block(
+          e.exerciseId,
+          [for (final s in e.sets) _row(s.type, _kgText(s.kg, unit), formatRepsRange(s.reps, s.repsMax))],
+          e.restSec ?? defaultRestSec,
+          unit,
+          explicitUnit: e.unit != null,
+        );
+      }(),
   ];
   bool _saving = false;
 
@@ -67,11 +95,11 @@ class _RoutineEditorState extends ConsumerState<_RoutineEditor> {
 
   List<RoutineExercise> _toExercises() => [
         for (final b in _blocks)
-          RoutineExercise(exerciseId: b.exerciseId, restSec: b.restSec, sets: [
+          RoutineExercise(exerciseId: b.exerciseId, restSec: b.restSec, unit: b.explicitUnit || b.unit != _preferred ? b.unit : null, sets: [
             for (final s in b.sets)
               () {
                 final reps = parseRepsRange(s.reps);
-                return StrengthSet(type: s.type, kg: parseAmount(s.kg), reps: reps.min, repsMax: reps.max);
+                return StrengthSet(type: s.type, kg: _parseKg(s.kg, b.unit), reps: reps.min, repsMax: reps.max);
               }(),
           ]),
       ];
@@ -94,13 +122,35 @@ class _RoutineEditorState extends ConsumerState<_RoutineEditor> {
         return;
       }
       final now = DateTime.now().millisecondsSinceEpoch;
-      ref.read(activeWorkoutProvider.notifier).set(workoutFromRoutine(Routine(id: id, name: name, exercises: exercises), now));
+      ref.read(activeWorkoutProvider.notifier).set(workoutFromRoutine(Routine(id: id, name: name, exercises: exercises), now, unitFor: _unitFor));
       if (mounted) context.pushReplacement('/fuerza/entrenar');
     } on Object catch (e) {
       if (!mounted) return;
       showToast(context, errorMessage(e), error: true);
       setState(() => _saving = false);
     }
+  }
+
+  Future<void> _switchUnit(_Block b, WeightUnit to) async {
+    var convert = false;
+    if (b.sets.any((s) => parseAmount(s.kg) != null)) {
+      final answer = await askUnitSwitch(context, to: to);
+      if (answer == null) return;
+      convert = answer;
+    }
+    setState(() {
+      if (convert) {
+        b.sets = [
+          for (final s in b.sets)
+            switch (parseAmount(s.kg)) {
+              final v? => SetRow(key: s.key, type: s.type, kg: plainEs(round1(convertWeight(v, b.unit, to))), reps: s.reps),
+              null => s,
+            },
+        ];
+      }
+      b.unit = to;
+      b.explicitUnit = true;
+    });
   }
 
   Future<void> _delete() async {
@@ -159,6 +209,8 @@ class _RoutineEditorState extends ConsumerState<_RoutineEditor> {
             name: data.nameOf(b.exerciseId),
             rows: b.sets,
             previous: [for (var j = 0; j < b.sets.length; j++) matchPrevious(last, types, j)],
+            unit: b.unit,
+            onUnitChange: (to) => _switchUnit(b, to),
             onChange: (j, p) => setState(() {
               final s = b.sets[j];
               b.sets = [...b.sets]..[j] = SetRow(key: s.key, type: p.type ?? s.type, kg: p.kg ?? s.kg, reps: p.reps ?? s.reps);
@@ -171,8 +223,8 @@ class _RoutineEditorState extends ConsumerState<_RoutineEditor> {
             }),
             onAddDrop: (j) => setState(() {
               final at = dropInsertIndex(types, j);
-              final kg = dropKg(parseAmount(b.sets[at - 1].kg));
-              b.sets = [...b.sets]..insert(at, _row(SetType.drop, plainEs(kg), ''));
+              final drop = dropWeight(parseAmount(b.sets[at - 1].kg), b.unit);
+              b.sets = [...b.sets]..insert(at, _row(SetType.drop, plainEs(drop), ''));
             }),
             restSec: b.restSec,
             onRestChange: (sec) => setState(() => b.restSec = sec),
@@ -186,12 +238,14 @@ class _RoutineEditorState extends ConsumerState<_RoutineEditor> {
           final exercise = await pickExercise(context, selected: _blocks.map((b) => b.exerciseId).toList());
           if (exercise == null) return;
           final last = lastSetsFor(data.workouts, exercise.id);
+          final unit = _unitFor(exercise.id);
           setState(() => _blocks.add(_Block(
                 exercise.id,
                 last != null && last.isNotEmpty
-                    ? [for (final s in last) _row(s.type, plainEs(s.kg), plainEs(s.reps))]
+                    ? [for (final s in last) _row(s.type, _kgText(s.kg, unit), plainEs(s.reps))]
                     : [for (var k = 0; k < 3; k++) _row(SetType.normal, '', '')],
                 restForNewExercise(exercise.id, data.workouts),
+                unit,
               )));
         },
         icon: const Icon(Icons.add),

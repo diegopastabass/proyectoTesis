@@ -5,10 +5,14 @@ import 'dart:math' as math;
 
 import '../common/date.dart';
 import '../common/numbers.dart';
+import '../common/units.dart';
 import 'models.dart';
 import 'stats.dart';
+import 'weights.dart';
 
 /// Serie en edición. kg y reps son texto para no pelear con el teclado ("52,").
+/// `kg` está escrito en la unidad del ejercicio ([DraftExercise.unit]); los
+/// `target*` y todo lo que se guarda están en kg.
 class DraftSet {
   const DraftSet({
     required this.key,
@@ -69,13 +73,14 @@ class DraftSet {
 }
 
 class DraftExercise {
-  const DraftExercise({required this.key, required this.exerciseId, required this.sets, this.restSec = defaultRestSec});
+  const DraftExercise({required this.key, required this.exerciseId, required this.sets, this.restSec = defaultRestSec, this.unit = WeightUnit.kg});
 
   factory DraftExercise.fromJson(Map<String, dynamic> j) => DraftExercise(
         key: j['key'] as String? ?? newKey(),
         exerciseId: j['exerciseId'] as String,
         sets: [for (final s in j['sets'] as List? ?? const []) DraftSet.fromJson((s as Map).cast<String, dynamic>())],
         restSec: restFrom(j['restSec']) ?? defaultRestSec,
+        unit: WeightUnit.from(j['unit']),
       );
 
   final String key;
@@ -85,22 +90,45 @@ class DraftExercise {
   /// Descanso tras cada serie, en segundos (0 = sin temporizador).
   final int restSec;
 
-  DraftExercise withSets(List<DraftSet> sets) => DraftExercise(key: key, exerciseId: exerciseId, sets: sets, restSec: restSec);
+  /// Unidad en que se escriben los pesos de este ejercicio (la de la máquina).
+  final WeightUnit unit;
 
-  DraftExercise withRest(int restSec) => DraftExercise(key: key, exerciseId: exerciseId, sets: sets, restSec: restSec);
+  DraftExercise withSets(List<DraftSet> sets) => DraftExercise(key: key, exerciseId: exerciseId, sets: sets, restSec: restSec, unit: unit);
 
-  Map<String, dynamic> toJson() => {'key': key, 'exerciseId': exerciseId, 'sets': sets.map((s) => s.toJson()).toList(), 'restSec': restSec};
+  DraftExercise withRest(int restSec) => DraftExercise(key: key, exerciseId: exerciseId, sets: sets, restSec: restSec, unit: unit);
+
+  DraftExercise withUnit(WeightUnit unit) => DraftExercise(key: key, exerciseId: exerciseId, sets: sets, restSec: restSec, unit: unit);
+
+  Map<String, dynamic> toJson() =>
+      {'key': key, 'exerciseId': exerciseId, 'sets': sets.map((s) => s.toJson()).toList(), 'restSec': restSec, 'unit': unit.name};
 }
 
-/// Descanso en curso: termina en `endsAt` (ms) y dura `seconds` en total (para la barra de progreso).
+/// Descanso en curso: termina en `endsAt` (ms) y dura `seconds` en total (para la
+/// barra de progreso). En pausa, `pausedLeft` guarda los ms que faltaban y
+/// `endsAt` no se usa hasta reanudar.
 class RestTimer {
-  const RestTimer({required this.endsAt, required this.seconds});
+  const RestTimer({required this.endsAt, required this.seconds, this.pausedLeft});
 
   final int endsAt;
   final int seconds;
 
+  /// ms que faltaban al pausar (null = corriendo).
+  final int? pausedLeft;
+
+  bool get paused => pausedLeft != null;
+
+  /// ms que faltan (0 si ya terminó).
+  int leftMs(int now) => math.max(0, pausedLeft ?? endsAt - now);
+
   /// Segundos que faltan (0 si ya terminó).
-  int remaining(int now) => math.max(0, ((endsAt - now) / 1000).ceil());
+  int remaining(int now) => (leftMs(now) / 1000).ceil();
+
+  /// Parte que queda (1 = recién empieza), para la barra de progreso.
+  double progress(int now) => seconds <= 0 ? 0 : (leftMs(now) / (seconds * 1000)).clamp(0.0, 1.0);
+
+  RestTimer pause(int now) => paused ? this : RestTimer(endsAt: endsAt, seconds: seconds, pausedLeft: math.max(0, endsAt - now));
+
+  RestTimer resume(int now) => paused ? RestTimer(endsAt: now + pausedLeft!, seconds: seconds) : this;
 }
 
 class ActiveWorkout {
@@ -114,7 +142,8 @@ class ActiveWorkout {
           for (final e in j['exercises'] as List? ?? const []) DraftExercise.fromJson((e as Map).cast<String, dynamic>()),
         ],
         rest: switch ((j['restEndsAt'], j['restSec'])) {
-          (final num endsAt, final num seconds) => RestTimer(endsAt: endsAt.toInt(), seconds: seconds.toInt()),
+          (final num endsAt, final num seconds) =>
+            RestTimer(endsAt: endsAt.toInt(), seconds: seconds.toInt(), pausedLeft: (j['restPausedLeft'] as num?)?.toInt()),
           _ => null,
         },
       );
@@ -137,6 +166,7 @@ class ActiveWorkout {
         'exercises': exercises.map((e) => e.toJson()).toList(),
         'restEndsAt': ?rest?.endsAt,
         'restSec': ?rest?.seconds,
+        'restPausedLeft': ?rest?.pausedLeft,
       };
 }
 
@@ -156,7 +186,9 @@ DraftSet _draftSet(SetType type, [double? targetKg, double? targetReps, double? 
 
 ActiveWorkout emptyWorkout(int now, [String name = 'Entrenamiento libre']) => ActiveWorkout(name: name, startedAt: now);
 
-ActiveWorkout workoutFromRoutine(Routine routine, int now) => ActiveWorkout(
+/// Sesión desde una rutina. La unidad de cada ejercicio es la que indica la rutina
+/// o, si no indica, la que entrega `unitFor` (la última usada o la preferida).
+ActiveWorkout workoutFromRoutine(Routine routine, int now, {WeightUnit Function(String exerciseId)? unitFor}) => ActiveWorkout(
       routineId: routine.id,
       name: routine.name,
       startedAt: now,
@@ -167,9 +199,30 @@ ActiveWorkout workoutFromRoutine(Routine routine, int now) => ActiveWorkout(
             exerciseId: e.exerciseId,
             sets: [for (final s in e.sets) _draftSet(s.type, s.kg, s.reps, s.repsMax)],
             restSec: e.restSec ?? defaultRestSec,
+            unit: e.unit ?? unitFor?.call(e.exerciseId) ?? WeightUnit.kg,
           ),
       ],
     );
+
+/// Unidad al agregar un ejercicio: la de la última vez (la máquina suele ser la
+/// misma) o la preferida.
+WeightUnit unitForExercise(String exerciseId, List<Workout> workouts, {WeightUnit fallback = WeightUnit.kg}) =>
+    lastUnitFor(workouts, exerciseId) ?? fallback;
+
+/// Cambia la unidad del ejercicio. Con `convert` los pesos escritos se convierten
+/// (100 kg → 220,5 lb); sin él se mantienen los números y cambia solo cómo se leen
+/// (anotaste "100" mirando una máquina en libras).
+DraftExercise switchUnit(DraftExercise e, WeightUnit to, {required bool convert}) {
+  if (e.unit == to) return e;
+  if (!convert) return e.withUnit(to);
+  return e.withUnit(to).withSets([
+    for (final s in e.sets)
+      switch (parseAmount(s.kg)) {
+        final v? => s.copyWith(kg: plainEs(round1(convertWeight(v, e.unit, to)))),
+        null => s,
+      },
+  ]);
+}
 
 /// Estructura de series al agregar un ejercicio: la de la última vez o 3 series normales.
 List<DraftSet> setsForNewExercise(String exerciseId, List<Workout> workouts) {
@@ -189,13 +242,9 @@ List<DraftSet> appendSet(List<DraftSet> sets) {
   return [...sets, _draftSet(type, last.targetKg, last.targetReps, last.targetRepsMax)];
 }
 
-/// Peso sugerido para un drop: 80 % del anterior, redondeado a 2,5 kg (o a 0,5 kg en pesos bajos).
-double? dropKg(double? kg) {
-  if (kg == null || kg <= 0) return null;
-  final step = kg >= 20 ? 2.5 : 0.5;
-  final out = (kg * 0.8 / step).round() * step;
-  return out > 0 && out < kg ? out : null;
-}
+/// Peso sugerido para un drop en kg: 80 % del anterior, redondeado a 2,5 kg (o a
+/// 0,5 kg en pesos bajos). En otra unidad, ver [dropWeight].
+double? dropKg(double? kg) => dropWeight(kg, WeightUnit.kg);
 
 /// Dónde va un drop nuevo de la serie `index`: después de ella y de sus drops.
 int dropInsertIndex(List<SetType> types, int index) {
@@ -207,12 +256,15 @@ int dropInsertIndex(List<SetType> types, int index) {
 }
 
 /// Agrega un drop a la serie `index` (después de sus drops), con el peso bajado
-/// del último que se hizo o se sugirió en ese grupo.
-List<DraftSet> insertDrop(List<DraftSet> sets, int index, {double? fromKg}) {
+/// del último que se hizo o se sugirió en ese grupo. El peso escrito está en
+/// `unit`; `fromKg` y la sugerencia que queda en el drop, en kg.
+List<DraftSet> insertDrop(List<DraftSet> sets, int index, {double? fromKg, WeightUnit unit = WeightUnit.kg}) {
   final at = dropInsertIndex([for (final s in sets) s.type], index);
   final before = sets[at - 1];
-  final kg = parseAmount(before.kg) ?? before.targetKg ?? fromKg;
-  return [...sets]..insert(at, _draftSet(SetType.drop, dropKg(kg)));
+  final ref = before.targetKg ?? fromKg;
+  final value = parseAmount(before.kg) ?? (ref == null ? null : displayWeight(ref, unit));
+  final drop = dropWeight(value, unit);
+  return [...sets]..insert(at, _draftSet(SetType.drop, drop == null ? null : toKg(drop, unit)));
 }
 
 /// Descanso al marcar la serie `index`: ninguno si sigue un drop (va sin pausa) o
@@ -223,11 +275,16 @@ int? restAfter(DraftExercise e, int index) {
   return next?.type == SetType.drop ? null : e.restSec;
 }
 
-/// Suma o resta segundos al descanso en curso; null si con eso termina.
+/// Suma o resta segundos al descanso en curso (también en pausa); null si con eso termina.
 RestTimer? adjustRest(RestTimer rest, int deltaSec, int now) {
+  final seconds = math.max(1, rest.seconds + deltaSec);
+  if (rest.paused) {
+    final left = rest.pausedLeft! + deltaSec * 1000;
+    return left <= 0 ? null : RestTimer(endsAt: rest.endsAt, seconds: seconds, pausedLeft: left);
+  }
   final endsAt = rest.endsAt + deltaSec * 1000;
   if (endsAt <= now) return null;
-  return RestTimer(endsAt: endsAt, seconds: math.max(1, rest.seconds + deltaSec));
+  return RestTimer(endsAt: endsAt, seconds: seconds);
 }
 
 /// Sugerencia para una serie: lo que se hizo la última vez en esa serie o, si no
@@ -242,6 +299,7 @@ RestTimer? adjustRest(RestTimer rest, int deltaSec, int now) {
 /// Doble progresión: si la última vez todas las series efectivas llegaron al tope
 /// de su rango, se sugiere subir el peso (el más alto usado + `step`) y volver al
 /// mínimo del rango. null si alguna serie no tiene rango o no llegó al tope.
+/// `step` está en la unidad del ejercicio; el resultado, en kg.
 double? progressionKg(DraftExercise e, List<StrengthSet?> previous, {double step = 2.5}) {
   var top = 0.0;
   var any = false;
@@ -254,18 +312,14 @@ double? progressionKg(DraftExercise e, List<StrengthSet?> previous, {double step
     top = math.max(top, p.kg!);
     any = true;
   }
-  return any ? top + step : null;
+  if (!any) return null;
+  // Se sube desde el peso redondeado en la unidad de la máquina (45 lb y no 44,9).
+  return toKg(displayWeight(top, e.unit) + step, e.unit);
 }
 
-const _lowerBody = {'quadriceps', 'hamstrings', 'glutes', 'adductors', 'abductors', 'lower back'};
-
-/// Cuánto subir: 5 kg en básicos de pierna con barra, 2 kg con mancuernas (cada una) y 2,5 kg en el resto.
-double progressionStep(Exercise? e) {
-  if (e == null) return 2.5;
-  if (e.equipment == 'dumbbell') return 2;
-  if (e.equipment == 'barbell' && e.primary.any(_lowerBody.contains)) return 5;
-  return 2.5;
-}
+/// Cuánto subir en kg: 5 en básicos de pierna con barra, 2 con mancuernas (cada
+/// una) y 2,5 en el resto. En otra unidad, ver [progressionStepIn].
+double progressionStep(Exercise? e) => progressionStepIn(e, WeightUnit.kg);
 
 /// Rango escrito en el editor de rutinas: "8-12" → (8, 12); "10" → (10, null).
 ({double? min, double? max}) parseRepsRange(String text) {
@@ -283,11 +337,11 @@ String repsRangeLabel(double? min, double? max) => max == null || max == min ? p
 String formatRepsRange(double? min, double? max) => max == null ? plainEs(min) : '${plainEs(min)}-${plainEs(max)}';
 
 /// Marca o desmarca una serie. Al marcarla, los campos vacíos se completan con la
-/// sugerencia. Devuelve null si no hay repeticiones con qué completarla.
-DraftSet? toggleDone(DraftSet set, StrengthSet? previous, {double? progressKg}) {
+/// sugerencia (convertida a `unit`). Devuelve null si no hay repeticiones con qué completarla.
+DraftSet? toggleDone(DraftSet set, StrengthSet? previous, {double? progressKg, WeightUnit unit = WeightUnit.kg}) {
   if (set.done) return set.copyWith(done: false);
   final hint = suggestion(set, previous, progressKg: progressKg);
-  final kg = set.kg.trim().isNotEmpty ? set.kg : plainEs(hint.kg);
+  final kg = set.kg.trim().isNotEmpty ? set.kg : (hint.kg == null ? '' : plainEs(displayWeight(hint.kg!, unit)));
   final reps = set.reps.trim().isNotEmpty ? set.reps : plainEs(hint.reps);
   final r = parseAmount(reps);
   if (r == null || r <= 0) return null;
@@ -305,14 +359,14 @@ int pendingSets(ActiveWorkout w) => w.exercises.fold(0, (n, e) => n + e.sets.whe
 
 int doneSets(ActiveWorkout w) => w.exercises.fold(0, (n, e) => n + e.sets.where((s) => s.done).length);
 
-/// Volumen de las series marcadas, sin calentamiento.
+/// Volumen de las series marcadas, sin calentamiento (en kg).
 double activeVolume(ActiveWorkout w) => w.exercises.fold(
       0,
       (sum, e) =>
           sum +
           e.sets
               .where((s) => s.done && s.type != SetType.warmup)
-              .fold<double>(0, (v, s) => v + (parseAmount(s.kg) ?? 0) * (parseAmount(s.reps) ?? 0)),
+              .fold<double>(0, (v, s) => v + toKg(parseAmount(s.kg) ?? 0, e.unit) * (parseAmount(s.reps) ?? 0)),
     );
 
 /// Convierte la sesión en curso en lo que se guarda: solo series hechas y ejercicios con alguna.
@@ -320,9 +374,12 @@ NewWorkout finishWorkout(ActiveWorkout w, int now, String Function(String exerci
   final exercises = <WorkoutExercise>[];
   for (final e in w.exercises) {
     final sets = [
-      for (final s in e.sets.where((s) => s.done)) StrengthSet(type: s.type, kg: parseAmount(s.kg), reps: parseAmount(s.reps)),
+      for (final s in e.sets.where((s) => s.done))
+        StrengthSet(type: s.type, kg: switch (parseAmount(s.kg)) { final v? => toKg(v, e.unit), null => null }, reps: parseAmount(s.reps)),
     ].where((s) => (s.reps ?? 0) > 0).toList();
-    if (sets.isNotEmpty) exercises.add(WorkoutExercise(exerciseId: e.exerciseId, name: nameOf(e.exerciseId), sets: sets, restSec: e.restSec));
+    if (sets.isNotEmpty) {
+      exercises.add(WorkoutExercise(exerciseId: e.exerciseId, name: nameOf(e.exerciseId), sets: sets, restSec: e.restSec, unit: e.unit));
+    }
   }
   return NewWorkout(
     routineId: w.routineId,
@@ -342,7 +399,7 @@ List<RoutineExercise> routineExercisesFrom(Workout w, [Routine? routine]) {
   final before = {for (final e in routine?.exercises ?? const <RoutineExercise>[]) e.exerciseId: e.sets};
   return [
     for (final e in w.exercises)
-      RoutineExercise(exerciseId: e.exerciseId, restSec: e.restSec ?? routine?.exercises.where((x) => x.exerciseId == e.exerciseId).firstOrNull?.restSec, sets: [
+      RoutineExercise(exerciseId: e.exerciseId, restSec: e.restSec ?? routine?.exercises.where((x) => x.exerciseId == e.exerciseId).firstOrNull?.restSec, unit: e.unit, sets: [
         for (var i = 0; i < e.sets.length; i++)
           () {
             final s = e.sets[i];

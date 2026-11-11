@@ -88,6 +88,7 @@ class _WorkoutDetailState extends ConsumerState<_WorkoutDetail> {
     final delta = prevVolume != null && prevVolume > 0 ? jsRound((totals.volume / prevVolume - 1) * 100) : null;
     final routine = w.routineId == null ? null : data.routines.where((r) => r.id == w.routineId).firstOrNull;
     final load = strengthSessionLoad(w);
+    final unit = ref.watch(weightUnitProvider);
 
     return PageBody(children: [
       PageHeader(
@@ -127,16 +128,16 @@ class _WorkoutDetailState extends ConsumerState<_WorkoutDetail> {
             tween: Tween(begin: 0, end: totals.volume.toDouble()),
             duration: const Duration(milliseconds: 1200),
             curve: Curves.easeOutCubic,
-            builder: (_, v, _) => Text(formatVolume(v), style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: c.fgStrong, fontFeatures: tabular)),
+            builder: (_, v, _) => Text(formatVolume(v, unit), style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: c.fgStrong, fontFeatures: tabular)),
           ),
           if (delta != null && previous != null)
             Text(
-              '${delta > 0 ? '+' : delta < 0 ? '−' : ''}${delta.abs()} % vs. ${formatVolume(prevVolume!)} la vez anterior (${longDate(previous.date)})',
+              '${delta > 0 ? '+' : delta < 0 ? '−' : ''}${delta.abs()} % vs. ${formatVolume(prevVolume!, unit)} la vez anterior (${longDate(previous.date)})',
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 12, color: delta > 0 ? c.success : c.muted),
             ),
           const SizedBox(height: 4),
-          Text('Suma de kg × repeticiones de las series efectivas (sin calentamiento).',
+          Text('Suma de peso × repeticiones de las series efectivas (sin calentamiento).',
               textAlign: TextAlign.center, style: TextStyle(fontSize: 11, color: c.faint)),
         ]),
       ),
@@ -226,7 +227,7 @@ class _WorkoutDetailState extends ConsumerState<_WorkoutDetail> {
                       child: Text(data.nameOf(e.exerciseId, e.name),
                           maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: c.primary)),
                     ),
-                    if (best > 0) Text('1RM est. ${formatKg(round1(best))} kg', style: TextStyle(fontSize: 11, color: c.faint)),
+                    if (best > 0) Text('1RM est. ${formatWeight(round1(best), e.unit)}', style: TextStyle(fontSize: 11, color: c.faint)),
                   ]),
                 ),
               ),
@@ -248,7 +249,7 @@ class _WorkoutDetailState extends ConsumerState<_WorkoutDetail> {
                               )),
                         ),
                         const SizedBox(width: 10),
-                        Text(formatSet(kg: e.sets[j].kg, reps: e.sets[j].reps), style: TextStyle(fontSize: 14, color: c.fg, fontFeatures: tabular)),
+                        Text(formatSet(kg: e.sets[j].kg, reps: e.sets[j].reps, unit: e.unit), style: TextStyle(fontSize: 14, color: c.fg, fontFeatures: tabular)),
                       ]),
                     ),
                 ]),

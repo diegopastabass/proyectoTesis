@@ -9,7 +9,7 @@ library;
 import '../common/date.dart';
 import '../nutrition/models.dart';
 
-enum ReminderKind { meal, training, streak }
+enum ReminderKind { meal, training, streak, fatigue }
 
 /// Hora del día en minutos desde medianoche.
 String formatClock(int minutes) => '${minutes ~/ 60}:${(minutes % 60).toString().padLeft(2, '0')}';
@@ -30,6 +30,7 @@ class ReminderSettings {
     this.trainingAt = 18 * 60,
     this.streak = false,
     this.streakAt = 21 * 60,
+    this.fatigue = true,
   });
 
   factory ReminderSettings.fromJson(Map<String, dynamic> j) => ReminderSettings(
@@ -41,6 +42,7 @@ class ReminderSettings {
         trainingAt: (j['trainingAt'] as num?)?.toInt() ?? 18 * 60,
         streak: j['streak'] == true,
         streakAt: (j['streakAt'] as num?)?.toInt() ?? 21 * 60,
+        fatigue: j['fatigue'] != false,
       );
 
   /// Comidas con recordatorio y su hora.
@@ -50,7 +52,10 @@ class ReminderSettings {
   final bool streak;
   final int streakAt;
 
-  bool get any => meals.isNotEmpty || training || streak;
+  /// Avisar las alertas de fatiga cruzada el día de la sesión (activado por defecto).
+  final bool fatigue;
+
+  bool get any => meals.isNotEmpty || training || streak || fatigue;
 
   /// Lo que se activa con un toque: almuerzo y cena, entrenamiento y racha.
   static const suggested = ReminderSettings(
@@ -59,12 +64,13 @@ class ReminderSettings {
     streak: true,
   );
 
-  ReminderSettings copyWith({Map<MealSlot, int>? meals, bool? training, int? trainingAt, bool? streak, int? streakAt}) => ReminderSettings(
+  ReminderSettings copyWith({Map<MealSlot, int>? meals, bool? training, int? trainingAt, bool? streak, int? streakAt, bool? fatigue}) => ReminderSettings(
         meals: meals ?? this.meals,
         training: training ?? this.training,
         trainingAt: trainingAt ?? this.trainingAt,
         streak: streak ?? this.streak,
         streakAt: streakAt ?? this.streakAt,
+        fatigue: fatigue ?? this.fatigue,
       );
 
   ReminderSettings withMeal(MealSlot slot, int? minutes) =>
@@ -76,6 +82,7 @@ class ReminderSettings {
         'trainingAt': trainingAt,
         'streak': streak,
         'streakAt': streakAt,
+        'fatigue': fatigue,
       };
 }
 

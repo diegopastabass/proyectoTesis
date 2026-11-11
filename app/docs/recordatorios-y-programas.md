@@ -26,7 +26,7 @@ Se configuran en **Ajustes → Notificaciones** (ruta `/notificaciones`). Tambi�
 
 ## 2. Programas sugeridos
 
-**Fuerza → "¿No sabes qué entrenar?"** (ruta `/fuerza/programas`) abre un cuestionario. Las sugerencias se actualizan con cada respuesta.
+**Fuerza → "¿No sabes qué entrenar?"** abre desde el 09-11-2026 el cuestionario inicial y el **plan semanal de fuerza y cardio** del motor de sugerencias ([motor-de-sugerencias.md](motor-de-sugerencias.md) §3), que usa este catálogo para la parte de fuerza. La pantalla de programas (`/fuerza/programas`) sigue disponible desde el plan ("Ver otros programas de fuerza") y desde el menú del programa ("Cambiar de programa"). Sus sugerencias se actualizan con cada respuesta.
 
 | Pregunta | Opciones |
 |---|---|

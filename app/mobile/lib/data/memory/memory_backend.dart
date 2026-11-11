@@ -21,6 +21,9 @@ import '../../core/nutrition/recipe.dart';
 import '../../core/nutrition/score.dart';
 import '../../core/strength/models.dart';
 import '../../core/strength/plan.dart';
+import '../../core/suggestions/profile.dart';
+import '../../core/suggestions/reason.dart';
+import '../../core/suggestions/weekly_plan.dart';
 import '../repositories.dart';
 
 /// Valor observable: emite el valor actual al suscribirse y luego cada cambio.
@@ -42,7 +45,11 @@ class _Live<T> {
   Stream<T> get stream => Stream.multi((c) {
         c.add(_value);
         final sub = _changes.stream.listen(c.add);
-        c.onCancel = sub.cancel;
+        // Sin devolver el Future de cancelar: `stream.first` lo esperaría y, en las
+        // pruebas con reloj simulado, no terminaría nunca.
+        c.onCancel = () {
+          sub.cancel();
+        };
       });
 }
 
@@ -228,10 +235,22 @@ class MemoryDiaryRepository implements DiaryRepository {
 }
 
 class MemoryProfileRepository implements ProfileRepository {
-  MemoryProfileRepository({List<WeightEntry> weights = const [], BodyGoal? bodyGoal, BodyProfile body = const BodyProfile()})
+  MemoryProfileRepository({List<WeightEntry> weights = const [], BodyGoal? bodyGoal, BodyProfile body = const BodyProfile(), AthleteProfile? athlete})
       : _weights = _Live(sortByDate(weights)),
         _bodyGoal = _Live(bodyGoal),
-        _body = _Live(body);
+        _body = _Live(body),
+        _athlete = _Live(athlete);
+
+  final _Live<AthleteProfile?> _athlete;
+  final _weekly = _Live<WeeklyPlan?>(null);
+  final _responses = _Live<Map<String, SuggestionResponse>>(const {});
+
+  @override
+  Stream<Map<String, SuggestionResponse>> watchSuggestionResponses(String uid) => _responses.stream;
+
+  @override
+  Future<void> saveSuggestionResponse(String uid, SuggestionResponse response) async =>
+      _responses.value = {..._responses.value, response.id: response};
 
   final _goals = _Live<Goals>(defaultGoals);
   final _Live<BodyProfile> _body;
@@ -286,6 +305,18 @@ class MemoryProfileRepository implements ProfileRepository {
 
   @override
   Future<void> saveTrainingPlan(String uid, TrainingPlan plan) async => _plan.value = plan;
+
+  @override
+  Stream<AthleteProfile?> watchAthleteProfile(String uid) => _athlete.stream;
+
+  @override
+  Future<void> saveAthleteProfile(String uid, AthleteProfile profile) async => _athlete.value = profile;
+
+  @override
+  Stream<WeeklyPlan?> watchWeeklyPlan(String uid) => _weekly.stream;
+
+  @override
+  Future<void> saveWeeklyPlan(String uid, WeeklyPlan? plan) async => _weekly.value = plan;
 }
 
 class MemoryStrengthRepository implements StrengthRepository {
@@ -483,6 +514,8 @@ Backend memoryBackend({required List<Food> seedFoods, required LookupRepository 
     profile: MemoryProfileRepository(
       weights: weights,
       bodyGoal: withSampleData ? BodyGoal(type: GoalType.lose, targetKg: 80, startDate: addDays(today, -35)) : null,
+      // Cuestionario ya respondido: el plan semanal sugerido se ve sin llenarlo.
+      athlete: withSampleData ? exampleAthlete.copyWith(answeredAt: addDays(today, -1)) : null,
     ),
     strength: MemoryStrengthRepository(
       routines: withSampleData
