@@ -1,7 +1,9 @@
 \documentclass[12pt]{article}
 \usepackage{setspace}
 \usepackage[utf8]{inputenc}
-\usepackage{graphicx}
+\newif\ifborrador
+\borradortrue % \borradorfalse para el PDF final con imágenes
+\usepackage[\ifborrador draft\fi]{graphicx}
 \usepackage{titling}
 \usepackage{tocloft}
 \usepackage{titlesec}
