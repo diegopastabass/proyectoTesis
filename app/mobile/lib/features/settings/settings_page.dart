@@ -10,6 +10,7 @@ import '../../data/repositories.dart';
 import '../../platform/capability.dart';
 import '../../platform/platform_providers.dart';
 import '../../ui/widgets.dart';
+import '../../data/ai/ai_service.dart';
 
 class SettingsPage extends ConsumerWidget {
   const SettingsPage({super.key});
@@ -21,6 +22,7 @@ class SettingsPage extends ConsumerWidget {
     final backend = ref.watch(backendProvider).kind;
     final theme = ref.watch(themeModeProvider);
     final weightUnit = ref.watch(weightUnitProvider);
+    final ai = ref.watch(aiServiceProvider);
     final capabilities = ref.watch(capabilitiesProvider);
     final preview = ref.watch(previewEnabledProvider);
     final plan = ref.watch(simProvider).plan;
@@ -133,6 +135,24 @@ class SettingsPage extends ConsumerWidget {
           'menú del ejercicio (⋮) durante el entrenamiento: la app la recuerda para la próxima vez. Todo se guarda en kg, '
           'así que cambiar de unidad no altera tu historial.',
           style: TextStyle(fontSize: 11, color: c.faint, height: 1.4),
+        ),
+        const SectionTitle('Asistente de IA'),
+        AppCard(
+          padding: const EdgeInsets.all(12),
+          child: Row(children: [
+            Icon(Icons.auto_awesome, color: ai.mode == AiMode.off ? c.faint : c.primary),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                switch (ai.mode) {
+                  AiMode.gemini => 'Conectado a Gemini (${ai.model}). Comida con foto o palabras, etiquetas, sesiones contadas e instrucciones en español.',
+                  AiMode.demo => 'Modo demostración: el asistente responde ejemplos. Para usar Gemini, agrega la clave en env/gemini.json.',
+                  AiMode.off => 'Sin configurar: falta la clave de la API de Gemini en env/gemini.json.',
+                },
+                style: TextStyle(fontSize: 13, color: c.fg),
+              ),
+            ),
+          ]),
         ),
         const SectionTitle('Integraciones del sistema'),
         AsyncView(

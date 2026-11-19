@@ -16,6 +16,7 @@ import '../../ui/format.dart';
 import '../../ui/trend_chart.dart';
 import '../../ui/widgets.dart';
 import 'exercise_widgets.dart';
+import '../../data/ai/ai_service.dart';
 
 enum _Metric {
   e1rm('1RM est.', 'Fuerza máxima estimada de tu mejor serie (fórmula de Epley)'),
@@ -188,6 +189,33 @@ class _Instructions extends ConsumerStatefulWidget {
 class _InstructionsState extends ConsumerState<_Instructions> {
   Future<List<String>>? _steps;
 
+  /// Traducción al español (null mientras no se pide o si no hay asistente).
+  Future<List<String>>? _spanish;
+  bool _showOriginal = false;
+
+  /// Carga las instrucciones (en inglés) y, si hay asistente, su traducción: la
+  /// guardada en el teléfono o una nueva.
+  void _load() {
+    final steps = ref.read(lookupProvider).exerciseInstructions(widget.id);
+    final ai = ref.read(aiServiceProvider);
+    final store = ref.read(localStoreProvider);
+    setState(() {
+      _steps = steps;
+      _spanish = ai.mode == AiMode.off
+          ? null
+          : steps.then((en) async {
+              if (en.isEmpty) return en;
+              final cached = store.translatedSteps(widget.id);
+              if (cached != null) return cached;
+              final name = ref.read(exercisesProvider).value?.byId[widget.id]?.nameEn ?? widget.id.replaceAll('_', ' ');
+              final es = await ai.translateSteps(name, en);
+              // El ejemplo del modo demostración no se guarda como traducción.
+              if (ai.mode == AiMode.gemini) await store.setTranslatedSteps(widget.id, es);
+              return es;
+            });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final c = context.colors;
@@ -195,7 +223,7 @@ class _InstructionsState extends ConsumerState<_Instructions> {
       return Align(
         alignment: Alignment.centerLeft,
         child: OutlinedButton.icon(
-          onPressed: () => setState(() => _steps = ref.read(lookupProvider).exerciseInstructions(widget.id)),
+          onPressed: _load,
           icon: const Icon(Icons.menu_book_outlined, size: 18),
           label: const Text('Instrucciones'),
         ),
@@ -209,24 +237,52 @@ class _InstructionsState extends ConsumerState<_Instructions> {
           return Row(children: [
             Text('No se pudieron cargar. Revisa tu conexión.', style: TextStyle(fontSize: 12, color: c.danger)),
             TextButton(
-              onPressed: () => setState(() => _steps = ref.read(lookupProvider).exerciseInstructions(widget.id)),
+              onPressed: _load,
               child: const Text('Reintentar'),
             ),
           ]);
         }
-        final steps = snap.data ?? const [];
-        return AppCard(
-          padding: const EdgeInsets.all(12),
-          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text('Instrucciones (en inglés)', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: c.muted)),
-            const SizedBox(height: 6),
-            if (steps.isEmpty) Text('Sin instrucciones.', style: TextStyle(fontSize: 12, color: c.faint)),
-            for (var i = 0; i < steps.length; i++)
-              Padding(
-                padding: const EdgeInsets.only(bottom: 4),
-                child: Text('${i + 1}. ${steps[i]}', style: TextStyle(fontSize: 12, color: c.fg, height: 1.45)),
-              ),
-          ]),
+        final original = snap.data ?? const [];
+        Widget card(List<String> steps, String title, {Widget? footer}) => AppCard(
+              padding: const EdgeInsets.all(12),
+              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Text(title, style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: c.muted)),
+                const SizedBox(height: 6),
+                if (steps.isEmpty) Text('Sin instrucciones.', style: TextStyle(fontSize: 12, color: c.faint)),
+                for (var i = 0; i < steps.length; i++)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 4),
+                    child: Text('${i + 1}. ${steps[i]}', style: TextStyle(fontSize: 12, color: c.fg, height: 1.45)),
+                  ),
+                ?footer,
+              ]),
+            );
+        final spanish = _spanish;
+        if (spanish == null || original.isEmpty) return card(original, 'Instrucciones (en inglés)');
+        return FutureBuilder<List<String>>(
+          future: spanish,
+          builder: (context, es) {
+            if (es.connectionState != ConnectionState.done) {
+              return card(original, 'Instrucciones (en inglés)', footer: Text('Traduciendo al español…', style: TextStyle(fontSize: 11, color: c.muted)));
+            }
+            if (es.hasError || _showOriginal) {
+              return card(
+                original,
+                'Instrucciones (en inglés)',
+                footer: es.hasError
+                    ? Text('No se pudieron traducir. ${es.error is AiException ? (es.error! as AiException).message : ''}', style: TextStyle(fontSize: 11, color: c.faint))
+                    : TextButton(onPressed: () => setState(() => _showOriginal = false), child: const Text('Ver en español')),
+              );
+            }
+            return card(
+              es.data ?? original,
+              'Instrucciones',
+              footer: Row(children: [
+                Expanded(child: Text('Traducidas por el asistente', style: TextStyle(fontSize: 11, color: c.faint))),
+                TextButton(onPressed: () => setState(() => _showOriginal = true), child: const Text('Ver original')),
+              ]),
+            );
+          },
         );
       },
     );

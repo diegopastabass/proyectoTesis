@@ -84,6 +84,22 @@ Usa `env/firebase.json` si existe (si no, el modo demostración); se le puede pa
 3. Ejecuta con `flutter run --dart-define-from-file=env/firebase.json`. El ingreso usa `signInWithProvider(GoogleAuthProvider())`, que abre Google en una hoja segura de Safari; la sesión queda guardada en el teléfono.
 4. Las reglas de `../firestore.rules` no cambian: todo lo propio de la app vive bajo `users/{uid}`.
 
+## Asistente de IA (Gemini)
+
+Comida con foto o con palabras, lectura de tablas nutricionales, sesiones de fuerza contadas con palabras e instrucciones de ejercicios en español ([../docs/ia-gemini.md](../docs/ia-gemini.md)). Para activarlo:
+
+1. Crea `env/gemini.json` (no se versiona) con este contenido y pega tu clave de Google AI Studio en `GEMINI_API_KEY`:
+   ```json
+   {
+     "GEMINI_API_KEY": "TU_CLAVE",
+     "GEMINI_MODEL": "gemini-3.5-flash-lite"
+   }
+   ```
+2. Suma el archivo al ejecutar: `flutter run --dart-define-from-file=env/memory.json --dart-define-from-file=env/gemini.json` (o con `env/firebase.json`). `tool/install_iphone.sh` lo suma solo si existe.
+3. Revisa en **Ajustes › Asistente de IA** que diga "Conectado a Gemini".
+
+Sin clave, el modo demostración responde ejemplos fijos.
+
 ## Temporizador del descanso (isla dinámica y alarma)
 
 En iOS 26 o superior, el descanso entre series usa AlarmKit: cuenta regresiva en la isla dinámica y en la pantalla bloqueada, con pausar, seguir y cancelar, y una alarma al terminar ([../docs/modulo-fuerza.md](../docs/modulo-fuerza.md) §2.2.2). Va en una extensión de widgets propia (`ios/RestTimerWidget`, bundle `cl.asistentedeportivo.asistenteDeportivo.RestTimerWidget`) que se firma junto con la app; si cambias el *Bundle Identifier* de Runner, cambia también el de esta extensión (debe empezar igual). El permiso de alarmas se pide la primera vez que empieza un descanso. **En el simulador el diálogo de permiso no aparece** (limitación del simulador): para ver la isla dinámica y la alarma hay que instalar la app en un iPhone con iOS 26+ (`sh tool/install_iphone.sh`).

@@ -172,8 +172,7 @@ class _CardioHomePageState extends ConsumerState<CardioHomePage> {
               ),
             ],
           ]),
-        if (ref.watch(previewEnabledProvider))
-          EntryCard(icon: Icons.bolt, title: 'Carga de entrenamiento', subtitle: 'Fuerza y cardio sumados en la semana', onTap: () => context.push('/carga')),
+        EntryCard(icon: Icons.bolt, title: 'Carga y fatiga cruzada', subtitle: 'Cómo va tu fatiga con fuerza y cardio sumados', onTap: () => context.push('/carga')),
         if (recent.isNotEmpty) ...[
           SectionTitle(
             'Últimas actividades',

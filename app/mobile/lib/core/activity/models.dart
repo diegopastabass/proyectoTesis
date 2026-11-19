@@ -29,6 +29,14 @@ class DailySteps {
   final DataSource source;
 }
 
+/// Pasos de una hora del día (0–23).
+class HourlySteps {
+  const HourlySteps({required this.hour, required this.steps});
+
+  final int hour;
+  final int steps;
+}
+
 class HeartRateSample {
   const HeartRateSample({required this.at, required this.bpm, required this.source});
 

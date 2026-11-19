@@ -71,7 +71,27 @@ class LocalStore {
 
   Future<void> setFatigueThreshold(double value) => _prefs.setDouble('fatigue-threshold', value);
 
-  /// 'system', 'light' o 'dark'.
+  /// Instrucciones de un ejercicio ya traducidas al español por el asistente
+  /// (se traducen una sola vez por ejercicio).
+  List<String>? translatedSteps(String exerciseId) {
+    final raw = _prefs.getStringList('instrucciones-es:$exerciseId');
+    return raw == null || raw.isEmpty ? null : raw;
+  }
+
+  Future<void> setTranslatedSteps(String exerciseId, List<String> steps) => _prefs.setStringList('instrucciones-es:$exerciseId', steps);
+
+  /// Meta diaria de pasos.
+  int? get stepsGoal => _prefs.getInt('steps-goal');
+
+  Future<void> setStepsGoal(int goal) => _prefs.setInt('steps-goal', goal);
+
+  /// Último resumen de la fatiga escrito por el asistente, con la firma de los
+  /// datos que lo generaron (se reutiliza mientras los datos no cambien).
+  String? get fatigueSummary => _prefs.getString('fatiga-resumen');
+
+  Future<void> setFatigueSummary(String json) => _prefs.setString('fatiga-resumen', json);
+
+    /// 'system', 'light' o 'dark'.
   String get themeMode => _prefs.getString('theme') ?? 'system';
 
   Future<void> setThemeMode(String mode) => _prefs.setString('theme', mode);

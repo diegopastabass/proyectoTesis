@@ -239,3 +239,35 @@ Si más de la mitad de las sesiones de la última semana tienen el RPE estimado,
 - Las notificaciones locales solo se programan con la app abierta; con la app cerrada por días, la alerta se ve al volver a abrirla. En el MVP las enviaría el servidor con FCM.
 - La hora de las comidas (para "carbohidratos 2–3 h antes del cardio" y "proteína dentro de 2 h después de la fuerza") se agrega en la fase 3, junto a las metas del día.
 - El umbral del déficit (20 %) y los porcentajes de las sugerencias son decisiones de diseño a ajustar con las evaluaciones del prototipo.
+
+## 5. Sección "Carga y fatiga cruzada" ampliada (16-11-2026)
+
+La pantalla `/carga` reúne todo lo de la fatiga cruzada, en este orden:
+
+1. **Estado:** la zona de la razón aguda/crónica con su valor (o "faltan datos" con menos de 28 días).
+2. **Lo que dice el asistente:** explicación en palabras escrita por Gemini con las cifras del motor ([ia-gemini.md](ia-gemini.md) §7).
+3. **Alertas** vigentes del motor (fase 2).
+4. **Carga de la semana** por disciplina (UA en 7 días).
+5. **De dónde viene la carga:** parte de la semana de fuerza y de cardio, con su carga reciente y habitual por día y su razón propia.
+6. **Barras de la semana**, **razón aguda/crónica en el tiempo** (banda verde de 0,8 a 1,3 y el umbral de aviso punteado) y **carga reciente frente a la habitual**.
+7. **Sesiones de la semana**, cada una con minutos, RPE (marcado si es estimado) y su carga en UA; tocarla abre la sesión. Si la mayoría tiene el RPE estimado, se sugiere anotarlo.
+8. **Avisar desde** (umbral configurable).
+
+Se entra desde Fuerza y desde Cardio ("Carga y fatiga cruzada"). La lógica nueva está en `lib/core/training/fatigue_view.dart` y se prueba en `test/core/steps_and_fatigue_test.dart`.
+
+## 6. Próximas implementaciones posibles
+
+Ordenadas por valor para el usuario y para la tesis (lo hecho está en §3 a §5 y en [ia-gemini.md](ia-gemini.md)):
+
+| # | Qué | Caso de uso | Por qué ahora |
+|---|---|---|---|
+| 1 | **Metas del día según el entrenamiento** y horario de comidas (fase 3) | CU-18, R05 | Es la pantalla de diseño que más se nota; ya existen el gasto (Mifflin), la carga del día y el plan. Falta la hora de las comidas y una fuente para los g/kg de carbohidratos |
+| 2 | **Ajuste semanal del plan** (fase 4) | RNF-14 | Cierra el ciclo del motor: adherencia, RPE medio y razón → sugerir subir, mantener o bajar, con historial de cambios |
+| 3 | **Entrenamientos del Apple Watch** desde Apple Salud | CU-03 | Ya está el permiso de Salud; suma cardio con pulso medio y mejora la confianza del RPE |
+| 4 | **Cardio sin GPS** (disciplina, minutos, RPE) | CU-17 | Pocas horas: entra directo a la carga |
+| 5 | **"Cómo me sentí"** en sesiones y comidas | CU-20, R07 | Texto libre que también puede usar el asistente al explicar la semana |
+| 6 | **Términos de uso y consentimiento reales** | CU-26, RNF-17 | Necesario antes de probar con otras personas |
+| 7 | **Exportar y borrar mis datos** | CU-21, R09 | Requisito legal (Ley 19.628) antes de pruebas con usuarios |
+| 8 | Pasos en la carga del día (como actividad baja) y en el gasto | — | Ya están los pasos y su estimación de energía |
+| 9 | Notas por ejercicio que se recuerdan, series de calentamiento sugeridas, superseries | — | Mejoras de uso en Fuerza |
+| 10 | Red social básica sin fotos | CU-09, 13, 14, 22, 23 | Más grande; conviene después de 6 y 7 |

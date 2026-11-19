@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../app/providers.dart';
-import '../../app/sim_providers.dart';
 import '../../app/theme.dart';
 import '../../core/common/date.dart';
 import '../../core/common/numbers.dart';
@@ -19,6 +18,7 @@ import '../../ui/widgets.dart';
 import 'barcode_scanner_page.dart';
 import 'food_form_page.dart';
 import 'food_picker.dart';
+import '../../data/ai/ai_service.dart';
 
 const _placeholder = 'Arroz 100g\n1 Tomate mediano\nHuevos x3\nAtún 150g';
 
@@ -170,7 +170,7 @@ class _LogPageState extends ConsumerState<LogPage> {
             onSelected: (_) => setState(() => _meal = m),
           ),
       ]),
-      if (ref.watch(previewEnabledProvider))
+      if (ref.watch(aiServiceProvider).mode != AiMode.off)
         Row(children: [
           Expanded(child: OutlinedButton.icon(onPressed: () => context.push('/ia/foto'), icon: const Icon(Icons.photo_camera_outlined, size: 18), label: const Text('Con foto'))),
           const SizedBox(width: 8),

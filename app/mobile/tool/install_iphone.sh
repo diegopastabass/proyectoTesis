@@ -24,7 +24,10 @@ for d in json.load(sys.stdin):
 [ -n "$DEVICE" ] || { echo "No hay un iPhone conectado y desbloqueado."; exit 1; }
 
 echo "Compilando en modo $MODE con $ENV_FILE para el dispositivo $DEVICE…"
-flutter build ios "--$MODE" --dart-define-from-file="$ENV_FILE"
+# El asistente de IA (Gemini) se suma si existe env/gemini.json (ver mobile/README.md).
+GEMINI_ARGS=""
+[ -f env/gemini.json ] && GEMINI_ARGS="--dart-define-from-file=env/gemini.json" && echo "Con el asistente de IA (env/gemini.json)."
+flutter build ios "--$MODE" --dart-define-from-file="$ENV_FILE" $GEMINI_ARGS
 # devicectl actualiza la app sin desinstalarla (flutter install la borra y se pierden
 # los datos locales, como la sesión de fuerza en curso).
 xcrun devicectl device install app --device "$DEVICE" build/ios/iphoneos/Runner.app

@@ -58,8 +58,10 @@
 	<string>Para mostrar la cuenta regresiva del descanso entre series en la isla dinámica y en la pantalla bloqueada, y sonar una alarma cuando termine.</string>
 	<key>NSSupportsLiveActivities</key>
 	<true/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Para elegir la foto de un plato o de una tabla nutricional y que el asistente la lea.</string>
 	<key>NSCameraUsageDescription</key>
-	<string>La cámara se usa para escanear el código de barras de los alimentos.</string>
+	<string>La cámara se usa para escanear el código de barras de los alimentos y para sacar fotos de platos y tablas nutricionales.</string>
 	<key>NSHealthShareUsageDescription</key>
 	<string>NutriApp lee tus pasos de Apple Salud para mostrarlos en tu diario junto a tu alimentación.</string>
 	<key>NSHealthUpdateUsageDescription</key>

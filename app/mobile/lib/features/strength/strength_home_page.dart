@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../app/providers.dart';
-import '../../app/sim_providers.dart';
 import '../../app/theme.dart';
 import '../../core/common/date.dart';
 import '../../core/strength/calendar.dart';
@@ -12,6 +11,7 @@ import '../../core/strength/programs.dart';
 import '../../core/strength/session.dart';
 import '../../core/strength/stats.dart';
 import '../../core/suggestions/alerts.dart';
+import '../../data/ai/ai_service.dart';
 import '../../core/suggestions/weekly_plan.dart';
 import '../load/load_pages.dart';
 import '../../ui/format.dart';
@@ -221,12 +221,12 @@ class StrengthHomePage extends ConsumerWidget {
           ),
         // La alerta más importante, arriba de todo lo demás del módulo.
         if (ref.watch(fatigueAlertsProvider).value?.where((a) => a.severity != Severity.info).firstOrNull case final alert?) AlertCard(alert: alert),
-        if (ref.watch(previewEnabledProvider))
+        if (ref.watch(aiServiceProvider).mode != AiMode.off)
           EntryCard(icon: Icons.auto_awesome, title: 'Contar mi sesión', subtitle: 'Escríbela o díctala con tus palabras', onTap: () => context.push('/ia/fuerza')),
         EntryCard(
           icon: Icons.bolt,
-          title: 'Carga de entrenamiento',
-          subtitle: 'Fuerza y cardio sumados en la semana',
+          title: 'Carga y fatiga cruzada',
+          subtitle: 'Cómo va tu fatiga con fuerza y cardio sumados',
           badge: switch (ref.watch(fatigueAlertsProvider).value?.length ?? 0) { 0 => null, final n => '$n' },
           onTap: () => context.push('/carga'),
         ),

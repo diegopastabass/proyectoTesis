@@ -4,6 +4,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:asistente_deportivo/app/app.dart';
 import 'package:asistente_deportivo/app/providers.dart';
@@ -17,6 +18,7 @@ import 'package:asistente_deportivo/core/nutrition/score.dart';
 import 'package:asistente_deportivo/core/nutrition/seed.dart';
 import 'package:asistente_deportivo/core/strength/models.dart';
 import 'package:asistente_deportivo/core/suggestions/profile.dart';
+import 'package:asistente_deportivo/features/ai/photo_picker.dart';
 import 'package:asistente_deportivo/core/suggestions/reason.dart';
 import 'package:asistente_deportivo/core/strength/session.dart';
 import 'package:asistente_deportivo/core/common/units.dart';
@@ -28,6 +30,7 @@ import 'package:asistente_deportivo/core/cardio/activity.dart';
 import 'package:asistente_deportivo/platform/location/location_service.dart';
 import 'package:asistente_deportivo/data/local/local_store.dart';
 import 'package:asistente_deportivo/platform/capability.dart';
+import 'package:asistente_deportivo/platform/health/health_service.dart';
 import 'package:asistente_deportivo/platform/notifications/notification_service.dart';
 import 'package:asistente_deportivo/platform/platform_providers.dart';
 import 'package:asistente_deportivo/ui/format.dart';
@@ -90,12 +93,40 @@ class _FakeLocation implements LocationService {
   }
 }
 
+/// Apple Salud con pasos fijos: 1000 × (día del mes) y 100 × hora.
+class _StepsHealth implements HealthService {
+  @override
+  String get providerName => 'Apple Salud';
+
+  @override
+  Future<CapabilityStatus> status() async => CapabilityStatus.granted;
+
+  @override
+  Future<CapabilityStatus> requestAccess(Set<HealthMetric> metrics) async => CapabilityStatus.granted;
+
+  @override
+  Future<List<DailySteps>> dailySteps({required String from, required String to}) async => [
+        for (var d = from; d.compareTo(to) <= 0; d = addDays(d, 1)) DailySteps(date: d, steps: 1000 * fromDateKey(d).day, source: DataSource.appleHealth),
+      ];
+
+  @override
+  Future<List<HourlySteps>> hourlySteps(String date) async => [for (var h = 0; h < 24; h++) HourlySteps(hour: h, steps: h == 18 ? 2500 : 100)];
+
+  @override
+  Future<List<HeartRateSample>> heartRate({required DateTime from, required DateTime to}) async => const [];
+
+  @override
+  Future<List<ActivitySession>> sessions({required DateTime from, required DateTime to}) async => const [];
+}
+
 Future<ProviderContainer> _boot(
   WidgetTester tester, {
   bool signedIn = true,
   bool withSampleData = true,
   NotificationService? notifications,
   LocationService? location,
+  Uint8List? photo,
+  HealthService? health,
 }) async {
   SharedPreferences.setMockInitialValues({});
   final prefs = await SharedPreferences.getInstance();
@@ -105,6 +136,9 @@ Future<ProviderContainer> _boot(
     localStoreProvider.overrideWithValue(LocalStore(prefs)),
     if (notifications != null) notificationServiceProvider.overrideWithValue(notifications),
     if (location != null) locationServiceProvider.overrideWithValue(location),
+    // Sin cámara en las pruebas: la "foto" llega directo.
+    photoSourceProvider.overrideWithValue((context, {required title}) async => photo),
+    if (health != null) healthServiceProvider.overrideWithValue(health),
     // Sin teselas del mapa: las pruebas no usan la red.
     mapTilesProvider.overrideWithValue(false),
   ]);
@@ -192,6 +226,77 @@ void main() {
       await _go(tester, container, location);
       expect(find.textContaining(text), findsWidgets, reason: location);
     }
+  });
+
+  testWidgets('la tarjeta de pasos abre el detalle: por hora, periodos, estadísticas y meta', (tester) async {
+    final container = await _boot(tester, health: _StepsHealth());
+    await _go(tester, container, '/');
+    await _tap(tester, find.text('pasos hoy'));
+    expect(find.text('Por hora'), findsOneWidget);
+    expect(find.textContaining('Más activo entre las 18:00 y las 19:00'), findsOneWidget);
+    expect(find.text('Promedio diario'), findsOneWidget);
+    expect(find.text('Días con la meta'), findsOneWidget);
+    await _tap(tester, find.text('30 días'));
+    expect(find.text('Últimos 30 días'), findsOneWidget);
+    await _tap(tester, find.text('10.000'));
+    expect(container.read(stepsGoalProvider), 10000);
+  });
+
+  testWidgets('la sección de fatiga muestra la explicación del asistente y las sesiones de la semana', (tester) async {
+    final container = await _boot(tester);
+    await _go(tester, container, '/carga');
+    await _settle(tester);
+    expect(find.text('Carga y fatiga cruzada'), findsOneWidget);
+    expect(find.text('Lo que dice el asistente'), findsOneWidget);
+    expect(find.text('Todavía estamos conociendo tu carga'), findsOneWidget);
+    expect(find.text('Sesiones de la semana'), findsOneWidget);
+  });
+
+  testWidgets('CU-07: comida con foto, revisar lo dudoso y guardar en el diario', (tester) async {
+    final container = await _boot(tester, photo: Uint8List.fromList([1, 2, 3]));
+    await _go(tester, container, '/ia/foto');
+    await _tap(tester, find.text('Sacar o elegir una foto'));
+    expect(find.text('Alimentos detectados'), findsOneWidget);
+    // El aceite (confianza 45 %) se debe revisar antes de guardar.
+    expect(find.text('Revisa 1 alimento para guardar'), findsOneWidget);
+    await _tap(tester, find.byTooltip(RegExp('^Confirmar')));
+    expect(find.text('Guardar en mi diario'), findsOneWidget);
+    await _tap(tester, find.text('Guardar en mi diario'));
+    final today = toDateKey(DateTime.now());
+    final entries = await tester.runAsync(() => container.read(backendProvider).diary.watchDay(demoUser.uid, today).first);
+    expect(entries!.where((e) => e.rawInput == 'IA: foto'), hasLength(4));
+    // El arroz está en el catálogo: sus macros salen del catálogo, no del asistente.
+    final rice = entries.firstWhere((e) => e.name.toLowerCase().contains('arroz'));
+    expect(rice.refId.startsWith('ia:'), isFalse);
+  });
+
+  testWidgets('CU-02: la sesión contada pide elegir lo que no reconoce y se abre como entrenamiento', (tester) async {
+    final container = await _boot(tester);
+    await _go(tester, container, '/fuerza');
+    await _tap(tester, find.text('Contar mi sesión'));
+    await _tap(tester, find.text('Ver un ejemplo'));
+    await _tap(tester, find.text('Ordenar con el asistente'));
+    expect(find.text('Falta confirmar un ejercicio'), findsOneWidget);
+    expect(find.text('Elige el ejercicio que falta'), findsOneWidget);
+    await _tap(tester, find.text('Elegir'));
+    await tester.enterText(find.widgetWithText(TextField, 'Buscar en español o inglés…'), 'medicine ball');
+    await _settle(tester);
+    await _tap(tester, find.byType(ListTile).first);
+    await _tap(tester, find.text('Revisar y guardar'));
+    final active = container.read(activeWorkoutProvider)!;
+    expect(active.exercises, hasLength(3));
+    expect(active.exercises.first.sets.every((s) => s.done), isTrue);
+    expect(find.text('Terminar'), findsOneWidget);
+  });
+
+  testWidgets('la foto de la etiqueta completa el formulario del alimento', (tester) async {
+    final container = await _boot(tester, photo: Uint8List.fromList([1]));
+    await _go(tester, container, '/alimentos');
+    await _tap(tester, find.byTooltip('Nuevo alimento'));
+    await _tap(tester, find.byTooltip('Leer la tabla nutricional con una foto'));
+    expect(find.textContaining('Etiqueta leída por el asistente'), findsOneWidget);
+    expect(find.widgetWithText(TextField, 'Yogur proteico natural'), findsOneWidget);
+    expect(find.text('62'), findsOneWidget);
   });
 
   testWidgets('recorre las pantallas de diseño con datos simulados', (tester) async {

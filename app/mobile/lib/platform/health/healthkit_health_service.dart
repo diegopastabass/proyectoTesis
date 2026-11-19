@@ -68,6 +68,22 @@ class HealthKitHealthService implements HealthService {
   }
 
   @override
+  Future<List<HourlySteps>> hourlySteps(String date) async {
+    await _ensureConfigured();
+    final now = DateTime.now();
+    final day = fromDateKey(date);
+    final out = <HourlySteps>[];
+    for (var h = 0; h < 24; h++) {
+      final start = DateTime(day.year, day.month, day.day, h);
+      if (start.isAfter(now)) break;
+      final end = DateTime(day.year, day.month, day.day, h + 1);
+      final steps = await _health.getTotalStepsInInterval(start, end.isAfter(now) ? now : end);
+      out.add(HourlySteps(hour: h, steps: steps ?? 0));
+    }
+    return out;
+  }
+
+  @override
   Future<List<HeartRateSample>> heartRate({required DateTime from, required DateTime to}) async {
     await _ensureConfigured();
     final points = await _health.getHealthDataFromTypes(types: const [HealthDataType.HEART_RATE], startTime: from, endTime: to);

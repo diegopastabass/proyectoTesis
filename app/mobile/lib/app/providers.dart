@@ -9,6 +9,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../core/activity/calendar.dart';
 import '../core/activity/reminders.dart';
+import '../core/activity/steps.dart';
 import '../core/activity/streak.dart';
 import '../core/body/energy.dart';
 import '../core/body/progress.dart';
@@ -32,6 +33,9 @@ import '../core/suggestions/reason.dart';
 import '../core/training/load.dart';
 import '../core/suggestions/weekly_plan.dart';
 import '../data/assets/catalog_assets.dart';
+import '../data/ai/ai_service.dart';
+import '../data/ai/demo_ai_service.dart';
+import '../data/ai/gemini_ai_service.dart';
 import '../data/local/local_store.dart';
 import '../data/repositories.dart';
 import '../platform/platform_providers.dart';
@@ -52,6 +56,18 @@ final backendProvider = Provider<Backend>((ref) => throw UnimplementedError('bac
 final localStoreProvider = Provider<LocalStore>((ref) => throw UnimplementedError('localStoreProvider se define en main.dart'));
 
 final catalogAssetsProvider = Provider<CatalogAssets>((ref) => CatalogAssets());
+
+/// Identificador de la app de iOS (para restringir la clave de Gemini a esta app).
+const iosBundleId = 'cl.asistentedeportivo.asistenteDeportivo';
+
+/// Asistente de IA: Gemini si hay clave; ejemplos en el modo demostración; si no, apagado.
+final aiServiceProvider = Provider<AiService>((ref) {
+  final config = ref.watch(appConfigProvider);
+  if (config.geminiApiKey.isNotEmpty) {
+    return GeminiAiService(apiKey: config.geminiApiKey, model: config.geminiModel.isEmpty ? defaultGeminiModel : config.geminiModel, bundleId: iosBundleId);
+  }
+  return ref.watch(backendProvider).kind == BackendKind.memory ? const DemoAiService() : const OffAiService();
+});
 
 // ---------------------------------------------------------------------------
 // Sesión
@@ -509,6 +525,19 @@ class ThemeModeController extends Notifier<ThemeMode> {
 }
 
 final themeModeProvider = NotifierProvider<ThemeModeController, ThemeMode>(ThemeModeController.new);
+
+/// Meta diaria de pasos (en el teléfono).
+class StepsGoalController extends Notifier<int> {
+  @override
+  int build() => ref.read(localStoreProvider).stepsGoal ?? defaultStepsGoal;
+
+  void set(int goal) {
+    state = goal;
+    ref.read(localStoreProvider).setStepsGoal(goal);
+  }
+}
+
+final stepsGoalProvider = NotifierProvider<StepsGoalController, int>(StepsGoalController.new);
 
 /// Unidad de peso preferida: la de los ejercicios que nunca se anotaron y la de los
 /// totales (volumen, gráficos). Cada ejercicio recuerda además la suya (una máquina

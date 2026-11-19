@@ -25,6 +25,9 @@ abstract interface class HealthService {
   /// Total de pasos por día local, entre `from` y `to` (YYYY-MM-DD, inclusive).
   Future<List<DailySteps>> dailySteps({required String from, required String to});
 
+  /// Pasos de cada hora del día `date` (hasta la hora actual si es hoy).
+  Future<List<HourlySteps>> hourlySteps(String date);
+
   Future<List<HeartRateSample>> heartRate({required DateTime from, required DateTime to});
 
   /// Entrenamientos registrados por el reloj u otras apps.
@@ -48,6 +51,9 @@ class UnavailableHealthService implements HealthService {
 
   @override
   Future<List<DailySteps>> dailySteps({required String from, required String to}) async => const [];
+
+  @override
+  Future<List<HourlySteps>> hourlySteps(String date) async => const [];
 
   @override
   Future<List<HeartRateSample>> heartRate({required DateTime from, required DateTime to}) async => const [];

@@ -13,6 +13,8 @@ import '../../core/nutrition/open_food_facts.dart';
 import '../../ui/format.dart';
 import '../../ui/widgets.dart';
 import 'barcode_scanner_page.dart';
+import '../../data/ai/ai_service.dart';
+import '../ai/photo_picker.dart';
 
 /// Abre el formulario de alimento a pantalla completa. Devuelve el alimento guardado.
 Future<Food?> openFoodForm(BuildContext context, {Food? food, String initialName = '', String initialBarcode = '', bool autoLookup = false}) {
@@ -147,6 +149,48 @@ class _FoodFormPageState extends ConsumerState<FoodFormPage> {
     _offSource = FoodSource(type: FoodSourceType.off, ref: draft.barcode, license: 'ODbL');
   }
 
+  /// Lectura de la etiqueta con el asistente: null = sin leer; '' = leyendo.
+  String? _labelStatus;
+  bool _labelError = false;
+
+  /// Completa los campos vacíos con la tabla nutricional leída por el asistente.
+  Future<void> _readLabel() async {
+    final photo = await ref.read(photoSourceProvider)(context, title: 'Foto de la tabla nutricional');
+    if (photo == null || !mounted) return;
+    setState(() {
+      _labelStatus = '';
+      _labelError = false;
+    });
+    try {
+      final label = await ref.read(aiServiceProvider).labelFromPhoto(photo);
+      if (!mounted) return;
+      setState(() {
+        if (!label.readable) {
+          _labelStatus = 'No se pudo leer la tabla. Prueba con una foto más cercana y derecha.';
+          _labelError = true;
+          return;
+        }
+        if (label.name != null && _name.text.trim().isEmpty) _name.text = label.name!;
+        if (label.brand != null && _brand.text.trim().isEmpty) _brand.text = label.brand!;
+        for (final k in MacroKey.values) {
+          if (_macros[k]!.text.trim().isEmpty) _macros[k]!.text = plain(round1(label.per100g![k]));
+        }
+        if (label.servingGrams != null && !_rows.any((r) => _sameName(r.name, 'porción'))) {
+          _rows.removeWhere((r) => r.name == 'unidad' && r.grams.text.trim().isEmpty);
+          _rows.add(_Row('porción', plain(label.servingGrams!)));
+        }
+        _labelStatus = 'Etiqueta leída por el asistente. Compara los valores con el envase antes de guardar.';
+      });
+    } on Object catch (e) {
+      if (mounted) {
+        setState(() {
+          _labelStatus = e is AiException ? e.message : 'No se pudo leer la etiqueta.';
+          _labelError = true;
+        });
+      }
+    }
+  }
+
   Future<void> _searchOff(String code) async {
     setState(() => _lookup = const _Loading());
     try {
@@ -275,6 +319,12 @@ class _FoodFormPageState extends ConsumerState<FoodFormPage> {
             ),
             const SizedBox(width: 6),
             IconButton.filledTonal(tooltip: 'Escanear con la cámara', onPressed: _scan, icon: const Icon(Icons.qr_code_scanner)),
+            if (ref.watch(aiServiceProvider).mode != AiMode.off)
+              IconButton.filledTonal(
+                tooltip: 'Leer la tabla nutricional con una foto',
+                onPressed: _labelStatus == '' ? null : _readLabel,
+                icon: const Icon(Icons.document_scanner_outlined),
+              ),
             IconButton.filledTonal(
               tooltip: 'Buscar datos en Open Food Facts',
               onPressed: codeValid && _lookup is! _Loading ? () => _searchOff(code) : null,
@@ -321,6 +371,14 @@ class _FoodFormPageState extends ConsumerState<FoodFormPage> {
               label: const Text('kcal desde macros', style: TextStyle(fontSize: 12)),
             ),
           ]),
+          if (_labelStatus != null)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 6),
+              child: Text(
+                _labelStatus!.isEmpty ? 'El asistente está leyendo la etiqueta…' : _labelStatus!,
+                style: TextStyle(fontSize: 11, color: _labelError ? c.danger : c.muted),
+              ),
+            ),
           Row(children: [
             for (final key in MacroKey.values) ...[
               if (key != MacroKey.kcal) const SizedBox(width: 6),

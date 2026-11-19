@@ -9,6 +9,7 @@ import '../data/repositories.dart';
 import '../features/account/account_pages.dart';
 import '../features/account/onboarding_pages.dart';
 import '../features/activity/activity_page.dart';
+import '../features/activity/steps_page.dart';
 import '../features/ai/ai_pages.dart';
 import '../features/auth/login_page.dart';
 import '../features/cardio/activity_detail_page.dart';
@@ -58,7 +59,7 @@ Page<void> _section(Widget child) => CustomTransitionPage(
     );
 
 /// Rutas de las pantallas de diseño con datos simulados (solo en modo demostración).
-const _previewPaths = ['/escaner', '/comunidad', '/ia/', '/metas', '/premium', '/bienvenida/terminos', '/ajustes/datos', '/cardio/manual', '/cardio/reloj', '/cardio/archivo', '/diario/comida'];
+const _previewPaths = ['/escaner', '/comunidad', '/metas', '/premium', '/bienvenida/terminos', '/ajustes/datos', '/cardio/manual', '/cardio/reloj', '/cardio/archivo', '/diario/comida'];
 
 final routerProvider = Provider<GoRouter>((ref) {
   final auth = ValueNotifier<AsyncValue<AppUser?>>(ref.read(authStateProvider));
@@ -82,6 +83,7 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(path: '/login', builder: (_, _) => const LoginPage()),
       GoRoute(path: '/ajustes', builder: (_, _) => const SettingsPage()),
       GoRoute(path: '/actividad', builder: (_, _) => const ActivityPage()),
+      GoRoute(path: '/pasos', builder: (_, s) => StepsPage(initialDate: s.uri.queryParameters['d'])),
       GoRoute(path: '/perfil', builder: (_, _) => const BodyProfilePage()),
       GoRoute(path: '/notificaciones', builder: (_, _) => const NotificationsPage()),
       // Grabar y guardar ocupan toda la pantalla (sin barras), para no tocar nada por error.
@@ -90,7 +92,7 @@ final routerProvider = Provider<GoRouter>((ref) {
       // Pantallas de diseño con datos simulados (solo en modo demostración, ver _previewPaths).
       GoRoute(path: '/escaner', builder: (_, _) => const BarcodeScannerPage(simulated: true)),
       GoRoute(path: '/ia/fuerza', builder: (_, s) => AiStrengthPage(estado: s.uri.queryParameters['estado'])),
-      GoRoute(path: '/ia/comida', builder: (_, s) => AiMealTextPage(estado: s.uri.queryParameters['estado'])),
+      GoRoute(path: '/ia/comida', builder: (_, s) => AiMealTextPage(estado: s.uri.queryParameters['estado'], initialText: s.uri.queryParameters['texto'])),
       GoRoute(path: '/ia/foto', builder: (_, s) => AiPhotoPage(estado: s.uri.queryParameters['estado'])),
       GoRoute(path: '/carga', builder: (_, s) => TrainingLoadPage(showShortHistory: s.uri.queryParameters['estado'] == 'faltan')),
       GoRoute(path: '/carga/alerta', builder: (_, _) => const FatigueAlertPage()),

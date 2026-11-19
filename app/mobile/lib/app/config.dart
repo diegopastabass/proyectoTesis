@@ -4,6 +4,9 @@
 ///   flutter run                                              → modo demostración (memoria)
 ///   flutter run --dart-define-from-file=env/emulator.json    → Emulator Suite local
 ///   flutter run --dart-define-from-file=env/firebase.json    → proyecto real
+///
+/// El asistente de IA (Gemini) se activa sumando su archivo, en cualquier modo:
+///   flutter run --dart-define-from-file=env/memory.json --dart-define-from-file=env/gemini.json
 library;
 
 import '../data/repositories.dart';
@@ -13,6 +16,8 @@ class AppConfig {
     required this.backend,
     this.emulatorHost = '127.0.0.1',
     this.firebase,
+    this.geminiApiKey = '',
+    this.geminiModel = '',
   });
 
   factory AppConfig.fromEnvironment() {
@@ -24,6 +29,8 @@ class AppConfig {
     return AppConfig(
       backend: kind,
       emulatorHost: const String.fromEnvironment('EMULATOR_HOST', defaultValue: '127.0.0.1'),
+      geminiApiKey: const String.fromEnvironment('GEMINI_API_KEY').trim(),
+      geminiModel: const String.fromEnvironment('GEMINI_MODEL').trim(),
       firebase: apiKey.isEmpty || appId.isEmpty || projectId.isEmpty
           ? null
           : const FirebaseConfig(
@@ -42,6 +49,12 @@ class AppConfig {
   final BackendKind backend;
   final String emulatorHost;
   final FirebaseConfig? firebase;
+
+  /// Clave de la API de Gemini (Google AI Studio), de `env/gemini.json`. Vacía = sin asistente real.
+  final String geminiApiKey;
+
+  /// Modelo de Gemini; vacío = el Flash-Lite por defecto.
+  final String geminiModel;
 
   /// Falta la configuración para conectarse al proyecto real.
   bool get missingFirebase => backend == BackendKind.firebase && firebase == null;

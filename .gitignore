@@ -52,6 +52,7 @@ credentials*.json
 *.pem
 *.key
 *.p12
+gemini.json
 
 # Claude Code (ajustes personales)
 .claude/settings.local.json

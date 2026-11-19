@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../app/theme.dart';
 import '../../core/activity/models.dart';
@@ -39,10 +40,13 @@ class StepsCard extends ConsumerWidget {
           onPressed: () => ref.invalidate(weekStepsProvider(date)),
           icon: Icon(Icons.refresh, size: 18, color: c.muted),
         ),
+      if (status.usable) Icon(Icons.chevron_right, size: 20, color: c.faint),
     ]);
 
     return AppCard(
       padding: const EdgeInsets.fromLTRB(12, 8, 8, 12),
+      // Con permiso, la tarjeta abre el detalle de los pasos.
+      onTap: status.usable ? () => context.push('/pasos?d=$date') : null,
       child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
         header,
         if (!status.usable) ...[

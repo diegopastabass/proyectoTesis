@@ -33,6 +33,9 @@ class _FakeHealth implements HealthService {
       ];
 
   @override
+  Future<List<HourlySteps>> hourlySteps(String date) async => [for (var h = 0; h < 24; h++) HourlySteps(hour: h, steps: h * 10)];
+
+  @override
   Future<List<HeartRateSample>> heartRate({required DateTime from, required DateTime to}) async => const [];
 
   @override

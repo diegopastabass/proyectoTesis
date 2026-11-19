@@ -75,6 +75,22 @@ final weekStepsProvider = FutureProvider.autoDispose.family<List<DailySteps>, St
   return ref.watch(healthServiceProvider).dailySteps(from: addDays(date, -6), to: date);
 });
 
+/// Pasos de un periodo de `length` días que termina en `to`, más el periodo anterior
+/// del mismo largo (para comparar). Del más antiguo al más reciente.
+final periodStepsProvider = FutureProvider.autoDispose.family<List<DailySteps>, (String, int)>((ref, key) async {
+  final (to, length) = key;
+  final status = await ref.watch(healthStatusProvider.future);
+  if (!status.usable) return const [];
+  return ref.watch(healthServiceProvider).dailySteps(from: addDays(to, -(2 * length - 1)), to: to);
+});
+
+/// Pasos por hora de un día.
+final hourlyStepsProvider = FutureProvider.autoDispose.family<List<HourlySteps>, String>((ref, date) async {
+  final status = await ref.watch(healthStatusProvider.future);
+  if (!status.usable) return const [];
+  return ref.watch(healthServiceProvider).hourlySteps(date);
+});
+
 /// Muestra la hoja de permisos de Apple Salud para leer pasos.
 Future<CapabilityStatus> connectHealth(WidgetRef ref) async {
   final status = await ref.read(healthServiceProvider).requestAccess(const {HealthMetric.steps});
