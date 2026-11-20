@@ -70,7 +70,7 @@ Funciona con lo que cada uno tenga. Con solo el celular, con un reloj o con un c
 
 ## Lámina 7: Cada tropiezo tiene una respuesta (1 min)
 
-Esta tabla resume la solución. A cada tropiezo le corresponde una función y un caso de uso. Si no sabe por dónde empezar, recibe un plan. Si tiene tres apps, registra todo en una. Si sube la carga muy rápido, la app la mide igual en fuerza y en cardio. Si acumula fatiga, recibe un aviso. Si come mal, sus metas cambian con el entrenamiento. Y si la información es genérica, la red social le deja agregar lo que le sirve con un botón.
+Esta tabla resume la solución. A cada tropiezo le corresponde una función de la app. Si no sabe por dónde empezar, recibe un plan. Si tiene tres apps, registra todo en una. Si sube la carga muy rápido, la app la mide igual en fuerza y en cardio. Si acumula fatiga, recibe un aviso. Si come mal, sus metas cambian con el entrenamiento. Y si la información es genérica, la red social le deja agregar lo que le sirve con un botón.
 
 En todos los casos la app registra, cruza y sugiere. Pero la decisión es del usuario.
 
@@ -218,17 +218,7 @@ Se dimensionó para 1.500 usuarios: unos 600 activos al día, 24.000 llamadas a 
 
 ---
 
-## Lámina 22: Integraciones (45 s)
-
-Dependemos de seis servicios externos, y cada uno tiene un plan si falla. Si no hay reloj, se registra con GPS o a mano. Si la IA no responde, se ofrece el registro manual. Si la alerta no llega al teléfono, queda en el resumen de la app. La idea es que una falla externa nunca impida registrar.
-
-Además, las claves viven solo en el servidor, los datos de salud se piden con permiso y se pueden borrar, y el pago ocurre en la tienda.
-
-**Idea clave:** si algo falla, el usuario sigue registrando.
-
----
-
-## Lámina 23: El mercado (45 s)
+## Lámina 22: El mercado (45 s)
 
 En Chile entre 4,5 y 5 millones de adultos hacen actividad física. Entre 180 y 250 mil hacen entrenamiento concurrente con un smartphone. Para ser conservador, trabajé con 1.500 usuarios, menos del 1 por ciento. La tendencia va en alza: Hyrox pasó de 650 a 650 mil competidores entre 2017 y 2024. Y hay espacio para crecer, porque 2 de cada 3 adultos todavía no entrena de forma regular.
 
@@ -236,7 +226,7 @@ En Chile entre 4,5 y 5 millones de adultos hacen actividad física. Entre 180 y 
 
 ---
 
-## Lámina 24: Modelo freemium (1 min)
+## Lámina 23: Modelo freemium (1 min)
 
 El modelo es freemium. Gratis, el usuario tiene el plan semanal, el registro manual, el código de barras y su progreso. Es justo lo que necesita quien empieza. Premium cuesta 7.990 pesos al mes y suma el reloj, el .fit, la IA, el cruce de datos con alertas y metas, y la red social.
 
@@ -246,7 +236,7 @@ De esos 7.990 pesos, al quitar el IVA y la comisión de la tienda llegan 5.707. 
 
 ---
 
-## Lámina 25: Factibilidad (1 min)
+## Lámina 24: Factibilidad (1 min)
 
 La inversión inicial es de 16,2 millones de pesos y el costo de operar es de unos 4,5 millones al año. Con esos números, el proyecto se sostiene con 159 suscriptores premium. Eso da una TIR del 15 por ciento y la inversión se recupera en 2,85 años.
 
@@ -258,7 +248,7 @@ Aclara que esto ya descuenta el IVA, la comisión y el impuesto a la renta, y qu
 
 ---
 
-## Lámina 26: Cierre (30 s)
+## Lámina 25: Cierre (30 s)
 
 Para cerrar: la mayoría quiere empezar, pero tropieza en el camino. Esta aplicación busca que empiece bien y no se rinda, registrando, cruzando sus datos y sugiriendo. Y siempre, la decisión final es suya.
 

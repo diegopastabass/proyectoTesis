@@ -67,5 +67,4 @@ firestore-debug.log
 ui-debug.log
 emulator-data/
 
-# PDF generado (se entrega aparte, no se versiona)
-/main.pdf
+
