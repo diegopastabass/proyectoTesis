@@ -229,6 +229,14 @@ class ActiveWorkoutController extends Notifier<ActiveWorkout?> {
   /// reemplaza) y no se aplican.
   int _lastCommand = 0;
 
+  /// Órdenes al sistema en fila: si se envían a la vez (empezar y saltar en un
+  /// segundo) pueden llegar en desorden y dejar una alarma suelta.
+  Future<void> _queue = Future.value();
+
+  /// La última cuenta no se pudo crear en el sistema (el fin del descanso se
+  /// avisa con una notificación): lo que informe el sistema no es este descanso.
+  bool _systemFailed = false;
+
   @override
   ActiveWorkout? build() {
     final user = ref.watch(sessionUserProvider);
@@ -268,7 +276,10 @@ class ActiveWorkoutController extends Notifier<ActiveWorkout?> {
     if (seconds > 0) await _send(StartRest(seconds, paused: rest.paused));
   }
 
-  Future<void> _send(RestCommand command) async {
+  Future<void> _send(RestCommand command) => _queue = _queue.then((_) => _run(command));
+
+  Future<void> _run(RestCommand command) async {
+    if (!ref.mounted) return;
     _lastCommand = DateTime.now().millisecondsSinceEpoch;
     final timer = ref.read(restTimerServiceProvider);
     try {
@@ -283,9 +294,15 @@ class ActiveWorkoutController extends Notifier<ActiveWorkout?> {
         case CancelRest():
           await timer.cancel();
       }
+      if (command is StartRest || command is ResumeRest) _systemFailed = false;
     } on Object catch (e) {
-      // Sin permiso o sin AlarmKit, el descanso sigue en la pantalla del entrenamiento.
+      // El descanso sigue en la pantalla del entrenamiento y el fin se avisa con
+      // una notificación; se informa para que no pase inadvertido.
       debugPrint('No se pudo actualizar el temporizador del sistema: $e');
+      if (command is StartRest || command is ResumeRest) {
+        _systemFailed = true;
+        if (ref.mounted) ref.read(restTimerIssueProvider.notifier).report(e);
+      }
     }
     _lastCommand = DateTime.now().millisecondsSinceEpoch;
   }
@@ -294,7 +311,7 @@ class ActiveWorkoutController extends Notifier<ActiveWorkout?> {
   void _fromSystem(RestAlarmSnapshot? snapshot) {
     final w = state;
     final rest = w?.rest;
-    if (w == null || rest == null) return;
+    if (w == null || rest == null || _systemFailed) return;
     final now = DateTime.now().millisecondsSinceEpoch;
     if (now - _lastCommand < 1500) return;
     final next = applyRestSnapshot(rest, snapshot, now);
@@ -305,8 +322,11 @@ class ActiveWorkoutController extends Notifier<ActiveWorkout?> {
   /// cambiar desde la pantalla bloqueada mientras la app no corría.
   Future<void> _reconcile() async {
     final timer = ref.read(restTimerServiceProvider);
-    if (state?.rest == null || !await timer.systemTimer) return;
-    _fromSystem(await timer.current());
+    // Sin permiso de alarmas el descanso no está en el sistema: su "no hay
+    // temporizador" no significa que se haya cancelado.
+    if (state?.rest == null || _systemFailed || !await timer.systemActive) return;
+    final snapshot = await timer.current();
+    if (ref.mounted) _fromSystem(snapshot);
   }
 
   void update(ActiveWorkout Function(ActiveWorkout w) fn) {
@@ -316,6 +336,20 @@ class ActiveWorkoutController extends Notifier<ActiveWorkout?> {
 }
 
 final activeWorkoutProvider = NotifierProvider<ActiveWorkoutController, ActiveWorkout?>(ActiveWorkoutController.new);
+
+/// Último problema del temporizador del sistema (null = ninguno). La pantalla del
+/// entrenamiento lo muestra una vez.
+class RestTimerIssue extends Notifier<String?> {
+  @override
+  String? build() => null;
+
+  void report(Object error) =>
+      state = 'No se pudo mostrar el descanso en la isla dinámica. Te avisaremos con una notificación al terminar.';
+
+  void clear() => state = null;
+}
+
+final restTimerIssueProvider = NotifierProvider<RestTimerIssue, String?>(RestTimerIssue.new);
 
 // ---------------------------------------------------------------------------
 // Actividad: calendario y racha

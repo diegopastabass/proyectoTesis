@@ -49,6 +49,12 @@ void main() {
       expect(restCommand(null, null, now), isNull);
     });
 
+    test('otro descanso con el anterior en pausa empieza una cuenta nueva', () {
+      expect(restCommand(paused(40000), running(120000, seconds: 120), now), const StartRest(120));
+      expect(restCommand(paused(40000), running(90000), now), const StartRest(90), reason: 'misma duración, pero no es lo que faltaba');
+      expect(restCommand(paused(40000), running(40400), now), const ResumeRest(41), reason: 'redondeo de un seguir normal');
+    });
+
     test('si llegó a cero solo, quitarlo no apaga la alarma que está sonando', () {
       expect(restCommand(running(0), null, now), isNull);
       expect(restCommand(running(-5000), null, now), isNull);

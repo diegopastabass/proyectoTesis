@@ -106,10 +106,14 @@ class _WorkoutPageState extends ConsumerState<WorkoutPage> {
     final answer = await askSessionRpe(context, title: '¿Qué tan duro fue el entrenamiento?');
     if (answer == null || !mounted) return;
     setState(() => _saving = true);
+    // Se leen antes de esperar: si la pantalla se cierra mientras se guarda, la
+    // sesión igual debe quedar cerrada.
+    final ctrl = _ctrl;
+    final actions = ref.read(strengthActionsProvider);
     try {
-      final id = await ref.read(strengthActionsProvider).saveWorkout(finishWorkout(active, now, data.nameOf, rpe: answer.rpe));
+      final id = await actions.saveWorkout(finishWorkout(active, now, data.nameOf, rpe: answer.rpe));
+      ctrl.set(null);
       if (!mounted) return;
-      _ctrl.set(null);
       context.pushReplacement('/fuerza/historial/$id?nuevo=1');
     } on Object catch (e) {
       if (!mounted) return;
@@ -127,6 +131,11 @@ class _WorkoutPageState extends ConsumerState<WorkoutPage> {
 
   @override
   Widget build(BuildContext context) {
+    ref.listen(restTimerIssueProvider, (_, issue) {
+      if (issue == null) return;
+      showToast(context, issue, error: true);
+      ref.read(restTimerIssueProvider.notifier).clear();
+    });
     final active = ref.watch(activeWorkoutProvider);
     if (active == null) {
       return PageBody(children: [

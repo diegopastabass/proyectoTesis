@@ -157,8 +157,14 @@ final class RestTimerController {
     }
   }
 
+  /// Quita el descanso. Se cancelan todas las alarmas de la app (solo hay de
+  /// descanso): si alguna quedó suelta (por ejemplo, de un intento que falló a
+  /// medias), no debe sonar después.
   func cancel() {
     if let id = RestTimerStore.id { try? manager.cancel(id: id) }
+    for alarm in (try? manager.alarms) ?? [] {
+      try? manager.cancel(id: alarm.id)
+    }
     RestTimerStore.clear()
   }
 

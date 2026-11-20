@@ -6,8 +6,11 @@
 /// cubre.
 library;
 
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fa;
+import 'package:flutter/foundation.dart';
 
 import '../../core/activity/calendar.dart';
 import '../../core/activity/streak.dart';
@@ -27,6 +30,27 @@ import '../repositories.dart';
 
 AppUser? _toUser(fa.User? u) =>
     u == null ? null : AppUser(uid: u.uid, displayName: u.displayName, email: u.email, photoUrl: u.photoURL, isAnonymous: u.isAnonymous);
+
+/// Espera una escritura de Firestore sin quedarse colgado sin internet.
+///
+/// Firestore aplica la escritura al instante en la copia local (las pantallas ya
+/// la ven), pero su Future termina recién cuando el servidor la confirma: sin
+/// red no termina nunca y la pantalla quedaba esperando (por ejemplo, "Terminar
+/// entrenamiento" en un gimnasio sin señal). Se espera un momento para mostrar
+/// los rechazos del servidor (permisos) y después se sigue: la escritura queda
+/// guardada en el teléfono y Firestore la envía al volver la conexión.
+Future<void> _sent(Future<void> write) async {
+  write = write.catchError((Object e) {
+    debugPrint('Escritura rechazada por Firestore: $e');
+    throw e;
+  });
+  try {
+    await write.timeout(const Duration(seconds: 2));
+  } on TimeoutException {
+    // Sin respuesta del servidor: queda pendiente en el teléfono.
+    unawaited(write.catchError((Object _) {}));
+  }
+}
 
 int _millis(Object? v) => v is Timestamp ? v.millisecondsSinceEpoch : (v is num ? v.toInt() : DateTime.now().millisecondsSinceEpoch);
 
@@ -86,19 +110,20 @@ class FirestoreFoodRepository implements FoodRepository {
 
   @override
   Future<String> createFood(FoodInput input, String uid, FoodSource source) async {
-    final ref = await _col.add({
+    final ref = _col.doc();
+    await _sent(ref.set({
       ...input.toMap(),
       'source': source.toMap(),
       'verified': false,
       'createdBy': uid,
       'createdAt': FieldValue.serverTimestamp(),
-    });
+    }));
     return ref.id;
   }
 
   @override
   Future<void> updateFood(String id, FoodInput input) =>
-      _col.doc(id).update({...input.toMap(), 'updatedAt': FieldValue.serverTimestamp()});
+      _sent(_col.doc(id).update({...input.toMap(), 'updatedAt': FieldValue.serverTimestamp()}));
 
   @override
   Future<void> importSeed({required List<Food> missing, required List<Food> fiberPatches}) async {
@@ -128,7 +153,7 @@ class FirestoreFoodRepository implements FoodRepository {
           batch.update(ref, {'per100g.fiber': food.per100g.fiber, 'updatedAt': FieldValue.serverTimestamp()});
         }
       }
-      await batch.commit();
+      await _sent(batch.commit());
     }
   }
 }
@@ -163,15 +188,16 @@ class FirestoreRecipeRepository implements RecipeRepository {
   @override
   Future<String> saveRecipe(Recipe recipe, {String? id}) async {
     if (id != null) {
-      await _col.doc(id).set({...recipe.toMap(), 'updatedAt': FieldValue.serverTimestamp()}, SetOptions(merge: true));
+      await _sent(_col.doc(id).set({...recipe.toMap(), 'updatedAt': FieldValue.serverTimestamp()}, SetOptions(merge: true)));
       return id;
     }
-    final ref = await _col.add({...recipe.toMap(), 'visibility': 'PRIVATE', 'createdAt': FieldValue.serverTimestamp()});
+    final ref = _col.doc();
+    await _sent(ref.set({...recipe.toMap(), 'visibility': 'PRIVATE', 'createdAt': FieldValue.serverTimestamp()}));
     return ref.id;
   }
 
   @override
-  Future<void> deleteRecipe(String id) => _col.doc(id).delete();
+  Future<void> deleteRecipe(String id) => _sent(_col.doc(id).delete());
 }
 
 class FirestoreDiaryRepository implements DiaryRepository {
@@ -231,7 +257,7 @@ class FirestoreDiaryRepository implements DiaryRepository {
       },
       SetOptions(merge: true),
     );
-    await batch.commit();
+    await _sent(batch.commit());
   }
 
   @override
@@ -243,7 +269,7 @@ class FirestoreDiaryRepository implements DiaryRepository {
         {'entries': FieldValue.increment(-1), 'kcal': FieldValue.increment(-entry.macros.kcal), 'updatedAt': FieldValue.serverTimestamp()},
         SetOptions(merge: true),
       );
-    await batch.commit();
+    await _sent(batch.commit());
   }
 
   @override
@@ -266,7 +292,9 @@ class FirestoreDiaryRepository implements DiaryRepository {
     // registros consultando cada uno. Es una vez por cuenta (~400 lecturas).
     final today = todayKey();
     final dates = [for (var i = 0; i <= _backfillDays; i++) addDays(today, -i)];
-    final snaps = await Future.wait(dates.map((d) => _entries(uid, d).get()));
+    // Del servidor: sin red, la copia local vacía haría creer que no hay días que
+    // resumir y el resumen quedaría marcado como hecho sin estarlo.
+    final snaps = await Future.wait(dates.map((d) => _entries(uid, d).get(const GetOptions(source: Source.server))));
     var batch = _db.batch();
     var ops = 0;
     for (var i = 0; i < dates.length; i++) {
@@ -308,14 +336,14 @@ class FirestoreProfileRepository implements ProfileRepository {
 
   @override
   Future<void> saveGoals(String uid, Goals goals) =>
-      _user(uid).set({'goals': goals.toMap(), 'updatedAt': FieldValue.serverTimestamp()}, SetOptions(merge: true));
+      _sent(_user(uid).set({'goals': goals.toMap(), 'updatedAt': FieldValue.serverTimestamp()}, SetOptions(merge: true)));
 
   @override
   Stream<BodyGoal?> watchBodyGoal(String uid) => _user(uid).snapshots().map((s) => BodyGoal.fromMap(s.data()?['bodyGoal']));
 
   @override
   Future<void> saveBodyGoal(String uid, BodyGoal goal) =>
-      _user(uid).set({'bodyGoal': goal.toMap(), 'updatedAt': FieldValue.serverTimestamp()}, SetOptions(merge: true));
+      _sent(_user(uid).set({'bodyGoal': goal.toMap(), 'updatedAt': FieldValue.serverTimestamp()}, SetOptions(merge: true)));
 
   @override
   Stream<List<WeightEntry>> watchWeights(String uid) => _weights(uid).snapshots().map(
@@ -324,24 +352,24 @@ class FirestoreProfileRepository implements ProfileRepository {
 
   @override
   Future<void> saveWeight(String uid, WeightEntry entry) =>
-      _weights(uid).doc(entry.date).set({'kg': entry.kg, 'updatedAt': FieldValue.serverTimestamp()});
+      _sent(_weights(uid).doc(entry.date).set({'kg': entry.kg, 'updatedAt': FieldValue.serverTimestamp()}));
 
   @override
-  Future<void> deleteWeight(String uid, String date) => _weights(uid).doc(date).delete();
+  Future<void> deleteWeight(String uid, String date) => _sent(_weights(uid).doc(date).delete());
 
   @override
   Stream<BodyProfile> watchBodyProfile(String uid) => _user(uid).snapshots().map((s) => BodyProfile.fromMap(s.data()?['body']));
 
   @override
   Future<void> saveBodyProfile(String uid, BodyProfile profile) =>
-      _user(uid).set({'body': profile.toMap(), 'updatedAt': FieldValue.serverTimestamp()}, SetOptions(merge: true));
+      _sent(_user(uid).set({'body': profile.toMap(), 'updatedAt': FieldValue.serverTimestamp()}, SetOptions(merge: true)));
 
   @override
   Stream<Set<int>> watchStreakRestDays(String uid) => _user(uid).snapshots().map((s) => weekdaysFrom(s.data()?['streakRestDays']));
 
   @override
   Future<void> saveStreakRestDays(String uid, Set<int> weekdays) =>
-      _user(uid).set({'streakRestDays': (weekdays.toList()..sort())}, SetOptions(merge: true));
+      _sent(_user(uid).set({'streakRestDays': (weekdays.toList()..sort())}, SetOptions(merge: true)));
 
   @override
   Stream<StreakCelebration?> watchStreakCelebration(String uid) =>
@@ -349,7 +377,7 @@ class FirestoreProfileRepository implements ProfileRepository {
 
   @override
   Future<void> saveStreakCelebration(String uid, StreakCelebration celebration) =>
-      _user(uid).set({'streakCelebrated': celebration.toMap()}, SetOptions(merge: true));
+      _sent(_user(uid).set({'streakCelebrated': celebration.toMap()}, SetOptions(merge: true)));
 
   @override
   Stream<TrainingPlan> watchTrainingPlan(String uid) => _user(uid).snapshots().map((s) => TrainingPlan.fromMap(s.data()?['trainingPlan']));
@@ -357,14 +385,14 @@ class FirestoreProfileRepository implements ProfileRepository {
   // `toMap` escribe todos los campos (null incluido), así el merge no deja restos del programa anterior.
   @override
   Future<void> saveTrainingPlan(String uid, TrainingPlan plan) =>
-      _user(uid).set({'trainingPlan': plan.toMap(), 'updatedAt': FieldValue.serverTimestamp()}, SetOptions(merge: true));
+      _sent(_user(uid).set({'trainingPlan': plan.toMap(), 'updatedAt': FieldValue.serverTimestamp()}, SetOptions(merge: true)));
 
   @override
   Stream<AthleteProfile?> watchAthleteProfile(String uid) => _user(uid).snapshots().map((s) => AthleteProfile.fromMap(s.data()?['athlete']));
 
   @override
   Future<void> saveAthleteProfile(String uid, AthleteProfile profile) =>
-      _user(uid).set({'athlete': profile.toMap(), 'updatedAt': FieldValue.serverTimestamp()}, SetOptions(merge: true));
+      _sent(_user(uid).set({'athlete': profile.toMap(), 'updatedAt': FieldValue.serverTimestamp()}, SetOptions(merge: true)));
 
   @override
   Stream<Map<String, SuggestionResponse>> watchSuggestionResponses(String uid) => _user(uid)
@@ -374,14 +402,14 @@ class FirestoreProfileRepository implements ProfileRepository {
 
   @override
   Future<void> saveSuggestionResponse(String uid, SuggestionResponse response) =>
-      _user(uid).collection('suggestions').doc(response.id).set({...response.toMap(), 'at': FieldValue.serverTimestamp()});
+      _sent(_user(uid).collection('suggestions').doc(response.id).set({...response.toMap(), 'at': FieldValue.serverTimestamp()}));
 
   @override
   Stream<WeeklyPlan?> watchWeeklyPlan(String uid) => _user(uid).snapshots().map((s) => WeeklyPlan.fromMap(s.data()?['weeklyPlan']));
 
   @override
   Future<void> saveWeeklyPlan(String uid, WeeklyPlan? plan) =>
-      _user(uid).set({'weeklyPlan': plan?.toMap(), 'updatedAt': FieldValue.serverTimestamp()}, SetOptions(merge: true));
+      _sent(_user(uid).set({'weeklyPlan': plan?.toMap(), 'updatedAt': FieldValue.serverTimestamp()}, SetOptions(merge: true)));
 }
 
 class FirestoreStrengthRepository implements StrengthRepository {
@@ -425,14 +453,16 @@ class FirestoreStrengthRepository implements StrengthRepository {
   Future<String> saveRoutine(String uid, {required String name, required List<RoutineExercise> exercises, String? id}) async {
     final data = {'name': name, 'exercises': exercises.map((e) => e.toMap()).toList(), 'updatedAt': FieldValue.serverTimestamp()};
     if (id != null) {
-      await _col(uid, 'routines').doc(id).set(data, SetOptions(merge: true));
+      await _sent(_col(uid, 'routines').doc(id).set(data, SetOptions(merge: true)));
       return id;
     }
-    return (await _col(uid, 'routines').add({...data, 'createdAt': FieldValue.serverTimestamp()})).id;
+    final ref = _col(uid, 'routines').doc();
+    await _sent(ref.set({...data, 'createdAt': FieldValue.serverTimestamp()}));
+    return ref.id;
   }
 
   @override
-  Future<void> deleteRoutine(String uid, String id) => _col(uid, 'routines').doc(id).delete();
+  Future<void> deleteRoutine(String uid, String id) => _sent(_col(uid, 'routines').doc(id).delete());
 
   @override
   Stream<List<Workout>> watchWorkouts(String uid) => _col(uid, 'workouts').snapshots().map((s) => [
@@ -450,14 +480,18 @@ class FirestoreStrengthRepository implements StrengthRepository {
       ]..sort((a, b) => b.startedAt.compareTo(a.startedAt)));
 
   @override
-  Future<String> saveWorkout(String uid, NewWorkout workout) async =>
-      (await _col(uid, 'workouts').add({...workout.toMap(), 'createdAt': FieldValue.serverTimestamp()})).id;
+  Future<String> saveWorkout(String uid, NewWorkout workout) async {
+    // El id se crea en el teléfono: así funciona sin internet (add() espera al servidor).
+    final ref = _col(uid, 'workouts').doc();
+    await _sent(ref.set({...workout.toMap(), 'createdAt': FieldValue.serverTimestamp()}));
+    return ref.id;
+  }
 
   @override
-  Future<void> deleteWorkout(String uid, String id) => _col(uid, 'workouts').doc(id).delete();
+  Future<void> deleteWorkout(String uid, String id) => _sent(_col(uid, 'workouts').doc(id).delete());
 
   @override
-  Future<void> setWorkoutRpe(String uid, String id, int rpe) => _col(uid, 'workouts').doc(id).update({'rpe': rpe});
+  Future<void> setWorkoutRpe(String uid, String id, int rpe) => _sent(_col(uid, 'workouts').doc(id).update({'rpe': rpe}));
 
   @override
   Stream<List<Exercise>> watchCustomExercises(String uid) => _col(uid, 'exercises').snapshots().map((s) => [
@@ -473,12 +507,13 @@ class FirestoreStrengthRepository implements StrengthRepository {
 
   @override
   Future<Exercise> createCustomExercise(String uid, {required String name, String? equipment, required List<String> primary}) async {
-    final ref = await _col(uid, 'exercises').add({
+    final ref = _col(uid, 'exercises').doc();
+    await _sent(ref.set({
       'name': name,
       'equipment': equipment,
       'primary': primary,
       'createdAt': FieldValue.serverTimestamp(),
-    });
+    }));
     return Exercise(id: '$customExercisePrefix${ref.id}', name: name, equipment: equipment, primary: primary, custom: true);
   }
 }

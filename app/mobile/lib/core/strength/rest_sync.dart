@@ -63,7 +63,13 @@ RestCommand? restCommand(RestTimer? before, RestTimer? after, int now) {
   if (seconds <= 0) return beforeActive ? const CancelRest() : null;
   if (!beforeActive) return after.paused ? StartRest(seconds, paused: true) : StartRest(seconds);
   if (after.paused && !before.paused) return const PauseRest();
-  if (!after.paused && before.paused) return ResumeRest(seconds);
+  if (!after.paused && before.paused) {
+    // Seguir deja lo que faltaba al pausar. Si no calza, empezó otro descanso
+    // (se marcó otra serie con el anterior en pausa): seguir la cuenta vieja
+    // dejaría en el sistema el tiempo del descanso anterior.
+    final resumed = after.seconds == before.seconds && (after.leftMs(now) - before.pausedLeft!).abs() < 1500;
+    return resumed ? ResumeRest(seconds) : StartRest(seconds);
+  }
   // Se ajustó el tiempo (±15 s) o empezó otro descanso: AlarmKit no cambia la
   // duración de una cuenta, así que se reemplaza por una nueva.
   return StartRest(seconds, paused: after.paused);
