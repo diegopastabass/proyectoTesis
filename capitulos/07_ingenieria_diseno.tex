@@ -14,22 +14,22 @@ La Figura \ref{fig:arquitectura_alto_nivel} muestra las partes principales de la
     \label{fig:arquitectura_alto_nivel}
 \end{figure}
 La \textbf{capa de presentación} es lo que usan las personas. El atleta usa la aplicación móvil hecha en \textbf{Flutter}, y el administrador usa un panel web. Además, la aplicación lee, con permiso del usuario, los datos de salud que Health Connect o Apple Health reúnen en el mismo teléfono.
-
+\\\\
 La \textbf{capa de procesamiento} está en la nube. Una API hecha en \textbf{NestJS}, que corre en AWS Fargate, concentra la lógica del sistema, como el cálculo de la fatiga, las metas de alimentación y el plan sugerido. Es la única parte con acceso a la base de datos \textbf{MongoDB}, alojada en MongoDB Atlas, y revisa cada documento antes de guardarlo.
-
+\\\\
 La \textbf{capa de servicios externos} reúne lo que el proyecto no construye por su cuenta. Gemini interpreta las fotos de comida y los textos, Open Food Facts entrega los datos de los productos envasados, Firebase envía las alertas al teléfono, Amazon S3 y CloudFront guardan y muestran los archivos y las fotos, y Google Play y App Store se encargan de los pagos. La mayoría de estas conexiones parte desde la API. Las excepciones son la subida de archivos, la visualización de fotos y el pago, que la aplicación hace directamente. El detalle de cada conexión se explica en la sección Diagrama de Integraciones.
 \subsection{Diseño Funcional}
 A continuación se presentan los flujos de cada uno de los casos de uso descritos en la fase de requerimientos. Para cada uno se indican sus precondiciones y poscondiciones, su curso normal de eventos y sus cursos alternos. Cada curso alterno lleva el número del paso del curso normal en el que ocurre.
-
+\newpage
 \subsubsection{CU-01. Anotar una sesión de fuerza}
 
 \textbf{Diagrama de Actividades}
 \begin{center}
-    \includegraphics[width=0.78\textwidth,height=0.42\textheight,keepaspectratio]{figuras/diseno/dga_cu01.png}
+    \includegraphics[width=1.4\textwidth,height=0.42\textheight,keepaspectratio]{figuras/diseno/dga_cu01.png}
     \captionof{figure}{Diagrama de Actividades -- CU-01: Anotar una sesión de fuerza.}
     \label{fig:dga_cu01}
 \end{center}
-
+\newpage
 \noindent\begin{minipage}{\linewidth}
 \textbf{Descripción Esencial Expandida del Caso de Uso}
 \par\vspace{0.2cm}
@@ -61,17 +61,18 @@ A continuación se presentan los flujos de cada uno de los casos de uso descrito
 \end{tabular}
 }
 \end{minipage}
-\vspace{0.4cm}
+\newpage
 
 \subsubsection{CU-02. Contar mi sesión de fuerza con mis palabras}
 
 \textbf{Diagrama de Actividades}
 \begin{center}
-    \includegraphics[width=0.78\textwidth,height=0.42\textheight,keepaspectratio]{figuras/diseno/dga_cu02.png}
+    \includegraphics[width=1.4\textwidth,height=0.42\textheight,keepaspectratio]{figuras/diseno/dga_cu02.png}
     \captionof{figure}{Diagrama de Actividades -- CU-02: Contar mi sesión de fuerza con mis palabras.}
     \label{fig:dga_cu02}
 \end{center}
 
+\newpage
 \noindent\begin{minipage}{\linewidth}
 \textbf{Descripción Esencial Expandida del Caso de Uso}
 \par\vspace{0.2cm}
@@ -104,16 +105,16 @@ A continuación se presentan los flujos de cada uno de los casos de uso descrito
 }
 \end{minipage}
 \vspace{0.4cm}
-
+\newpage
 \subsubsection{CU-03. Traer mis sesiones desde el reloj}
 
 \textbf{Diagrama de Actividades}
 \begin{center}
-    \includegraphics[width=0.78\textwidth,height=0.42\textheight,keepaspectratio]{figuras/diseno/dga_cu03.png}
+    \includegraphics[width=1.4\textwidth,height=0.42\textheight,keepaspectratio]{figuras/diseno/dga_cu03.png}
     \captionof{figure}{Diagrama de Actividades -- CU-03: Traer mis sesiones desde el reloj.}
     \label{fig:dga_cu03}
 \end{center}
-
+\newpage
 \noindent\begin{minipage}{\linewidth}
 \textbf{Descripción Esencial Expandida del Caso de Uso}
 \par\vspace{0.2cm}
@@ -148,16 +149,16 @@ A continuación se presentan los flujos de cada uno de los casos de uso descrito
 }
 \end{minipage}
 \vspace{0.4cm}
-
+\newpage
 \subsubsection{CU-04. Subir el archivo de mi ciclocomputador}
 
 \textbf{Diagrama de Actividades}
 \begin{center}
-    \includegraphics[width=0.78\textwidth,height=0.42\textheight,keepaspectratio]{figuras/diseno/dga_cu04.png}
+    \includegraphics[width=1.4\textwidth,height=0.42\textheight,keepaspectratio]{figuras/diseno/dga_cu04.png}
     \captionof{figure}{Diagrama de Actividades -- CU-04: Subir el archivo de mi ciclocomputador.}
     \label{fig:dga_cu04}
 \end{center}
-
+\newpage
 \noindent\begin{minipage}{\linewidth}
 \textbf{Descripción Esencial Expandida del Caso de Uso}
 \par\vspace{0.2cm}
@@ -191,16 +192,16 @@ A continuación se presentan los flujos de cada uno de los casos de uso descrito
 }
 \end{minipage}
 \vspace{0.4cm}
-
+\newpage
 \subsubsection{CU-05. Revisar mi fatiga y recibir alertas}
 
 \textbf{Diagrama de Actividades}
 \begin{center}
-    \includegraphics[width=0.78\textwidth,height=0.42\textheight,keepaspectratio]{figuras/diseno/dga_cu05.png}
+    \includegraphics[width=1.4\textwidth,height=0.42\textheight,keepaspectratio]{figuras/diseno/dga_cu05.png}
     \captionof{figure}{Diagrama de Actividades -- CU-05: Revisar mi fatiga y recibir alertas.}
     \label{fig:dga_cu05}
 \end{center}
-
+\newpage
 \noindent\begin{minipage}{\linewidth}
 \textbf{Descripción Esencial Expandida del Caso de Uso}
 \par\vspace{0.2cm}
@@ -235,16 +236,16 @@ A continuación se presentan los flujos de cada uno de los casos de uso descrito
 }
 \end{minipage}
 \vspace{0.4cm}
-
+\newpage
 \subsubsection{CU-06. Anotar una comida buscando los alimentos}
 
 \textbf{Diagrama de Actividades}
 \begin{center}
-    \includegraphics[width=0.78\textwidth,height=0.42\textheight,keepaspectratio]{figuras/diseno/dga_cu06.png}
+    \includegraphics[width=1.4\textwidth,height=0.42\textheight,keepaspectratio]{figuras/diseno/dga_cu06.png}
     \captionof{figure}{Diagrama de Actividades -- CU-06: Anotar una comida buscando los alimentos.}
     \label{fig:dga_cu06}
 \end{center}
-
+\newpage
 \noindent\begin{minipage}{\linewidth}
 \textbf{Descripción Esencial Expandida del Caso de Uso}
 \par\vspace{0.2cm}
@@ -277,16 +278,16 @@ A continuación se presentan los flujos de cada uno de los casos de uso descrito
 }
 \end{minipage}
 \vspace{0.4cm}
-
+\newpage
 \subsubsection{CU-07. Registrar una comida con una foto}
 
 \textbf{Diagrama de Actividades}
 \begin{center}
-    \includegraphics[width=0.78\textwidth,height=0.42\textheight,keepaspectratio]{figuras/diseno/dga_cu07.png}
+    \includegraphics[width=1.4\textwidth,height=0.42\textheight,keepaspectratio]{figuras/diseno/dga_cu07.png}
     \captionof{figure}{Diagrama de Actividades -- CU-07: Registrar una comida con una foto.}
     \label{fig:dga_cu07}
 \end{center}
-
+\newpage
 \noindent\begin{minipage}{\linewidth}
 \textbf{Descripción Esencial Expandida del Caso de Uso}
 \par\vspace{0.2cm}
@@ -320,16 +321,16 @@ A continuación se presentan los flujos de cada uno de los casos de uso descrito
 }
 \end{minipage}
 \vspace{0.4cm}
-
+\newpage
 \subsubsection{CU-08. Agregar una receta ajustada a mis metas}
 
 \textbf{Diagrama de Actividades}
 \begin{center}
-    \includegraphics[width=0.78\textwidth,height=0.42\textheight,keepaspectratio]{figuras/diseno/dga_cu08.png}
+    \includegraphics[width=1.4\textwidth,height=0.42\textheight,keepaspectratio]{figuras/diseno/dga_cu08.png}
     \captionof{figure}{Diagrama de Actividades -- CU-08: Agregar una receta ajustada a mis metas.}
     \label{fig:dga_cu08}
 \end{center}
-
+\newpage
 \noindent\begin{minipage}{\linewidth}
 \textbf{Descripción Esencial Expandida del Caso de Uso}
 \par\vspace{0.2cm}
@@ -362,16 +363,16 @@ A continuación se presentan los flujos de cada uno de los casos de uso descrito
 }
 \end{minipage}
 \vspace{0.4cm}
-
+\newpage
 \subsubsection{CU-09. Publicar una sesión, ruta o comida}
 
 \textbf{Diagrama de Actividades}
 \begin{center}
-    \includegraphics[width=0.78\textwidth,height=0.42\textheight,keepaspectratio]{figuras/diseno/dga_cu09.png}
+    \includegraphics[width=1.4\textwidth,height=0.42\textheight,keepaspectratio]{figuras/diseno/dga_cu09.png}
     \captionof{figure}{Diagrama de Actividades -- CU-09: Publicar una sesión, ruta o comida.}
     \label{fig:dga_cu09}
 \end{center}
-
+\newpage
 \noindent\begin{minipage}{\linewidth}
 \textbf{Descripción Esencial Expandida del Caso de Uso}
 \par\vspace{0.2cm}
@@ -406,16 +407,16 @@ A continuación se presentan los flujos de cada uno de los casos de uso descrito
 }
 \end{minipage}
 \vspace{0.4cm}
-
+\newpage
 \subsubsection{CU-10. Mantener el catálogo de ejercicios}
 
 \textbf{Diagrama de Actividades}
 \begin{center}
-    \includegraphics[width=0.78\textwidth,height=0.42\textheight,keepaspectratio]{figuras/diseno/dga_cu10.png}
+    \includegraphics[width=1.4\textwidth,height=0.42\textheight,keepaspectratio]{figuras/diseno/dga_cu10.png}
     \captionof{figure}{Diagrama de Actividades -- CU-10: Mantener el catálogo de ejercicios.}
     \label{fig:dga_cu10}
 \end{center}
-
+\newpage
 \noindent\begin{minipage}{\linewidth}
 \textbf{Descripción Esencial Expandida del Caso de Uso}
 \par\vspace{0.2cm}
@@ -447,16 +448,16 @@ A continuación se presentan los flujos de cada uno de los casos de uso descrito
 }
 \end{minipage}
 \vspace{0.4cm}
-
+\newpage
 \subsubsection{CU-11. Revisar el contenido reportado}
 
 \textbf{Diagrama de Actividades}
 \begin{center}
-    \includegraphics[width=0.78\textwidth,height=0.42\textheight,keepaspectratio]{figuras/diseno/dga_cu11.png}
+    \includegraphics[width=1.4\textwidth,height=0.42\textheight,keepaspectratio]{figuras/diseno/dga_cu11.png}
     \captionof{figure}{Diagrama de Actividades -- CU-11: Revisar el contenido reportado.}
     \label{fig:dga_cu11}
 \end{center}
-
+\newpage
 \noindent\begin{minipage}{\linewidth}
 \textbf{Descripción Esencial Expandida del Caso de Uso}
 \par\vspace{0.2cm}
@@ -488,16 +489,16 @@ A continuación se presentan los flujos de cada uno de los casos de uso descrito
 }
 \end{minipage}
 \vspace{0.4cm}
-
+\newpage
 \subsubsection{CU-12. Completar mi perfil y recibir un plan semanal}
 
 \textbf{Diagrama de Actividades}
 \begin{center}
-    \includegraphics[width=0.78\textwidth,height=0.42\textheight,keepaspectratio]{figuras/diseno/dga_cu12.png}
+    \includegraphics[width=1.4\textwidth,height=0.42\textheight,keepaspectratio]{figuras/diseno/dga_cu12.png}
     \captionof{figure}{Diagrama de Actividades -- CU-12: Completar mi perfil y recibir un plan semanal.}
     \label{fig:dga_cu12}
 \end{center}
-
+\newpage
 \noindent\begin{minipage}{\linewidth}
 \textbf{Descripción Esencial Expandida del Caso de Uso}
 \par\vspace{0.2cm}
@@ -531,16 +532,16 @@ A continuación se presentan los flujos de cada uno de los casos de uso descrito
 }
 \end{minipage}
 \vspace{0.4cm}
-
+\newpage
 \subsubsection{CU-13. Agregar una publicación a mis módulos}
 
 \textbf{Diagrama de Actividades}
 \begin{center}
-    \includegraphics[width=0.78\textwidth,height=0.42\textheight,keepaspectratio]{figuras/diseno/dga_cu13.png}
+    \includegraphics[width=1.4\textwidth,height=0.42\textheight,keepaspectratio]{figuras/diseno/dga_cu13.png}
     \captionof{figure}{Diagrama de Actividades -- CU-13: Agregar una publicación a mis módulos.}
     \label{fig:dga_cu13}
 \end{center}
-
+\newpage
 \noindent\begin{minipage}{\linewidth}
 \textbf{Descripción Esencial Expandida del Caso de Uso}
 \par\vspace{0.2cm}
@@ -572,16 +573,16 @@ A continuación se presentan los flujos de cada uno de los casos de uso descrito
 }
 \end{minipage}
 \vspace{0.4cm}
-
+\newpage
 \subsubsection{CU-14. Seguir a otro usuario}
 
 \textbf{Diagrama de Actividades}
 \begin{center}
-    \includegraphics[width=0.78\textwidth,height=0.42\textheight,keepaspectratio]{figuras/diseno/dga_cu14.png}
+    \includegraphics[width=1.4\textwidth,height=0.42\textheight,keepaspectratio]{figuras/diseno/dga_cu14.png}
     \captionof{figure}{Diagrama de Actividades -- CU-14: Seguir a otro usuario.}
     \label{fig:dga_cu14}
 \end{center}
-
+\newpage
 \noindent\begin{minipage}{\linewidth}
 \textbf{Descripción Esencial Expandida del Caso de Uso}
 \par\vspace{0.2cm}
@@ -613,16 +614,16 @@ A continuación se presentan los flujos de cada uno de los casos de uso descrito
 }
 \end{minipage}
 \vspace{0.4cm}
-
+\newpage
 \subsubsection{CU-15. Registrar un producto con su código de barras}
 
 \textbf{Diagrama de Actividades}
 \begin{center}
-    \includegraphics[width=0.78\textwidth,height=0.42\textheight,keepaspectratio]{figuras/diseno/dga_cu15.png}
+    \includegraphics[width=1.4\textwidth,height=0.42\textheight,keepaspectratio]{figuras/diseno/dga_cu15.png}
     \captionof{figure}{Diagrama de Actividades -- CU-15: Registrar un producto con su código de barras.}
     \label{fig:dga_cu15}
 \end{center}
-
+\newpage
 \noindent\begin{minipage}{\linewidth}
 \textbf{Descripción Esencial Expandida del Caso de Uso}
 \par\vspace{0.2cm}
@@ -654,16 +655,16 @@ A continuación se presentan los flujos de cada uno de los casos de uso descrito
 }
 \end{minipage}
 \vspace{0.4cm}
-
+\newpage
 \subsubsection{CU-16. Contar mi comida con mis palabras}
 
 \textbf{Diagrama de Actividades}
 \begin{center}
-    \includegraphics[width=0.78\textwidth,height=0.42\textheight,keepaspectratio]{figuras/diseno/dga_cu16.png}
+    \includegraphics[width=1.4\textwidth,height=0.42\textheight,keepaspectratio]{figuras/diseno/dga_cu16.png}
     \captionof{figure}{Diagrama de Actividades -- CU-16: Contar mi comida con mis palabras.}
     \label{fig:dga_cu16}
 \end{center}
-
+\newpage
 \noindent\begin{minipage}{\linewidth}
 \textbf{Descripción Esencial Expandida del Caso de Uso}
 \par\vspace{0.2cm}
@@ -696,16 +697,16 @@ A continuación se presentan los flujos de cada uno de los casos de uso descrito
 }
 \end{minipage}
 \vspace{0.4cm}
-
+\newpage
 \subsubsection{CU-17. Registrar una sesión de cardio sin reloj}
 
 \textbf{Diagrama de Actividades}
 \begin{center}
-    \includegraphics[width=0.78\textwidth,height=0.42\textheight,keepaspectratio]{figuras/diseno/dga_cu17.png}
+    \includegraphics[width=1.4\textwidth,height=0.42\textheight,keepaspectratio]{figuras/diseno/dga_cu17.png}
     \captionof{figure}{Diagrama de Actividades -- CU-17: Registrar una sesión de cardio sin reloj.}
     \label{fig:dga_cu17}
 \end{center}
-
+\newpage
 \noindent\begin{minipage}{\linewidth}
 \textbf{Descripción Esencial Expandida del Caso de Uso}
 \par\vspace{0.2cm}
@@ -738,16 +739,16 @@ A continuación se presentan los flujos de cada uno de los casos de uso descrito
 }
 \end{minipage}
 \vspace{0.4cm}
-
+\newpage
 \subsubsection{CU-18. Ver mis metas de alimentación del día}
 
 \textbf{Diagrama de Actividades}
 \begin{center}
-    \includegraphics[width=0.78\textwidth,height=0.42\textheight,keepaspectratio]{figuras/diseno/dga_cu18.png}
+    \includegraphics[width=1.4\textwidth,height=0.42\textheight,keepaspectratio]{figuras/diseno/dga_cu18.png}
     \captionof{figure}{Diagrama de Actividades -- CU-18: Ver mis metas de alimentación del día.}
     \label{fig:dga_cu18}
 \end{center}
-
+\newpage
 \noindent\begin{minipage}{\linewidth}
 \textbf{Descripción Esencial Expandida del Caso de Uso}
 \par\vspace{0.2cm}
@@ -779,16 +780,16 @@ A continuación se presentan los flujos de cada uno de los casos de uso descrito
 }
 \end{minipage}
 \vspace{0.4cm}
-
+\newpage
 \subsubsection{CU-19. Revisar mi progreso}
 
 \textbf{Diagrama de Actividades}
 \begin{center}
-    \includegraphics[width=0.78\textwidth,height=0.42\textheight,keepaspectratio]{figuras/diseno/dga_cu19.png}
+    \includegraphics[width=1.4\textwidth,height=0.42\textheight,keepaspectratio]{figuras/diseno/dga_cu19.png}
     \captionof{figure}{Diagrama de Actividades -- CU-19: Revisar mi progreso.}
     \label{fig:dga_cu19}
 \end{center}
-
+\newpage
 \noindent\begin{minipage}{\linewidth}
 \textbf{Descripción Esencial Expandida del Caso de Uso}
 \par\vspace{0.2cm}
@@ -819,16 +820,16 @@ A continuación se presentan los flujos de cada uno de los casos de uso descrito
 }
 \end{minipage}
 \vspace{0.4cm}
-
+\newpage
 \subsubsection{CU-20. Anotar cómo me sentí}
 
 \textbf{Diagrama de Actividades}
 \begin{center}
-    \includegraphics[width=0.78\textwidth,height=0.42\textheight,keepaspectratio]{figuras/diseno/dga_cu20.png}
+    \includegraphics[width=1.4\textwidth,height=0.42\textheight,keepaspectratio]{figuras/diseno/dga_cu20.png}
     \captionof{figure}{Diagrama de Actividades -- CU-20: Anotar cómo me sentí.}
     \label{fig:dga_cu20}
 \end{center}
-
+\newpage
 \noindent\begin{minipage}{\linewidth}
 \textbf{Descripción Esencial Expandida del Caso de Uso}
 \par\vspace{0.2cm}
@@ -859,16 +860,16 @@ A continuación se presentan los flujos de cada uno de los casos de uso descrito
 }
 \end{minipage}
 \vspace{0.4cm}
-
+\newpage
 \subsubsection{CU-21. Controlar mis datos personales}
 
 \textbf{Diagrama de Actividades}
 \begin{center}
-    \includegraphics[width=0.78\textwidth,height=0.42\textheight,keepaspectratio]{figuras/diseno/dga_cu21.png}
+    \includegraphics[width=1.4\textwidth,height=0.42\textheight,keepaspectratio]{figuras/diseno/dga_cu21.png}
     \captionof{figure}{Diagrama de Actividades -- CU-21: Controlar mis datos personales.}
     \label{fig:dga_cu21}
 \end{center}
-
+\newpage
 \noindent\begin{minipage}{\linewidth}
 \textbf{Descripción Esencial Expandida del Caso de Uso}
 \par\vspace{0.2cm}
@@ -900,16 +901,16 @@ A continuación se presentan los flujos de cada uno de los casos de uso descrito
 }
 \end{minipage}
 \vspace{0.4cm}
-
+\newpage
 \subsubsection{CU-22. Reportar una publicación}
 
 \textbf{Diagrama de Actividades}
 \begin{center}
-    \includegraphics[width=0.78\textwidth,height=0.42\textheight,keepaspectratio]{figuras/diseno/dga_cu22.png}
+    \includegraphics[width=1.4\textwidth,height=0.42\textheight,keepaspectratio]{figuras/diseno/dga_cu22.png}
     \captionof{figure}{Diagrama de Actividades -- CU-22: Reportar una publicación.}
     \label{fig:dga_cu22}
 \end{center}
-
+\newpage
 \noindent\begin{minipage}{\linewidth}
 \textbf{Descripción Esencial Expandida del Caso de Uso}
 \par\vspace{0.2cm}
@@ -941,16 +942,16 @@ A continuación se presentan los flujos de cada uno de los casos de uso descrito
 }
 \end{minipage}
 \vspace{0.4cm}
-
+\newpage
 \subsubsection{CU-23. Ver el muro de la comunidad}
 
 \textbf{Diagrama de Actividades}
 \begin{center}
-    \includegraphics[width=0.78\textwidth,height=0.42\textheight,keepaspectratio]{figuras/diseno/dga_cu23.png}
+    \includegraphics[width=1.4\textwidth,height=0.42\textheight,keepaspectratio]{figuras/diseno/dga_cu23.png}
     \captionof{figure}{Diagrama de Actividades -- CU-23: Ver el muro de la comunidad.}
     \label{fig:dga_cu23}
 \end{center}
-
+\newpage
 \noindent\begin{minipage}{\linewidth}
 \textbf{Descripción Esencial Expandida del Caso de Uso}
 \par\vspace{0.2cm}
@@ -982,16 +983,16 @@ A continuación se presentan los flujos de cada uno de los casos de uso descrito
 }
 \end{minipage}
 \vspace{0.4cm}
-
+\newpage
 \subsubsection{CU-24. Contratar el plan premium}
 
 \textbf{Diagrama de Actividades}
 \begin{center}
-    \includegraphics[width=0.78\textwidth,height=0.42\textheight,keepaspectratio]{figuras/diseno/dga_cu24.png}
+    \includegraphics[width=1.4\textwidth,height=0.42\textheight,keepaspectratio]{figuras/diseno/dga_cu24.png}
     \captionof{figure}{Diagrama de Actividades -- CU-24: Contratar el plan premium.}
     \label{fig:dga_cu24}
 \end{center}
-
+\newpage
 \noindent\begin{minipage}{\linewidth}
 \textbf{Descripción Esencial Expandida del Caso de Uso}
 \par\vspace{0.2cm}
@@ -1024,16 +1025,16 @@ A continuación se presentan los flujos de cada uno de los casos de uso descrito
 }
 \end{minipage}
 \vspace{0.4cm}
-
+\newpage
 \subsubsection{CU-25. Cancelar mi suscripción}
 
 \textbf{Diagrama de Actividades}
 \begin{center}
-    \includegraphics[width=0.78\textwidth,height=0.42\textheight,keepaspectratio]{figuras/diseno/dga_cu25.png}
+    \includegraphics[width=1.4\textwidth,height=0.42\textheight,keepaspectratio]{figuras/diseno/dga_cu25.png}
     \captionof{figure}{Diagrama de Actividades -- CU-25: Cancelar mi suscripción.}
     \label{fig:dga_cu25}
 \end{center}
-
+\newpage
 \noindent\begin{minipage}{\linewidth}
 \textbf{Descripción Esencial Expandida del Caso de Uso}
 \par\vspace{0.2cm}
@@ -1065,16 +1066,16 @@ A continuación se presentan los flujos de cada uno de los casos de uso descrito
 }
 \end{minipage}
 \vspace{0.4cm}
-
+\newpage
 \subsubsection{CU-26. Aceptar los términos de uso y el aviso legal}
 
 \textbf{Diagrama de Actividades}
 \begin{center}
-    \includegraphics[width=0.78\textwidth,height=0.42\textheight,keepaspectratio]{figuras/diseno/dga_cu26.png}
+    \includegraphics[width=1.4\textwidth,height=0.42\textheight,keepaspectratio]{figuras/diseno/dga_cu26.png}
     \captionof{figure}{Diagrama de Actividades -- CU-26: Aceptar los términos de uso y el aviso legal.}
     \label{fig:dga_cu26}
 \end{center}
-
+\newpage
 \noindent\begin{minipage}{\linewidth}
 \textbf{Descripción Esencial Expandida del Caso de Uso}
 \par\vspace{0.2cm}
@@ -1107,16 +1108,16 @@ A continuación se presentan los flujos de cada uno de los casos de uso descrito
 }
 \end{minipage}
 \vspace{0.4cm}
-
+\newpage
 \subsubsection{CU-27. Crear una receta}
 
 \textbf{Diagrama de Actividades}
 \begin{center}
-    \includegraphics[width=0.9\textwidth,height=0.76\textheight,keepaspectratio]{figuras/diseno/dga_cu27.png}
+    \includegraphics[width=1.4\textwidth,height=0.76\textheight,keepaspectratio]{figuras/diseno/dga_cu27.png}
     \captionof{figure}{Diagrama de Actividades -- CU-27: Crear una receta.}
     \label{fig:dga_cu27}
 \end{center}
-
+\newpage
 \noindent\begin{minipage}{\linewidth}
 \textbf{Descripción Esencial Expandida del Caso de Uso}
 \par\vspace{0.2cm}
@@ -1152,7 +1153,7 @@ A continuación se presentan los flujos de cada uno de los casos de uso descrito
 }
 \end{minipage}
 \vspace{0.4cm}
-
+\newpage
 \subsection{Diseño Técnico}
 Esta sección aborda la estructura técnica interna del sistema, detallando cómo se organizan y relacionan las entidades de información, tanto a nivel de persistencia en base de datos como a nivel de la lógica de negocio en el backend.
 
@@ -1165,7 +1166,7 @@ El modelo sigue dos reglas simples:
     \item \textbf{Embeber lo que se usa junto:} La información que siempre se consulta en conjunto se guarda dentro del mismo documento. Por ejemplo, las series de cada ejercicio quedan dentro de la sesión de fuerza, y los alimentos de una comida quedan dentro de la comida. Así, una sola consulta trae todo lo necesario.
     \item \textbf{Referenciar lo que se comparte o crece mucho:} Los datos que usan muchos documentos, como el catálogo de ejercicios o de alimentos, tienen su propia colección y se referencian por su identificador (\texttt{ObjectId}). Lo mismo pasa con la telemetría segundo a segundo, que se guarda en una colección de series temporales para no superar el tamaño máximo de un documento (16 MB).
 \end{itemize}
-
+\newpage
 Con estas reglas, el modelo queda formado por 15 colecciones, que se resumen en la Tabla \ref{tab:colecciones}.
 \begin{table}[h!]
     \centering
@@ -1193,6 +1194,7 @@ Con estas reglas, el modelo queda formado por 15 colecciones, que se resumen en 
     \caption{Colecciones del modelo de datos en MongoDB.}
     \label{tab:colecciones}
 \end{table}
+\newpage
 \textbf{Índices principales}
 
 Para que las consultas más frecuentes sean rápidas, se definen los siguientes índices:
@@ -1293,6 +1295,7 @@ Descripción: Representa un día del usuario. Guarda sus metas de calorías y ma
     updatedAt & Date & Obligatorio & Fecha de modificación. \\ \hline
 \end{longtable}
 }
+\newpage
 \noindent\textbf{Colección: exercises} \\
 Descripción: Catálogo de ejercicios de fuerza, tanto oficiales como creados por los usuarios. Los grupos musculares van dentro del documento, porque son pocos y casi no cambian.
 {\footnotesize
@@ -1318,6 +1321,7 @@ Descripción: Catálogo de ejercicios de fuerza, tanto oficiales como creados po
     createdAt & Date & Obligatorio & Fecha de creación. \\ \hline
 \end{longtable}
 }
+\newpage
 \noindent\textbf{Colección: workouts} \\
 Descripción: Guarda todas las sesiones de entrenamiento. El campo \texttt{type} indica si es de fuerza o de resistencia, y según eso el documento tiene unos campos u otros. Esta flexibilidad es una de las ventajas del modelo de documentos.
 {\footnotesize
@@ -1454,6 +1458,7 @@ Descripción: Registro de cada comida. Los alimentos consumidos van dentro del d
     createdAt & Date & Obligatorio & Fecha de registro. \\ \hline
 \end{longtable}
 }
+\newpage
 \noindent\textbf{Colección: fatigueSnapshots} \\
 Descripción: Guarda el cálculo diario de carga y fatiga de cada usuario. Las alertas que genera el cálculo van dentro del mismo documento.
 {\footnotesize
@@ -1565,6 +1570,7 @@ Descripción: Relaciones entre usuarios de la red social. Cada documento indica 
     createdAt & Date & Obligatorio & Fecha en que comenzó a seguirlo. \\ \hline
 \end{longtable}
 }
+\newpage
 \noindent\textbf{Colección: routines} \\
 Descripción: Rutinas de fuerza del usuario. Pueden ser creadas por él o agregadas desde una publicación de la comunidad, en cuyo caso guardan una referencia al autor original.
 {\footnotesize
@@ -1592,6 +1598,7 @@ Descripción: Rutinas de fuerza del usuario. Pueden ser creadas por él o agrega
     updatedAt & Date & Obligatorio & Fecha de la última edición. \\ \hline
 \end{longtable}
 }
+\newpage
 \noindent\textbf{Colección: routes} \\
 Descripción: Rutas de cardio del usuario, propias o agregadas desde la comunidad. Al publicarse, se ocultan el inicio y el final del recorrido.
 {\footnotesize
@@ -1615,6 +1622,7 @@ Descripción: Rutas de cardio del usuario, propias o agregadas desde la comunida
     createdAt & Date & Obligatorio & Fecha de creación. \\ \hline
 \end{longtable}
 }
+\newpage
 \noindent\textbf{Colección: trainingPlans} \\
 Descripción: Plan semanal sugerido para cada usuario. Se genera a partir de una plantilla según su perfil y guarda los ajustes que se le hacen, para que el usuario pueda ver por qué cambió.
 {\footnotesize
@@ -1645,6 +1653,7 @@ Descripción: Plan semanal sugerido para cada usuario. Se genera a partir de una
     updatedAt & Date & Obligatorio & Fecha de la última actualización. \\ \hline
 \end{longtable}
 }
+\newpage
 \noindent\textbf{Colección: moderationLogs} \\
 Descripción: Bitácora de las acciones de moderación que realiza el administrador.
 {\footnotesize
@@ -2345,6 +2354,7 @@ La Tabla \ref{tab:ambientes} muestra los recursos de cada ambiente. Como una sol
 \end{table}
 
 La API se dimensionó con una tarea, porque la carga esperada es baja. Si esa tarea falla, AWS la reemplaza automáticamente, aunque el servicio puede quedar interrumpido por uno o dos minutos. Tener dos tareas permanentes evitaría esa interrupción, pero duplicaría el costo de este componente. Por eso se deja como una mejora para cuando la cantidad de usuarios lo justifique.
+\\\\
 \textbf{Costo mensual de producción}
 
 La Tabla \ref{tab:costo_produccion} muestra el costo de este dimensionamiento. Los precios de AWS son los publicados para la región de São Paulo \citep{aws_fargate_pricing}. MongoDB publica un valor de USD 57 al mes para M10 en Virginia \citep{atlas_pricing}, pero no se pudo confirmar el valor en São Paulo. Como los servicios de AWS cuestan cerca de un 70\% más en esa región, se considera USD 100 al mes, incluidos el almacenamiento y los respaldos. Este valor se debe confirmar antes de contratar el servicio.
@@ -2374,6 +2384,7 @@ La Tabla \ref{tab:costo_produccion} muestra el costo de este dimensionamiento. L
 \end{table}
 
 Este total es el que se usa en la factibilidad económica, donde corresponde a USD 182 al mes de infraestructura (Tabla \ref{tab:costo_infra}) y USD 6 al mes de imágenes (Tabla \ref{tab:costo_imagenes}). Con estos costos, y después de descontar el IVA, la comisión de las tiendas y el impuesto a la renta, la Alternativa 3 necesita 159 suscriptores para alcanzar el equilibrio.
+\newpage
 \textbf{Cuándo aumentar la capacidad}
 
 La Tabla \ref{tab:escalamiento} indica qué señal avisa que se debe ampliar cada componente.
@@ -2412,13 +2423,12 @@ El sistema se compone de cuatro piezas que se instalan por separado:
 \end{itemize}
 
 MongoDB Atlas lo opera su proveedor, por lo que no hay que instalar el motor de base de datos. Se debe crear el clúster, configurar la conexión privada con la red de AWS y definir los índices descritos en el modelo de datos. Las claves de los servicios externos se guardan en AWS Secrets Manager y no quedan en el código ni en la imagen Docker.
-\begin{spacing}{1.0}
+
+\newpage
 \subsection{Comentarios Generales del Capítulo}
 En este capítulo se definió cómo se va a construir la solución. A partir de los requerimientos del capítulo anterior, se describió cada caso de uso con sus precondiciones, sus flujos y su diagrama de actividades, y se detalló su funcionamiento técnico con un diagrama de secuencia. También se diseñó el modelo de datos en MongoDB, las interfaces de usuario de cada caso de uso, las integraciones con los seis sistemas externos, la infraestructura y su despliegue.
-
-\medskip
+\\\\
 El diseño dejó dos aportes principales. El primero es que aclaró lo que faltaba. Al trazar cada caso de uso paso a paso, se encontraron datos necesarios que el modelo no tenía, como el registro de quién reporta una publicación, y se corrigieron antes de programar. El segundo es que se comprobaron los costos. Al dimensionar la infraestructura con precios reales de AWS en São Paulo, se vio que la estimación inicial era baja, lo que llevó a ajustar la factibilidad económica. Sumando el IVA, la comisión de las tiendas y el impuesto a la renta, la solución elegida necesita 159 suscriptores. También se tomaron decisiones para gastar solo en lo necesario, como usar una función Lambda para leer archivos \texttt{.fit} y subir las fotos directamente a Amazon S3, sin dejar de proteger los datos sensibles con una conexión privada a la base de datos.
+\\\\
+Algunos valores de este diseño todavía son supuestos que se deben confirmar, como la carga esperada, la compresión de los datos de telemetría y el precio de MongoDB Atlas en São Paulo. Esto es parte del prototipo evolutivo, ya que cada versión permitirá medir estos valores y ajustar el diseño. Lo mismo ocurre con las interfaces de usuario, ya que varias pantallas muestran por ahora datos simulados y se conectarán a medida que se implementen sus servicios. Con este capítulo quedan cumplidos los objetivos específicos 1 a 4, según los criterios de la Tabla \ref{tab:validacion}. El objetivo 5, que es implementar el MVP y verificar el cruce de datos, corresponde a la etapa siguiente. Para ello ya existe un prototipo funcional en iOS que implementa el registro de fuerza, el registro de cardio con GPS y la nutrición, además del cálculo de la carga y de la fatiga cruzada definido en el Capítulo 3, con pruebas unitarias. Con esta base, el proyecto puede avanzar a la implementación.
 
-\medskip
-Algunos valores de este diseño todavía son supuestos que se deben confirmar, como la carga esperada, la compresión de los datos de telemetría y el precio de MongoDB Atlas en São Paulo. Esto es parte del prototipo evolutivo, ya que cada versión permitirá medir estos valores y ajustar el diseño. Lo mismo ocurre con las interfaces de usuario, ya que varias pantallas muestran por ahora datos simulados y se conectarán a medida que se implementen sus servicios. Con este capítulo quedan cumplidos los objetivos específicos 1 a 4, según los criterios de la Tabla \ref{tab:validacion}. El objetivo 5, que es implementar el MVP y verificar el cruce de datos, corresponde a la etapa siguiente. Para ello ya existe un prototipo funcional en iOS que implementa el registro de fuerza, el registro de cardio con GPS y la nutrición, además del cálculo de la carga y de la fatiga cruzada definido en el Capítulo 3, con pruebas unitarias. Con esta base, el proyecto puede avanzar a la implementación, donde se planifica la puesta en marcha y las pruebas del sistema.
-\end{spacing}

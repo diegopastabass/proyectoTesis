@@ -1,0 +1,1112 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Presentación de la solución</title>
+
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          bg: 'var(--bg)', surface: 'var(--surface)', surface2: 'var(--surface2)',
+          ink: 'var(--ink)', muted: 'var(--muted)', line: 'var(--line)',
+          accent: 'var(--accent)', accent2: 'var(--accent2)',
+          good: 'var(--good)', bad: 'var(--bad)', onaccent: 'var(--onaccent)',
+          gold: 'var(--gold)', ongold: 'var(--ongold)', bar: 'var(--bar)'
+        },
+        fontFamily: { sans: ['Inter', 'Segoe UI', 'system-ui', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'] }
+      }
+    }
+  }
+</script>
+
+<style>
+  /* Paleta basada en la plantilla oficial de la Universidad Mayor (solo tema claro) */
+  :root {
+    --bg: #FFFFFF; --surface: #F1F6F7; --surface2: #DDEBEE;
+    --ink: #1F2B2E; --muted: #41555B; --line: #9FB8BE;
+    --accent: #0B6070; --accent2: #0F7384; --onaccent: #FFFFFF;
+    --good: #166534; --bad: #B91C1C;
+    --gold: #FFC20E; --ongold: #1B1B1B; --bar: #3D3D3B;
+    --logo: url("data:image/png;base64,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");
+  }
+
+  html, body { margin: 0; height: 100%; overflow: hidden; background: var(--bg); color: var(--ink); }
+  body { font-family: Inter, 'Segoe UI', system-ui, Roboto, 'Helvetica Neue', Arial, sans-serif; }
+
+  /* Lienzo fijo de 1920x1080 que se escala a la pantalla */
+  #stage {
+    position: absolute; left: 50%; top: 50%; width: 1920px; height: 1080px;
+    transform-origin: center center; overflow: hidden; background: #FFFFFF;
+  }
+
+  /* Logo blanco (para el banner) y escudo (para la esquina de las diapositivas) */
+  .logo-white { background: var(--logo) center / contain no-repeat; filter: invert(1); mix-blend-mode: screen; }
+  .logo-shield { background: var(--logo) -45px 0 / 150px auto no-repeat; width: 62px; height: 72px; }
+
+  .ic { width: 1em; height: 1em; fill: none; stroke: currentColor; stroke-width: 2;
+        stroke-linecap: round; stroke-linejoin: round; flex: none; }
+
+  .chip { border: 2px solid var(--line); color: var(--muted); border-radius: 999px;
+          padding: 6px 22px; font-weight: 700; font-size: 24px; background: #fff; }
+  .chip.on { background: var(--accent); color: var(--onaccent); border-color: var(--accent); }
+
+  .ui-btn { border: 2px solid var(--line); color: var(--ink); border-radius: 10px;
+            width: 48px; height: 40px; font-size: 22px; font-weight: 700; background: #fff; cursor: pointer; }
+  .ui-btn:hover { border-color: var(--accent); }
+  .ui-btn:focus-visible { outline: 3px solid var(--accent2); outline-offset: 2px; }
+  .idx:focus-visible { outline: 3px solid var(--accent2); outline-offset: 2px; }
+
+  /* Marco de teléfono para las grabaciones y las capturas de la app */
+  .phone { position: relative; flex: none; width: 381px; height: 800px; padding: 12px; border-radius: 58px;
+           background: #1F2B2E; box-shadow: 0 26px 50px rgba(0,0,0,.22); }
+  .phone.sm { width: 266px; height: 560px; padding: 9px; border-radius: 42px; box-shadow: 0 16px 30px rgba(0,0,0,.18); }
+  .phone .scr { width: 100%; height: 100%; overflow: hidden; border-radius: 46px; background: #F3E7C3; }
+  .phone.sm .scr { border-radius: 34px; }
+  .phone img, .phone video { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; }
+  .pend { position: absolute; left: 50%; bottom: 24px; transform: translateX(-50%); white-space: nowrap;
+          border: 2px dashed var(--line); color: var(--muted); border-radius: 999px; padding: 2px 16px;
+          font-size: 19px; font-weight: 700; background: #fff; }
+
+  .tag { border-radius: 999px; padding: 4px 18px; font-size: 22px; font-weight: 800; }
+  .step { display: flex; align-items: flex-start; gap: 18px; }
+  .step-n { display: flex; height: 48px; width: 48px; flex: none; align-items: center; justify-content: center;
+            border-radius: 999px; background: var(--accent); color: var(--onaccent); font-size: 25px; font-weight: 800; }
+  .cu { display: flex; align-items: flex-start; gap: 10px; border-radius: 10px; padding: 3px 8px; }
+  .cu b { flex: none; color: var(--accent); }
+  .cu.live { background: var(--gold); color: var(--ongold); font-weight: 700; }
+  .cu.live b { color: var(--ongold); }
+  .box { border: 2px solid var(--line); background: var(--surface); border-radius: 18px; padding: 14px 18px; }
+</style>
+
+<!-- Animaciones (la versión sin animaciones reemplaza este bloque) -->
+<style id="anim">
+  .slide {
+    position: absolute; inset: 0; opacity: 0; visibility: hidden;
+    transition: opacity .5s ease, transform .5s ease, visibility 0s linear .5s;
+  }
+  .slide.is-active { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
+  .slide.is-before { transform: translateX(-50px); }
+  .slide.is-after  { transform: translateX(50px); }
+
+  /* Elementos que aparecen de a poco al entrar a la diapositiva */
+  .rv { opacity: 0; transform: translateY(26px); transition: opacity .55s ease, transform .55s ease; }
+  .is-active .rv { opacity: 1; transform: none; transition-delay: calc(var(--i, 0) * 100ms + 150ms); }
+
+  .chrome, #footer, #focus { transition: opacity .3s ease; }
+  .chip { transition: all .3s ease; }
+  .idx { transition: background-color .2s ease; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .slide, .rv { transition: none !important; }
+  }
+</style>
+</head>
+
+<body>
+
+<!-- Íconos simples reutilizables -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-dumbbell" viewBox="0 0 24 24"><path d="M6.5 6.5v11M17.5 6.5v11M3.5 9v6M20.5 9v6M6.5 12h11"/></symbol>
+  <symbol id="i-bike" viewBox="0 0 24 24"><circle cx="5.5" cy="17" r="3.5"/><circle cx="18.5" cy="17" r="3.5"/><path d="M5.5 17l4-8h6l3 8M9.5 9l3.5 8M14 6h2.5"/></symbol>
+  <symbol id="i-run" viewBox="0 0 24 24"><circle cx="14" cy="5" r="2"/><path d="M12 9l-3 4 4 2-2 5M12 9l4 2 3-1M9 13l-3 1"/></symbol>
+  <symbol id="i-mountain" viewBox="0 0 24 24"><path d="M3 19l6-10 4 6 3-4 5 8H3z"/></symbol>
+  <symbol id="i-plate" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 16v-5a6 6 0 1 1 12 0v5l2 2H4l2-2zM10 21h4"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V4M4 20h16M8 16v-5M12 16V8M16 16v-8"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.5 3-6 6-6s6 2.5 6 6M16 5a3 3 0 0 1 0 6M18 14c2 .8 3 2.8 3 6"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3z"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></symbol>
+  <symbol id="i-scan" viewBox="0 0 24 24"><path d="M4 7V4h3M20 7V4h-3M4 17v3h3M20 17v3h-3M8 8v8M11 8v8M14 8v8M17 8v8"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></symbol>
+  <symbol id="i-watch" viewBox="0 0 24 24"><rect x="7" y="6" width="10" height="12" rx="3"/><path d="M9 6l1-3h4l1 3M9 18l1 3h4l1-3"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6V3zM14 3v4h4"/></symbol>
+  <symbol id="i-server" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="6" rx="1.5"/><rect x="3" y="14" width="18" height="6" rx="1.5"/><path d="M7 7h.01M7 17h.01"/></symbol>
+  <symbol id="i-db" viewBox="0 0 24 24"><ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v12c0 1.7 3 3 7 3s7-1.3 7-3V6M5 12c0 1.7 3 3 7 3s7-1.3 7-3"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3l2 6 6 2-6 2-2 6-2-6-6-2 6-2z"/></symbol>
+  <symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-cart" viewBox="0 0 24 24"><path d="M3 5h3l2 11h10l2-8H7"/><circle cx="9" cy="20" r="1"/><circle cx="17" cy="20" r="1"/></symbol>
+  <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M7 18h10a4 4 0 0 0 .5-8A6 6 0 0 0 6 9a4.5 4.5 0 0 0 1 9z"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol>
+  <symbol id="i-camera" viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/></symbol>
+  <symbol id="i-sofa" viewBox="0 0 24 24"><path d="M4 11V8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3M3 11h18v6H3zM5 17v2M19 17v2"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="M4 6l6 6 4-4 6 8M20 11v5h-5"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l5 5"/></symbol>
+  <symbol id="banner" viewBox="0 0 1920 640">
+    <defs>
+      <linearGradient id="tealGrad" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="1920" y2="0">
+        <stop offset="0" stop-color="#0A5F6E"/><stop offset=".18" stop-color="#3F8E99"/><stop offset=".40" stop-color="#0A4F5C"/>
+        <stop offset=".62" stop-color="#0A5260"/><stop offset=".80" stop-color="#4A929D"/><stop offset="1" stop-color="#0B6C7A"/>
+      </linearGradient>
+      <linearGradient id="goldGrad" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="1920" y2="600">
+        <stop offset="0" stop-color="#FFC20E"/><stop offset="1" stop-color="#F2A900"/>
+      </linearGradient>
+    </defs>
+    <path d="M0,0 H1920 V608 C1700,540 1400,430 1070,302 C800,330 400,410 0,508 Z" fill="url(#tealGrad)"/>
+    <path d="M0,100 C400,120 800,195 1070,288 C1400,400 1700,505 1920,572 L1920,608 C1700,540 1400,430 1070,302 C800,215 400,140 0,114 Z" fill="url(#goldGrad)"/>
+  </symbol>
+</svg>
+
+<div id="stage">
+
+  <!-- Franja dorada lateral con el número de diapositiva -->
+  <div id="goldbar" class="chrome absolute left-0 top-0 z-20 h-full w-[88px] bg-gold" style="box-shadow: 6px 0 12px rgba(0,0,0,.22)">
+    <span id="num" class="absolute bottom-8 left-0 w-full text-center text-[44px] font-semibold text-ongold">1</span>
+  </div>
+
+  <!-- Título de la diapositiva (rectángulo gris de la plantilla) -->
+  <div id="titlebar" class="chrome absolute left-0 top-[40px] z-30 flex h-[88px] items-center bg-bar pl-8 pr-20 text-[54px] font-medium text-white" style="box-shadow: 0 6px 14px rgba(0,0,0,.28)">
+    <span id="bartitle"></span>
+  </div>
+
+  <!-- Logo de la universidad, arriba a la derecha -->
+  <div id="lockup" class="chrome absolute right-[56px] top-[38px] z-30 flex items-center gap-4">
+    <div class="logo-shield"></div>
+    <div>
+      <p class="text-[40px] font-extrabold uppercase leading-none tracking-tight" style="color:#3D3D3B">Universidad <span class="font-black">Mayor</span></p>
+      <p class="mt-1 text-[15px] leading-none text-muted">para espíritus emprendedores</p>
+    </div>
+  </div>
+
+  <!-- Recordatorio del objetivo: qué parte de la idea trabaja cada diapositiva -->
+  <div id="focus" class="absolute right-[650px] top-[64px] z-30 flex gap-3 opacity-0">
+    <span class="chip" data-k="registrar">Registrar</span>
+    <span class="chip" data-k="cruzar">Cruzar</span>
+    <span class="chip" data-k="sugerir">Sugerir</span>
+  </div>
+
+  <!-- ============ PORTADA ============ -->
+  <section class="slide" data-title="Portada" data-nofooter>
+    <svg class="absolute left-0 top-0" width="1920" height="640" aria-hidden="true"><use href="#banner"/></svg>
+    <div class="logo-white absolute left-[70px] top-[185px] h-[224px] w-[230px]"></div>
+    <div class="absolute right-[44px] top-[92px] w-[1000px] text-right">
+      <p class="whitespace-nowrap text-[33px] font-semibold uppercase text-white">Escuela de Ingeniería en Computación e Informática</p>
+      <div class="mt-4 h-[5px] w-full bg-gold"></div>
+      <p class="ml-auto mt-5 max-w-[640px] text-[34px] font-light uppercase leading-snug text-white">Facultad de Ciencias, Ingeniería y Tecnología</p>
+      <p class="text-[64px] font-light leading-none text-gold">2026</p>
+    </div>
+    <div class="absolute left-1/2 top-[540px] w-[1240px] -translate-x-1/2 text-center">
+      <h1 class="rv text-[44px] font-extrabold leading-tight">Solución tecnológica para el registro, cruce de datos y análisis del entrenamiento concurrente y la nutrición en deportistas aficionados</h1>
+      <p class="rv mt-6 text-[38px] font-bold text-accent">La solución: qué hace, cómo lo hace y por qué vale la pena.</p>
+    </div>
+    <div class="rv absolute bottom-[52px] left-[118px] text-[40px] font-bold leading-[1.35]">
+      <p>Nombre: Diego Vilches</p>
+      <p>Profesor: Armando Patricio Muñoz</p>
+      <p>Fecha: 11/2026</p>
+      <p>Correo: diego.vilches@mayor.cl</p>
+    </div>
+  </section>
+
+  <!-- ============ ÍNDICE ============ -->
+  <section class="slide pl-[152px] pr-[72px] pt-[172px]" data-title="Índice">
+    <h2 class="rv text-6xl font-extrabold leading-tight">Índice de la presentación</h2>
+    <p class="rv mt-3 text-[28px] text-muted">Haz clic en un tema para ir directo a esa lámina.</p>
+
+    <div class="mt-10 grid grid-cols-5 gap-5">
+      <div class="rv rounded-3xl border-2 border-line bg-surface p-5">
+        <p class="text-[23px] font-bold uppercase tracking-wider text-accent">1 · El problema</p>
+        <ul class="mt-3 space-y-1">
+          <li><a href="#" data-goto="Querer empezar" class="idx flex items-center justify-between gap-3 rounded-xl px-3 py-1 text-[25px] font-semibold hover:bg-surface2"><span>Querer empezar</span><span class="idx-n tabular-nums text-accent">0</span></a></li>
+          <li><a href="#" data-goto="Por dónde empezar" class="idx flex items-center justify-between gap-3 rounded-xl px-3 py-1 text-[25px] font-semibold hover:bg-surface2"><span>Por dónde partir</span><span class="idx-n tabular-nums text-accent">0</span></a></li>
+          <li><a href="#" data-goto="Los tropiezos" class="idx flex items-center justify-between gap-3 rounded-xl px-3 py-1 text-[25px] font-semibold hover:bg-surface2"><span>Los tropiezos</span><span class="idx-n tabular-nums text-accent">0</span></a></li>
+          <li><a href="#" data-goto="Novato y experto" class="idx flex items-center justify-between gap-3 rounded-xl px-3 py-1 text-[25px] font-semibold hover:bg-surface2"><span>Novato y experto</span><span class="idx-n tabular-nums text-accent">0</span></a></li>
+        </ul>
+      </div>
+      <div class="rv rounded-3xl border-2 border-line bg-surface p-5">
+        <p class="text-[23px] font-bold uppercase tracking-wider text-accent">2 · La solución</p>
+        <ul class="mt-3 space-y-1">
+          <li><a href="#" data-goto="La solución" class="idx flex items-center justify-between gap-3 rounded-xl px-3 py-1 text-[25px] font-semibold hover:bg-surface2"><span>Cada tropiezo</span><span class="idx-n tabular-nums text-accent">0</span></a></li>
+          <li><a href="#" data-goto="Procesos" class="idx flex items-center justify-between gap-3 rounded-xl px-3 py-1 text-[25px] font-semibold hover:bg-surface2"><span>Procesos (BPMN)</span><span class="idx-n tabular-nums text-accent">0</span></a></li>
+          <li><a href="#" data-goto="Proceso 5" class="idx flex items-center justify-between gap-3 rounded-xl px-3 py-1 text-[25px] font-semibold hover:bg-surface2"><span>Perfil y plan</span><span class="idx-n tabular-nums text-accent">0</span></a></li>
+          <li><a href="#" data-goto="Proceso 1" class="idx flex items-center justify-between gap-3 rounded-xl px-3 py-1 text-[25px] font-semibold hover:bg-surface2"><span>Cardio y fatiga</span><span class="idx-n tabular-nums text-accent">0</span></a></li>
+          <li><a href="#" data-goto="Casos de uso" class="idx flex items-center justify-between gap-3 rounded-xl px-3 py-1 text-[25px] font-semibold hover:bg-surface2"><span>Casos de uso</span><span class="idx-n tabular-nums text-accent">0</span></a></li>
+        </ul>
+      </div>
+      <div class="rv rounded-3xl border-2 border-gold bg-surface2 p-5">
+        <p class="text-[23px] font-bold uppercase tracking-wider text-accent">3 · En vivo</p>
+        <ul class="mt-3 space-y-1">
+          <li><a href="#" data-goto="Plan semanal" class="idx flex items-center justify-between gap-3 rounded-xl px-3 py-1 text-[25px] font-semibold hover:bg-white"><span>Plan semanal</span><span class="idx-n tabular-nums text-accent">0</span></a></li>
+          <li><a href="#" data-goto="Registro de fuerza" class="idx flex items-center justify-between gap-3 rounded-xl px-3 py-1 text-[25px] font-semibold hover:bg-white"><span>Fuerza</span><span class="idx-n tabular-nums text-accent">0</span></a></li>
+          <li><a href="#" data-goto="Registro de cardio" class="idx flex items-center justify-between gap-3 rounded-xl px-3 py-1 text-[25px] font-semibold hover:bg-white"><span>Cardio</span><span class="idx-n tabular-nums text-accent">0</span></a></li>
+          <li><a href="#" data-goto="Fatiga cruzada" class="idx flex items-center justify-between gap-3 rounded-xl px-3 py-1 text-[25px] font-semibold hover:bg-white"><span>Fatiga cruzada</span><span class="idx-n tabular-nums text-accent">0</span></a></li>
+          <li><a href="#" data-goto="Nutrición" class="idx flex items-center justify-between gap-3 rounded-xl px-3 py-1 text-[25px] font-semibold hover:bg-white"><span>Nutrición</span><span class="idx-n tabular-nums text-accent">0</span></a></li>
+          <li><a href="#" data-goto="Comunidad" class="idx flex items-center justify-between gap-3 rounded-xl px-3 py-1 text-[25px] font-semibold hover:bg-white"><span>Comunidad</span><span class="idx-n tabular-nums text-accent">0</span></a></li>
+          <li><a href="#" data-goto="Pantallas" class="idx flex items-center justify-between gap-3 rounded-xl px-3 py-1 text-[25px] font-semibold hover:bg-white"><span>Más pantallas</span><span class="idx-n tabular-nums text-accent">0</span></a></li>
+        </ul>
+      </div>
+      <div class="rv rounded-3xl border-2 border-line bg-surface p-5">
+        <p class="text-[23px] font-bold uppercase tracking-wider text-accent">4 · Arquitectura</p>
+        <ul class="mt-3 space-y-1">
+          <li><a href="#" data-goto="Arquitectura" class="idx flex items-center justify-between gap-3 rounded-xl px-3 py-1 text-[25px] font-semibold hover:bg-surface2"><span>Tres capas</span><span class="idx-n tabular-nums text-accent">0</span></a></li>
+          <li><a href="#" data-goto="Tecnologías" class="idx flex items-center justify-between gap-3 rounded-xl px-3 py-1 text-[25px] font-semibold hover:bg-surface2"><span>Tecnologías</span><span class="idx-n tabular-nums text-accent">0</span></a></li>
+          <li><a href="#" data-goto="Infraestructura" class="idx flex items-center justify-between gap-3 rounded-xl px-3 py-1 text-[25px] font-semibold hover:bg-surface2"><span>Infraestructura</span><span class="idx-n tabular-nums text-accent">0</span></a></li>
+          <li><a href="#" data-goto="Integraciones" class="idx flex items-center justify-between gap-3 rounded-xl px-3 py-1 text-[25px] font-semibold hover:bg-surface2"><span>Integraciones</span><span class="idx-n tabular-nums text-accent">0</span></a></li>
+        </ul>
+      </div>
+      <div class="rv rounded-3xl border-2 border-line bg-surface p-5">
+        <p class="text-[23px] font-bold uppercase tracking-wider text-accent">5 · Negocio</p>
+        <ul class="mt-3 space-y-1">
+          <li><a href="#" data-goto="La oportunidad" class="idx flex items-center justify-between gap-3 rounded-xl px-3 py-1 text-[25px] font-semibold hover:bg-surface2"><span>El mercado</span><span class="idx-n tabular-nums text-accent">0</span></a></li>
+          <li><a href="#" data-goto="Modelo freemium" class="idx flex items-center justify-between gap-3 rounded-xl px-3 py-1 text-[25px] font-semibold hover:bg-surface2"><span>Freemium</span><span class="idx-n tabular-nums text-accent">0</span></a></li>
+          <li><a href="#" data-goto="Factibilidad" class="idx flex items-center justify-between gap-3 rounded-xl px-3 py-1 text-[25px] font-semibold hover:bg-surface2"><span>Factibilidad</span><span class="idx-n tabular-nums text-accent">0</span></a></li>
+          <li><a href="#" data-goto="Cierre" class="idx flex items-center justify-between gap-3 rounded-xl px-3 py-1 text-[25px] font-semibold hover:bg-surface2"><span>Cierre</span><span class="idx-n tabular-nums text-accent">0</span></a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 1. QUERER EMPEZAR ============ -->
+  <section class="slide pl-[152px] pr-[72px] pt-[172px]" data-title="Querer empezar">
+    <h2 class="rv mt-3 text-6xl font-extrabold leading-tight">Casi todos quieren <span class="text-accent">empezar a moverse</span></h2>
+    <p class="rv mt-3 text-4xl text-muted">Los motivos cambian. Las ganas son las mismas.</p>
+
+    <div class="mt-12 grid grid-cols-3 gap-8">
+      <div class="rv rounded-3xl border-2 border-line bg-surface p-10">
+        <svg class="ic text-7xl text-accent"><use href="#i-heart"/></svg>
+        <h3 class="mt-5 text-5xl font-extrabold">Por salud</h3>
+        <p class="mt-3 text-[30px] leading-snug text-muted">Sentirse mejor, dormir mejor y prevenir enfermedades.</p>
+      </div>
+      <div class="rv rounded-3xl border-2 border-line bg-surface p-10">
+        <svg class="ic text-7xl text-accent"><use href="#i-dumbbell"/></svg>
+        <h3 class="mt-5 text-5xl font-extrabold">Por cómo se ve</h3>
+        <p class="mt-3 text-[30px] leading-snug text-muted">Bajar de peso, ganar músculo o simplemente verse mejor.</p>
+      </div>
+      <div class="rv rounded-3xl border-2 border-line bg-surface p-10">
+        <svg class="ic text-7xl text-accent"><use href="#i-sofa"/></svg>
+        <h3 class="mt-5 text-5xl font-extrabold">Por dejar el sillón</h3>
+        <p class="mt-3 text-[30px] leading-snug text-muted">Cambiar una vida sedentaria y tener más energía en el día.</p>
+      </div>
+    </div>
+
+    <div class="mt-10 grid grid-cols-[0.8fr_1.2fr] gap-8">
+      <div class="rv rounded-3xl bg-gold p-9 text-ongold">
+        <p class="text-[88px] font-extrabold leading-none">1 de cada 3</p>
+        <p class="mt-3 text-[28px] font-semibold leading-snug">adultos en Chile hace actividad física de forma regular (MINDEP).</p>
+      </div>
+      <div class="rv flex items-center rounded-3xl bg-surface2 p-9">
+        <p class="text-[44px] font-extrabold leading-tight">Querer empezar es fácil. <span class="text-accent">Lo difícil es saber cómo, y no rendirse en el camino.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 2. POR DÓNDE EMPEZAR ============ -->
+  <section class="slide pl-[152px] pr-[72px] pt-[172px]" data-title="Por dónde empezar">
+    <h2 class="rv mt-3 text-6xl font-extrabold leading-tight">Información sobra. <span class="text-accent">Lo que falta es una guía para ti.</span></h2>
+
+    <div class="mt-9 grid grid-cols-2 gap-7">
+      <div class="rv flex gap-7 rounded-3xl border-2 border-line bg-surface p-8">
+        <svg class="ic text-7xl text-bad"><use href="#i-search"/></svg>
+        <div><h3 class="text-[42px] font-extrabold">Está repartida</h3><p class="mt-2 text-[30px] leading-snug text-muted">Rutinas en YouTube, recetas en Instagram, rutas en otra app. Nada está en un solo lugar.</p></div>
+      </div>
+      <div class="rv flex gap-7 rounded-3xl border-2 border-line bg-surface p-8">
+        <svg class="ic text-7xl text-bad"><use href="#i-users"/></svg>
+        <div><h3 class="text-[42px] font-extrabold">Es para todos, no para ti</h3><p class="mt-2 text-[30px] leading-snug text-muted">Está hecha para llegar a millones, no para tu nivel, tus días libres ni tu equipo.</p></div>
+      </div>
+      <div class="rv flex gap-7 rounded-3xl border-2 border-line bg-surface p-8">
+        <p class="flex-none whitespace-nowrap text-[56px] font-extrabold leading-none text-bad">1 de 9</p>
+        <div><h3 class="text-[42px] font-extrabold">No siempre es confiable</h3><p class="mt-2 text-[30px] leading-snug text-muted">Solo 1 de 9 blogs de influencers populares alcanzó el puntaje mínimo de credibilidad (Sabbagh et al., 2020).</p></div>
+      </div>
+      <div class="rv flex gap-7 rounded-3xl border-2 border-line bg-surface p-8">
+        <svg class="ic text-7xl text-bad"><use href="#i-clock"/></svg>
+        <div><h3 class="text-[42px] font-extrabold">Hay que copiarla a mano</h3><p class="mt-2 text-[30px] leading-snug text-muted">Lo que encuentras lo tienes que anotar en un cuaderno o en otra app para poder seguirlo.</p></div>
+      </div>
+    </div>
+
+    <div class="rv mt-8 flex items-center gap-6 rounded-3xl border-2 border-gold bg-surface2 px-9 py-6">
+      <svg class="ic text-6xl text-accent"><use href="#i-flag"/></svg>
+      <p class="text-[34px] font-bold leading-snug">La guía de un programa y la confianza en uno mismo ayudan a mantener el entrenamiento de fuerza (Rhodes et al., 2017).</p>
+    </div>
+  </section>
+
+  <!-- ============ 3. LOS TROPIEZOS ============ -->
+  <section class="slide pl-[152px] pr-[72px] pt-[172px]" data-title="Los tropiezos">
+    <h2 class="rv mt-3 text-6xl font-extrabold leading-tight">Y en el camino, <span class="text-accent">casi todos tropiezan</span></h2>
+    <p class="rv mt-3 text-[32px] text-muted">Cuatro errores muy comunes cuando alguien empieza a combinar pesas, cardio y alimentación.</p>
+
+    <div class="mt-10 grid grid-cols-4 gap-6">
+      <div class="rv rounded-3xl border-2 border-line bg-surface p-8">
+        <div class="flex gap-2 text-bad"><svg class="ic text-6xl"><use href="#i-dumbbell"/></svg><svg class="ic text-6xl"><use href="#i-bike"/></svg></div>
+        <h3 class="mt-5 text-[38px] font-extrabold leading-tight">Fatiga cruzada</h3>
+        <p class="mt-3 text-[27px] leading-snug text-muted">Piernas pesadas el lunes y una salida larga en bici el martes. Una disciplina le quita a la otra.</p>
+      </div>
+      <div class="rv rounded-3xl border-2 border-line bg-surface p-8">
+        <svg class="ic text-6xl text-bad"><use href="#i-shield"/></svg>
+        <h3 class="mt-5 text-[38px] font-extrabold leading-tight">Lesiones en el gimnasio</h3>
+        <p class="mt-3 text-[27px] leading-snug text-muted">Subir el peso o el volumen más rápido de lo que el cuerpo está acostumbrado se asocia a más lesiones (Gabbett, 2016).</p>
+      </div>
+      <div class="rv rounded-3xl border-2 border-line bg-surface p-8">
+        <svg class="ic text-6xl text-bad"><use href="#i-plate"/></svg>
+        <h3 class="mt-5 text-[38px] font-extrabold leading-tight">Comer mal para lo que entrena</h3>
+        <p class="mt-3 text-[27px] leading-snug text-muted">El mismo plato un día de descanso que después de tres horas en bicicleta. El cuerpo no se recupera.</p>
+      </div>
+      <div class="rv rounded-3xl border-2 border-line bg-surface p-8">
+        <svg class="ic text-6xl text-bad"><use href="#i-down"/></svg>
+        <h3 class="mt-5 text-[38px] font-extrabold leading-tight">Sobre&shy;entrenamiento</h3>
+        <p class="mt-3 text-[27px] leading-snug text-muted">Entrenar más no siempre es mejor. El rendimiento baja, el progreso se estanca y aparece el cansancio.</p>
+      </div>
+    </div>
+
+    <div class="rv mt-10 flex items-center justify-between gap-8 rounded-3xl bg-bar px-10 py-7 text-white">
+      <p class="text-[40px] font-extrabold leading-tight">El resultado: <span class="text-gold">frustración, dolor y abandono.</span></p>
+      <p class="max-w-[640px] text-[27px] leading-snug text-white/80">Ninguno se ve en una sola app, porque cada una mira solo una parte del entrenamiento.</p>
+    </div>
+  </section>
+
+  <!-- ============ 4. NOVATO Y EXPERTO ============ -->
+  <section class="slide pl-[152px] pr-[72px] pt-[172px]" data-title="Novato y experto">
+    <h2 class="rv mt-3 text-6xl font-extrabold leading-tight">Pensada para el que empieza. <span class="text-accent">Útil para el que ya entrena.</span></h2>
+
+    <div class="mt-10 grid grid-cols-2 gap-8">
+      <div class="rv rounded-3xl border-2 border-line bg-surface p-9">
+        <div class="flex items-center gap-5"><svg class="ic text-6xl text-accent"><use href="#i-flag"/></svg><h3 class="text-[44px] font-extrabold">El que empieza</h3></div>
+        <ul class="mt-6 space-y-4 text-[30px] leading-snug">
+          <li class="flex gap-4"><svg class="ic mt-1 text-[34px] text-good"><use href="#i-check"/></svg>Un plan semanal según su nivel, sus días y su equipo.</li>
+          <li class="flex gap-4"><svg class="ic mt-1 text-[34px] text-good"><use href="#i-check"/></svg>Rutinas y recetas de personas que elige seguir.</li>
+          <li class="flex gap-4"><svg class="ic mt-1 text-[34px] text-good"><use href="#i-check"/></svg>Un aviso antes de que la fatiga se acumule.</li>
+          <li class="flex gap-4"><svg class="ic mt-1 text-[34px] text-good"><use href="#i-check"/></svg>Le basta con el celular.</li>
+        </ul>
+      </div>
+      <div class="rv rounded-3xl border-2 border-gold bg-surface2 p-9">
+        <div class="flex items-center gap-5"><svg class="ic text-6xl text-accent"><use href="#i-watch"/></svg><h3 class="text-[44px] font-extrabold">El atleta híbrido</h3></div>
+        <ul class="mt-6 space-y-4 text-[30px] leading-snug">
+          <li class="flex gap-4"><svg class="ic mt-1 text-[34px] text-good"><use href="#i-check"/></svg>Sus datos del reloj y del ciclocomputador, sin pasarlos a mano.</li>
+          <li class="flex gap-4"><svg class="ic mt-1 text-[34px] text-good"><use href="#i-check"/></svg>Fuerza, cardio y comidas cruzados en una sola app.</li>
+          <li class="flex gap-4"><svg class="ic mt-1 text-[34px] text-good"><use href="#i-check"/></svg>Metas de comida que cambian según la sesión del día.</li>
+          <li class="flex gap-4"><svg class="ic mt-1 text-[34px] text-good"><use href="#i-check"/></svg>Comparte sus rutinas, rutas y recetas.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="rv mt-8 rounded-3xl bg-surface p-6">
+      <p class="text-[30px] font-extrabold">Funciona con lo que tengas. <span class="font-semibold text-muted">Mientras más datos, más precisas las sugerencias.</span></p>
+      <div class="mt-4 grid grid-cols-[1fr_auto_1fr_auto_1fr] items-center gap-4 text-[27px]">
+        <div class="flex items-center gap-4 rounded-2xl bg-white px-6 py-4"><svg class="ic text-5xl text-accent"><use href="#i-phone"/></svg><div><p class="font-extrabold">Solo el celular</p><p class="text-[23px] text-muted">GPS y cómo sentiste el esfuerzo</p></div></div>
+        <div class="text-4xl font-extrabold text-accent">→</div>
+        <div class="flex items-center gap-4 rounded-2xl bg-white px-6 py-4"><svg class="ic text-5xl text-accent"><use href="#i-watch"/></svg><div><p class="font-extrabold">Con reloj</p><p class="text-[23px] text-muted">Health Connect o Apple Health</p></div></div>
+        <div class="text-4xl font-extrabold text-accent">→</div>
+        <div class="flex items-center gap-4 rounded-2xl bg-white px-6 py-4"><svg class="ic text-5xl text-accent"><use href="#i-file"/></svg><div><p class="font-extrabold">Con ciclocomputador</p><p class="text-[23px] text-muted">Archivo .fit con potencia y cadencia</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 5. LA SOLUCIÓN ============ -->
+  <section class="slide pl-[152px] pr-[72px] pt-[172px]" data-title="La solución" data-focus="registrar cruzar sugerir">
+    <h2 class="rv mt-3 text-6xl font-extrabold leading-tight">Cada tropiezo tiene <span class="text-accent">una respuesta</span></h2>
+    <p class="rv mt-3 text-[32px] text-muted">Una app que registra, cruza tus datos y te sugiere cómo seguir. <b class="text-ink">Tú decides.</b></p>
+
+    <table class="rv mt-8 w-full border-separate border-spacing-0 text-[29px]">
+      <thead>
+        <tr class="text-left text-muted">
+          <th class="px-6 py-3 font-bold">Tropiezo</th>
+          <th class="px-6 py-3 font-bold">Lo que hace la app</th>
+          <th class="w-[390px] rounded-t-2xl bg-accent px-6 py-3 text-center font-extrabold text-onaccent">Caso de uso</th>
+        </tr>
+      </thead>
+      <tbody class="font-semibold">
+        <tr><td class="border-b border-line px-6 py-[15px]">No sé por dónde empezar</td><td class="border-b border-line px-6">Te sugiere un plan semanal según tu perfil</td><td class="border-b border-onaccent/20 bg-accent whitespace-nowrap text-center font-extrabold text-onaccent">CU-12</td></tr>
+        <tr><td class="border-b border-line px-6 py-[15px]">Pesas, cardio y comida en tres apps</td><td class="border-b border-line px-6">Registra todo en un mismo lugar, en pocos pasos</td><td class="border-b border-onaccent/20 bg-accent whitespace-nowrap text-center font-extrabold text-onaccent">CU-01 · CU-17 · CU-15</td></tr>
+        <tr><td class="border-b border-line px-6 py-[15px]">Subir la carga demasiado rápido</td><td class="border-b border-line px-6">Mide la carga de fuerza y de cardio con la misma regla</td><td class="border-b border-onaccent/20 bg-accent whitespace-nowrap text-center font-extrabold text-onaccent">CU-01 · CU-17</td></tr>
+        <tr><td class="border-b border-line px-6 py-[15px]">Fatiga cruzada y sobreentrenamiento</td><td class="border-b border-line px-6">Cruza tus datos y te avisa antes, con una sugerencia</td><td class="border-b border-onaccent/20 bg-accent whitespace-nowrap text-center font-extrabold text-onaccent">CU-05</td></tr>
+        <tr><td class="border-b border-line px-6 py-[15px]">Comer mal para lo que entreno</td><td class="border-b border-line px-6">Ajusta tus metas de comida al entrenamiento del día</td><td class="border-b border-onaccent/20 bg-accent whitespace-nowrap text-center font-extrabold text-onaccent">CU-18</td></tr>
+        <tr class="bg-surface2"><td class="rounded-bl-2xl px-6 py-[15px]">Información genérica y copiada a mano</td><td class="px-6">Una red social donde agregas lo que te sirve con un botón</td><td class="rounded-b-2xl bg-accent whitespace-nowrap text-center font-extrabold text-onaccent">CU-23 · CU-13</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ============ PROCESOS DE NEGOCIO (BPMN) ============ -->
+  <section class="slide pl-[152px] pr-[72px] pt-[172px]" data-title="Procesos">
+    <h2 class="rv mt-3 text-6xl font-extrabold leading-tight">Cinco procesos que <span class="text-accent">entregan valor al atleta</span></h2>
+    <p class="rv mt-3 text-[30px] text-muted">Dibujados con carriles, al estilo BPMN: cada carril es un participante y cada rombo, una decisión. Haz clic en uno para verlo en grande.</p>
+
+    <div class="mt-7 grid grid-cols-5 gap-5">
+      <div class="rv relative flex flex-col rounded-3xl border-2 border-gold bg-surface2 p-4">
+        <img data-zoom src="../../figuras/procesos/bpmn_proceso5.png" alt="Proceso 5: perfil del usuario y plan sugerido" class="h-[360px] w-full cursor-zoom-in rounded-2xl bg-white object-contain p-2">
+        <span class="absolute right-6 top-6 rounded-full bg-gold px-3 py-1 text-[18px] font-extrabold text-ongold">En detalle</span><p class="mt-4 text-[21px] font-bold uppercase tracking-wider text-accent">Proceso 5</p>
+        <h3 class="mt-1 text-[29px] font-extrabold leading-tight">Perfil y plan sugerido</h3>
+        <p class="mt-2 text-[22px] leading-snug text-muted">Atleta y app · R13</p>
+      </div>
+      <div class="rv relative flex flex-col rounded-3xl border-2 border-gold bg-surface2 p-4">
+        <img data-zoom src="../../figuras/procesos/bpmn_proceso1.png" alt="Proceso 1: registro de cardio y cálculo de fatiga cruzada" class="h-[360px] w-full cursor-zoom-in rounded-2xl bg-white object-contain p-2">
+        <span class="absolute right-6 top-6 rounded-full bg-gold px-3 py-1 text-[18px] font-extrabold text-ongold">En detalle</span><p class="mt-4 text-[21px] font-bold uppercase tracking-wider text-accent">Proceso 1</p>
+        <h3 class="mt-1 text-[29px] font-extrabold leading-tight">Cardio y fatiga cruzada</h3>
+        <p class="mt-2 text-[22px] leading-snug text-muted">Atleta, app y reloj · R02 y R03</p>
+      </div>
+      <div class="rv flex flex-col rounded-3xl border-2 border-line bg-surface p-4">
+        <img data-zoom src="../../figuras/procesos/bpmn_proceso4.png" alt="Proceso 4: registro de fuerza" class="h-[360px] w-full cursor-zoom-in rounded-2xl bg-white object-contain p-2">
+        <p class="mt-4 text-[21px] font-bold uppercase tracking-wider text-accent2">Proceso 4</p>
+        <h3 class="mt-1 text-[29px] font-extrabold leading-tight">Registro de fuerza</h3>
+        <p class="mt-2 text-[22px] leading-snug text-muted">Atleta, app e IA · R01</p>
+      </div>
+      <div class="rv flex flex-col rounded-3xl border-2 border-line bg-surface p-4">
+        <img data-zoom src="../../figuras/procesos/bpmn_proceso2.png" alt="Proceso 2: registro de comidas y metas de alimentación" class="h-[360px] w-full cursor-zoom-in rounded-2xl bg-white object-contain p-2">
+        <p class="mt-4 text-[21px] font-bold uppercase tracking-wider text-accent2">Proceso 2</p>
+        <h3 class="mt-1 text-[29px] font-extrabold leading-tight">Comidas y metas</h3>
+        <p class="mt-2 text-[22px] leading-snug text-muted">Atleta, app e IA · R04 y R05</p>
+      </div>
+      <div class="rv flex flex-col rounded-3xl border-2 border-line bg-surface p-4">
+        <img data-zoom src="../../figuras/procesos/bpmn_proceso3.png" alt="Proceso 3: publicación y uso de contenido de la comunidad" class="h-[360px] w-full cursor-zoom-in rounded-2xl bg-white object-contain p-2">
+        <p class="mt-4 text-[21px] font-bold uppercase tracking-wider text-accent2">Proceso 3</p>
+        <h3 class="mt-1 text-[29px] font-extrabold leading-tight">Comunidad</h3>
+        <p class="mt-2 text-[22px] leading-snug text-muted">Atletas, app y administrador · R08, R11 y R12</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROCESO 5 EN DETALLE ============ -->
+  <section class="slide pl-[152px] pr-[72px] pt-[160px]" data-title="Proceso 5" data-focus="sugerir">
+    <div class="flex gap-14">
+      <img data-zoom src="../../figuras/procesos/bpmn_proceso5.png" alt="Proceso 5: perfil del usuario y plan sugerido" class="rv h-[820px] flex-none cursor-zoom-in rounded-3xl border-2 border-line bg-white object-contain p-4">
+      <div class="flex-1 pt-6">
+        <div class="rv flex flex-wrap items-center gap-3"><span class="tag bg-accent text-onaccent">Proceso 5</span><span class="tag bg-surface2">R13</span><span class="tag border-2 border-line text-muted">Lleva a CU-12</span></div>
+        <h2 class="rv mt-5 text-6xl font-extrabold leading-tight">El camino del que empieza: <span class="text-accent">un plan que aprende contigo</span></h2>
+        <div class="mt-9 space-y-5 text-[29px] leading-snug">
+          <div class="rv flex gap-5"><span class="flex-none rounded-xl bg-surface2 px-4 py-1 text-[23px] font-extrabold text-accent">Tareas 1 y 2</span><p>Responde el cuestionario y la app calcula su nivel, su orientación y un plan semanal.</p></div>
+          <div class="rv flex gap-5"><span class="flex-none rounded-xl bg-gold px-4 py-1 text-[23px] font-extrabold text-ongold">Tarea 3</span><p>El atleta acepta, cambia o ignora el plan. <b>La decisión siempre es suya.</b></p></div>
+          <div class="rv flex gap-5"><span class="flex-none rounded-xl bg-surface2 px-4 py-1 text-[23px] font-extrabold text-accent">Tarea 4</span><p>Entrena y registra sus sesiones, con los procesos 1 y 4.</p></div>
+          <div class="rv flex gap-5"><span class="flex-none rounded-xl bg-surface2 px-4 py-1 text-[23px] font-extrabold text-accent">Tareas 5 y 6</span><p>La app revisa lo cumplido y qué tan duro lo sintió, y propone un plan más liviano, igual o más exigente.</p></div>
+        </div>
+        <div class="rv mt-9 flex items-center gap-6 rounded-3xl border-2 border-gold bg-surface2 px-8 py-6">
+          <svg class="ic text-6xl text-accent"><use href="#i-clock"/></svg>
+          <p class="text-[30px] font-bold leading-snug">El ciclo se repite cada semana. En premium también considera la fatiga cruzada.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROCESO 1 EN DETALLE ============ -->
+  <section class="slide pl-[152px] pr-[72px] pt-[160px]" data-title="Proceso 1" data-focus="registrar cruzar sugerir">
+    <div class="flex gap-14">
+      <img data-zoom src="../../figuras/procesos/bpmn_proceso1.png" alt="Proceso 1: registro de cardio y cálculo de fatiga cruzada" class="rv h-[820px] flex-none cursor-zoom-in rounded-3xl border-2 border-line bg-white object-contain p-4">
+      <div class="flex-1 pt-6">
+        <div class="rv flex flex-wrap items-center gap-3"><span class="tag bg-accent text-onaccent">Proceso 1</span><span class="tag bg-surface2">R02 · R03</span><span class="tag border-2 border-line text-muted">Lleva a CU-03, CU-04, CU-17 y CU-05</span></div>
+        <h2 class="rv mt-4 text-[54px] font-extrabold leading-tight">Venga de donde venga, <span class="text-accent">la sesión se cruza</span></h2>
+        <div class="mt-6 grid grid-cols-3 gap-4 text-[24px] leading-snug">
+          <div class="rv rounded-2xl bg-surface p-5"><p class="text-[22px] font-extrabold uppercase tracking-wider text-accent2">Registrar</p><p class="mt-2">Tareas 1 a 3. Llega desde el reloj, un archivo .fit, el GPS o a mano.</p></div>
+          <div class="rv rounded-2xl bg-surface p-5"><p class="text-[22px] font-extrabold uppercase tracking-wider text-accent2">Cruzar</p><p class="mt-2">Tareas 4 a 6. Calcula la carga, la junta con la fuerza y las comidas y ajusta las metas del día.</p></div>
+          <div class="rv rounded-2xl border-2 border-gold bg-surface2 p-5"><p class="text-[22px] font-extrabold uppercase tracking-wider text-accent">Sugerir</p><p class="mt-2">Tareas 7 a 9. Si hay riesgo, avisa con una sugerencia y muestra el resumen.</p></div>
+        </div>
+        <div class="rv mt-5 rounded-3xl bg-surface2 p-5">
+          <p class="text-[24px] font-bold uppercase tracking-wider text-accent">Las dos decisiones del proceso</p>
+          <div class="mt-3 space-y-3 text-[26px] leading-snug">
+            <p class="flex gap-4"><span class="flex h-10 w-10 flex-none rotate-45 items-center justify-center border-2 border-accent bg-white"><span class="-rotate-45 text-[20px] font-extrabold text-accent">1</span></span><span><b>¿Registró con un reloj?</b> Si es así, la sesión llega sola. Si no, la sube, la graba o la anota.</span></p>
+            <p class="flex gap-4"><span class="flex h-10 w-10 flex-none rotate-45 items-center justify-center border-2 border-accent bg-white"><span class="-rotate-45 text-[20px] font-extrabold text-accent">2</span></span><span><b>¿Riesgo de fatiga o poco descanso?</b> Solo entonces envía una alerta.</span></p>
+          </div>
+        </div>
+        <div class="rv mt-5 flex items-center gap-6 rounded-3xl border-2 border-gold bg-surface px-7 py-4">
+          <svg class="ic text-5xl text-accent"><use href="#i-check"/></svg>
+          <p class="text-[28px] font-bold leading-snug">Tarea 8: el atleta decide si ajusta su entrenamiento. La app no cambia nada por su cuenta.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 6. CASOS DE USO ============ -->
+  <section class="slide pl-[152px] pr-[72px] pt-[172px]" data-title="Casos de uso">
+    <h2 class="rv mt-3 text-6xl font-extrabold leading-tight">27 casos de uso, <span class="text-accent">6 demos en vivo</span></h2>
+
+    <div class="rv mt-5 flex flex-wrap items-center gap-3 text-[23px] font-bold">
+      <span class="text-muted">Actores:</span>
+      <span class="rounded-full bg-surface2 px-5 py-1">Atleta básico (gratis)</span>
+      <span class="rounded-full bg-surface2 px-5 py-1">Atleta híbrido (premium)</span>
+      <span class="rounded-full bg-surface2 px-5 py-1">Administrador</span>
+      <span class="rounded-full border-2 border-line px-5 py-1 text-muted">App de salud del teléfono</span>
+      <span class="rounded-full border-2 border-line px-5 py-1 text-muted">Asistente de IA</span>
+      <span class="ml-auto rounded-full bg-gold px-5 py-1 text-ongold">En vivo hoy</span>
+    </div>
+
+    <div class="mt-5 grid grid-cols-4 gap-5 text-[21px] leading-snug">
+      <div class="rv box"><p class="mb-2 text-[23px] font-extrabold uppercase tracking-wider text-accent2">Perfil y cuenta</p>
+        <p class="cu live"><b>12</b>Completar mi perfil y recibir un plan</p><p class="cu"><b>21</b>Controlar mis datos personales</p><p class="cu"><b>24</b>Contratar el plan premium</p><p class="cu"><b>25</b>Cancelar mi suscripción</p><p class="cu"><b>26</b>Aceptar los términos de uso</p></div>
+      <div class="rv box"><p class="mb-2 text-[23px] font-extrabold uppercase tracking-wider text-accent2">Fuerza</p>
+        <p class="cu live"><b>01</b>Anotar una sesión de fuerza</p><p class="cu"><b>02</b>Contar mi sesión con mis palabras</p></div>
+      <div class="rv box"><p class="mb-2 text-[23px] font-extrabold uppercase tracking-wider text-accent2">Cardio</p>
+        <p class="cu live"><b>17</b>Registrar una sesión sin reloj</p><p class="cu"><b>03</b>Traer mis sesiones desde el reloj</p><p class="cu"><b>04</b>Subir el archivo de mi ciclocomputador</p></div>
+      <div class="rv box"><p class="mb-2 text-[23px] font-extrabold uppercase tracking-wider text-accent2">Fatiga y progreso</p>
+        <p class="cu live"><b>05</b>Revisar mi fatiga y recibir alertas</p><p class="cu"><b>19</b>Revisar mi progreso</p><p class="cu"><b>20</b>Anotar cómo me sentí</p></div>
+      <div class="rv box col-span-2"><p class="mb-2 text-[23px] font-extrabold uppercase tracking-wider text-accent2">Nutrición</p>
+        <div class="grid grid-cols-2 gap-x-4">
+          <p class="cu live"><b>15</b>Registrar un producto con su código de barras</p><p class="cu live"><b>18</b>Ver mis metas de alimentación del día</p>
+          <p class="cu"><b>06</b>Anotar una comida buscando los alimentos</p><p class="cu"><b>07</b>Registrar una comida con una foto</p>
+          <p class="cu"><b>16</b>Contar mi comida con mis palabras</p><p class="cu"><b>08</b>Agregar una receta ajustada a mis metas</p>
+          <p class="cu"><b>27</b>Crear una receta</p>
+        </div></div>
+      <div class="rv box"><p class="mb-2 text-[23px] font-extrabold uppercase tracking-wider text-accent2">Comunidad</p>
+        <p class="cu live"><b>23</b>Ver el muro de la comunidad</p><p class="cu live"><b>13</b>Agregar una publicación a mis módulos</p><p class="cu"><b>09</b>Publicar una sesión, ruta o comida</p><p class="cu"><b>14</b>Seguir a otro usuario</p><p class="cu"><b>22</b>Reportar una publicación</p></div>
+      <div class="rv box"><p class="mb-2 text-[23px] font-extrabold uppercase tracking-wider text-accent2">Administración</p>
+        <p class="cu"><b>10</b>Mantener el catálogo de ejercicios</p><p class="cu"><b>11</b>Revisar el contenido reportado</p>
+        <p class="mt-3 px-2 text-[19px] text-muted">Se usan desde un panel web.</p></div>
+    </div>
+  </section>
+
+  <!-- ============ 7. DEMO: PLAN SEMANAL (CU-12) ============ -->
+  <section class="slide pl-[152px] pr-[72px] pt-[160px]" data-title="Plan semanal" data-focus="sugerir">
+    <div class="flex gap-20">
+      <div class="rv phone"><div class="scr" data-demo="demos/cu12_plan"><img src="../../figuras/interfaces/cu12_plan.jpg" alt="Pantalla del plan semanal sugerido"></div><span class="pend">Grabación pendiente</span></div>
+      <div class="flex-1 pt-6">
+        <div class="rv flex flex-wrap items-center gap-3"><span class="tag bg-accent text-onaccent">CU-12</span><span class="tag bg-surface2">Plan gratuito</span><span class="tag border-2 border-line text-muted">Funciona en parte en el prototipo</span></div>
+        <h2 class="rv mt-5 text-6xl font-extrabold leading-tight">Responde tres pasos y <span class="text-accent">recibe tu plan</span></h2>
+        <ol class="mt-9 space-y-6 text-[31px] leading-snug">
+          <li class="rv step"><span class="step-n">1</span><span class="pt-1">Respondes un cuestionario corto: experiencia y objetivo, días y equipo, y tus datos personales.</span></li>
+          <li class="rv step"><span class="step-n">2</span><span class="pt-1">La app define tu nivel (principiante, intermedio o avanzado) y tu orientación (fuerza, resistencia o mixta).</span></li>
+          <li class="rv step"><span class="step-n">3</span><span class="pt-1">Recibes un plan semanal, con las sesiones separadas para que te recuperes.</span></li>
+          <li class="rv step"><span class="step-n">4</span><span class="pt-1">Cada semana se ajusta según lo que cumpliste y qué tan duro lo sentiste.</span></li>
+        </ol>
+        <div class="mt-10 grid grid-cols-2 gap-6">
+          <div class="rv rounded-3xl border-l-8 border-bad bg-surface p-6"><p class="text-[22px] font-bold uppercase tracking-wider text-bad">Tropiezo que evita</p><p class="mt-2 text-[29px] font-bold leading-snug">«No sé por dónde empezar ni cómo combinar pesas y cardio.»</p></div>
+          <div class="rv rounded-3xl border-2 border-gold bg-surface2 p-6"><p class="text-[22px] font-bold uppercase tracking-wider text-accent">Tú decides</p><p class="mt-2 text-[29px] leading-snug">Puedes aceptar el plan, cambiarlo o dejarlo para después.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 8. DEMO: FUERZA (CU-01) ============ -->
+  <section class="slide pl-[152px] pr-[72px] pt-[160px]" data-title="Registro de fuerza" data-focus="registrar">
+    <div class="flex gap-20">
+      <div class="rv phone"><div class="scr" data-demo="demos/cu01_fuerza"><img src="../../figuras/interfaces/cu01_entreno.jpg" alt="Pantalla de una sesión de fuerza en curso"></div><span class="pend">Grabación pendiente</span></div>
+      <div class="flex-1 pt-6">
+        <div class="rv flex flex-wrap items-center gap-3"><span class="tag bg-accent text-onaccent">CU-01</span><span class="tag bg-surface2">Plan gratuito</span><span class="tag bg-good text-onaccent">Funciona en el prototipo</span></div>
+        <h2 class="rv mt-5 text-6xl font-extrabold leading-tight">Anota tu sesión de gimnasio <span class="text-accent">mientras entrenas</span></h2>
+        <ol class="mt-7 space-y-4 text-[31px] leading-snug">
+          <li class="rv step"><span class="step-n">1</span><span class="pt-1">Empiezas una rutina guardada o una sesión libre.</span></li>
+          <li class="rv step"><span class="step-n">2</span><span class="pt-1">Anotas el peso y las repeticiones de cada serie.</span></li>
+          <li class="rv step"><span class="step-n">3</span><span class="pt-1">Al terminar indicas qué tan duro lo sentiste, de 1 a 10 (RPE).</span></li>
+          <li class="rv step"><span class="step-n">4</span><span class="pt-1">La app calcula la carga de la sesión y la suma a tu historial.</span></li>
+        </ol>
+        <div class="rv mt-7 flex items-center gap-6 rounded-3xl bg-surface2 px-8 py-4">
+          <p class="text-[24px] font-bold uppercase tracking-wider text-accent">Carga</p>
+          <p class="text-[40px] font-extrabold">minutos × RPE</p>
+          <p class="text-[25px] leading-snug text-muted">La misma regla para fuerza y para cardio (Foster et al., 2001).</p>
+        </div>
+        <div class="mt-6 grid grid-cols-2 gap-6">
+          <div class="rv rounded-3xl border-l-8 border-bad bg-surface p-6"><p class="text-[22px] font-bold uppercase tracking-wider text-bad">Tropiezo que evita</p><p class="mt-2 text-[28px] font-bold leading-snug">Subir el peso semana a semana sin saber cuánto vienes entrenando.</p></div>
+          <div class="rv rounded-3xl border-2 border-gold bg-surface2 p-6"><p class="text-[22px] font-bold uppercase tracking-wider text-accent">En premium (CU-02)</p><p class="mt-2 text-[28px] leading-snug">Cuentas tu sesión con tus palabras y la IA la ordena en series.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 9. DEMO: CARDIO (CU-17) ============ -->
+  <section class="slide pl-[152px] pr-[72px] pt-[160px]" data-title="Registro de cardio" data-focus="registrar">
+    <div class="flex gap-20">
+      <div class="rv phone"><div class="scr" data-demo="demos/cu17_cardio"><img src="../../figuras/interfaces/cu17_grabar.jpg" alt="Pantalla de grabación de una salida con GPS"></div><span class="pend">Grabación pendiente</span></div>
+      <div class="flex-1 pt-6">
+        <div class="rv flex flex-wrap items-center gap-3"><span class="tag bg-accent text-onaccent">CU-17</span><span class="tag bg-surface2">Plan gratuito</span><span class="tag border-2 border-line text-muted">Funciona en parte en el prototipo</span></div>
+        <h2 class="rv mt-5 text-6xl font-extrabold leading-tight">Sal a correr o a pedalear <span class="text-accent">solo con tu celular</span></h2>
+        <ol class="mt-9 space-y-6 text-[31px] leading-snug">
+          <li class="rv step"><span class="step-n">1</span><span class="pt-1">Eliges la disciplina: ciclismo, running o trekking.</span></li>
+          <li class="rv step"><span class="step-n">2</span><span class="pt-1">Grabas con un toque y ves el tiempo, la distancia y el mapa.</span></li>
+          <li class="rv step"><span class="step-n">3</span><span class="pt-1">Al terminar indicas qué tan dura la sentiste.</span></li>
+          <li class="rv step"><span class="step-n">4</span><span class="pt-1">La carga queda en la misma unidad que tu sesión de fuerza.</span></li>
+        </ol>
+        <div class="mt-9 grid grid-cols-2 gap-6">
+          <div class="rv flex items-center gap-5 rounded-3xl bg-surface p-6"><svg class="ic text-6xl text-accent"><use href="#i-watch"/></svg><p class="text-[27px] leading-snug"><b>Con reloj (CU-03).</b> La sesión llega sola desde la app de salud del teléfono.</p></div>
+          <div class="rv flex items-center gap-5 rounded-3xl bg-surface p-6"><svg class="ic text-6xl text-accent"><use href="#i-file"/></svg><p class="text-[27px] leading-snug"><b>Con ciclocomputador (CU-04).</b> Subes el .fit y ves potencia y cadencia.</p></div>
+        </div>
+        <div class="rv mt-6 rounded-3xl border-l-8 border-bad bg-surface p-6"><p class="text-[22px] font-bold uppercase tracking-wider text-bad">Tropiezo que evita</p><p class="mt-2 text-[28px] font-bold leading-snug">Pesas y cardio se miden distinto, así que nadie suma el cansancio de los dos.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 10. DEMO: FATIGA (CU-05) ============ -->
+  <section class="slide pl-[152px] pr-[72px] pt-[160px]" data-title="Fatiga cruzada" data-focus="cruzar sugerir">
+    <div class="flex gap-20">
+      <div class="rv phone"><div class="scr" data-demo="demos/cu05_fatiga"><img src="../../figuras/interfaces/cu05_alerta.jpg" alt="Pantalla de alerta de fatiga con una sugerencia"></div><span class="pend">Grabación pendiente</span></div>
+      <div class="flex-1 pt-6">
+        <div class="rv flex flex-wrap items-center gap-3"><span class="tag bg-accent text-onaccent">CU-05</span><span class="tag bg-gold text-ongold">Premium</span><span class="tag border-2 border-line text-muted">Carga real, alerta de ejemplo</span></div>
+        <h2 class="rv mt-5 text-6xl font-extrabold leading-tight">Te avisa <span class="text-accent">antes</span> de que la fatiga te frene</h2>
+        <ol class="mt-8 space-y-5 text-[30px] leading-snug">
+          <li class="rv step"><span class="step-n">1</span><span class="pt-1">Cada sesión que registras se cruza con las demás y con tus comidas.</span></li>
+          <li class="rv step"><span class="step-n">2</span><span class="pt-1">Compara tu carga de la última semana con la de las últimas seis.</span></li>
+          <li class="rv step"><span class="step-n">3</span><span class="pt-1">Si detecta un riesgo, te envía un aviso con una sugerencia concreta.</span></li>
+          <li class="rv step"><span class="step-n">4</span><span class="pt-1">Tú eliges: seguir la sugerencia o mantener tu plan.</span></li>
+        </ol>
+        <div class="rv mt-8 rounded-3xl bg-surface2 p-6">
+          <p class="text-[24px] font-bold uppercase tracking-wider text-accent">Cuándo avisa</p>
+          <div class="mt-3 grid grid-cols-2 gap-5 text-[26px] leading-snug">
+            <p class="flex gap-3"><svg class="ic mt-1 text-4xl text-accent"><use href="#i-chart"/></svg><span>Tu carga semanal supera <b>1,3 veces</b> lo habitual y mañana toca una sesión exigente de la otra disciplina.</span></p>
+            <p class="flex gap-3"><svg class="ic mt-1 text-4xl text-accent"><use href="#i-clock"/></svg><span>Dejaste <b>menos de 6 horas</b> entre una sesión de fuerza y una de cardio.</span></p>
+          </div>
+        </div>
+        <div class="rv mt-6 rounded-3xl border-l-8 border-bad bg-surface p-6"><p class="text-[22px] font-bold uppercase tracking-wider text-bad">Tropiezos que evita</p><p class="mt-2 text-[28px] font-bold leading-snug">Fatiga cruzada, sobreentrenamiento y lesiones por subir la carga muy rápido.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 11. DEMO: NUTRICIÓN (CU-15 y CU-18) ============ -->
+  <section class="slide pl-[152px] pr-[72px] pt-[160px]" data-title="Nutrición" data-focus="registrar sugerir">
+    <div class="flex gap-20">
+      <div class="rv phone"><div class="scr" data-demo="demos/cu18_nutricion"><img src="../../figuras/interfaces/cu18_entreno.jpg" alt="Pantalla de metas de alimentación del día"></div><span class="pend">Grabación pendiente</span></div>
+      <div class="flex-1 pt-6">
+        <div class="rv flex flex-wrap items-center gap-3"><span class="tag bg-accent text-onaccent">CU-15 · CU-18</span><span class="tag bg-surface2">Código de barras gratis</span><span class="tag bg-gold text-ongold">Metas premium</span></div>
+        <h2 class="rv mt-5 text-6xl font-extrabold leading-tight">Come según <span class="text-accent">lo que entrenas hoy</span></h2>
+        <ol class="mt-6 space-y-4 text-[30px] leading-snug">
+          <li class="rv step"><span class="step-n">1</span><span class="pt-1">Escaneas el código de barras del producto y ajustas la porción.</span></li>
+          <li class="rv step"><span class="step-n">2</span><span class="pt-1">La comida se suma a tu diario, con sus calorías y macronutrientes.</span></li>
+          <li class="rv step"><span class="step-n">3</span><span class="pt-1">Tus metas cambian según el día: más carbohidratos antes de pierna, otras metas en descanso.</span></li>
+          <li class="rv step"><span class="step-n">4</span><span class="pt-1">Te sugiere qué comer antes y después de entrenar.</span></li>
+        </ol>
+        <div class="rv mt-6 grid grid-cols-4 gap-4 text-center text-[24px] font-bold">
+          <div class="rounded-2xl bg-surface p-3"><svg class="ic mx-auto text-4xl text-accent"><use href="#i-scan"/></svg><p class="mt-2">Código de barras</p></div>
+          <div class="rounded-2xl bg-surface p-3"><svg class="ic mx-auto text-4xl text-accent"><use href="#i-search"/></svg><p class="mt-2">Buscar en la lista</p></div>
+          <div class="rounded-2xl bg-surface p-3"><svg class="ic mx-auto text-4xl text-accent"><use href="#i-camera"/></svg><p class="mt-2">Foto del plato (IA)</p></div>
+          <div class="rounded-2xl bg-surface p-3"><svg class="ic mx-auto text-4xl text-accent"><use href="#i-spark"/></svg><p class="mt-2">Con tus palabras (IA)</p></div>
+        </div>
+        <div class="mt-6 grid grid-cols-2 gap-6">
+          <div class="rv rounded-3xl border-l-8 border-bad bg-surface p-6"><p class="text-[22px] font-bold uppercase tracking-wider text-bad">Tropiezo que evita</p><p class="mt-2 text-[28px] font-bold leading-snug">Comer lo mismo entrene o no, y no recuperarse.</p></div>
+          <div class="rv rounded-3xl border-2 border-gold bg-surface2 p-6"><p class="text-[22px] font-bold uppercase tracking-wider text-accent">Metas, no dietas</p><p class="mt-2 text-[28px] leading-snug">Son sugerencias. La app no reemplaza a un nutricionista.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 12. DEMO: COMUNIDAD (CU-23 y CU-13) ============ -->
+  <section class="slide pl-[152px] pr-[72px] pt-[160px]" data-title="Comunidad" data-focus="registrar sugerir">
+    <div class="flex gap-20">
+      <div class="rv phone"><div class="scr" data-demo="demos/cu13_comunidad"><img src="../../figuras/interfaces/cu13_agregar.jpg" alt="Pantalla para agregar una rutina de la comunidad"></div><span class="pend">Grabación pendiente</span></div>
+      <div class="flex-1 pt-6">
+        <div class="rv flex flex-wrap items-center gap-3"><span class="tag bg-accent text-onaccent">CU-23 · CU-13</span><span class="tag bg-gold text-ongold">Premium</span><span class="tag border-2 border-line text-muted">Diseño con datos simulados</span></div>
+        <h2 class="rv mt-5 text-6xl font-extrabold leading-tight">Una red social que <span class="text-accent">sí puedes usar</span></h2>
+        <ol class="mt-9 space-y-6 text-[31px] leading-snug">
+          <li class="rv step"><span class="step-n">1</span><span class="pt-1">En tu muro ves lo que publican las personas que sigues.</span></li>
+          <li class="rv step"><span class="step-n">2</span><span class="pt-1">Abres una rutina, una ruta o una receta y ves quién la creó.</span></li>
+          <li class="rv step"><span class="step-n">3</span><span class="pt-1">Pulsas «Agregar a mis rutinas».</span></li>
+          <li class="rv step"><span class="step-n">4</span><span class="pt-1">Queda una copia en tu módulo, lista para usar y conectada al cruce de datos.</span></li>
+        </ol>
+        <div class="rv mt-9 rounded-3xl bg-surface2 p-6 text-[27px] leading-snug">
+          <p><b>Con recetas:</b> las porciones se ajustan a lo que te falta comer ese día.</p>
+          <p class="mt-2"><b>Al publicar una ruta:</b> se ocultan el inicio y el final, para no mostrar dónde vives.</p>
+        </div>
+        <div class="rv mt-6 rounded-3xl border-l-8 border-bad bg-surface p-6"><p class="text-[22px] font-bold uppercase tracking-wider text-bad">Tropiezo que evita</p><p class="mt-2 text-[28px] font-bold leading-snug">Información genérica de redes sociales que hay que copiar a mano.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 13. MÁS PANTALLAS ============ -->
+  <section class="slide pl-[152px] pr-[72px] pt-[172px]" data-title="Pantallas">
+    <h2 class="rv mt-3 text-6xl font-extrabold leading-tight">Otras pantallas <span class="text-accent">del prototipo</span></h2>
+    <p class="rv mt-3 text-[30px] text-muted">Hechas en Flutter, no en una herramienta de dibujo. Todas están en el capítulo 7.</p>
+
+    <div class="mt-10 flex justify-between">
+      <div class="rv text-center"><div class="phone sm"><div class="scr"><img src="../../figuras/interfaces/cu07_revision.jpg" alt="Comida estimada desde una foto"></div></div><p class="mt-5 text-[26px] font-extrabold">Comida con una foto</p><p class="text-[22px] text-muted">CU-07 · IA</p></div>
+      <div class="rv text-center"><div class="phone sm"><div class="scr"><img src="../../figuras/interfaces/cu02_revision.jpg" alt="Sesión de fuerza contada con palabras"></div></div><p class="mt-5 text-[26px] font-extrabold">Fuerza con tus palabras</p><p class="text-[22px] text-muted">CU-02 · IA</p></div>
+      <div class="rv text-center"><div class="phone sm"><div class="scr"><img src="../../figuras/interfaces/cu04_resumen.jpg" alt="Resumen de un archivo .fit"></div></div><p class="mt-5 text-[26px] font-extrabold">Archivo .fit</p><p class="text-[22px] text-muted">CU-04 · Ciclocomputador</p></div>
+      <div class="rv text-center"><div class="phone sm"><div class="scr"><img src="../../figuras/interfaces/cu19_carga.jpg" alt="Gráfico de la carga en el tiempo"></div></div><p class="mt-5 text-[26px] font-extrabold">Tu carga en el tiempo</p><p class="text-[22px] text-muted">CU-19 · Progreso</p></div>
+      <div class="rv text-center"><div class="phone sm"><div class="scr"><img src="../../figuras/interfaces/cu09_ruta.jpg" alt="Publicar una ruta"></div></div><p class="mt-5 text-[26px] font-extrabold">Publicar una ruta</p><p class="text-[22px] text-muted">CU-09 · Comunidad</p></div>
+      <div class="rv text-center"><div class="phone sm"><div class="scr"><img src="../../figuras/interfaces/cu24_planes.jpg" alt="Planes gratuito y premium"></div></div><p class="mt-5 text-[26px] font-extrabold">Plan premium</p><p class="text-[22px] text-muted">CU-24 · Precio con IVA</p></div>
+    </div>
+  </section>
+
+  <!-- ============ 14. ARQUITECTURA EN TRES CAPAS ============ -->
+  <section class="slide pl-[152px] pr-[72px] pt-[172px]" data-title="Arquitectura" data-focus="cruzar sugerir">
+    <h2 class="rv mt-3 text-6xl font-extrabold leading-tight">Cliente y servidor, <span class="text-accent">en tres capas</span></h2>
+
+    <div class="mt-8 flex flex-col gap-3">
+      <div class="rv grid grid-cols-[260px_1fr] items-stretch gap-5">
+        <div class="flex flex-col justify-center rounded-2xl bg-bar px-6 text-white"><p class="text-[24px] font-bold uppercase tracking-wider text-gold">Capa 1</p><p class="text-[32px] font-extrabold leading-tight">Presentación</p></div>
+        <div class="grid grid-cols-3 gap-5">
+          <div class="flex items-center gap-5 rounded-2xl border-2 border-line bg-surface px-6 py-5"><svg class="ic text-6xl text-accent"><use href="#i-phone"/></svg><div><p class="text-[30px] font-extrabold">App móvil · Flutter</p><p class="text-[24px] text-muted">Android e iOS con un solo código</p></div></div>
+          <div class="flex items-center gap-5 rounded-2xl border-2 border-line bg-surface px-6 py-5"><svg class="ic text-6xl text-accent"><use href="#i-heart"/></svg><div><p class="text-[30px] font-extrabold">Health Connect / Apple Health</p><p class="text-[24px] text-muted">Datos del reloj, con permiso</p></div></div>
+          <div class="flex items-center gap-5 rounded-2xl border-2 border-line bg-surface px-6 py-5"><svg class="ic text-6xl text-accent"><use href="#i-code"/></svg><div><p class="text-[30px] font-extrabold">Panel web</p><p class="text-[24px] text-muted">Para el administrador</p></div></div>
+        </div>
+      </div>
+
+      <div class="rv pl-[280px] text-center text-[26px] font-bold text-accent">⇅ HTTPS · API REST</div>
+
+      <div class="rv grid grid-cols-[260px_1fr] items-stretch gap-5">
+        <div class="flex flex-col justify-center rounded-2xl bg-accent px-6 text-white"><p class="text-[24px] font-bold uppercase tracking-wider text-gold">Capa 2</p><p class="text-[32px] font-extrabold leading-tight">Procesamiento en la nube</p></div>
+        <div class="grid grid-cols-[1.4fr_1fr_1fr] gap-5">
+          <div class="flex items-center gap-5 rounded-2xl border-2 border-gold bg-surface2 px-6 py-5"><svg class="ic text-6xl text-accent"><use href="#i-server"/></svg><div><p class="text-[30px] font-extrabold">API · NestJS</p><p class="text-[24px] leading-snug">Calcula la fatiga, las metas de comida y el plan sugerido</p></div></div>
+          <div class="flex items-center gap-5 rounded-2xl border-2 border-line bg-surface px-6 py-5"><svg class="ic text-6xl text-accent"><use href="#i-file"/></svg><div><p class="text-[30px] font-extrabold">Lector .fit</p><p class="text-[24px] text-muted">AWS Lambda</p></div></div>
+          <div class="flex items-center gap-5 rounded-2xl border-2 border-line bg-surface px-6 py-5"><svg class="ic text-6xl text-accent"><use href="#i-db"/></svg><div><p class="text-[30px] font-extrabold">MongoDB Atlas</p><p class="text-[24px] text-muted">Historial como documentos</p></div></div>
+        </div>
+      </div>
+
+      <div class="rv pl-[280px] text-center text-[26px] font-bold text-accent">⇅ Solo la API tiene las claves</div>
+
+      <div class="rv grid grid-cols-[260px_1fr] items-stretch gap-5">
+        <div class="flex flex-col justify-center rounded-2xl bg-gold px-6 text-ongold"><p class="text-[24px] font-bold uppercase tracking-wider">Capa 3</p><p class="text-[32px] font-extrabold leading-tight">Servicios externos</p></div>
+        <div class="grid grid-cols-5 gap-4 text-[24px]">
+          <div class="rounded-2xl border-2 border-line bg-surface px-5 py-4"><svg class="ic text-5xl text-accent2"><use href="#i-spark"/></svg><p class="mt-2 font-extrabold">Gemini</p><p class="text-[21px] text-muted">Fotos y textos</p></div>
+          <div class="rounded-2xl border-2 border-line bg-surface px-5 py-4"><svg class="ic text-5xl text-accent2"><use href="#i-scan"/></svg><p class="mt-2 font-extrabold">Open Food Facts</p><p class="text-[21px] text-muted">Códigos de barras</p></div>
+          <div class="rounded-2xl border-2 border-line bg-surface px-5 py-4"><svg class="ic text-5xl text-accent2"><use href="#i-bell"/></svg><p class="mt-2 font-extrabold">Firebase</p><p class="text-[21px] text-muted">Alertas al teléfono</p></div>
+          <div class="rounded-2xl border-2 border-line bg-surface px-5 py-4"><svg class="ic text-5xl text-accent2"><use href="#i-cloud"/></svg><p class="mt-2 font-extrabold">S3 y CloudFront</p><p class="text-[21px] text-muted">Fotos y archivos</p></div>
+          <div class="rounded-2xl border-2 border-line bg-surface px-5 py-4"><svg class="ic text-5xl text-accent2"><use href="#i-cart"/></svg><p class="mt-2 font-extrabold">Play y App Store</p><p class="text-[21px] text-muted">Pagos</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 15. TECNOLOGÍAS Y POR QUÉ ============ -->
+  <section class="slide pl-[152px] pr-[72px] pt-[172px]" data-title="Tecnologías">
+    <h2 class="rv mt-3 text-6xl font-extrabold leading-tight">Por qué <span class="text-accent">estas piezas</span></h2>
+
+    <div class="mt-7 grid grid-cols-3 gap-6">
+      <div class="rv rounded-3xl border-2 border-line bg-surface p-7">
+        <div class="flex items-center gap-4"><svg class="ic text-6xl text-accent"><use href="#i-phone"/></svg><h3 class="text-[40px] font-extrabold">Flutter</h3></div>
+        <p class="mt-4 text-[25px] leading-snug text-muted">Un solo código para Android e iOS, con la misma experiencia. Tiene paquetes para leer Health Connect y Apple Health, y el prototipo ya está hecho con él.</p>
+      </div>
+      <div class="rv rounded-3xl border-2 border-line bg-surface p-7">
+        <div class="flex items-center gap-4"><svg class="ic text-6xl text-accent"><use href="#i-server"/></svg><h3 class="text-[40px] font-extrabold">NestJS</h3></div>
+        <p class="mt-4 text-[25px] leading-snug text-muted">TypeScript ordenado en módulos: fuerza, cardio, nutrición y comunidad. Revisa cada dato antes de guardarlo y es la única pieza que guarda las claves.</p>
+      </div>
+      <div class="rv rounded-3xl border-2 border-gold bg-surface2 p-7">
+        <div class="flex items-center gap-4"><svg class="ic text-6xl text-accent"><use href="#i-db"/></svg><h3 class="text-[40px] font-extrabold">MongoDB Atlas</h3></div>
+        <p class="mt-4 text-[25px] leading-snug">Una sesión puede tener 3 ejercicios y otra 7. Cada una se guarda como un documento, sin cambiar la estructura. Los puntos GPS van en series temporales.</p>
+      </div>
+      <div class="rv rounded-3xl border-2 border-line bg-surface p-7">
+        <div class="flex items-center gap-4"><svg class="ic text-6xl text-accent"><use href="#i-cloud"/></svg><h3 class="text-[40px] font-extrabold">AWS Fargate y Lambda</h3></div>
+        <p class="mt-4 text-[25px] leading-snug text-muted">La API corre en contenedores sin administrar servidores, de 1 a 3 según el uso. El lector .fit solo se enciende cuando llega un archivo.</p>
+      </div>
+      <div class="rv rounded-3xl border-2 border-line bg-surface p-7">
+        <div class="flex items-center gap-4"><svg class="ic text-6xl text-accent"><use href="#i-spark"/></svg><h3 class="text-[40px] font-extrabold">Gemini Flash</h3></div>
+        <p class="mt-4 text-[25px] leading-snug text-muted">Entiende fotos de comida y textos libres. Se llama solo desde la API, para proteger la clave y controlar el gasto. Cambiar de proveedor solo toca esa conexión.</p>
+      </div>
+      <div class="rv rounded-3xl border-2 border-line bg-surface p-7">
+        <div class="flex items-center gap-4"><svg class="ic text-6xl text-accent"><use href="#i-camera"/></svg><h3 class="text-[40px] font-extrabold">S3 y CloudFront</h3></div>
+        <p class="mt-4 text-[25px] leading-snug text-muted">Las fotos se suben directo desde el teléfono con un permiso temporal y no pasan por la API. CloudFront las muestra dentro de su nivel gratuito.</p>
+      </div>
+    </div>
+    <p class="rv mt-6 text-[26px] text-muted">Todas son tecnologías abiertas o servicios probados. No hay que crear hardware ni inventar algoritmos desde cero.</p>
+  </section>
+
+  <!-- ============ 16. INFRAESTRUCTURA ============ -->
+  <section class="slide pl-[152px] pr-[72px] pt-[172px]" data-title="Infraestructura">
+    <h2 class="rv mt-3 text-6xl font-extrabold leading-tight">Dimensionada para <span class="text-accent">1.500 usuarios</span></h2>
+
+    <div class="mt-8 grid grid-cols-[1.05fr_0.95fr] gap-8">
+      <!-- Esquema simplificado de la arquitectura detallada -->
+      <div class="rv relative rounded-3xl border-2 border-line bg-surface p-6">
+        <div class="flex justify-center gap-6">
+          <div class="flex items-center gap-3 rounded-2xl bg-white px-6 py-3 text-[26px] font-extrabold shadow-sm"><svg class="ic text-4xl text-accent"><use href="#i-phone"/></svg>App móvil</div>
+          <div class="flex items-center gap-3 rounded-2xl bg-white px-6 py-3 text-[26px] font-extrabold shadow-sm"><svg class="ic text-4xl text-accent"><use href="#i-code"/></svg>Panel web</div>
+        </div>
+        <p class="my-2 text-center text-[22px] font-bold text-accent">↓ HTTPS</p>
+        <div class="rounded-2xl border-2 border-dashed border-accent bg-white/60 p-5">
+          <p class="text-[22px] font-extrabold uppercase tracking-wider text-accent">AWS · región São Paulo</p>
+          <div class="mt-3 rounded-xl bg-surface2 px-5 py-3 text-center text-[25px] font-bold">Balanceador de carga (ALB, HTTPS)</div>
+          <p class="my-1 text-center text-[22px] font-bold text-accent">↓</p>
+          <div class="grid grid-cols-[1.3fr_1fr] gap-4">
+            <div class="rounded-xl border-2 border-gold bg-white px-5 py-3"><p class="text-[25px] font-extrabold">API NestJS en Fargate</p><p class="text-[21px] text-muted">0,5 vCPU y 1 GB · de 1 a 3 tareas · dos zonas</p></div>
+            <div class="rounded-xl bg-white px-5 py-3"><p class="text-[25px] font-extrabold">Lector .fit</p><p class="text-[21px] text-muted">Lambda, solo al llegar un archivo</p></div>
+          </div>
+          <div class="mt-4 grid grid-cols-2 gap-4">
+            <div class="rounded-xl bg-white px-5 py-3"><p class="text-[25px] font-extrabold">S3 y CloudFront</p><p class="text-[21px] text-muted">Buckets privados · subida prefirmada</p></div>
+            <div class="rounded-xl bg-white px-5 py-3"><p class="text-[25px] font-extrabold">ECR, Secrets y CloudWatch</p><p class="text-[21px] text-muted">Imágenes, claves y registros</p></div>
+          </div>
+        </div>
+        <p class="my-2 text-center text-[22px] font-bold text-accent">↓ conexión privada (VPC peering)</p>
+        <div class="flex items-center justify-center gap-4 rounded-2xl bg-white px-6 py-3 text-[25px] font-extrabold shadow-sm"><svg class="ic text-4xl text-accent"><use href="#i-db"/></svg>MongoDB Atlas M10 · tres nodos con réplica</div>
+      </div>
+
+      <div class="flex flex-col gap-4">
+        <div class="grid grid-cols-2 gap-4">
+          <div class="rv rounded-2xl bg-surface2 p-6"><p class="text-[22px] font-bold uppercase tracking-wider text-muted">Activos al día</p><p class="text-[54px] font-extrabold leading-tight">600</p><p class="text-[22px] text-muted">40% de los registrados</p></div>
+          <div class="rv rounded-2xl bg-surface2 p-6"><p class="text-[22px] font-bold uppercase tracking-wider text-muted">Llamadas a la API</p><p class="text-[54px] font-extrabold leading-tight">24.000</p><p class="text-[22px] text-muted">al día · hasta 10 por segundo</p></div>
+          <div class="rv rounded-2xl bg-surface2 p-6"><p class="text-[22px] font-bold uppercase tracking-wider text-muted">Base de datos</p><p class="text-[54px] font-extrabold leading-tight">19,9 GB</p><p class="text-[22px] text-muted">al cuarto año</p></div>
+          <div class="rv rounded-2xl bg-gold p-6 text-ongold"><p class="text-[22px] font-bold uppercase tracking-wider">Producción</p><p class="text-[54px] font-extrabold leading-tight">USD 188</p><p class="text-[22px] font-semibold">al mes, con precios reales</p></div>
+        </div>
+        <div class="rv rounded-2xl border-2 border-line bg-surface p-5">
+          <p class="text-[24px] font-extrabold">Tres ambientes</p>
+          <div class="mt-3 grid grid-cols-3 gap-3 text-[21px] leading-snug">
+            <div class="rounded-xl bg-white p-3"><p class="font-extrabold text-accent">Desarrollo</p><p>Docker en el computador, sin costo de nube</p></div>
+            <div class="rounded-xl bg-white p-3"><p class="font-extrabold text-accent">QA</p><p>Se enciende solo para las pruebas, con Atlas gratuito</p></div>
+            <div class="rounded-xl bg-white p-3"><p class="font-extrabold text-accent">Producción</p><p>Agrega tareas si la CPU pasa del 60%</p></div>
+          </div>
+        </div>
+        <p class="rv text-[22px] leading-snug text-muted">La carga esperada es un supuesto que se medirá con el prototipo evolutivo.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 17. INTEGRACIONES ============ -->
+  <section class="slide pl-[152px] pr-[72px] pt-[172px]" data-title="Integraciones">
+    <h2 class="rv mt-3 text-6xl font-extrabold leading-tight">Si un servicio falla, <span class="text-accent">tú sigues registrando</span></h2>
+
+    <table class="rv mt-8 w-full border-separate border-spacing-0 text-[27px]">
+      <thead>
+        <tr class="text-left text-muted">
+          <th class="px-5 py-3 font-bold">Servicio externo</th>
+          <th class="px-5 py-3 font-bold">Para qué se usa</th>
+          <th class="rounded-t-2xl bg-accent px-5 py-3 font-extrabold text-onaccent">Si falla</th>
+        </tr>
+      </thead>
+      <tbody class="font-semibold">
+        <tr><td class="border-b border-line px-5 py-[13px]">Health Connect y Apple Health</td><td class="border-b border-line px-5 text-muted">Traer las sesiones del reloj</td><td class="border-b border-onaccent/20 bg-accent px-5 text-onaccent">Registras con el GPS o a mano</td></tr>
+        <tr><td class="border-b border-line px-5 py-[13px]">Gemini</td><td class="border-b border-line px-5 text-muted">Entender fotos de comida y textos</td><td class="border-b border-onaccent/20 bg-accent px-5 text-onaccent">Se ofrece el registro manual</td></tr>
+        <tr><td class="border-b border-line px-5 py-[13px]">Open Food Facts</td><td class="border-b border-line px-5 text-muted">Buscar productos por código de barras</td><td class="border-b border-onaccent/20 bg-accent px-5 text-onaccent">Buscas el alimento en la lista</td></tr>
+        <tr><td class="border-b border-line px-5 py-[13px]">Amazon S3 y CloudFront</td><td class="border-b border-line px-5 text-muted">Guardar fotos y archivos .fit</td><td class="border-b border-onaccent/20 bg-accent px-5 text-onaccent">Se conserva lo escrito para reintentar</td></tr>
+        <tr><td class="border-b border-line px-5 py-[13px]">Firebase Cloud Messaging</td><td class="border-b border-line px-5 text-muted">Enviar las alertas al teléfono</td><td class="border-b border-onaccent/20 bg-accent px-5 text-onaccent">La alerta queda en el resumen de la app</td></tr>
+        <tr class="bg-surface2"><td class="rounded-bl-2xl px-5 py-[13px]">Google Play y App Store</td><td class="px-5 text-muted">Cobrar y cancelar la suscripción</td><td class="rounded-b-2xl bg-accent px-5 text-onaccent">No se activa premium sin confirmar el pago</td></tr>
+      </tbody>
+    </table>
+
+    <div class="mt-7 grid grid-cols-3 gap-6">
+      <div class="rv flex gap-5 rounded-3xl bg-surface p-6"><svg class="ic text-5xl text-accent"><use href="#i-lock"/></svg><p class="text-[25px] leading-snug"><b>Claves solo en el servidor.</b> Nunca en el teléfono, donde cualquiera podría extraerlas.</p></div>
+      <div class="rv flex gap-5 rounded-3xl bg-surface p-6"><svg class="ic text-5xl text-accent"><use href="#i-shield"/></svg><p class="text-[25px] leading-snug"><b>Tus datos son tuyos.</b> Permiso antes de leer tu salud, cifrado y opción de borrar todo (Ley 19.628).</p></div>
+      <div class="rv flex gap-5 rounded-3xl bg-surface p-6"><svg class="ic text-5xl text-accent"><use href="#i-cart"/></svg><p class="text-[25px] leading-snug"><b>El pago ocurre en la tienda.</b> La app nunca ve los datos de la tarjeta.</p></div>
+    </div>
+  </section>
+
+  <!-- ============ 18. MERCADO ============ -->
+  <section class="slide pl-[152px] pr-[72px] pt-[172px]" data-title="La oportunidad">
+    <h2 class="rv mt-3 text-6xl font-extrabold leading-tight">Un mercado que <span class="text-accent">ya está creciendo</span></h2>
+
+    <div class="mt-12 grid grid-cols-[1.35fr_0.65fr] gap-10">
+      <div class="flex flex-col gap-5">
+        <div class="rv rounded-2xl bg-surface2 px-7 py-6" style="width:100%"><p class="text-5xl font-extrabold">4,5 a 5 millones</p><p class="text-[28px] text-muted">de chilenos mayores de 18 años hacen actividad física</p></div>
+        <div class="rv rounded-2xl bg-surface2 px-7 py-6" style="width:82%"><p class="text-5xl font-extrabold">1,2 a 1,5 millones</p><p class="text-[28px] text-muted">practican pesas, running o ciclismo</p></div>
+        <div class="rv rounded-2xl bg-surface2 px-7 py-6" style="width:64%"><p class="text-5xl font-extrabold">180 a 250 mil</p><p class="text-[28px] text-muted">hacen entrenamiento concurrente y usan smartphone</p></div>
+        <div class="rv rounded-2xl bg-gold px-7 py-5 text-ongold" style="width:46%"><p class="text-5xl font-extrabold">1.500 usuarios</p><p class="text-[28px] font-semibold">escenario conservador, menos del 1%</p></div>
+      </div>
+      <div class="flex flex-col gap-6">
+        <div class="rv rounded-3xl border-2 border-gold bg-surface p-8">
+          <p class="text-2xl font-bold uppercase tracking-widest text-accent">Hyrox</p>
+          <p class="mt-3 text-6xl font-extrabold leading-none">650 <span class="text-accent">→</span> 650.000</p>
+          <p class="mt-3 text-[28px] leading-snug text-muted">competidores entre 2017 y 2024 en la carrera que mezcla fuerza y resistencia.</p>
+        </div>
+        <div class="rv rounded-3xl border-2 border-line bg-surface p-8">
+          <p class="text-[34px] font-extrabold leading-snug">Y hay espacio para crecer: <span class="text-accent">2 de cada 3 adultos</span> todavía no hace actividad física regular.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 19. MODELO FREEMIUM ============ -->
+  <section class="slide pl-[152px] pr-[72px] pt-[172px]" data-title="Modelo freemium">
+    <h2 class="rv mt-3 text-6xl font-extrabold leading-tight">Gratis para empezar. <span class="text-accent">Premium para ir más lejos.</span></h2>
+
+    <div class="mt-9 grid grid-cols-[1.15fr_0.85fr] gap-8">
+      <div class="grid grid-cols-2 gap-6">
+        <div class="rv rounded-3xl border-2 border-line bg-surface p-8">
+          <p class="text-2xl font-bold uppercase tracking-widest text-accent2">Gratis</p>
+          <p class="mt-1 text-6xl font-extrabold">$0</p>
+          <ul class="mt-5 space-y-3 text-[26px] leading-snug">
+            <li class="flex gap-3"><svg class="ic mt-1 text-3xl text-good"><use href="#i-check"/></svg>Cuestionario y plan semanal</li>
+            <li class="flex gap-3"><svg class="ic mt-1 text-3xl text-good"><use href="#i-check"/></svg>Registro de fuerza, cardio con GPS y comidas</li>
+            <li class="flex gap-3"><svg class="ic mt-1 text-3xl text-good"><use href="#i-check"/></svg>Código de barras y recetas propias</li>
+            <li class="flex gap-3"><svg class="ic mt-1 text-3xl text-good"><use href="#i-check"/></svg>Progreso y control de tus datos</li>
+          </ul>
+          <p class="mt-5 text-[23px] font-semibold text-muted">Pensado para el que empieza.</p>
+        </div>
+        <div class="rv rounded-3xl border-2 border-gold bg-surface2 p-8">
+          <p class="text-2xl font-bold uppercase tracking-widest text-accent">Premium</p>
+          <p class="mt-1 text-6xl font-extrabold">$7.990<span class="text-3xl text-muted"> / mes</span></p>
+          <ul class="mt-5 space-y-3 text-[26px] leading-snug">
+            <li class="flex gap-3"><svg class="ic mt-1 text-3xl text-good"><use href="#i-check"/></svg>Todo lo gratuito</li>
+            <li class="flex gap-3"><svg class="ic mt-1 text-3xl text-good"><use href="#i-check"/></svg>Reloj y archivos .fit</li>
+            <li class="flex gap-3"><svg class="ic mt-1 text-3xl text-good"><use href="#i-check"/></svg>Registro con IA: fotos y palabras</li>
+            <li class="flex gap-3"><svg class="ic mt-1 text-3xl text-good"><use href="#i-check"/></svg>Cruce de datos, alertas y metas</li>
+            <li class="flex gap-3"><svg class="ic mt-1 text-3xl text-good"><use href="#i-check"/></svg>Red social deportiva</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="rv rounded-3xl bg-surface p-8">
+        <p class="text-[32px] font-extrabold leading-tight">De cada $7.990, <span class="text-accent">¿cuánto llega al proyecto?</span></p>
+        <div class="mt-6 space-y-4">
+          <div><div class="flex justify-between text-[25px] font-bold"><span>Precio con IVA</span><span>$7.990</span></div><div class="mt-1 h-7 rounded-lg bg-line" style="width:100%"></div></div>
+          <div><div class="flex justify-between text-[25px] font-bold"><span>Sin IVA (19%)</span><span>$6.714</span></div><div class="mt-1 h-7 rounded-lg bg-accent2" style="width:84%"></div></div>
+          <div><div class="flex justify-between text-[25px] font-bold"><span>Sin comisión de la tienda (15%)</span><span>$5.707</span></div><div class="mt-1 h-7 rounded-lg bg-accent" style="width:71%"></div></div>
+        </div>
+        <div class="mt-7 rounded-2xl bg-gold p-6 text-ongold"><p class="text-[22px] font-bold uppercase tracking-wider">Ingreso neto por suscriptor</p><p class="text-[56px] font-extrabold leading-tight">$68.486 <span class="text-[28px]">al año</span></p></div>
+        <p class="mt-4 text-[22px] text-muted">Precio comparado con Fitia ($6.990), Strava ($7.600) y Freeletics ($8.000).</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 20. FACTIBILIDAD ECONÓMICA ============ -->
+  <section class="slide pl-[152px] pr-[72px] pt-[172px]" data-title="Factibilidad">
+    <h2 class="rv mt-3 text-6xl font-extrabold leading-tight">Se sostiene con <span class="text-accent">159 suscriptores</span></h2>
+    <p class="rv mt-3 text-[30px] text-muted">Flujo de caja a 4 años de la Solución por Capas, con VAN igual a cero y TIR del 15%.</p>
+
+    <div class="mt-12 grid grid-cols-3 gap-7">
+      <div class="rv rounded-2xl bg-surface2 p-8"><p class="text-[24px] font-bold uppercase tracking-wider text-muted">Inversión inicial</p><p class="mt-2 whitespace-nowrap text-[60px] font-extrabold leading-tight">$16,2 M</p><p class="text-[25px] text-muted">desarrollo y publicación en las tiendas</p></div>
+      <div class="rv rounded-2xl bg-surface2 p-8"><p class="text-[24px] font-bold uppercase tracking-wider text-muted">Costo operativo</p><p class="mt-2 whitespace-nowrap text-[60px] font-extrabold leading-tight">$4,5 M <span class="text-[30px]">al año</span></p><p class="text-[25px] text-muted">nube, IA, fotos, mantención y Apple</p></div>
+      <div class="rv rounded-2xl bg-gold p-8 text-ongold"><p class="text-[24px] font-bold uppercase tracking-wider">Punto de equilibrio</p><p class="mt-2 whitespace-nowrap text-[60px] font-extrabold leading-tight">159</p><p class="text-[25px] font-semibold">suscriptores premium al año</p></div>
+      <div class="rv rounded-2xl bg-surface2 p-8"><p class="text-[24px] font-bold uppercase tracking-wider text-muted">Rentabilidad (TIR)</p><p class="mt-2 whitespace-nowrap text-[60px] font-extrabold leading-tight">15%</p><p class="text-[25px] text-muted">en 4 años</p></div>
+      <div class="rv rounded-2xl bg-surface2 p-8"><p class="text-[24px] font-bold uppercase tracking-wider text-muted">Recuperación</p><p class="mt-2 whitespace-nowrap text-[60px] font-extrabold leading-tight">2,85 años</p><p class="text-[25px] text-muted">flujo neto de $5,7 M al año</p></div>
+      <div class="rv rounded-2xl border-2 border-line bg-surface p-7">
+        <p class="text-[24px] font-bold uppercase tracking-wider text-muted">Conversión necesaria</p>
+        <div class="mt-3 space-y-2 text-[24px] font-bold">
+          <div class="flex items-center gap-3"><span class="w-[110px]">1.500</span><div class="h-5 rounded bg-bad" style="width:212px"></div><span>10,6%</span></div>
+          <div class="flex items-center gap-3"><span class="w-[110px]">1.800</span><div class="h-5 rounded bg-accent2" style="width:176px"></div><span>8,8%</span></div>
+          <div class="flex items-center gap-3"><span class="w-[110px]">5.000</span><div class="h-5 rounded bg-good" style="width:64px"></div><span>3,2%</span></div>
+        </div>
+      </div>
+    </div>
+    <p class="rv mt-10 text-[26px] text-muted">Ya descuenta el IVA, la comisión de las tiendas y el impuesto a la renta (27%). No incluye el costo de marketing.</p>
+  </section>
+
+  <!-- ============ CIERRE ============ -->
+  <section class="slide" data-title="Cierre" data-nofooter>
+    <svg class="absolute left-0 top-0" width="1920" height="640" aria-hidden="true"><use href="#banner"/></svg>
+    <div class="logo-white absolute left-[70px] top-[185px] h-[224px] w-[230px]"></div>
+    <div class="absolute right-[44px] top-[92px] w-[1000px] text-right">
+      <p class="whitespace-nowrap text-[33px] font-semibold uppercase text-white">Escuela de Ingeniería en Computación e Informática</p>
+      <div class="mt-4 h-[5px] w-full bg-gold"></div>
+      <p class="ml-auto mt-5 max-w-[640px] text-[34px] font-light uppercase leading-snug text-white">Facultad de Ciencias, Ingeniería y Tecnología</p>
+      <p class="text-[64px] font-light leading-none text-gold">2026</p>
+    </div>
+    <div class="absolute left-0 right-0 top-[660px] text-center">
+      <h2 class="rv text-[76px] font-extrabold leading-none">Empezar bien, <span class="text-accent">y no rendirse en el camino.</span></h2>
+      <div class="rv mt-10 flex items-center justify-center gap-6">
+        <span class="rounded-full bg-surface2 px-10 py-3 text-[38px] font-bold">Registrar</span>
+        <span class="text-5xl font-extrabold text-accent">→</span>
+        <span class="rounded-full bg-surface2 px-10 py-3 text-[38px] font-bold">Cruzar</span>
+        <span class="text-5xl font-extrabold text-accent">→</span>
+        <span class="rounded-full bg-gold px-10 py-3 text-[38px] font-extrabold text-ongold">Sugerir</span>
+      </div>
+      <p class="rv mt-12 text-[36px] font-semibold text-muted">Tú decides. <span class="font-extrabold text-ink">¿Preguntas?</span></p>
+    </div>
+  </section>
+
+  <!-- Pie de página: objetivo siempre presente y controles -->
+  <div id="footer" class="absolute bottom-0 left-[88px] right-0 z-20 flex h-[64px] items-center justify-between border-t-2 border-line bg-surface px-14">
+    <p class="flex items-center gap-4 text-[26px] font-semibold"><svg class="ic text-4xl text-accent"><use href="#i-flag"/></svg><span class="text-muted">Objetivo:</span> centralizar, cruzar y sugerir para entrenar con información objetiva</p>
+    <div class="flex items-center gap-3">
+      <button id="prev" class="ui-btn" aria-label="Diapositiva anterior">←</button>
+      <button id="next" class="ui-btn" aria-label="Diapositiva siguiente">→</button>
+    </div>
+  </div>
+
+  <!-- Visor para ver un diagrama en grande (clic o Esc para cerrar) -->
+  <div id="zoom" class="absolute inset-0 z-50 hidden cursor-zoom-out items-center justify-center bg-black/70 p-8">
+    <img alt="" class="max-h-full max-w-full rounded-3xl bg-white p-6 shadow-2xl">
+  </div>
+</div>
+
+<script>
+(() => {
+  const stage = document.getElementById('stage');
+  const slides = [...document.querySelectorAll('.slide')];
+  const total = slides.length;
+  const num = document.getElementById('num');
+  const bartitle = document.getElementById('bartitle');
+  const chrome = [...document.querySelectorAll('.chrome')];
+  const footer = document.getElementById('footer');
+  const focus = document.getElementById('focus');
+  const chips = [...focus.querySelectorAll('.chip')];
+  const deckTitle = document.title;
+  let cur = 0;
+
+  // Ajusta el lienzo de 1920x1080 al tamaño de la pantalla
+  function fit() {
+    const s = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+    stage.style.transform = `translate(-50%, -50%) scale(${s})`;
+  }
+
+  // Orden de aparición de los elementos de cada diapositiva
+  slides.forEach(sl => sl.querySelectorAll('.rv').forEach((el, i) => el.style.setProperty('--i', i)));
+
+  // Grabaciones de la app: busca demos/<nombre>.mp4 y si no existe demos/<nombre>.gif.
+  // Mientras no haya grabación se muestra la captura de la tesis.
+  document.querySelectorAll('[data-demo]').forEach(scr => {
+    const base = scr.dataset.demo;
+    const img = scr.querySelector('img');
+    const pend = scr.parentElement.querySelector('.pend');
+    const done = () => pend && pend.remove();
+    const v = document.createElement('video');
+    v.muted = true; v.loop = true; v.playsInline = true; v.preload = 'auto';
+    v.addEventListener('loadeddata', () => {
+      img.replaceWith(v); done();
+      if (scr.closest('.slide').classList.contains('is-active')) v.play().catch(() => {});
+    }, { once: true });
+    v.addEventListener('error', () => {
+      const g = new Image();
+      g.onload = () => { img.src = g.src; done(); };
+      g.src = base + '.gif';
+    }, { once: true });
+    v.src = base + '.mp4';
+  });
+
+  function go(n) {
+    closeZoom();
+    cur = Math.max(0, Math.min(total - 1, n));
+    slides.forEach((sl, i) => {
+      sl.classList.toggle('is-active', i === cur);
+      sl.classList.toggle('is-before', i < cur);
+      sl.classList.toggle('is-after', i > cur);
+      sl.setAttribute('aria-hidden', String(i !== cur));
+    });
+    const sl = slides[cur];
+    const cover = sl.hasAttribute('data-nofooter');
+    num.textContent = cur + 1;
+    bartitle.textContent = sl.dataset.title;
+    chrome.forEach(c => { c.style.opacity = cover ? '0' : '1'; });
+    footer.style.opacity = cover ? '0' : '1';
+    footer.style.pointerEvents = cover ? 'none' : 'auto';
+    const f = (sl.dataset.focus || '').split(' ').filter(Boolean);
+    focus.style.opacity = f.length ? '1' : '0';
+    chips.forEach(c => c.classList.toggle('on', f.includes(c.dataset.k)));
+    // Los videos parten desde el inicio cada vez que se entra a su lámina
+    document.querySelectorAll('.phone video').forEach(v => v.pause());
+    sl.querySelectorAll('.phone video').forEach(v => { v.currentTime = 0; v.play().catch(() => {}); });
+    document.title = `${sl.dataset.title} · ${deckTitle}`;
+    try { history.replaceState(null, '', '#' + (cur + 1)); } catch (e) {}
+  }
+
+  const next = () => go(cur + 1);
+  const prev = () => go(cur - 1);
+
+  document.getElementById('next').addEventListener('click', next);
+  document.getElementById('prev').addEventListener('click', prev);
+
+  // Visor de diagramas
+  const zoom = document.getElementById('zoom');
+  const zoomImg = zoom.querySelector('img');
+  const isZoomed = () => !zoom.classList.contains('hidden');
+  const closeZoom = () => { zoom.classList.add('hidden'); zoom.classList.remove('flex'); };
+  document.querySelectorAll('[data-zoom]').forEach(img => img.addEventListener('click', () => {
+    zoomImg.src = img.src; zoomImg.alt = img.alt;
+    zoom.classList.remove('hidden'); zoom.classList.add('flex');
+  }));
+  zoom.addEventListener('click', closeZoom);
+
+  window.addEventListener('keydown', e => {
+    if (e.ctrlKey || e.metaKey || e.altKey) return;
+    if (isZoomed()) { e.preventDefault(); if (e.key === 'Escape' || e.key === ' ' || e.key === 'Enter') closeZoom(); return; }
+    if (e.target.closest && e.target.closest('a') && (e.key === 'Enter' || e.key === ' ')) return;
+    switch (e.key) {
+      case 'ArrowRight': case 'PageDown': case ' ': case 'Enter': e.preventDefault(); next(); break;
+      case 'ArrowLeft': case 'PageUp': case 'Backspace': e.preventDefault(); prev(); break;
+      case 'Home': go(0); break;
+      case 'End': go(total - 1); break;
+      case 'f': case 'F':
+        if (document.fullscreenElement) document.exitFullscreen();
+        else document.documentElement.requestFullscreen && document.documentElement.requestFullscreen();
+        break;
+    }
+  });
+
+  // Deslizar en pantallas táctiles
+  let x0 = null;
+  window.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, { passive: true });
+  window.addEventListener('touchend', e => {
+    if (x0 === null) return;
+    const dx = e.changedTouches[0].clientX - x0;
+    if (Math.abs(dx) > 60) (dx < 0 ? next : prev)();
+    x0 = null;
+  });
+
+  // Índice: cada enlace lleva a su lámina y muestra su número
+  document.querySelectorAll('[data-goto]').forEach(el => {
+    const idx = slides.findIndex(s => s.dataset.title === el.dataset.goto);
+    el.querySelector('.idx-n').textContent = idx + 1;
+    el.addEventListener('click', e => { e.preventDefault(); go(idx); el.blur(); });
+  });
+
+  window.addEventListener('resize', fit);
+  window.addEventListener('hashchange', () => go((parseInt(location.hash.slice(1), 10) || 1) - 1));
+
+  fit();
+  go((parseInt(location.hash.slice(1), 10) || 1) - 1);
+})();
+</script>
+</body>
+</html>

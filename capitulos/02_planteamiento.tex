@@ -114,11 +114,13 @@ Por mucho tiempo, el análisis detallado de datos deportivos y el entrenamiento 
 \\\\
 \textbf{Recuperación y prevención de lesiones:}\\
 La segunda razón es ayudar a reducir el riesgo de lesiones causadas por una mala combinación de fuerza y resistencia, y a mejorar la recuperación. El cruce de datos permitirá avisar al usuario cuando aparezcan señales de sobreentrenamiento, para que pueda decidir a tiempo si descansa, baja la carga o consulta a un profesional. En el deporte, el uso de tecnología para medir y evaluar se ha vuelto un recurso muy importante, y hoy se aplica con buenos resultados en áreas como la kinesiología, la preparación física y la rehabilitación. Expertos de la industria deportiva coinciden en que recolectar y procesar datos de forma automática será clave en los próximos años para alargar la vida deportiva, prevenir lesiones y depender menos de que una persona esté monitoreando todo el tiempo \citep{frevel2022impact}.
+\\\\
 \textbf{Información confiable y personalizada:}\\
 La tercera razón es entregar a cada deportista información adaptada a su nivel, en un solo lugar. Hoy, quien empieza depende de contenido genérico de redes sociales, que no siempre es confiable \citep{sabbagh2020credibility}. La aplicación busca cambiar eso con un plan sugerido según el perfil y con una comunidad donde las rutinas, recetas y rutas se pueden agregar directamente a los propios módulos. Esto es relevante, porque la personalización en aplicaciones móviles ha mostrado efectos positivos en el cambio de hábitos \citep{tong2021personalized}.
 \subsection{Objetivos del Proyecto}
 \subsubsection{Objetivo General}
 Desarrollar, antes de diciembre de 2026, un producto mínimo viable (MVP) de una aplicación móvil que centralice el registro del entrenamiento de fuerza, resistencia y nutrición de deportistas aficionados que practican entrenamiento concurrente en Chile, que entregue un plan de entrenamiento sugerido según el perfil de cada usuario y sugerencias de carga y alimentación a partir del cruce de sus datos, y que permita compartir y reutilizar sesiones, rutas y comidas entre usuarios, validado mediante pruebas técnicas, para que el deportista, incluso sin experiencia previa, cuente con información objetiva y personalizada al organizar sus entrenamientos y su alimentación, y así pueda reducir el riesgo de acumular fatiga cruzada.
+\newpage
 \subsubsection{Objetivos Específicos}
 Los siguientes objetivos específicos se enmarcan en el mismo plazo del objetivo general:
 \begin{enumerate}
@@ -145,7 +147,7 @@ El alcance de este proyecto considera el diseño y el desarrollo de un producto 
 
 \subsubsection*{Tipos de Entrenamiento Considerados}
 El entrenamiento de fuerza se registra de forma bastante parecida sin importar su objetivo. En cambio, cada deporte de resistencia se mide de una manera distinta, y no es lo mismo seguir a alguien que corre que a alguien que anda en bicicleta. Por eso es necesario definir qué tipos de entrenamiento va a seguir la aplicación y qué datos se registran en cada uno.
-\\\\
+\newpage
 \textbf{Entrenamiento de fuerza}
 
 La Tabla \ref{tab:tipos_fuerza} muestra los tipos de entrenamiento de fuerza que considera la aplicación.
@@ -169,6 +171,7 @@ La Tabla \ref{tab:tipos_fuerza} muestra los tipos de entrenamiento de fuerza que
 \end{table}
 
 En la práctica, todos estos tipos se registran de la misma forma, con el ejercicio, las series, las repeticiones y el peso. Hay solo dos diferencias. En el entrenamiento isométrico se registra el tiempo en vez de las repeticiones, y en la calistenia se suma el peso corporal del usuario como parte de la carga. Esto permite usar un mismo formulario y un mismo cálculo de volumen para todos los tipos de fuerza.
+\newpage
 \textbf{Entrenamiento de resistencia (cardio)}
 
 La Tabla \ref{tab:tipos_cardio} muestra las disciplinas de resistencia que considera la aplicación y los datos que se obtienen de cada una.
@@ -208,6 +211,7 @@ Para acotar el desarrollo de la propuesta, quedan fuera del alcance los siguient
     \item La aplicación no entregará dietas ni planes de alimentación prescritos. En nutrición solo entrega metas y sugerencias, porque la planificación dietética está reservada a profesionales de la salud.
     \item En el MVP no se podrán subir videos a la red social. Las fotos sí se incluyen.
 \end{itemize}
+\newpage
 \subsection{Comentarios Generales del Capítulo}
 En este capítulo se describió el problema que enfrentan los deportistas aficionados que combinan fuerza, resistencia y nutrición usando aplicaciones separadas que no comparten datos entre sí. Esto hace más difícil prevenir lesiones y mejorar el rendimiento. También se describió al usuario objetivo a través de tres perfiles, y se identificaron sus principales dolores. El más importante es que no tiene un lugar centralizado ni personalizado donde informarse, y que depende de contenido genérico de redes sociales.
 \\\\

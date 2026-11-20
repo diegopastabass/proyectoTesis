@@ -62,6 +62,7 @@ Son interfaces de programación (APIs) incluidas en los sistemas operativos de l
 \\\\
 \textbf{Formato de Archivos .FIT (Flexible and Interoperable Data Transfer):}\\
 Es un formato de archivo binario creado originalmente por Garmin (dentro del consorcio ANT+), que se convirtió en el estándar de la industria para guardar y transferir datos deportivos. A diferencia de los concentradores, que suelen entregar la información resumida, un archivo \texttt{.fit} guarda el detalle completo del entrenamiento, con datos segundo a segundo de frecuencia cardíaca, potencia, cadencia y posición GPS. Procesar estos archivos directamente permite hacer análisis mucho más precisos.
+\\\\
 \textbf{Inteligencia Artificial: Procesamiento de Lenguaje Natural (PLN) y Visión Artificial:}\\
 En el software deportivo, estas dos ramas de la inteligencia artificial sirven principalmente para que registrar datos sea más rápido y fácil:
 \begin{itemize}
@@ -76,7 +77,7 @@ Las bases de datos relacionales tradicionales guardan la información en tablas 
 La personalización consiste en adaptar el contenido y las sugerencias de una aplicación a las características de cada persona. Para hacerlo, la aplicación construye un \textbf{perfil del usuario} con dos tipos de datos. Los datos declarados son los que el usuario entrega directamente, como su experiencia, sus objetivos o los días que puede entrenar. Los datos observados son los que el sistema obtiene de su uso, como las sesiones que cumple, el esfuerzo que reporta o la carga que acumula. Una revisión sistemática con metaanálisis encontró que las tecnologías móviles personalizadas tienen un efecto positivo en el cambio de hábitos, y que este efecto es mayor cuando la personalización usa datos capturados por el propio sistema \citep{tong2021personalized}.
 \textbf{Redes Sociales Deportivas y Contenido Generado por Usuarios:}\\
 El contenido generado por usuarios es el que crean y publican los propios usuarios de una plataforma, en vez de la empresa que la administra. En las aplicaciones deportivas, este contenido toma la forma de actividades, rutas, rutinas o recetas que se comparten con otras personas. Plataformas como Strava y Hevy funcionan como redes sociales donde los usuarios siguen a otras personas, comparan sus marcas y reutilizan lo que otros publican \citep{strava_segments, hevy_social}. A diferencia de las redes sociales generales, donde el contenido busca llegar a la mayor cantidad de personas y no siempre es confiable \citep{sabbagh2020credibility}, en una red deportiva el usuario elige a quién seguir y puede usar ese contenido directamente en su propio entrenamiento.
-\\\\
+
 \subsection{Revisión del Estado del Arte}
 En esta sección se analizan las principales aplicaciones del mercado que abordan, en mayor o menor medida, el registro de datos deportivos y nutricionales. En el Capítulo 1 se hizo una revisión preliminar. Aquí se revisa con más detalle cómo funcionan estas herramientas, cómo se conectan con otros dispositivos y qué les falta, para justificar la solución propuesta.
 
@@ -84,6 +85,7 @@ En esta sección se analizan las principales aplicaciones del mercado que aborda
 Fitia es una de las aplicaciones más usadas para controlar la alimentación y contar calorías. Para alguien cuyo objetivo es bajar de peso o ganar músculo, y que hace actividades simples como caminar o rutinas de fuerza comunes, Fitia funciona muy bien. Sus principales ventajas son su gran base de datos de alimentos y lo fácil que es llevar el registro diario.
 \\\\
 Sin embargo, cuando se mira desde el entrenamiento concurrente aparecen limitaciones importantes. La principal es que no cruza bien el gasto de calorías con el tipo de ejercicio realizado. Aunque se puede sincronizar con plataformas como Strava, su análisis se reduce a comparar ``calorías que entran versus calorías que salen'', sin considerar qué tipo de energía usó el cuerpo ni la fatiga muscular.
+\newpage
 \textbf{Formas de Integración}
 
 Según su documentación oficial, Fitia no se conecta directamente con aplicaciones y dispositivos como Strava, Garmin o los relojes inteligentes. En su lugar, lee los datos a través de los concentradores del sistema operativo, es decir, Apple Health en iOS y Google Health Connect en Android \citep{fitia_sync_health, fitia_import_apple}. Las características de esta integración son las siguientes:
@@ -98,7 +100,7 @@ Según su documentación oficial, Fitia no se conecta directamente con aplicacio
     Con estos datos, Fitia recalcula la meta de calorías del día para que el usuario no termine comiendo menos de lo que necesita después de un entrenamiento intenso.
     \item \textbf{Sincronización en ambos sentidos:} Fitia importa el peso, los pasos y las sesiones de ejercicio, y a su vez envía a Apple Health las calorías y los macronutrientes consumidos.
 \end{itemize}
-
+\newpage
 \textbf{Brechas y Relación con el Problema}
 
 Como se explicó en el planteamiento del problema, las principales dificultades del atleta híbrido son tener sus datos repartidos en distintas aplicaciones, que no se crucen los datos de fuerza, resistencia y nutrición, y no poder anticipar la fatiga cruzada. La Tabla \ref{tab:analisis_fitia} muestra cómo se relaciona Fitia con cada uno de estos puntos y qué oportunidad de mejora aborda este proyecto.
@@ -116,11 +118,11 @@ Como se explicó en el planteamiento del problema, las principales dificultades 
     \caption{Análisis comparativo entre el enfoque actual de Fitia y la solución tecnológica propuesta.}
     \label{tab:analisis_fitia}
 \end{table}
-
+\\\\
 \textbf{Conclusión del Análisis}
 
 El análisis de Fitia muestra que la industria ya reconoce la necesidad de conectar el gasto físico con la alimentación para que el usuario no coma de menos. Sin embargo, su enfoque se limita a las calorías que entran y salen. No considera el tipo de esfuerzo, la fatiga muscular acumulada ni las particularidades del entrenamiento concurrente. Esto refuerza la justificación de este proyecto, que busca juntar datos que hoy están dispersos y mostrarlos de una forma útil para el deportista.
-
+\newpage
 \subsubsection{Análisis de Kenso: Planificación de Fuerza Asistida por IA}
 Según la documentación oficial de Kenso y su ficha en la tienda de aplicaciones \citep{kenso_official, kenso_appstore}, esta herramienta funciona principalmente como planificador y registro de entrenamiento de fuerza. Su principal atractivo es un motor de inteligencia artificial que ayuda a decidir cuándo subir las cargas y que considera las señales de recuperación del deportista.
 \\\\
@@ -133,6 +135,7 @@ Al revisar su documentación, se identifican las siguientes características:
     \item \textbf{Datos que usa para estimar la fatiga:} Para calcular un puntaje de disposición (Readiness Score), Kenso importa desde HealthKit datos como la variabilidad de la frecuencia cardíaca (HRV), la frecuencia cardíaca en reposo y el sueño. Con este puntaje sugiere cuándo subir las cargas o cuándo hacer una semana de descarga (deload).
     \item \textbf{Sin nutrición ni registro propio de cardio:} La plataforma no incluye seguimiento de la alimentación ni cálculo de macronutrientes. Tampoco tiene un sistema propio para registrar el cardio, como rutas con GPS.
 \end{itemize}
+\newpage
 \textbf{Brechas y Relación con el Problema}
 
 En este proyecto, el problema central es que los datos de fuerza, resistencia y nutrición están separados y no se cruzan. Esto impide controlar bien la fatiga cruzada y el efecto de interferencia. La Tabla \ref{tab:analisis_kenso} compara lo que ofrece Kenso con la solución propuesta.
@@ -152,14 +155,15 @@ En este proyecto, el problema central es que los datos de fuerza, resistencia y 
     \caption{Análisis comparativo entre el enfoque actual de Kenso y la solución tecnológica propuesta.}
     \label{tab:analisis_kenso}
 \end{table}
+
 \textbf{Conclusión del Análisis}
 
 El caso de Kenso es especialmente útil para este proyecto, porque muestra que ya se usan inteligencia artificial e indicadores como la HRV o el RPE para ajustar las cargas y prevenir el sobreentrenamiento. Pero también confirma el problema planteado en esta tesis. Kenso es un sistema avanzado pero aislado, que solo mejora el entrenamiento de fuerza. Como no procesa directamente los datos de resistencia ni considera la alimentación, el deportista sigue teniendo que coordinar por su cuenta su nutrición y su cardio.
 
-
+\newpage
 \subsubsection{Análisis de Hybrid: Nutrición que se Ajusta y Lectura Automática de Datos}
 A partir del análisis de \textbf{Hybrid} (también publicada como ``Hybrid Fit'') \citep{hybrid_apple, hybrid_google}, es posible entender cómo funciona y compararla con la solución propuesta. A diferencia de las herramientas anteriores, Hybrid integra fuerza, resistencia y una nutrición que se ajusta con ayuda de IA.
-
+\\\\
 \textbf{Fatiga y Nutrición en Hybrid}
 
 \begin{itemize}
@@ -194,6 +198,7 @@ Tomando a Hybrid como la aplicación más cercana a lo que se propone, la Tabla 
     \caption{Análisis comparativo de diferencias frente a la plataforma Hybrid.}
     \label{tab:analisis_hybrid}
 \end{table}
+\\\\
 \textbf{Conclusión del Análisis}
 \\
 El análisis de Hybrid, junto con el de Fitia y Kenso, muestra que el mercado se está moviendo hacia soluciones más completas que combinan IA y lectura automática de datos. Aun así, todavía hay aspectos que hacen más difícil el uso diario. La industria deja en manos de los wearables el registro de datos, lo que funciona bien, pero reacciona tarde ante la fatiga cruzada y usa interfaces más complejas de lo necesario, como depender de un chatbot para la nutrición. Esto deja espacio para la solución planteada en esta tesis, que busca anticiparse a la fatiga, usar lenguaje natural para registrar datos y ajustar automáticamente las porciones de las recetas.
@@ -215,19 +220,16 @@ Las aplicaciones analizadas hasta ahora casi no aprovechan la comunidad. Para es
 \end{table}
 
 La propuesta toma ambas ideas y las extiende a la nutrición, de modo que una receta publicada también se pueda agregar al propio módulo de nutrición, con las porciones ajustadas. Además, todo lo que se agrega desde la comunidad entra al cruce de datos y al plan sugerido, algo que ninguna de las dos plataformas hace, porque cada una cubre una sola disciplina.
-\begin{spacing}{1.3}
+
 \subsection{Comentarios Generales del Capítulo}
 
 A partir de la revisión de conceptos y del estado del arte, se pueden sacar algunas conclusiones que van a guiar el diseño de la solución.
-
-\medskip
+\\\\
 En primer lugar, la industria registra el cardio usando principalmente concentradores de datos como Apple Health o Google Health Connect, en vez de desarrollar su propio registro con GPS. Esto se evalúa con más detalle en el estudio de factibilidad técnica de los próximos capítulos, donde hay que decidir si conviene leer los datos desde estos concentradores o conectarse directamente con las marcas de wearables más populares (Garmin, Polar, etc.). También es importante revisar el caso de los ciclocomputadores y sensores de potencia usados en ciclismo, ya que muchos de ellos permiten exportar sus registros en formatos abiertos, lo que podría hacer más fácil integrarlos.
-
-\medskip
+\\\\
 En segundo lugar, la revisión de Fitia, Kenso y Hybrid muestra que ninguna de estas aplicaciones logra anticiparse a la fatiga cruzada considerando ambas disciplinas a la vez. Todas reaccionan después de que el usuario informa desgaste, o bien analizan el esfuerzo desde un solo punto de vista (solo calorías o solo fuerza).
-
-\medskip
+\\\\
 En tercer lugar, Strava y Hevy muestran que una comunidad dentro de la aplicación permite que los usuarios aprendan de otros y reutilicen lo que publican. A esto se suma que la personalización en aplicaciones móviles tiene un efecto positivo en el cambio de hábitos \citep{tong2021personalized}. Por eso la propuesta incorpora un perfil del usuario con un plan sugerido y una red social cuyo contenido se puede agregar directamente a los propios módulos.
-
+\\\\
 Por último, esta revisión permitió identificar las tecnologías que el proyecto puede aprovechar. En particular, el procesamiento de lenguaje natural para que registrar datos sea más rápido, y modelos de cálculo para estimar la carga de entrenamiento y ajustar la nutrición. Estas herramientas son las que permitirán a la propuesta cubrir lo que hoy les falta a las aplicaciones existentes.
-\end{spacing}
+

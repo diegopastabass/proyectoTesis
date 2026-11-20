@@ -8,6 +8,7 @@ En el presente capítulo se aborda la fase de Ingeniería de Requerimientos, un 
 En este capítulo, el modelo de negocios no se refiere a cómo gana dinero el proyecto, porque eso ya se analizó en la factibilidad económica del capítulo anterior. Aquí se refiere a los procesos principales que entregan valor al atleta. Se describen cinco procesos, y entre ellos cubren el registro de fuerza, de cardio y de comidas, el cruce de datos, la red social y el plan sugerido.
 \\\\
 Los procesos se dibujan con carriles, al estilo de BPMN (Business Process Model and Notation). Cada carril representa a un participante, el círculo simple marca el inicio, el círculo doble marca el fin y los rombos marcan las decisiones. Las tareas están numeradas, y después de cada diagrama se explica qué ocurre en cada una.
+\newpage
 \subsubsection{Proceso 1: Registro de Cardio y Cálculo de Fatiga Cruzada}
 Este proceso muestra cómo una sesión de cardio entra a la aplicación, venga de donde venga, y cómo se cruza con el resto de los datos para avisar al atleta si está acumulando demasiada fatiga. Los participantes son el atleta, la aplicación y el reloj junto con la app de salud del teléfono. Responde a los requerimientos R02 y R03.
 
@@ -55,6 +56,7 @@ Este proceso muestra las cuatro formas de registrar una comida y cómo cada una 
 \end{enumerate}
 
 Además, el atleta puede armar sus propias recetas y luego buscarlas en la lista como cualquier alimento (CU-27). La búsqueda en la lista, el código de barras y las recetas propias son parte del plan gratuito. La foto, la descripción y las metas según el entrenamiento son parte del plan premium.
+\newpage
 \subsubsection{Proceso 3: Publicación y Uso de Contenido de la Comunidad}
 Este proceso muestra cómo una sesión, una ruta o una comida que publica un atleta llega a otro, que puede agregarla a sus propios módulos o reportarla. Los participantes son el atleta que publica, el atleta que ve la publicación, la aplicación y el administrador. Responde a los requerimientos R08, R11 y R12.
 
@@ -76,6 +78,7 @@ Este proceso muestra cómo una sesión, una ruta o una comida que publica un atl
     \item \textbf{Revisa la publicación:} El administrador evalúa si cumple las normas de la comunidad o si puede ser peligrosa para la salud.
     \item \textbf{Oculta la publicación:} Si no cumple las normas, el administrador la oculta y queda registro de quién tomó la decisión y por qué.
 \end{enumerate}
+\newpage
 \subsubsection{Proceso 4: Registro de Fuerza}
 Este proceso muestra las dos formas de registrar una sesión de fuerza, ya sea con el formulario o con las propias palabras del atleta, para que anotar una sesión tome poco tiempo. Los participantes son el atleta, la aplicación y el asistente de inteligencia artificial. Responde al requerimiento R01.
 
@@ -99,6 +102,7 @@ Este proceso muestra las dos formas de registrar una sesión de fuerza, ya sea c
 \end{enumerate}
 
 El formulario es parte del plan gratuito. El registro con las propias palabras y el cruce de datos son parte del plan premium.
+\newpage
 \subsubsection{Proceso 5: Perfil del Usuario y Plan Sugerido}
 Este proceso muestra cómo la aplicación conoce a un usuario nuevo, le sugiere un plan de entrenamiento y lo va ajustando cada semana con lo que registra. Es el proceso que da una guía a quien recién empieza. Los participantes son el atleta y la aplicación. Responde al requerimiento R13.
 
@@ -119,6 +123,7 @@ Este proceso muestra cómo la aplicación conoce a un usuario nuevo, le sugiere 
     \item \textbf{Revisa la semana:} La aplicación compara las sesiones cumplidas con las sugeridas y revisa qué tan duro las sintió el atleta. En el plan premium también considera su fatiga cruzada.
     \item \textbf{Sugiere el plan siguiente:} Con reglas simples, la aplicación propone un plan más liviano, igual o más exigente, y explica por qué cambió. El ciclo se repite cada semana mientras el atleta siga usando el plan.
 \end{enumerate}
+\newpage
 \subsection{Modelo de Requerimientos}
 El Modelo de Requerimientos reúne lo que el sistema debe hacer de cara al usuario (requerimientos funcionales) y la forma técnica en que se va a lograr (requerimientos no funcionales). A continuación se presenta el diagrama de trazabilidad, que relaciona los procesos de negocio de la sección anterior (cardio y fatiga, comidas y metas, comunidad, registro de fuerza y plan sugerido) con los requerimientos funcionales que los hacen posibles. Los requerimientos que no pertenecen a un proceso en particular se agrupan como funciones transversales de la plataforma.
 
@@ -128,6 +133,7 @@ El Modelo de Requerimientos reúne lo que el sistema debe hacer de cara al usuar
     \caption{Diagrama de trazabilidad: relación entre requerimientos y procesos de negocio.}
     \label{fig:diagrama_requerimientos}
 \end{figure}
+\newpage
 \subsubsection{Requerimientos Funcionales}
 Los requerimientos funcionales describen lo que la aplicación permite hacer al usuario y lo que le entrega a cambio. Se presentan en quince requerimientos, escritos desde el punto de vista de quien usa la aplicación y no de los procesos internos del sistema. Catorce corresponden al deportista y uno al administrador de la plataforma.
 
@@ -169,6 +175,7 @@ Los requerimientos funcionales describen lo que la aplicación permite hacer al 
         \textbf{Prioridad} & Crítica \\ \hline
     \end{tabular}
 \end{table}
+\newpage
 \begin{table}[h!]
     \centering
     \renewcommand{\arraystretch}{1.3}
@@ -220,6 +227,7 @@ Los requerimientos funcionales describen lo que la aplicación permite hacer al 
         \textbf{Prioridad} & Baja \\ \hline
     \end{tabular}
 \end{table}
+\newpage
 \begin{table}[h!]
     \centering
     \renewcommand{\arraystretch}{1.3}
@@ -270,6 +278,7 @@ Los requerimientos funcionales describen lo que la aplicación permite hacer al 
         \textbf{Prioridad} & Media \\ \hline
     \end{tabular}
 \end{table}
+\newpage
 \begin{table}[h!]
     \centering
     \renewcommand{\arraystretch}{1.3}
@@ -307,7 +316,7 @@ Los requerimientos funcionales describen lo que la aplicación permite hacer al 
         \textbf{Prioridad} & Alta \\ \hline
     \end{tabular}
 \end{table}
-
+\newpage
 \begin{table}[h!]
     \centering
     \renewcommand{\arraystretch}{1.3}
@@ -320,7 +329,7 @@ Los requerimientos funcionales describen lo que la aplicación permite hacer al 
         \textbf{Prioridad} & Alta \\ \hline
     \end{tabular}
 \end{table}
-
+\newpage
 \subsubsection{Características de los Usuarios del Sistema}
 El sistema contempla tres perfiles de usuario con niveles de acceso diferenciados, diseñados para cubrir desde el deportista principiante hasta la administración técnica de la plataforma.
 
@@ -338,7 +347,7 @@ El sistema contempla tres perfiles de usuario con niveles de acceso diferenciado
     \caption{Perfiles de usuario del sistema.}
     \label{tab:perfiles_usuario}
 \end{table}
-
+\newpage
 La Tabla \ref{tab:funciones_plan} resume qué incluye cada plan.
 
 \begin{table}[h!]
@@ -359,6 +368,7 @@ La Tabla \ref{tab:funciones_plan} resume qué incluye cada plan.
     \caption{Funciones de cada plan.}
     \label{tab:funciones_plan}
 \end{table}
+\newpage
 \subsubsection{Propósito del Sistema}
 El propósito del sistema es centralizar la captura, el almacenamiento y el análisis cruzado de datos provenientes de tres dominios históricamente fragmentados: el entrenamiento de fuerza, la resistencia cardiovascular y la nutrición deportiva. A través de la integración de telemetría de wearables, inteligencia artificial (visión computacional y procesamiento de lenguaje natural) y un motor algorítmico de fatiga concurrente, la plataforma busca:
 \begin{enumerate}
@@ -431,6 +441,7 @@ Los requisitos específicos detallan las capacidades particulares que cada módu
         \item El plan debe revisarse cada semana según la adherencia, el RPE promedio y el índice de fatiga cruzada.
     \end{itemize}
 \end{itemize}
+\newpage
 \subsubsection{Requisitos No Funcionales}
 Los requisitos no funcionales explican cómo se van a lograr, desde el punto de vista técnico, los requerimientos funcionales descritos antes. Cada uno indica a qué requerimientos funcionales apoya.
 
@@ -459,6 +470,7 @@ Los requisitos no funcionales explican cómo se van a lograr, desde el punto de 
         \textbf{Descripción} & El usuario subirá el archivo desde la aplicación y el backend en NestJS lo leerá con una librería de código abierto, obteniendo duración, distancia, frecuencia cardíaca, potencia, cadencia y TSS. Un archivo de hasta 10 MB (unas 4 horas de registro) debe procesarse en menos de 3 segundos. Los datos segundo a segundo se guardarán en la colección de series temporales \texttt{telemetry} de MongoDB, y el archivo original en almacenamiento en la nube (Amazon S3). \\ \hline
     \end{tabular}
 \end{table}
+\newpage
 \begin{table}[h!]
     \centering
     \renewcommand{\arraystretch}{1.3}
@@ -484,7 +496,7 @@ Los requisitos no funcionales explican cómo se van a lograr, desde el punto de 
         \textbf{Descripción} & Para el registro por lenguaje natural y por fotos, la aplicación enviará el texto o la imagen al backend, que lo reenviará a una API de inteligencia artificial en la nube (Gemini, con sus modelos Flash) con instrucciones predefinidas, y recibirá la respuesta en formato JSON. Si el índice de confianza es menor a 70\%, se pedirá al usuario que revise el resultado antes de guardarlo. La respuesta de una foto debe llegar en menos de 5 segundos con una conexión normal. El backend guardará en memoria las respuestas repetidas y controlará el gasto para respetar los límites de la API. \\ \hline
     \end{tabular}
 \end{table}
-
+\newpage
 \begin{table}[h!]
     \centering
     \renewcommand{\arraystretch}{1.3}
@@ -522,7 +534,7 @@ Los requisitos no funcionales explican cómo se van a lograr, desde el punto de 
         \textbf{Descripción} & Los datos se guardarán en MongoDB como documentos BSON organizados en colecciones. La información que se consulta junta, como las series de un ejercicio o los alimentos de una comida, irá dentro del mismo documento. Los catálogos de ejercicios y alimentos tendrán su propia colección y se referenciarán por su identificador. La telemetría segundo a segundo se guardará en una colección de series temporales. La línea de tiempo diaria y mensual se obtendrá consultando por usuario y fecha, con índices compuestos en esos campos para que la consulta sea rápida. \\ \hline
     \end{tabular}
 \end{table}
-
+\newpage
 \begin{table}[h!]
     \centering
     \renewcommand{\arraystretch}{1.3}
@@ -560,7 +572,7 @@ Los requisitos no funcionales explican cómo se van a lograr, desde el punto de 
         \textbf{Descripción} & La base de datos estará en MongoDB Atlas, un servicio administrado con respaldos automáticos diarios (snapshots) y almacenamiento cifrado. Ante una falla, se podrá recuperar la información con una pérdida máxima de 24 horas (RPO). \\ \hline
     \end{tabular}
 \end{table}
-
+\newpage
 \begin{table}[h!]
     \centering
     \renewcommand{\arraystretch}{1.3}
@@ -598,7 +610,7 @@ Los requisitos no funcionales explican cómo se van a lograr, desde el punto de 
         \textbf{Descripción} & El panel del administrador será una aplicación web separada, conectada al mismo backend, con acceso solo para usuarios con rol de administrador. Permitirá crear, editar y eliminar ejercicios del catálogo, y revisar y eliminar publicaciones de la comunidad. Cada acción de moderación quedará registrada en la colección \texttt{moderationLogs}. \\ \hline
     \end{tabular}
 \end{table}
-
+\newpage
 \begin{table}[h!]
     \centering
     \renewcommand{\arraystretch}{1.3}
@@ -624,7 +636,7 @@ Los requisitos no funcionales explican cómo se van a lograr, desde el punto de 
         \textbf{Descripción} & El muro se cargará por páginas, mostrando primero las publicaciones más recientes de las personas que el usuario sigue, con un índice por autor y fecha. Cada publicación tendrá un nivel de visibilidad (pública, seguidores o privada), que el backend validará antes de mostrarla. En las rutas publicadas se ocultarán los primeros y los últimos 200 metros del recorrido. Al agregar una publicación a los propios módulos, se creará una copia en la colección correspondiente (\texttt{routines}, \texttt{routes} o \texttt{recipes}) con una referencia al autor original. Las fotos se comprimirán en el teléfono antes de subirlas, se les borrarán los datos de ubicación y se guardarán en el almacenamiento de objetos, mientras que en MongoDB solo quedará su dirección. En el MVP no se aceptarán videos. \\ \hline
     \end{tabular}
 \end{table}
-
+\newpage
 \begin{table}[h!]
     \centering
     \renewcommand{\arraystretch}{1.3}
@@ -683,6 +695,7 @@ Los requisitos de interfaz especifican cómo el sistema se comunica con los usua
     \item \textbf{GPS del dispositivo:} Acceso al sensor de ubicación para el registro opcional de rutas de ciclismo, running o trekking cuando el usuario no disponga de un wearable externo.
     \item \textbf{Wearables y ciclocomputadores:} Comunicación indirecta a través de los concentradores del sistema operativo (Health Connect / HealthKit). No se establece conexión Bluetooth directa entre la aplicación y los dispositivos. Toda la telemetría fluye mediante los brokers nativos del SO o la carga manual de archivos \texttt{.fit}.
 \end{itemize}
+\newpage
 \subsection{Casos de Uso}
 \subsubsection{Actores}
 Los actores son las personas y los servicios externos que se relacionan con la aplicación. Los actores primarios son los que inician las acciones, y los secundarios son los servicios externos que participan en ellas.
@@ -705,6 +718,7 @@ Los actores son las personas y los servicios externos que se relacionan con la a
 \end{table}
 
 Los servicios que la aplicación usa por dentro, como el envío de notificaciones, la base de datos de productos envasados o el almacenamiento de fotos, no se muestran como actores, porque el usuario no se relaciona con ellos directamente. Se describen en los requisitos de interfaces de este capítulo y en el diseño.
+
 \subsubsection{Diagrama de Casos de Uso}
 Los casos de uso se muestran en cuatro diagramas, uno por cada parte de la aplicación. Se escribieron desde el punto de vista del usuario y sin términos técnicos, para que cualquier persona pueda entender qué hará la aplicación. Los diagramas incluyen relaciones de inclusión (``include''), que son pasos que siempre ocurren, y de extensión (``extend''), que son pasos opcionales. Cuando aparecen los dos atletas, el Atleta Híbrido hereda los casos de uso del Atleta Básico, porque el plan premium incluye todo lo del plan gratuito.
 
@@ -714,7 +728,7 @@ Los casos de uso se muestran en cuatro diagramas, uno por cada parte de la aplic
     \caption{Diagrama de Casos de Uso: Perfil, Cuenta y Seguimiento.}
     \label{fig:cu_perfil}
 \end{figure}
-
+\newpage
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=0.95\textwidth]{figuras/casos_de_uso/cu_entrenamiento.png}
@@ -727,17 +741,17 @@ Los casos de uso se muestran en cuatro diagramas, uno por cada parte de la aplic
     \caption{Diagrama de Casos de Uso: Nutrición.}
     \label{fig:cu_nutricion}
 \end{figure}
-
+\newpage
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=0.85\textwidth]{figuras/casos_de_uso/cu_comunidad.png}
     \caption{Diagrama de Casos de Uso: Red Social y Administración.}
     \label{fig:cu_comunidad}
 \end{figure}
+\newpage
 \subsubsection{Descripción de Alto Nivel de Casos de Uso}
 A continuación se describe cada caso de uso de los diagramas anteriores, con el requerimiento funcional al que responde. Su flujo normal y sus flujos alternativos se detallan en el Diseño Funcional del capítulo siguiente. Cada requerimiento funcional tiene al menos un caso de uso, como se muestra en la Tabla \ref{tab:cu_requerimientos}.
-
-\noindent
+\\\\
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
     \hline
     \rowcolor[HTML]{EFEFEF}
@@ -747,9 +761,7 @@ A continuación se describe cada caso de uso de los diagramas anteriores, con el
     \textbf{Descripción} & El usuario elige los ejercicios que hizo, desde la lista de ejercicios o desde una rutina que guardó antes, y anota las series, las repeticiones, el peso y qué tan duro lo sintió. La aplicación guarda la sesión y la suma a su historial. \\ \hline
     \textbf{RF Asociados} & R01 \\ \hline
 \end{tabular}
-\vspace{0.5cm}
-
-\noindent
+\\\\\\
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
     \hline
     \rowcolor[HTML]{EFEFEF}
@@ -760,8 +772,7 @@ A continuación se describe cada caso de uso de los diagramas anteriores, con el
     \textbf{Descripción} & El usuario escribe o dicta lo que hizo, por ejemplo ``sentadilla, 4 series de 8 con 80 kilos''. La aplicación lo ordena en ejercicios, series y pesos, y se lo muestra para que lo revise. El usuario corrige lo que haga falta y lo guarda. \\ \hline
     \textbf{RF Asociados} & R01 \\ \hline
 \end{tabular}
-\vspace{0.5cm}
-\noindent
+\newpage
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
     \hline
     \rowcolor[HTML]{EFEFEF}
@@ -772,9 +783,7 @@ A continuación se describe cada caso de uso de los diagramas anteriores, con el
     \textbf{Descripción} & Después de entrenar con su reloj, la aplicación trae sola las sesiones nuevas de ciclismo, running o trekking desde la app de salud del teléfono, con su duración, su distancia y su pulso. Así no tiene que anotar nada a mano. La primera vez, la aplicación le pide permiso para leer esos datos. \\ \hline
     \textbf{RF Asociados} & R02 \\ \hline
 \end{tabular}
-\vspace{0.5cm}
-
-\noindent
+\\\\\\
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
     \hline
     \rowcolor[HTML]{EFEFEF}
@@ -784,9 +793,7 @@ A continuación se describe cada caso de uso de los diagramas anteriores, con el
     \textbf{Descripción} & El usuario sube el archivo que exportó desde su ciclocomputador o reloj. La aplicación lo lee y le muestra la sesión con todo detalle, como la potencia, la cadencia y el pulso a lo largo de la salida. \\ \hline
     \textbf{RF Asociados} & R02 \\ \hline
 \end{tabular}
-\vspace{0.5cm}
-
-\noindent
+\\\\\\
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
     \hline
     \rowcolor[HTML]{EFEFEF}
@@ -796,8 +803,7 @@ A continuación se describe cada caso de uso de los diagramas anteriores, con el
     \textbf{Descripción} & El usuario ve en un resumen cuánto se ha cargado en la semana, sumando la fuerza y el cardio. Si la aplicación nota que viene muy cansado y tiene un entrenamiento exigente al día siguiente, le manda un aviso con una sugerencia, por ejemplo bajar el peso o mover la sesión. También le avisa si dejó poco tiempo entre una sesión de fuerza y una de cardio. El usuario decide si la sigue. \\ \hline
     \textbf{RF Asociados} & R03 \\ \hline
 \end{tabular}
-\vspace{0.5cm}
-\noindent
+\newpage
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
     \hline
     \rowcolor[HTML]{EFEFEF}
@@ -807,9 +813,7 @@ A continuación se describe cada caso de uso de los diagramas anteriores, con el
     \textbf{Descripción} & El usuario busca lo que comió en la lista de alimentos, indica cuánto comió y lo guarda en su diario del día. La aplicación le muestra las calorías y los macronutrientes de la comida y cuánto lleva en el día. \\ \hline
     \textbf{RF Asociados} & R04 \\ \hline
 \end{tabular}
-\vspace{0.5cm}
-
-\noindent
+\\\\\\
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
     \hline
     \rowcolor[HTML]{EFEFEF}
@@ -820,9 +824,7 @@ A continuación se describe cada caso de uso de los diagramas anteriores, con el
     \textbf{Descripción} & El usuario le saca una foto a su plato. La aplicación estima qué alimentos hay, en qué cantidad y cuántas calorías y macronutrientes tienen. El usuario revisa la estimación, la corrige si hace falta y la guarda. Cuando la aplicación no está segura del resultado, se lo avisa para que lo revise con más cuidado. La foto no se guarda, salvo que el usuario la quiera publicar. \\ \hline
     \textbf{RF Asociados} & R04 \\ \hline
 \end{tabular}
-\vspace{0.5cm}
-
-\noindent
+\\\\\\
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
     \hline
     \rowcolor[HTML]{EFEFEF}
@@ -832,8 +834,7 @@ A continuación se describe cada caso de uso de los diagramas anteriores, con el
     \textbf{Descripción} & El usuario ve una receta en el muro y la agrega a su módulo de nutrición. La aplicación ajusta la cantidad de cada ingrediente según lo que le falta comer ese día, manteniendo las proporciones de la receta original. Es un caso particular de CU-13. \\ \hline
     \textbf{RF Asociados} & R12 \\ \hline
 \end{tabular}
-\vspace{0.5cm}
-\noindent
+\newpage
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
     \hline
     \rowcolor[HTML]{EFEFEF}
@@ -843,9 +844,7 @@ A continuación se describe cada caso de uso de los diagramas anteriores, con el
     \textbf{Descripción} & El usuario elige una sesión de fuerza, una ruta, una comida o una receta que ya tiene, le agrega un texto y, si quiere, hasta 4 fotos, declarando que son suyas o que tiene permiso para publicarlas. Luego elige quién la puede ver (todos, sus seguidores o solo él). Si publica una ruta, la aplicación oculta el inicio y el final del recorrido para que no se sepa dónde vive. \\ \hline
     \textbf{RF Asociados} & R08, R15 \\ \hline
 \end{tabular}
-\vspace{0.5cm}
-
-\noindent
+\\\\\\
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
     \hline
     \rowcolor[HTML]{EFEFEF}
@@ -855,9 +854,7 @@ A continuación se describe cada caso de uso de los diagramas anteriores, con el
     \textbf{Descripción} & El administrador agrega, cambia o desactiva ejercicios de la lista que usan los atletas, indicando qué músculos trabajan y qué equipamiento necesitan. La aplicación le avisa si el ejercicio ya existe. \\ \hline
     \textbf{RF Asociados} & R11 \\ \hline
 \end{tabular}
-\vspace{0.5cm}
-
-\noindent
+\\\\\\
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
     \hline
     \rowcolor[HTML]{EFEFEF}
@@ -867,8 +864,7 @@ A continuación se describe cada caso de uso de los diagramas anteriores, con el
     \textbf{Descripción} & El administrador revisa las publicaciones, fotos y recetas que reportaron los usuarios. Si no cumplen las normas de la comunidad o pueden ser peligrosas para la salud, las oculta. La aplicación guarda quién tomó la decisión y por qué. \\ \hline
     \textbf{RF Asociados} & R11 \\ \hline
 \end{tabular}
-\vspace{0.5cm}
-\noindent
+\newpage
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
     \hline
     \rowcolor[HTML]{EFEFEF}
@@ -878,9 +874,7 @@ A continuación se describe cada caso de uso de los diagramas anteriores, con el
     \textbf{Descripción} & Al crear su cuenta, el usuario responde preguntas sobre su experiencia, sus objetivos, los días que puede entrenar, su equipamiento, los deportes que practica, su edad, su sexo, su estatura y su peso. Con eso, la aplicación le sugiere un plan para la semana, que puede aceptar, cambiar o ignorar. Cada semana el plan se ajusta según lo que el usuario cumplió y cómo se sintió. \\ \hline
     \textbf{RF Asociados} & R13 \\ \hline
 \end{tabular}
-\vspace{0.5cm}
-
-\noindent
+\\\\\\
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
     \hline
     \rowcolor[HTML]{EFEFEF}
@@ -890,9 +884,7 @@ A continuación se describe cada caso de uso de los diagramas anteriores, con el
     \textbf{Descripción} & El usuario ve en el muro una publicación de otra persona, por ejemplo una rutina de pecho, y pulsa ``Agregar a mis rutinas''. La rutina queda guardada como suya, indicando quién la creó. Si es una ruta, queda en su módulo de cardio, y si es una receta, en su módulo de nutrición (CU-08). \\ \hline
     \textbf{RF Asociados} & R12 \\ \hline
 \end{tabular}
-\vspace{0.5cm}
-
-\noindent
+\\\\\\
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
     \hline
     \rowcolor[HTML]{EFEFEF}
@@ -902,8 +894,7 @@ A continuación se describe cada caso de uso de los diagramas anteriores, con el
     \textbf{Descripción} & El usuario encuentra a otra persona en el muro o en el buscador y la sigue. Desde ese momento ve las publicaciones de esa persona en su muro. Puede dejar de seguirla cuando quiera. \\ \hline
     \textbf{RF Asociados} & R08 \\ \hline
 \end{tabular}
-\vspace{0.5cm}
-\noindent
+\newpage
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
     \hline
     \rowcolor[HTML]{EFEFEF}
@@ -913,9 +904,7 @@ A continuación se describe cada caso de uso de los diagramas anteriores, con el
     \textbf{Descripción} & El usuario escanea con la cámara el código de barras de un producto envasado. La aplicación le muestra sus calorías y macronutrientes. El usuario indica cuánto comió y lo guarda. \\ \hline
     \textbf{RF Asociados} & R04 \\ \hline
 \end{tabular}
-\vspace{0.5cm}
-
-\noindent
+\\\\\\
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
     \hline
     \rowcolor[HTML]{EFEFEF}
@@ -926,9 +915,7 @@ A continuación se describe cada caso de uso de los diagramas anteriores, con el
     \textbf{Descripción} & El usuario escribe o dicta lo que comió, por ejemplo ``un plato de arroz con pollo y una ensalada''. La aplicación estima los alimentos, las cantidades y los macronutrientes. El usuario revisa la estimación, la corrige si hace falta y la guarda. \\ \hline
     \textbf{RF Asociados} & R04 \\ \hline
 \end{tabular}
-\vspace{0.5cm}
-
-\noindent
+\\\\\\
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
     \hline
     \rowcolor[HTML]{EFEFEF}
@@ -938,8 +925,7 @@ A continuación se describe cada caso de uso de los diagramas anteriores, con el
     \textbf{Descripción} & El usuario graba su salida de ciclismo, running o trekking con el GPS del teléfono, o la anota a mano con su duración, su distancia y qué tan duro la sintió. La aplicación la guarda y la considera en su carga de la semana. \\ \hline
     \textbf{RF Asociados} & R02 \\ \hline
 \end{tabular}
-\vspace{0.5cm}
-\noindent
+\newpage
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
     \hline
     \rowcolor[HTML]{EFEFEF}
@@ -949,9 +935,7 @@ A continuación se describe cada caso de uso de los diagramas anteriores, con el
     \textbf{Descripción} & El usuario abre su resumen de nutrición y ve cuántas calorías y macronutrientes le conviene comer ese día, según lo que entrenó o tiene planificado, y cuánto le falta. También le sugiere en qué momento conviene comer. Son sugerencias y no una dieta. \\ \hline
     \textbf{RF Asociados} & R05 \\ \hline
 \end{tabular}
-\vspace{0.5cm}
-
-\noindent
+\\\\\\
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
     \hline
     \rowcolor[HTML]{EFEFEF}
@@ -961,9 +945,7 @@ A continuación se describe cada caso de uso de los diagramas anteriores, con el
     \textbf{Descripción} & El usuario abre su historial y elige ver un día o un mes. La aplicación le muestra juntos sus entrenamientos, sus comidas y cómo ha cambiado su carga en el tiempo. \\ \hline
     \textbf{RF Asociados} & R06 \\ \hline
 \end{tabular}
-\vspace{0.5cm}
-
-\noindent
+\\\\\\
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
     \hline
     \rowcolor[HTML]{EFEFEF}
@@ -973,8 +955,7 @@ A continuación se describe cada caso de uso de los diagramas anteriores, con el
     \textbf{Descripción} & Después de un entrenamiento o de una comida, el usuario escribe cómo se sintió, por ejemplo si tuvo alguna molestia o si la comida le cayó pesada. La nota queda junto a ese registro para revisarla después. \\ \hline
     \textbf{RF Asociados} & R07 \\ \hline
 \end{tabular}
-\vspace{0.5cm}
-\noindent
+\newpage
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
     \hline
     \rowcolor[HTML]{EFEFEF}
@@ -985,9 +966,7 @@ A continuación se describe cada caso de uso de los diagramas anteriores, con el
     \textbf{Descripción} & El usuario decide si la aplicación puede leer sus datos de salud y puede cambiar esa decisión cuando quiera. También puede revisar y corregir sus datos o eliminar su cuenta. Si elimina la cuenta, se borran todos sus datos. \\ \hline
     \textbf{RF Asociados} & R09 \\ \hline
 \end{tabular}
-\vspace{0.5cm}
-
-\noindent
+\\\\\\
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
     \hline
     \rowcolor[HTML]{EFEFEF}
@@ -997,9 +976,7 @@ A continuación se describe cada caso de uso de los diagramas anteriores, con el
     \textbf{Descripción} & El usuario reporta una publicación o una foto que le parece inapropiada o peligrosa y elige el motivo. El administrador la revisa después (CU-11). \\ \hline
     \textbf{RF Asociados} & R08, R11 \\ \hline
 \end{tabular}
-\vspace{0.5cm}
-
-\noindent
+\\\\\\
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
     \hline
     \rowcolor[HTML]{EFEFEF}
@@ -1009,9 +986,7 @@ A continuación se describe cada caso de uso de los diagramas anteriores, con el
     \textbf{Descripción} & El usuario abre el muro y ve las publicaciones más recientes de las personas que sigue, con sus fotos. Desde ahí puede abrir una publicación, agregarla a sus módulos (CU-13) o reportarla (CU-22). \\ \hline
     \textbf{RF Asociados} & R08 \\ \hline
 \end{tabular}
-\vspace{0.5cm}
-
-\noindent
+\newpage
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
     \hline
     \rowcolor[HTML]{EFEFEF}
@@ -1021,9 +996,7 @@ A continuación se describe cada caso de uso de los diagramas anteriores, con el
     \textbf{Descripción} & El usuario ve qué incluye el plan premium, cuánto cuesta en total y cada cuánto se cobra. Si le interesa, lo contrata y desde ese momento tiene todas sus funciones. \\ \hline
     \textbf{RF Asociados} & R14 \\ \hline
 \end{tabular}
-\vspace{0.5cm}
-
-\noindent
+\\\\\\
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
     \hline
     \rowcolor[HTML]{EFEFEF}
@@ -1033,9 +1006,7 @@ A continuación se describe cada caso de uso de los diagramas anteriores, con el
     \textbf{Descripción} & El usuario cancela su suscripción desde la aplicación, que lo lleva a la pantalla de suscripciones de su tienda, donde confirma la cancelación. Sigue con el plan premium hasta que termine el periodo pagado, y después vuelve al plan gratuito conservando sus datos. \\ \hline
     \textbf{RF Asociados} & R14 \\ \hline
 \end{tabular}
-\vspace{0.5cm}
-
-\noindent
+\\\\\\
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
     \hline
     \rowcolor[HTML]{EFEFEF}
@@ -1045,9 +1016,7 @@ A continuación se describe cada caso de uso de los diagramas anteriores, con el
     \textbf{Descripción} & Al crear su cuenta, el usuario lee los términos de uso y el aviso legal, y los acepta para poder seguir. Si los términos cambian más adelante, la aplicación se los vuelve a mostrar. \\ \hline
     \textbf{RF Asociados} & R15 \\ \hline
 \end{tabular}
-\vspace{0.5cm}
-
-\noindent
+\newpage
 \begin{tabular}{|p{3.5cm}|p{11.5cm}|}
     \hline
     \rowcolor[HTML]{EFEFEF}
@@ -1057,7 +1026,6 @@ A continuación se describe cada caso de uso de los diagramas anteriores, con el
     \textbf{Descripción} & El usuario arma una receta eligiendo sus ingredientes de la lista de alimentos e indicando los gramos de cada uno y cuántas porciones rinde. La aplicación calcula las calorías y los macronutrientes de la receta y de cada porción. La receta queda guardada en su módulo de nutrición, donde la puede encontrar al registrar una comida (CU-06) o, si es Atleta Híbrido, publicar (CU-09). \\ \hline
     \textbf{RF Asociados} & R04 \\ \hline
 \end{tabular}
-\vspace{0.5cm}
 \begin{table}[h!]
     \centering
     \renewcommand{\arraystretch}{1.3}
@@ -1084,12 +1052,11 @@ A continuación se describe cada caso de uso de los diagramas anteriores, con el
     \caption{Relación entre los requerimientos funcionales y los casos de uso.}
     \label{tab:cu_requerimientos}
 \end{table}
-\begin{spacing}{1.3}
+\newpage
 \subsection{Comentarios Generales del Capítulo}
 En este capítulo se ha consolidado el puente entre la visión de negocio y la implementación técnica de la plataforma. El capítulo partió con un Modelo de Negocios de cinco procesos, que son el registro de cardio con el cálculo de fatiga, el registro de comidas con sus metas, la publicación y el uso de contenido de la comunidad, el registro de fuerza y el plan sugerido. Posteriormente, la trazabilidad de los requerimientos garantizó que cada especificación funcional y no funcional del software nazca directamente de una necesidad operativa comprobada, mitigando el riesgo de desarrollar funcionalidades superfluas. 
-
+\\\\
 Además, se incorporaron requerimientos centrados en la personalización, como el perfil del usuario con su plan sugerido, y en la red social deportiva, donde el contenido que publican otros usuarios se puede agregar directamente a los propios módulos.
-
-\medskip
+\\\\
 Finalmente, la especificación de los Casos de Uso, apoyada por sus respectivos diagramas e identificación de actores primarios y secundarios, delimitó con exactitud la frontera del sistema. Con este sólido marco de requerimientos finalizado, alineado a las restricciones normativas chilenas y a las dependencias de hardware de terceros, el proyecto cuenta con las bases necesarias para transicionar hacia la fase de Ingeniería de Diseño, donde se definirá la arquitectura de software detallada, el modelo de datos orientado a documentos y las interfaces de usuario.
-\end{spacing}
+
